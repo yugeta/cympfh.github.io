@@ -16,7 +16,9 @@ function redraw() {
   if (R.checked)
     ids = shuffle(ids);
 
-  V.src = "http://www.youtube.com/v/"+ids[0]+"?autoplay=1&playlist="+ids.slice(1).join(',');
+  V.src =
+    "http://www.youtube.com/v/"+ids[0]+
+    "?autoplay=1&playlist="+ids.slice(1).join(',');
 
   // where
   function shuffle(ls) {
