@@ -1,7 +1,7 @@
-all : index.html push
+all : Index push
 
-index.html:
-	ls -lt > $@
+Index:
+	ls -lt > index.html
 
 push :
 	git add --all
