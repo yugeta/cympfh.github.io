@@ -1,7 +1,8 @@
 all : Index push
 
 Index:
-	ls -lt > index.html
+	echo "<plaintext>" > index.html
+	ls -lt >> index.html
 
 push :
 	git add --all
