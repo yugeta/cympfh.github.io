@@ -6,5 +6,5 @@ Index:
 
 push :
 	git add --all
-	git commit -a -m "`kasitime`"
+	git commit -a
 	git push

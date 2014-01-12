@@ -1,0 +1,33 @@
+<head>
+<script>
+var ctx, div
+  , mode = 'normal'
+  , staying_keys = {}
+  , sum = 0
+
+function init() {
+  ctx = document.getElementById('C').getContext('2d');
+  div = document.getElementById('D');
+
+  mode = 'normal';
+
+  ctx.fillStyle='rgb(0,0,0)'
+  ctx.font = "32px 'Monotype Corsiva'";
+  ctx.fillText('Hit your Space', 30, 400);
+  ctx.beginPath();
+  ctx.moveTo(0,402); ctx.lineTo(300,402); ctx.stroke();
+
+}
+
+</script>
+<script src='keys.js'></script>
+<script src='display.js'></script>
+</head>
+<body onload="init()" onkeydown='kd(event)' onkeyup='ku(event)' ondblclick='start()'>
+<div id="D" style='border:1px black solid;background-color:black;color:white;display:block;width:490px;height:20px;font-size:19px;text-align:right;'>pt</div>
+<canvas id="C" height='490px' width='490px' style='border:1px black solid;'></canvas>
+
+<pre style='float:right'>4 5 6 7
+r t y u
+f g h j
+v b n m</pre>
