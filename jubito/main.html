@@ -22,10 +22,16 @@ function init() {
 </script>
 <script src='keys.js'></script>
 <script src='display.js'></script>
+<script type="text/javascript" src="../js/swfobject.js"></script>
+<script src='video.js'></script>
 </head>
-<body onload="init()" onkeydown='kd(event)' onkeyup='ku(event)' ondblclick='start()'>
+<body onload="init();video_init()" onkeydown='kd(event)' onkeyup='ku(event)' ondblclick='start()'>
+
 <div id="D" style='border:1px black solid;background-color:black;color:white;display:block;width:490px;height:20px;font-size:19px;text-align:right;'>pt</div>
+
 <canvas id="C" height='490px' width='490px' style='border:1px black solid;'></canvas>
+
+<div id='video'></div>
 
 <pre style='float:right'>4 5 6 7
 r t y u
