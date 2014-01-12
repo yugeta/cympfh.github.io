@@ -14,7 +14,7 @@ function init() {
   ctx.fillStyle = 'rgb(0,0,0)';
   ctx.strokeStyle ='rgb(0,0,0)';
   ctx.font = "32px 'Monotype Corsiva'";
-  ctx.fillText('Hit your Space', 30, 420);
+  ctx.fillText('Hit your [a]', 30, 420);
   ctx.beginPath();
   ctx.moveTo(0,422); ctx.lineTo(300,422); ctx.stroke();
 
@@ -27,14 +27,83 @@ function init() {
 <script type="text/javascript" src="../js/swfobject.js"></script>
 <script src='video.js'></script>
 </head>
-<body onload="init();video_init()" onkeydown='kd(event)' onkeyup='ku(event)' ondblclick='start()'>
+<body onload="video_init()" onkeydown='kd(event)' onkeyup='ku(event)' ondblclick='start()'>
 
 <div id="D" style='border:1px black solid;background-color:black;color:white;display:block;width:490px;height:20px;font-size:19px;text-align:right;'>pt</div>
 <canvas id="C" height='490px' width='490px' style='border:1px black solid;'></canvas>
 
 <div id='video'></div>
 
-<pre style='float:right'>4 5 6 7
+<div style='float:right'>
+<pre>4 5 6 7
 r t y u
 f g h j
 v b n m</pre>
+<textarea id='S' style='height:60%'>### notes
+    
+    
+o   
+o   
+###
+    
+    
+   o
+   o
+###
+o   
+    
+    
+    
+###
+    
+    
+   o
+    
+###
+    
+    
+o   
+    
+###
+    
+    
+  o 
+    
+###
+    
+    
+    
+   o
+###
+    
+    
+    
+  o 
+###
+    
+    
+    
+ o   
+###
+    
+    
+    
+o   
+###
+    
+o  o
+    
+    
+###
+    
+ oo 
+    
+    
+###
+o  o
+    
+    
+    
+###
+</textarea></div>
+

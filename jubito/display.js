@@ -1,28 +1,31 @@
-
 var map = ["4567", "RTYU", "FGHJ", "VBNM"];
 
 function play(ctx) {
-  var time = 0
-    , full_pt = 900000 / count(scores);
+  var full_pt = 900000 / count(scores)
+    , display_dt = 10
+    ;
 
-  var ID;
   if (player && 'playVideo' in player) {
     player.playVideo();
-    player.seekTo();
+    player.seekTo(0);
   }
-  setTimeout(function() {
-    ID = setInterval(loop, display_dt);
-  }, sleep);
+  var ID = setInterval(loop, display_dt);
+  console.log('start!', display_dt);
 
   function loop() {
 
-    var idx = Math.floor( time * display_dt / dt );
+    var time = player.getCurrentTime() * 1000; // [sec]
+    var idx = Math.floor( time / dt );
 
     ctx.clearRect(0,0,500,500);
 
-    if (idx > scores.length) {
+    if (idx > scores.length || mode !== 'edit') {
       clearInterval(ID);
-      setTimeout(init, 1000);
+      setTimeout(function() {
+        init();
+        player.stopVideo();
+        player.clearVideo();
+      }, 1000);
       return;
     }
 
@@ -32,14 +35,12 @@ function play(ctx) {
     for (var i=0; i < 3; ++i) {
       var j = idx + i;
       if (!(j in scores)) break;
-      var r = 1 - (1/30) * ((j+1) * dt / display_dt - time);
+      var r = 1 - ( ((j+1) * dt - time) / 2 / dt )
       r = Math.max(0, Math.min(1, r));
       display(ctx, scores[j], r);
     }
 
     key_check();
-
-    ++time;
 
     function key_check() {
       if (idx in scores) check(idx);
@@ -50,7 +51,7 @@ function play(ctx) {
     }
     function check(idx) {
       var arr = scores[idx];
-      var r = Math.abs( 1 - (1/30) * ((idx+1) * dt / display_dt - time));
+      var r = Math.abs( 1 - (1/30 / display_dt) * ((idx+1) * dt - time));
       r = Math.max(0, Math.min(1, r));
       var dp = full_pt * r;
 
