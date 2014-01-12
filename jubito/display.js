@@ -12,6 +12,7 @@ function play(ctx) {
   , full_pt = 900000 / count(scores);
 
   var dt = 600, display_dt = 20;
+  if (player && 'playVideo' in player) player.playVideo();
   var ID = setInterval(loop, display_dt);
 
   function loop() {
