@@ -3,13 +3,8 @@ var map = ["4567", "RTYU", "FGHJ", "VBNM"];
 function play(ctx) {
   var full_pt = 900000 / count(scores)
     , display_dt = 10
+    , ID = setInterval(loop, display_dt)
     ;
-
-  if (player && 'playVideo' in player) {
-    player.playVideo();
-    player.seekTo(0);
-  }
-  var ID = setInterval(loop, display_dt);
 
   function loop() {
 
@@ -22,9 +17,10 @@ function play(ctx) {
       clearInterval(ID);
       setTimeout(function() {
         init();
+        player.seekTo(0);
         player.stopVideo();
         player.clearVideo();
-      }, 1000);
+      }, 2000);
       return;
     }
 

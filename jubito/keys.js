@@ -3,6 +3,7 @@ function kd(e) {
   e = e || window.event;
 
   if (e.keyCode === 27) {
+    player.seekTo(0);
     player.stopVideo();
     player.clearVideo();
     init();
@@ -29,6 +30,9 @@ function ku(e) {
 function start() {
   sum = 0;
   mode = 'edit'
-
-  play(ctx, div);
+  if (player && 'playVideo' in player) {
+    player.playVideo();
+    player.seekTo(0);
+  }
+  setTimeout(function() { play(ctx, div) }, 1200);
 }
