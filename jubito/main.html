@@ -11,8 +11,8 @@ function init() {
 
   mode = 'normal';
 
-  ctx.fillStyle = 'rgb(255,255,255)';
-  ctx.strokeStyle ='rgb(255,255,255)';
+  ctx.fillStyle = 'rgb(0,0,0)';
+  ctx.strokeStyle ='rgb(0,0,0)';
   ctx.font = "32px 'Monotype Corsiva'";
   ctx.fillText('Hit your Space', 30, 420);
   ctx.beginPath();
@@ -23,13 +23,14 @@ function init() {
 </script>
 <script src='keys.js'></script>
 <script src='display.js'></script>
+<script src='scores.js'></script>
 <script type="text/javascript" src="../js/swfobject.js"></script>
 <script src='video.js'></script>
 </head>
 <body onload="init();video_init()" onkeydown='kd(event)' onkeyup='ku(event)' ondblclick='start()'>
 
-<div id="D" style='position:absolute;left:10px;top:10px;border:1px black solid;background-color:black;color:white;display:block;width:490px;height:20px;font-size:19px;text-align:right;'>pt</div>
-<canvas id="C" height='490px' width='490px' style='border:1px black solid;position:absolute;left:10px;top:30px;z-index:99'></canvas>
+<div id="D" style='border:1px black solid;background-color:black;color:white;display:block;width:490px;height:20px;font-size:19px;text-align:right;'>pt</div>
+<canvas id="C" height='490px' width='490px' style='border:1px black solid;'></canvas>
 
 <div id='video'></div>
 

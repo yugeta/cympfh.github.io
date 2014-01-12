@@ -2,18 +2,17 @@
 var map = ["4567", "RTYU", "FGHJ", "VBNM"];
 
 function play(ctx) {
-  var scores = [
-    [[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,0,0,1]]
-  , [[1,1,1,1],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-  , [[0,0,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]]
-  ]
-  , time = 0
-  
-  , full_pt = 900000 / count(scores);
+  var time = 0
+    , full_pt = 900000 / count(scores);
 
-  var dt = 600, display_dt = 20;
-  if (player && 'playVideo' in player) player.playVideo();
-  var ID = setInterval(loop, display_dt);
+  var ID;
+  if (player && 'playVideo' in player) {
+    player.playVideo();
+    player.seekTo();
+  }
+  setTimeout(function() {
+    ID = setInterval(loop, display_dt);
+  }, sleep);
 
   function loop() {
 
