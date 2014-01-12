@@ -8,7 +8,7 @@ function kd(e) {
     init();
   }
   else if (mode === 'normal') {
-    if (e.keyCode === 65) {
+    if (e.keyCode === 65) { // 'a'
       scores = txt2scores(document.getElementById('S').value);
       start();
     }

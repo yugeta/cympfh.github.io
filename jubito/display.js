@@ -10,7 +10,6 @@ function play(ctx) {
     player.seekTo(0);
   }
   var ID = setInterval(loop, display_dt);
-  console.log('start!', display_dt);
 
   function loop() {
 
@@ -46,12 +45,11 @@ function play(ctx) {
       if (idx in scores) check(idx);
       if ((idx-1) in scores) check(idx-1);
       if ((idx+1) in scores) check(idx+1);
-      if ((idx+2) in scores) check(idx+2);
-      D.innerHTML = ('000000'+sum).slice(-6) + ' pt';
+      D.innerHTML = ('000000'+(sum|0)).slice(-6) + ' pt';
     }
     function check(idx) {
       var arr = scores[idx];
-      var r = Math.abs( 1 - (1/30 / display_dt) * ((idx+1) * dt - time));
+      var r = 1 - ( ((idx+1) * dt - time) / 2 / dt )
       r = Math.max(0, Math.min(1, r));
       var dp = full_pt * r;
 
