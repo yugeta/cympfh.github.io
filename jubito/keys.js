@@ -30,9 +30,7 @@ function ku(e) {
 function start() {
   sum = 0;
   mode = 'edit'
-  if (player && 'playVideo' in player) {
-    player.playVideo();
-    player.seekTo(0);
-  }
-  setTimeout(function() { play(ctx, div) }, 1200);
+  player.playVideo();
+  player.seekTo(0);
+  play(ctx, div);
 }
