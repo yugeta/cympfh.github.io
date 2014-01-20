@@ -3,7 +3,7 @@ var id = "EK0Z6PDBB-E"
 function video_init() {
   swfobject.embedSWF(
       "http://www.youtube.com/v/"+id+"?enablejsapi=1&autoplay=1&playerapiid=player&wmode=transparent"
-    , "video", "320", "200", "8", null, null
+    , "video", "480", "360", "8", null, null
     , { allowScriptAccess: "always" }, { id: "player" }); 
 }
 
