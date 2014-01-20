@@ -50,22 +50,41 @@ function onYouTubePlayerReady() {
 function onStateChange(newState) { 
   if (newState == 0) { 
     ++idx;
-    setTitle(idx);
-    if (idx in ls) {
-      player.loadVideoById(ls[idx].id);
-    } else {
-      D.removeChild(player);
-      var v = document.createElement("div");
-      v.id = "V";
-      D.appendChild(v);
-      P.style.display = "block";
-    }
+    load();
+  }
+}
+
+function load() {
+  setTitle(idx);
+  if (idx in ls) {
+    player.loadVideoById(ls[idx].id);
+  } else {
+    D.removeChild(player);
+    var v = document.createElement("div");
+    v.id = "V";
+    D.appendChild(v);
+    P.style.display = "block";
   }
 }
 
 function setTitle() {
-  W.innerHTML = "Now playing: " + ls[idx].name; 
+  if (idx in ls)
+    W.innerHTML = "<a onclick='showMenu()'>Now playing: " + ls[idx].name + "</a>";
+  else
+    W.innerHTML = "push ``play'' (optional: random)";
 }
+
+function showMenu() {
+  if (!(idx in ls)) return;
+  var tori = "<img src='./img/tw.png' onclick='tw()'>"
+    , prev = "<a onclick='prev()'>≪ prev</a>"
+    , next = "<a onclick='next()'>next ≫</a>"
+    , cancel = "<a onclick='setTitle()'>cancel</a>";
+  W.innerHTML = prev + ' ' + next + ' ' + tori + ' ' + cancel;;
+}
+
+function prev() { --idx; load() }
+function next() { ++idx; load() }
 
 function tw() {
   if (!(idx in ls)) return;
@@ -82,7 +101,7 @@ function tw() {
 <body>
 
 <div style="width:450px;display:block" id="D">
-<div style="display:block;background-color:black;color:white" id="W" onclick='tw()'>push ``play'' (optional: random)</div>
+<div style="display:block;background-color:black;color:white" id="W">push ``play'' (optional: random)</div>
 <embed id='V' width='640px' height='480px' src=''>
 </div>
 
@@ -266,7 +285,6 @@ zMI23phBgJo 電気グルーヴ　『Upside Down』
 fWFljWFjjTg Green Night Parade (feat.星子) - Green Night Parade
 xt5h8xgEqFQ fu_mou - Green Night Parade - 01. Prelude
 </textarea>
-
 
   <input type='checkbox' id='R'> random
   <input type='button' value='play' onclick='listset()'>
