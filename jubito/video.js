@@ -8,6 +8,7 @@ function video_init() {
 }
 
 function onYouTubePlayerReady(playerId) {
+  id = document.getElementById('I').value;
   player.loadVideoById(id);
   init();
 }
