@@ -84,7 +84,7 @@ function showMenu() {
 }
 
 function prev() { --idx; if (idx < 0) idx = ls.length-1;  load() }
-function next() { ++idx; if (idx >= idx) idx = 0; load() }
+function next() { ++idx; if (idx >= ls.length) idx = 0; load() }
 
 function tw() {
   if (!(idx in ls)) return;
