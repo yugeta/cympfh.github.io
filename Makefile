@@ -1,8 +1,9 @@
 all : index push
 
 index:
-	echo '<textplain>' > index.html
+	echo '<pre>' > index.html
 	find . | egrep --color=never '.html|.txt|.md' | sed 's/^.*$$/<a href="&">&<\/a>/' >> index.html
+	echo `date` >> index.html
 
 push :
 	git add --all
