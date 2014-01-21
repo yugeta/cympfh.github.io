@@ -17,7 +17,7 @@ index.html : achieve recent
 
 achieve: 
 	echo '<pre>' > ${ACH}
-	ls -BGgt *.txt | sed 's/[^ ]*$$/<a href="&">&<\/a>/' >> ${ACH}
+	ls -BGgth *.txt | sed 's/[^ ]*$$/<a href="&">&<\/a>/' >> ${ACH}
 
 recent:
 	ls -1t *.txt | head -n3 | xargs -n1 -i bash -c "echo '<a href={}>{}</a><code>'; head -n3 {}; echo '</code>'" > ${REC}
