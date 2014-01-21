@@ -1,10 +1,7 @@
 ACH='/tmp/achieve'
 REC='/tmp/recent'
 
-all : index.html top
-
-top:
-	make -f ../Makefile
+all : index.html
 
 index.html : achieve recent
 	echo '<!DOCTYPE html>' > $@
