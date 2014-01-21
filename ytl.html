@@ -1,6 +1,34 @@
 <head>
 <meta charset="UTF-8">
-<title>YTl ver 1.2.2</title>
+<title>YTl ver 1.2.3</title>
+<style>
+body {
+  background-color: white;
+  color: black;
+}
+a {
+  font-size: 14px
+}
+code {
+  width: 450px;
+  white-space: pre;
+  display: block;
+  color: #faf;
+  border-top: 1px solid #dad;
+  border-left: 5px solid #dad;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+div#W {
+  display: block;
+  background-color:black;
+  color:white;
+  padding:3px;
+  font-size: 13px;
+}
+
+</style>
 <script type="text/javascript" src="../js/swfobject.js"></script>
 <script type="text/javascript">
 
@@ -72,11 +100,11 @@ function setTitle() {
 
 function showMenu() {
   if (!(idx in ls)) return;
-  var tori = "<img src='./img/tw.png' onclick='tw()'>"
+  var tori = "<img src='./img/tw.png' height='14px' width='14px' onclick='tw()'>"
     , prev = "<a onclick='prev()'>≪ prev</a>"
     , next = "<a onclick='next()'>next ≫</a>"
     , cancel = "<a onclick='setTitle()'>cancel</a>"
-    , exit = "<a onclick='ytExit()'>exit</a>";
+    , exit = "<a onclick='ytExit()' style='margin-left:32%'>exit</a>";
   W.innerHTML = prev + ' ' + next + ' ' + tori + ' ' + cancel + ' ' + exit;;
 }
 
@@ -94,11 +122,13 @@ function tw() {
 }
 
 function ytExit() {
-    D.removeChild(player);
-    var v = document.createElement("div");
-    v.id = "V";
-    D.appendChild(v);
-    P.style.display = "block";
+  idx = -1;
+  setTitle();
+  D.removeChild(player);
+  var v = document.createElement("div");
+  v.id = "V";
+  D.appendChild(v);
+  P.style.display = "block";
 }
 
 </script>
@@ -106,7 +136,7 @@ function ytExit() {
 <body>
 
 <div style="width:450px;display:block" id="D">
-<div style="display:block;background-color:black;color:white" id="W">push ``play''</div>
+<div id="W">push ``play''</div>
 <embed id='V' width='640px' height='480px' src=''>
 </div>
 
@@ -291,8 +321,11 @@ fWFljWFjjTg Green Night Parade (feat.星子) - Green Night Parade
 xt5h8xgEqFQ fu_mou - Green Night Parade - 01. Prelude
 </textarea>
 
-  <input type='checkbox' id='L'> loop
   <input type='checkbox' id='R'> random
   <input type='button' value='play' onclick='listset()'>
   </form>
 </div>
+<code>
+ver 1.2.3 : 2014/01/21 : add exit button
+ver 1.2.2 : 2014/01/20 : loop in default
+</code>
