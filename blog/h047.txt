@@ -1,0 +1,57 @@
+2013年  3月  6日 水曜日 04:43:00 JST
+
+A sample code should not answer 7 because the character, 7 seems to see ?.
+
+---
+R5RSを初めて読んだ。
+call/ccが少しわからなくなった。
+多値を返すためのvaluesをcall/ccで定義してて、なんで多値になるのか分からない。
+
+(define (values . things)
+    (call/cc (lambda (cc) (apply cc things))) )
+
+とあって、ためしに実験
+
+; gosh> (define (balues . things) (call/cc (lambda (cont) (apply cont things))))
+; balues
+; gosh> (balues 1 2 3)
+; 1
+; 2
+; 3
+; gosh> (receive (a b c) (balues 1 2 3) (list c b a))
+; (3 2 1)
+
+できてる。なんで出来るのか分からない。
+values手続きの定義本体のccは、大域脱出をするただのid関数だと思うんだけど。
+じゃあ、もうそれでいいのかな。
+
+---
+dynamic-windで出てくるサンプルコードも果てしなく難しい。
+意義は分かった。そのthunkがどのタイミングででも呼び出される前後には
+beforeとafterが呼び出される。それはいいんだけど
+
+; (define path '())
+; (define c #f)
+;  (define (add s) (push! path s))
+; 
+;  (dynamic-wind
+;      (lambda () (add 'connect))
+;      (lambda ()
+;          (add (call/cc (lambda (c0) (set! c c0) 'talk1))))
+;      (lambda () (add 'disconnect)) )
+; 
+; (c 'talk2)
+
+これを読み込ませてREPLで実験
+
+; gosh> path
+; (disconnect talk2 connect disconnect talk1 connect)
+; gosh> c
+; #<subr continuation>
+; gosh> (c 'talk-final)
+; 
+; シェルが値を返しました 70
+
+なんか、エラーなのかよく分からないエラーが出る。
+
+以上。

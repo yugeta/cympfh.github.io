@@ -1,0 +1,54 @@
+Sat Mar 16 13:50:18 JST 2013
+
+もうちょっと、Fayで遊ぶ．
+こっちから歩み寄る姿勢が大切．
+
+まず公式のドキュメントを正座して朗読する．
+title="Home · faylang/fay Wiki" https://github.com/faylang/fay/wiki
+
+> A proper subset of Haskell that compiles to JavaScript.
+
+はい．subsetなのですね．気をつけます．
+
+前回(./h055.txt)、printが無いとか言ったけど、putStrLnならあった．
+console.logであると中で定義されてる．show関数はJSONへの変換程度．
+リストなんかを綺麗に表示するのは自分の手でやるのかな．
+
+なにをどう変換してから型検査に掛けてるのかわからん．
+
+---
+cympfh@yuugiri:~/test$ cat test.hs
+import FFI
+import Prelude
+
+main :: Fay ()
+main = putStrLn $ list_show $ [ i | i <- [1,2,3]]
+
+list_show :: [Int] -> [Int]
+list_show ls = "[" ++ list_show' ls ++ "]"
+list_show' [] = ""
+list_show' (x:[]) = show x
+list_show' (x:xs) = show x ++ ", " ++ list_show' xs
+
+cympfh@yuugiri:~/test$ make
+fay -O -o test.js test.hs
+fay:
+test.hs:5:19:
+    Couldn't match expected type `Char' with actual type `Int'
+    Expected type: [Int] -> fay-base-0.14.2.0:Prelude.String
+        Actual type: [Int] -> [Int]
+    In the first argument of `($)', namely `list_show'
+    In the second argument of `($)', namely
+        `list_show $ [i | i <- [1, 2, 3]]'
+
+test.hs:8:16:
+    Couldn't match expected type `Int' with actual type `Char'
+    Expected type: [Int]
+        Actual type: [Char]
+    In the first argument of `(++)', namely `"["'
+    In the expression: "[" ++ list_show' ls ++ "]"
+
+make: *** [test] Error 1
+
+---
+ああ、もういいです．もう満足しました

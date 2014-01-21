@@ -1,0 +1,86 @@
+Thu Feb 28 19:16:20 JST 2013
+
+node.js は、というか V8 は、いつになったら、
+javascript 1.7やそれより上に対応するんだろうな．
+
+title="Issue 890 - v8 - Support for Javascript 1.8 features - V8 JavaScript Engine - Google Project Hosting" http://code.google.com/p/v8/issues/detail?id=890
+
+三年前のフォーラム記事．V8はJavaScriptじゃなくてECMAScriptに従う、と．
+ECMAScriptなんて、誰も知らないよ．
+
+ちょっと書き捨てるのには、SpiderMonkey を使うにしても、
+node.js は捨てれないしな．
+
+//-------------------------
+function tarai(x,y,z){
+    return x<=y? y
+               : tarai(tarai(x-1,y,z), tarai(y-1,z,x), tarai(z-1,x,y))
+}
+print(tarai(13,6,0));
+
+こんなものを、node.jsとSpiderMonkeyで実行してtimeを比較する．
+もちろんnode.jsではprintの代わりにconsole.logを用いる．
+
+nodeがnode.jsであり、jsはSpiderMonkey.
+
+cympfh@sazanami:~/test$ node --version
+v0.6.12
+
+cympfh@sazanami:~/test$ js -h
+JavaScript-C 1.8.5 2011-03-31
+usage: js [options] [scriptfile] [scriptarg...]
+Options:
+  -h            Display this information
+  (略)
+
+cympfh@sazanami:~/test$ time node tarai.js
+13
+
+real    0m1.008s
+user    0m0.980s
+sys     0m0.020s
+cympfh@sazanami:~/test$ time node tarai.js
+13
+
+real    0m0.993s
+user    0m0.972s
+sys     0m0.012s
+cympfh@sazanami:~/test$ time node tarai.js
+13
+
+real    0m1.028s
+user    0m1.012s
+sys     0m0.012s
+cympfh@sazanami:~/test$ time js tarai.js
+13
+
+real    0m9.148s
+user    0m9.137s
+sys     0m0.004s
+cympfh@sazanami:~/test$ time js tarai.js
+13
+
+real    0m9.099s
+user    0m9.085s
+sys     0m0.004s
+cympfh@sazanami:~/test$ time js tarai.js
+13
+
+real    0m9.209s
+user    0m9.197s
+sys     0m0.004s
+
+ちょっと、違いすぎてビビった．
+これは、やっぱり、SpiderMonkeyは使いたくなくなる．
+
+
+で、違う言語を持ち出しちゃうけど、
+
+cympfh@sazanami:~/test$ time gosh test.scm
+13
+
+real    0m4.423s
+user    0m4.056s
+sys     0m0.020s
+
+やっぱり、node.js使うことにしよう．

@@ -1,0 +1,35 @@
+Fri Oct 25 15:40:50 JST 2013
+
+node.js child.execは出力を適当な文字数に打ち切る
+
+書きかけのソースコードの断片
+
+前にも遭遇したけどね，この問題
+問題はどこに問題があるのか見つけるのが大変なこと
+
+まず，解決したソースコード
+
+> const child = require("child_process")
+
+> child.exec("curl "+url+"|nkf > /tmp/asaloondat.dat", function(er,out) {
+>   var rs =
+>     fs.readFileSync("/tmp/asaloondat.dat", "utf-8")
+>       .split("<><>")
+>   // do something
+> });
+
+「curlで何か読みだして，nkfでutf-8になることを期待してから，適当なファイルに出力する」をchild.execで実行する
+実行結果の出力は別に利用せずに，実行が終わったら出力されたファイルを同期的に読んで色々する
+
+問題だったソースコード
+
+> child.exec("curl "+url+"|nkf", function(er,out) {
+>   var rs = out.split("<><>")
+>   // do something
+> });
+
+普通はこうするべきでしょ
+「curlで何か読みだして，nkfでutf-8になることを期待する」をchild.execで実行したら，出力を引数outとして
+無名関数が呼ばれる．関数の中ではoutを利用する．
+
+問題は，outがあんまり長い(文字列)と，途中で打ち切られること．curlが悪いのかnkfが悪いのか１０分くらい悩んでた．

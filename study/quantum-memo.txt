@@ -1,0 +1,60 @@
+memo
+
+(ket 0) => |0>
+(ket* 2 (ket 0)) => 2*|0>
+(ket+ (ket 0) (ket 1)) => |0> + |1>
+
+これらを全て同等に扱いたい
+
+a * |i> + b * |j> + ...
+を
+(list (ket a . i) (ket b . j) ...)
+というデータ型で持つことにします
+
+(ket a . i) :: Ket
+(list ket) :: Ket-list
+
+だから
+(define (ket i) (list `(ket i . 1)))
+だし，ket*はmapでもって，係数部分をスカラー倍
+ket+はリストのappend
+
+ket :: 'a -> Ket-list
+ket+ :: Ket-list ... -> Ket-list
+ket* :: Number Ket-list -> Ket-list
+
+そのままだと
+(ket+ (ket 0) (ket 0))
+は
+2 * |0>
+ではなくて
+|0> + |0>
+として持つことになる
+
+手続き norm を用意します
+上のように同じ項はひとつにまとめるのと，あと
+係数の自乗(実数に限定しよう)の和が1であるように全体を数倍する
+
+
+以上を持って，1 qubit についてのある基底
+
+|+> と |-> が次のように定義できます
+(|はSchemeの変数名に使えない)
+
+(define +> (norm (ket+ (ket 0) (ket 1))))
+(define -> (norm (ket+ (ket 0) (ket* -1 (ket 1)))))
+
+gosh> +>
+((ket (1) . 0.7071067811865475) (ket (0) . 0.7071067811865475))
+gosh> ->
+((ket (1) . -0.7071067811865475) (ket (0) . 0.7071067811865475))
+
+大事なの忘れてた
+Ket-list 同士の掛け算
+これは，いわばベクトルの内積なので，inner* という名前にしよう
+
+inner* :: Ket-list Ket-list -> Number
+
+srfi-42 を使うことで綺麗に掛けました
+(inner* +> ->) がゼロであることを確認
+

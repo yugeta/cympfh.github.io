@@ -1,0 +1,46 @@
+# Register Allocation
+多くの変数を限られたレジスタに割り当て、出来ればmoveの両隣に
+同じレジスタを割り当てることで、moveを消し去りたい．
+
+We derive "interference graph (干渉グラフ)".
+Each node in the graph is temporary value.
+Each edge (u,v) means that cannot be assigned a same register,
+that is u and v are live at the same time.
+
+Next, do color the interference graph.
+If the machine has K registers, we can color the graph with K colors.
+If there is no K-coloring, temporaries in memory. this called "Spill".
+
+graph coloring is NP-compelete.
+use approximation algorithm which is P.
+
+# Simplify
+
+* Build -> Simplify -> Spill -> Select.
+
+1. Build
+    Construct the interference graph.
+
+2. Simplify
+    This is simple heuristic.
+    A node m with fewer than K neighbors.
+    Let G' be the graph remove node m from graph G.
+    If G' can K-color then G can also.
+    We can use this principle.
+    Repeatedly remove nodes of degree less than K,
+    and push on a stack.
+
+3. (potential) Spill
+    In 2.Simplify,
+    When the graph has only node of degree >= K,
+    That simplify heuristic fails to color.
+    It must in memory, not registers.
+    Remove it from the graph.
+
+4. Select
+    Assign colors. starting with empty graph, rebuild original
+    by repeatedly adding (popping) a node from the stack.
+
+5. Start back
+    In 4.Select, when cannot color, some temporary move to be
+    in memory, and back up. this called "actual spill".

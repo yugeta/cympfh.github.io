@@ -1,0 +1,30 @@
+Fri Jul 12 20:48:24 JST 2013
+
+bashのviモード
+別に昔からあるものだけれど
+
+# .bashrc
+set -o vi
+
+# .inputrc
+set editing-mode vi
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+"\C-j": vi-movement-mode
+"\C-l": clear-screen
+
+viモードになると、viでいうとこの normal mode と insert mode が
+bashに入る．起動したときは たぶん insert mode からはじまる
+どっちの mode か見てわからないので時々それが困る．
+
+上の .inputrc によって
+
+カーソルの上下で入力の履歴を辿れるけど、normal では j/k がそれに相当
+する．insert ではデフォルトと同様に C-p / C-n がそれに相当する
+
+insert から Esc で normal になるけど C-j でもそうなる．ただし normal
+で C-j するとそれはEnterになる．この設定はあんまり良くないかも
+
+あとただ vi mode にすると C-l で画面クリアにならないようなので
+上の設定をした
+

@@ -1,0 +1,253 @@
+並列分散ソフトウェアと高速化
+
+Tue Jun 11 10:35:21 JST 2013
+
+並列計算 (Introduction)
+=======
+
+* OS
+    - 同期を取る必要 >> オーバーヘッド
+    - システムの仮想化 >> セキュリティの問題
+* 言語
+    - 正しく計算を記述できるんですか？
+    - 学習をプログラミングしたい (最適化や再利用も含めて)
+
+並列計算 >> 速ければよい  
+分散計算 >> 分散してることがよい (データが安全にある) 
+
+* 大事な論文
+Flynn, M.J. 1966. Very High–Speed Computing Systems. Proceedings of
+the IEEE 54, 12 (December) 1966, pp. 1901–1909.
+
+## Flynn
+Flynnは並列計算を4分類した
+
+* SISD
+    逐次計算機
+* SIMD (しむでぃー) 
+    逐次計算機 + 並列性 
+    複数のなんかが同じ演算をする
+    GPUはそう
+* MIMD
+    独立した命令列を実行する計算機を並列で動かす
+    - message passing model (MPI)
+* MISD (みすでぃー)
+    - 定義はまちまち
+    - 平木敬曰く，シストリックアレイ的計算機
+
+## 並列計算の正確性
+* 浮動少数演算の結合則がたまにひどく成り立たないこと
+
+## 計算モデル
+* 逐次計算モデル (von Neumann 計算モデル)
+* SIMD
+* シストリックアレイ
+* SPMD(Bluk Syncronous Model, EPS)
+    - 1ステップごとに計算しては同期，を繰り返す
+* CSP (Communicating Sequantial Processes)
+    - Occamとかいう言語
+    - 実用的ではなかった
+* Mutil Thread (モデルではないけどね)
+* Actor Model (並行 Object Oriented Model)
+    - 計算をアクターのグラフで表現する
+* Dataflow Model
+* Reduction Model (大事じゃない)
+* 述語論理計算モデル (resolution or unification)
+
+
+### 来週
+1. Dataflow Model, Dataflow Machine
+2. Interconnection Network
+3. 並列キャッシュ
+4. 同期
+5. スケジューリング
+
+---
+
+Tue Jun 18 10:35:02 JST 2013
+
+共有メモリ
+=========
+
+プログラム上のモデル，実行のメカニズム
+* 共有メモリ
+* Message passing
+send, receive で共有メモリで介してやり取りするのがMessage passing(?)
+
+# TSM (True Shared Memory)
+本当にメモリを共有するもの.
+
+極端なのがPRAM. 複数のプロセッサがひとつのメモリを使う. 
+ここで問題点
+    * アクセス時間. N台に繋げば速度は1/Nになる(バンド幅云々)
+
+TSMは，複数のプロセサが複数のメモリと，なにかしらの緩衝を挟んで
+つながっている. バンド幅の問題を解決. 
+残っている問題点は
+    * latency (アクセス遅延)
+    * アクセスの順序が保たれない (RとWの順序が保たれないのはヤバい)
+
+# cache memory
+main memoryがひとつあるのに対して，
+各processorがcacheを一つずつ持っている.
+
+## consistency problem
+    * cacheへのwriteが即座に他のcacheへ反映されないこと
+    * みたいに，「プログラマが思うようなメモリアクセスができ」ないこと
+    * 一台のプロセッサで逐次実行させた場合と同じ結果を得られるか？とも言える
+
+## Strong Consistency Model
+すべてのメモリアクセスに全て順序を附ける. 
+全ての動作を同期させる. 動作はTSMと全く同じであろう. 
+
+もちろんこれは強すぎる
+
+全てのアクセスメモリは，未実行な write が終わってからにする. 
+これなら十分だ. 
+これのことを TSO model (total store ordering) とか言います. 
+Sparc V7 なんかがそうです.
+
+TSOの実現の為に, 次の2つのどちらかを使う. (i)がよく使われる. 
+
+(i) Invalidation protocol
+    write があったら他のキャッシュが無効になる
+    複数のcacheの中にある共有キャッシュブロックが消える
+    「共有度が低い」
+
+(ii) Update protocol
+    write があったら，他の共有キャッシュブロックを更新する.
+    ただし問題があって，プログラム上の共有が終わっても
+    ブロックがある限り更新される (false sharing)
+    共有してるどっか一部が書き込まれたら共有はされてない
+    ところまで更新される，ということ.
+
+### Dead Block Prodiction (Elimination)
+使われないであろう共有ブロック共有を削除すること. 
+これは実際そこそこの精度があるし，誤ったとしてもキャッシュが消える
+だけなので，正しい動作はなされる.
+
+わけわからん
+
+* MSI protocol
+* MESI protocol (modified exclusive shared invalid)
+* MOESI protocol (m owned e s i)
+
+---
+
+Tue Jul  2 10:33:52 JST 2013
+
+## 相互結合網 (Interconnection Network)
+PEとPEをつなぐ
+
++ 低遅延
++ 高バンド幅
++ 低コスト
+
+これらを満たしたい
+最初の２つを満たす為には、「完全結合ネットワーク」がある. 完全グラフ.
+さすがにそんなのは造らないけど、「Non blocking network」出力の衝突が無い. 
+全ての接続がいつも可能. 平均のバンド幅がscalable.
+じゃあ試しに毎クロック、ランダムに接続させようとすると
+ある受理率rhoを以って接続できる. 
+番所によると、入出力が4*4くらいだとrho=1だけど、nが8以上くらいから、0.65に収束する.
+
+
+### Non blocking network の例
+
+* Crossbar Switch
+
+### Ring とかいうネットワークのモデル
+
+そんなよくない. 遅延は大きいし、すぐに受理率がゼロに収束する. 
+でも、i7とかXenonPhiでも採用されてる. nが小さければ問題ないから. 
+
+### Mesh
+3D版とかもある
+次元は増えれば増えるほど遅延は減る
+
+
+### 3D-Torus
+K-computer がこれ
+実際には六次元トーラスである. 部分を取り出していつでも三次元トーラスになる
+ように、六次元まで用意してる. ユーザーからは三次元である. 
+
+### Tree network
+基本は二分木. 改良として兄弟ノードをバイパス路でつなぐ. 
+任意のノードをつなぐパスの長さがだいたい半分になります. 
+別の改良として、木を三次元にする(ピラミッド).
+
+### Fat-tree
+根っこに近いほど、親が複数いる. 
+
+(a (a b b) (a b b))) => ((list a a) (a b b) (a b b))
+
+### Hyper(n次元)Cube network
+
+Thinking Machine 社の CM-1, CM-2
+
+### MIN (omega network)
+nからnへのパスにn以下の長さの唯一のパスがある. 
+shuffle operation 云々.
+
+### Banyan network
+区間木みたいなやつ．長いのが出てくるのは最初だけ、という意味で
+問題ない．
+
+### Benes network
+re-arrangable networkです．つまり、いつでもパスを作ることができるくらい
+エッジが多い．だから順序が保たれないことがある．
+電話がこれである！
+
+---
+
+Tue Jul  9 10:34:11 JST 2013
+
+今までの
+
+* blocking network
+* re-arrangable network (=)
+* non-blocking network (=)
+* perfect connection
+
+今日はネットワークと同期の話
+
+## Recursive strucre of Benes network
+
+## Bitonic-sort network
+
+bitonic-sort っていうのがあったんだって.
+Goodyear社の STARAN.
+名前だけ覚えてればよい
+
+## CLOS network
+CLOSさんの後輩がBenesさん.
+non-blocking である.
+
+## Flatten butterfly network => Dragonfly Network
+
+# 同期
+
+同期はメモリアクセスと通信で実現する
+
+## spin lock
+
+writerがひとつあって、readerがいくつかあって、lockedの間spinし続ける
+
+* test and set
+* compose and swop
+* load linked and steve 
+
+* Back off
+    + Binary Back off (Ethernetとか)
+
+## Barrier synchronization
+
+線バリア
+面バリア
+
+Pos.
+同期がscalable であること
+
+Cons.
+activeなprocessが必要
+=> Gang schaduling
