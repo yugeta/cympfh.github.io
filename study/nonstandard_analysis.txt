@@ -1,0 +1,181 @@
+; my textbook is
+;;     "AN INTRODUCTION TO NONSTANDARD ANALYSIS"
+;;     written by Isaac Davis
+
+1960年にAbraham Robinsonが作ったnonstandard analysisは
+無限の数を扱うなんか計算モデル？
+standard analysis(epsilon-delta)の上位互換として作られる
+
+
+define sum
+    union ; ∪
+
+define prod
+    intersection ; ∩
+
+
+# filter U on a set J
+
+* Define.
+
+filter U on a set J
+    U is a subset of P(J)
+    {} not in U
+    forall A, B in U. (prod A B) in U ; intersection property
+    forall A in U. forall A is subset of B. B in U
+
+ultrafilter U on J
+    U is filter on J
+    forall A in J. (either-or (A in U) (J\A in U)) ; maximality
+
+free-ultrafilter U on J
+    U is ultrafilter on J
+    U contains no finite set ; freeness
+
+
+* Lemma.
+    Aの上のultrafilter Uと
+    Nを有限個に分割してできたコレクション {A1 .. An} について
+    unique-exist i. Ai in U
+    が成り立つ
+
+    分割したコレクションというのはつまり、
+    (sum A1 .. An) == N
+    (forall i, j. (prod Ai Aj) == {})
+
+Proof.
+    まず、Uには{A1 .. An}の少なくとも一つは含む、ということ
+    含まないと仮定する
+    Ai not in U
+    => (N\Ai) in U (because maximality)
+    そしてintersection propertyから
+    (prod (N\A1) .. (N\An)) in U
+    => (N \ (sum A1 .. An)) in U
+    => (N \ N) in U
+    => {} in U.
+    これは矛盾
+
+    次に2つ Ai, Aj が含まれるならば
+    intersection propertyから、
+    (prod Ai Aj) in U
+    => {} in U
+    とやはり矛盾
+
+    したがって、Uに含まれるのは {A1 .. An} の中のどれか唯一つ
+
+
+* Lemma.
+Aの上のfilter F'からultrafilter F は次のように作れる
+
+Phi = { filters on A }
+; F' in Phi である
+Phiの要素について、その包含関係で順序をつける
+その時のPhiの最大の元が、欲しかったFなのである
+いろいろ証明略
+
+
+* Define.
+
+let*
+    a, b in R^n
+    (a0, a1 ..) = a
+    (b0, b1 ..) = b
+{ i | ai == bi } を、 [[a==b]] と書いて表す
+
+ulrafilterの法の下の等号性 (Equivalence Modulo an Ultrafilter)
+    let
+        ultrafilter U
+        a, b in R^n
+    a == b (mod U) <=> [[a==b]] in U
+
+同様に不等号
+    a <= b (mod U) <=> [[a<=b]] in U
+    
+    Uがultrafilterであることから、a<=b または b<=aが成り立つ．
+    すなわち、これは全順序を与える．
+
+* Example.
+let
+    a = (0, 1, 0, 1 ..)
+    b = (1, 0, 1, 0 ..)
+    0 = (0, 0, 0, 0 ..)
+    1 = (1, 1, 1, 1 ..)
+
+a /= b
+(or a==0 a==1)
+(or b==0 b==1)
+
+because
+    odds = {1, 3, 5, ..}
+    evens = N \ odds
+    (or (odds in U) (evens in U))
+
+
+# Ultrapower
+
+実数の列全体 R^n について、あるultrafilter U を法にする等号によって
+同値類を取ったもの *R これをhyperrealと呼ぶ．簡単に加算と乗算を定義
+して体になる．
+
+a + b = (a0, a1 ..) + (b0, b1 ..)
+      = (a0+b0 , a1+b1 ..)
+
+a * b = (a0, a1 ..) * (b0, b1 ..)
+      = (a0*b0 , a1*b1 ..)
+
+簡単に見ると
+a1 == a2 and b1 == b2
+<=> [[a1==a2]] in U and [[b1==b2]] in U
+<=> (prod [[a1==a2]] [[b1==b2]]) in U ; intersection property
+<=> [[a1==a2 & b1==b2]] in U
+<=> [[a1+b1==a2+b2]] in U
+<=> a1+b1 == a2+b2 (mod U)
+みたいな
+
+単位元
+a + zero == a
+<=> [[a+zero==a]] in U
+<=> [[zero==0]] in U
+<=> zero == 0 (mod U)
+
+同様に
+a * e == a
+<=> e == 1 (mod U)
+
+Uの法の下で、単位元は唯一
+
+逆元を見る
+
+a + (-a) == 0
+明らかに
+let (a0, a1 ..) = a in
+(-a) = (-a0, -a1 ..)
+これは確かに逆元
+
+a + x == 0
+a + y == 0
+とする
+a + x + y == 0 + y == 0 + x
+=> x == y
+Uの法の下で、逆元は唯一
+
+加算についての逆元も大体そのままで
+a = (a0, a1 ..)
+d = (if ai == 0 then 1 else 1 / ai)
+dがaの逆元
+ただし、a == 0 なら逆元は存在しない
+
+
+# 無限小、無限大
+
+自然数の列の集合を `N と書くことにする
+a in *R と、n in `N の大小を、ultrafilter U の下で較べる
+
+forall n in `N. a <= n
+    このaを無限小と呼ぶ
+
+forall n in `N. a >= n
+    このaを無限大と呼ぶ
+
+
+

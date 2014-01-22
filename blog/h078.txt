@@ -1,0 +1,45 @@
+Wed Jun  5 15:23:24 JST 2013
+
+# プロジェクター実験
+先週xfceのパソコンでプロジェクタつないでもモニタは検知できても
+"output on" が出来なかった．
+
+別のパソコンで，やはりxfce ので，xrandr 使ってできた．使わなくても
+できたような気がすごくするけど．
+
+; 使える（繋がってないの含めて）モニタ出力デバイス一覧
+$ xrandr -q
+Screen 0: minimum 320 x 200, current 1280 x 800, maximum 8192 x 8192
+LVDS1 connected 1280x800+0+0 (normal left inverted right x axis y axis) 286mm x 179mm
+   1280x800       60.5*+
+   1024x768       60.0  
+   800x600        60.3     56.2  
+   640x480        59.9  
+VGA1 disconnected (normal left inverted right x axis y axis)
+HDMI1 disconnected (normal left inverted right x axis y axis)
+DP1 disconnected (normal left inverted right x axis y axis)
+HDMI2 disconnected (normal left inverted right x axis y axis)
+DP2 disconnected (normal left inverted right x axis y axis)
+DP3 disconnected (normal left inverted right x axis y axis)
+TV1 disconnected (normal left inverted right x axis y axis)
+
+LVDS1 がおそらく組み込みの（ノートパソコンです）のモニタ
+VGA1 が，私がプロジェクタ出力に使ってる穴
+
+; 私のノートパソコンの最高解像度
+$ xrandr --output LVDS1 --mode 1280x800
+
+--modeの後でタブ補完すれば，使える解像度一覧がわかる．すごい遅いけど
+
+; これでもたぶん大丈夫
+$ xrandr --output LVDS1 --auto
+
+; プロジェクタの解像度に合わせる
+$ xrandr --output LVDS1 --mode 1024x768
+
+; プロジェクタに出力
+$ xrandr --output VGA1 --mode 1024x768
+; なんか一旦別の解像度にしないと映らない
+$ xrandr --output VGA1 --mode 800x600
+; 今度こそいける
+$ xrandr --output VGA1 --mode 1024x768

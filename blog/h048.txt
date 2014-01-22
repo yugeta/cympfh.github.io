@@ -1,0 +1,64 @@
+2013年  3月  6日 水曜日 08:25:00 JST
+
+chooseマクロは
+http://www.shido.info/lisp/scheme_amb.html
+による。(ちょっと違う)
+
+問題は
+http://www.geocities.jp/m_hiroi/light/abcruby17.html
+にあった
+出典：Leon Sterling, Ehud Shapiro (著), 松田利夫 (訳), 『Prolog の技芸』, 共立出版, 1988, (278頁より) 
+の、もの。
+
+---
+(define (fail) '@)
+
+(define-syntax choose
+    (syntax-rules ()
+        ((_) (fail))
+        ((_ a) a)
+        ((_ a b ...) (let ((fail0 fail))
+            (call/cc (lambda (cc)
+                (set! fail (lambda () (set! fail fail0) (cc (choose b ...))))
+                (cc a))))) ))
+
+;;;
+
+(let ((Michael (list (choose 1 2 3) 'bascket (choose 'Islam 'Australia 'America)))
+      (Simon   (list (choose 1 2 3) (choose 'bascket 'tennis 'clicket) 'Islam))
+      (Richard (list (choose 1 2 3) (choose 'bascket 'tennis 'clicket) (choose 'Islam 'Australia 'America))) )
+
+      (define (require cond)
+          (if (not cond) (fail)))
+
+      (define (unique? ls)
+        (if (< (length ls) 2) #t
+            (if (member (car ls) (cdr ls)) #f
+                (unique? (cdr ls)))))
+
+      (require (unique?
+            (map car (list Michael Simon Richard))))
+      (require (unique?
+            (map cadr (list Michael Simon Richard))))
+      (require (unique?
+            (map caddr (list Michael Simon Richard))))
+
+      (require (< (car Michael)
+                  (car (find (lambda (p) (eq? (caddr p) 'America))
+                             (list Michael Simon Richard)) )))
+
+      (require (< (car Simon)
+                  (car (find (lambda (p) (eq? (cadr p) 'tennis))
+                             (list Michael Simon Richard)))))
+
+      (require (= 1 (car (find (lambda (p) (eq? (cadr p) 'clicket))
+                               (list Michael Simon Richard)))))
+
+      (display #`"Michael : ,Michael\n")
+      (display #`"Simon : ,Simon\n")
+      (display #`"Richard : ,Richard\n")
+      'done)
+
+; Michael : (2 bascket Australia)
+; Simon : (1 clicket Islam)
+; Richard : (3 tennis America)

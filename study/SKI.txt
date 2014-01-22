@@ -1,0 +1,364 @@
+ラムダ項 (lambda term) とは、
+M ::= var | lambda x. M | M M
+ただし, var とはアルファベットの並び、いや、やっぱり
+一文字に限定して、一文字で表す何か変数． ご存知の通り．
+
+---
+書くことについて
+
+    lambda x. lambda y. M
+を
+    lambda xy. M
+で表すことにする．この表すことにする、は再帰的な定義である．
+つまり
+    lambda xyz. M
+は
+    lambda x. lambda y. lambda z. M
+である．
+
+もうひとつ.
+    M M
+は、明らかならば
+    MM
+と間の半角空白を省略する．
+
+括弧の扱いについて．
+常識的な扱いである．関数適用が左結合なだけ．
+    xyz == (xy)z
+    x(yz) == x $ yz -- $なんて使うつもりないけど
+
+ベータ簡約について．
+    略．
+通常、簡約の様子は右矢印の右下にベータを添えて2つのラムダ項を
+繋いで書くけど、私は、意味が同じという意味で、 == でつなぐこと
+にする．
+
+---
+SKIコンビネータとは、まずラムダ項で定義する．
+
+    S := lambda xyz. xz(yz)
+    K := lambda xy. x
+    I := lambda x. x
+
+---
+全てのラムダ項はSKで表せるということ．
+
+まず、I なんて必要ないということ．
+    SK = lambda yz. Kz(yz)
+       = lambda yz. z
+therefore
+    SK_ = lambda z. z (_ is any lambda term)
+
+SKKもSKSもIである．通常 SKK で表す．
+
+重要な性質は次の3つ．
+    lambda x. x == SKK
+    lambda x. M == KM (when x is not in FV(M))
+    lambda x. MN == S (lambda x. M) (lambda x. N)
+
+FV(M)とは、Mの中に現れる自由変数．自由変数とは、lambdaによって束縛されて
+いない変数のこと．次のように定義できる．
+    FV(var) = var
+    FV(lambda x. M) = FV(M) - {x}
+    FV(M N) = FV(M) + FV(N)
+
+その性質の3つ目だけを確認することにする．
+    S (lambda x. M) (lambda y. N)
+        == lambda z. (lambda x. M) z ((lambda x. N) z)
+        == lambda z. (lambda x. M) z N[x:=z]
+        == lambda z. M[x:=z] N[x:=z]
+        == M N
+
+一番最後の == はちょっと苦しい．x, z のアルファ変換だと思う．
+
+---
+先の3つの式を、左辺から右辺への変換だと見ることで、全てのラムダ項を
+SKのみで表すことができる．証明できるかな．
+
+適当な文脈を与えることによって、任意のラムダ項について、3つの変換式の
+どれか一つが常に、適用できるということ．
+
+その変換で、
+    lambda x. M
+のMの部分が、変換によって確実に短くなるということ．一つ目ではゼロになるし
+2つ目でもそう．3つ目では、2つに分けられるから、それぞれについては
+確実に短くなっている．ただしlambda自体が一つ増えるし、延べとしては
+同じだ．3つ目しか適用できないというようなラムダ項が存在しないとすれば、
+一つ目と2つ目を使う機会によって、lambda x. M が登場しないことになって
+それはつまりSKのみで表せていることになる．
+
+2つ目の、但し書きが面倒だな．まあ、きっとできる．
+
+---
+全てのラムダ項はSKで表せて、SはKのみで表せず、KはSのみで表せないならば、
+(実際、そうであるらしい) <S, K> はラムダ項の基底(basis) だと言える．
+
+---
+次のXによって、SもKも表せる．<S, K> がbasisなら、<X> もbasisだ．
+線形数学を思い描くならば、ラムダ項に次元なんてものは存在しないことになる．
+次元というのは基底の数だから．
+
+    X := lambda x. xKSK
+      == lambda x. (lambda xy. x) (lambda xyz. xz(yz)) (lambda xy. x)
+
+    XX == XKSK
+       == (KKSK)SK
+       == (KK)SK
+       == KK
+       == lambda y. K
+
+    XXX == (XX)X
+        == (lambda y. K) X
+        == K
+
+    X(XX) == X(lambda y. K)
+          == (lambda y. K) KSK
+          == KSK
+          == S
+
+はい．全てのラムダ項はXというラムダ式のみで表せます．
+
+---
+不動点コンビネータ．
+
+まず、Omegaとして有名な次のラムダ項
+    Omega := M M
+      where
+        M := lambda x. x x
+
+このOmegaは無限のベータ簡約しか描けない．
+いわゆるベータ正規形が存在しない．
+
+    Y := lambda f. M M
+      where
+        M := lambda x. f (x x)
+
+外で束縛してるfをMで使ってるのはちょっと、書き方として
+よろしくないかもしれない．じゃあ
+    Y := lambda f. (lambda x. f(xx)) (lambda x. f(xx))
+
+Yは何かプログラマの書いた関数Fを受け取って
+    
+    YF == MM
+       == (lambda x. F(xx)) (lambda x. F(xx))
+       == F(MM)
+       == F(YF)
+         where
+           M == lambda x. F(xx)
+
+当然ながら、これを繰り返し使えば、というか、ベータ簡約を繰り返せば
+
+    YF == F(F(YF))
+       == F(F(F(YF)))
+       == ...
+
+ラムダ項のベータ簡約は、都合の良いように評価していけばいいはず．
+つまり正格評価も遅延評価もない．ベータ正規形があると信じて
+そこに向かうことを努力する．
+
+http://en.wikipedia.org/wiki/Lambda_calculus
+にあった例のGという関数をそのまま．
+
+    G := lambda rn. (if (zero? n) (* n (r (1- n))))
+
+ifもzero?も*も説明してないけど、評価順序を気にしないでいいんだから、
+いくらでも定義できる．大雑把に先に定義しよう．
+
+    まず, 何か変数
+        zero, one, two, three
+    があることにする．プリミティブで整数があることにしてもいいけどさ．
+    きっとチャーチ数だよね．省略．
+
+    つぎの変数も大事だ．
+        true, false
+
+    if t b a := b (when t is true)
+              | a (otherwise)
+
+ちゃんとラムダ式で書けば、true,falseを
+    true  := lambda xy. x (== K)
+    false := lambda xy. y
+と定義することによって
+    if := lambda tba. t b a
+と書ける．
+
+    * := lambda xy. lambda p. p x y
+
+xとyをとって、pに託す．具体的には結局何もしてない．
+consと同じ定義だね．そして
+    * x y
+を
+    x*y
+と書くことにする．もちろん積のつもりである．
+
+    zero? t = true (when t is zero)
+            | false (otherwise)
+
+zeroを定義してないので、ちゃんとした定義はムチャだ．
+
+1- は、これもやはり、1 引き算するつもりの関数だけど
+    
+    1- t = zero (when t is one)
+         | one  (when t is two)
+         | two  (when t is three)
+
+引数として one, two, three にしか対応してない．
+今の説明ではそれしか出てこないハズだから．
+
+長くなった．改めて
+
+    Y := lambda f. (lambda x. f(xx)) (lambda x. f(xx))
+    G := lambda rn. (if (zero? n) one (* n (r (1- n))))
+
+    Y G three == (YG) three
+              == G (YG) three
+              == (if (zero? three) one (* n (YG (1- three))))
+              == (* three (YG (1- three)))
+はい、わかったぞ．
+(YG)で外にGを出してから、外のGを評価する．Gはある条件で、その引数にあるYが
+無視できて、そのときに無限に思えるループが止まるんだ．
+              == three * (YG (1- three))
+              == three * (YG two)
+              == three * (G (YG) two)
+              == three * (if (zero? two) one (* ..))
+              == three * (* ..)
+              == three * (two * (YG (1- two)))
+              == ...
+              == three * (two * (one * (G (YG) zero)))
+              == three * (two * (one * (if (zero? zero) one (* zero (YG (1- zero))))))
+              == three * (two * (one * one))
+
+で、おわり！
+Gは階乗のようである！
+
+---
+true, false は先に与えた．Booleanがあったら、やっぱりIntも欲しくなる．
+先に省略って書いたけど Church 数は書いておこう．
+
+Chuch数は、ゼロを含む自然数をラムダ項で表すものである．(Intではないね)
+ラムダ項における自然数とは、適用する回数だ、というアイデアは一度
+知ってしまえばとても自然に思える．
+
+    zero := lambda sz. z
+
+引数のs, z とは、succeed と zero の気持ちである．
+
+自然数nを表すラムダ項
+    (n) := lambda sz. (s (s .. (s z))) -- zにsをn回適用した．
+
+気持ちとしてはzeroにs回、succeedしたものを返してる．
+例えば
+    one := lambda sz. sz
+    two := lambda sz. s(sz)
+
+気持ち、というのはただの気持ちであり、実際に引数には何の意味もまだ
+与えていない．
+
+さっきの zero? は引数がzeroかを判定する述語．
+
+    zero? zero == true
+    <=> zero? (lambda sz. z) == true
+
+    zero? one == false
+    <=> zero? (lambda sz. sz) == false
+
+zero?が取る(lambda sz. M) のzにtrue を渡して、sに一引数をとってfalseを返す
+ようなものを渡すことにすればいい．つまり
+
+    zero (K false) true == true
+    one (K false) true == (K false) true
+                       == false
+    two (K false) true == (K false) ((K false) true)
+                       == (K false) false
+                       == false
+
+したがって次のようにすればいい
+    zero? := lambda n. n (K false) true
+
+church数の引数s,zに何か意味を与えることで、希望の演算を実現するのが
+多いらしい．
+
+---
+1 加える関数 suc を作りたい．つまり、こう
+    
+    suc zero == one
+    suc one == two
+    suc two == ...
+
+    lambda sz. M == lambda sz. ((lambda sz. M) s z)
+    =>
+    lambda sz. s ((lambda sz. M) s z)
+        == lambda sz. s M
+        == suc (lambda sz. M)
+
+したがって
+    suc := lambda n. (lambda sz. s n)
+
+なんか、これ考えるのにすごい時間かかったんだけど、考えすぎだった．
+
+---
+cons, 2つ組み
+
+    cons := lambda xy. (lambda p. p x y)
+
+こう、使う．
+    cons 1 2 == lambda p. p 1 2
+
+cons に与えた2つの値が、保持されたラムダ項が返ってくる．
+ってか、整数使っちゃった．
+
+pにしかるべき関数を与えれば、2つの値を操作できる．
+
+    car := lambda xy. x
+    cdr := lambda xy. y
+
+    car (cons x y) == x
+    cdr (cons x y) == y
+
+---
+1 減らす関数 pred を作りたい．先は 1- という名前にしてたけど．
+
+predを作るのにconsが必要だったと記憶してたからこそ先に説明したんだけど、
+思い出せないので結局wikipediaを見ちゃった．
+
+    i := cons _ 0 -- _ is any lambda term
+    f := lambda p. cons (cdr p) (suc (cdr p))
+      i.e.
+        f (cons _ x) == cons x (suc x)
+
+iにfをn回適用するとどうなるか．
+    (cons _ 0) == (cons 0 1) -- once
+               == (cons 1 2) -- twice
+               == (cons 2 3) -- three times
+               == ...
+               == (cons (n-1) n) -- n times
+
+よって、
+    let n := (lambda sz. s(s(..(sz)..))) -- apply s n times
+    n f i == f(f(..(fi)..)) -- apply f n times
+          == (cons (n-1) n)
+    car (n f i) == n-1
+
+したがってpredは次で定義できる
+    pred := lambda n. car (n f i)
+      where
+        f := lambda p. cons (cdr p) (suc (cdr p))
+        i := cons 0 0 -- also (cons 1 0) is ok
+        cons, car, cdr, suc
+
+これで、church数同士の等号を確認する述語 equal? が定義できそうだ．
+    %equal? := lambda mn.
+        if (zero? m)
+            (if (zero? n) true false)
+            (if (zero? n) false (%equal? (pred m) (pred n)))
+
+andとか定義してなかったからifを入れ子にした．
+そしてこれは再帰を使ってしまってるから、前のYコンビネータを用いて
+
+    F := lambda rmn.
+        if (zero? m)
+            (if (zero? n) true false)
+            (if (zero? n) false (r (pred m) (pred n)))
+    equal? := YF
+
+できた！

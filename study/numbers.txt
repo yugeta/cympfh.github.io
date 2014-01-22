@@ -1,0 +1,365 @@
+I use textbook,
+    "Numbers, sets and axioms" written by Hamilton
+
+-------
+Index
+
+* Numbers
+** Peano
+** Integer
+** Rational numbers
+
+* Set
+** Size
+** Ordered Set
+
+-------
+
+# Numbers
+
+ここで言うnumbersとは、0を含める自然数のことを示唆する
+
+# Peano
+Peano の公理とは、numbers を与えるためのもので、次の5つからなる
+
+(P1) 0はnumberである
+(P2) numberであるnを持ってきた時、n'はこれもまたnumberである
+(P3) numberであるnに就いて、n'が0と等しくなることはない
+(P4) numberであるm, n に就いて m' = n' ならば、m = n である
+(P5) Aというnumbersの部分集合を考えるとき、
+    「0はAに属する」「nがAに属するならばn'もAに属する」
+    というこの2つが成るならば、Aとはnumbersそのものである
+
+P1, P2 によって、実際に自然数は作れて、きっとそれは0を始点とする
+半直線になるだろう
+    0, 0'(1), 0''(2), ...
+P3は確かに0が始点であることを言う
+P4は異なる2つの'が同じものになったりしない、つまり合流しないことを
+言う。これによってたしかにただの一列であることを保証する
+P5は数学的帰納法を公理で保証する
+
+' は、確かに +1 するものである。successor と呼ばれる。
+
+公理 P5 について、次のような P5* を採用しても同じである
+
+(P5*) Aというnumbersの部分集合を考えるとき、
+    「0はAに属する」「0〜nの全てがAに属するならばn'もAに属する」
+    というこの2つが成るならば、Aとはnumbersそのものである
+
+
+この公理の上で加算と乗算は定義できる
+
+(+) :: number -> number -> number
+m + 0 = m
+m + n' = (m+n)'
+
+(*) :: number -> number -> number
+m * 0 = 0
+m * n' = m + (m*n)
+
+これはたしかに、馴染みのある加算と乗算である
+つまり、交換律、結合律など、成り立つ
+
+Peano の公理を、モデルとして書く
+つまり、定義したい集合 N
+successor となる関数 f (:: N->N->N)
+始点である e (<- N)
+の3つ組み <N, f, e>
+
+-- "n <- N" means that n belongs to set N.
+
+初めのPeano公理は、 <Numbers, ', 0> と書ける
+
+そして先の公理に沿って書くと
+
+(P1) e <- N
+(P2) if n <- N then f n <- N
+(P3) if n <- N then f n /= e
+(P4) if n <- N and m <- N and f n == f m then n == m
+(P5) if A is subset of N which contains e and contains
+     f x for every x in A, A is N.
+
+2つのモデルが同型であること
+一方を他方に写す全単射があればいい。具体的に何を写すのかちょっと
+あれだけど、次のように定義する
+
+Define.
+2つのPeanoモデル <N1, f1, e1>, <N2, f2, e2> が同型である、とは、
+次のような全単射 phi が存在すること
+
+phi :: N1 -> N2
+phi e1 = e2
+phi (f1 x) = f2 (phi x) -- phi (x+1) equals to (phi x)+1
+
+Theorem.
+ある Peano model <N, f, e> と、集合X, g :: X -> X, a in X とについて
+次のような関数Fは唯一に存在する
+
+F :: N -> X
+F e = a
+F (f n) = g (F n) -- n in N
+
+よく見たらちゃんと再帰的定義になってる
+つまり、Fに渡す値は清楚列上で狭義単調現象していってる
+
+<N, f, e> として、通常の自然数<N, ', 0> を考える
+
+F 0 = a
+F n' = g (F n)
+
+したがって、2つのPeanoモデルがあるとき、その二つは同型です
+なぜなら、今言ったようにいつも唯一の写像を持つわけだが、
+
+<N1, f1, e1> , <N2, f2, e2>
+F :: N1 -> N2
+G :: N2 -> N1
+
+such that
+    F e1 = e2
+    G e2 = e1
+    F (f1 x) = f2 (F x)
+    G (f2 y) = f1 (G y)
+
+so,
+    G (F e1) = G e2 = e1
+    G (F (f1 x)) = G (f2 (F x)
+                 = f1 (G (F x) = f1 x
+
+    therefore, G (F x) = x
+likewise,
+    F (G y) =y
+
+F and G are inverses of each other.
+So, F and G are bijection. Proof is complete.
+
+# Integer
+Peano によって、自然数を定義できた
+その自然数の集合Nを用いて、整数は次のように表せる
+    a in N, b in N, (a, b)
+つまり、2つの自然数の差 (a - b) が整数に相当する
+ただしまだNの上での引き算は定義してないので、使わないようにする
+
+等号
+    (a, b) == (c, d)
+        when a + d == b + c (i.e. a-b == c-d)
+    -- 推移律、交換律
+
+加算乗算
+    (a, b) + (c, d) = (a+c, b+d)
+    -- (a-b) + (c-d) = (a+c) - (b+d)
+    (a, b) * (c, d) = (a*c+b*d, a*d+b*c)
+    -- (a-b) * (c-d) = (a*c+b*d) - (a*d+b*c)
+
+単に2つの自然数の組みを一つの整数とすると、唯一性が無いので
+    { (a, b) | a in N, b in N }
+例えば、この集合を、(a-b) という整数に相当させる
+
+いわゆる、同値類ってやつだね
+(a,b) という代表元をもってして、
+    { (c,d) | (a,b) == (c,d) }
+という集合を {(a,b)} と、表してしまう
+
+整数全体の集合はZと表す
+
+# Rational numbers
+
+有理数は2つの整数の比である
+    {(a, b) | a in Z, b in Z}
+でもって、有理数 (a/b) を表す
+
+
+---
+# Set
+
+# Size
+集合の大きさ
+alephとかいうやつ
+
+有限集合ならば、可算ならば、要素の数を数えられる。集合の大きさを
+聞かれたら数えればいい。
+
+Define.
+Aが有限であるとは
+    there is a bijection from set A to {1, 2, .. n},
+
+"equinumerous"
+if there is a bijection from A to B, they denoted
+    A ~ B
+サイズについて等しいことを言う
+
+例えば N = {0, 1 ..} , 2N = {0, 2 ..} は、
+    f x = 2 * x
+という関数fによって、
+    N ~ 2N
+が確認できる
+
+Aが可算(coutable)であるとは、
+    Aは有限である、または、
+    A ~ N (numbers)
+
+例えば、N(自然数全体)、は可算である
+可算集合の部分集合は可算であるらしいよ
+
+Theorem.
+有理数全体の集合Qは、自然数全体の集合Nと同じ濃度である
+これは有名
+
+可算集合を可算なだけ集めたものの和集合は可算集合である
+まあ、そうなのかもしれない
+
+Define.
+冪集合(power set)
+集合Aに対して、Aの部分集合全体をP(A)で表す
+
+Theorem.
+いかなる集合Aに就いて、A -> P(A) という写像で、全単射な
+ものは存在しない
+
+Proof.
+全単射f :: A -> P(A)
+x in A, f x とは、Aの部分集合であり、
+x in (f x) 或いは x not in (f x) のどちらかである
+    T = { x | x in A, x not in (f x) }
+このようなTを考える
+これはもちろんAの部分集合であり、P(A)の元である
+fが全射であることから
+    exists y. f y = T
+今、"y (not) in T" を考えると、矛盾が起こるらしい
+Suppose y in T, y in A and y not in (f y), so y not in T. contradiction.
+Suppose y not in T, not (y not in (f y)), so y in T. contradiction.
+
+そりゃそうだね
+
+Theorem.
+可算集合の定義を考えれば、P(N)は可算ではない．
+非可算集合 (uncountable set) である．
+
+Define.
+非可算である、とは、
+無限であって、そしてNと同じ濃度でないこと．
+
+
+実数全体の集合Rの濃度について考えていきます
+
+Theorem.
+Rの中の任意な区間は、Rと同じ濃度
+tangentによって写せるから
+
+Theorem.
+R ~ P(N) である
+
+R ~ [0, 1) なので、[0, 1) ~ P(N) を示せばいい．
+単射f :: P(N) -> [0, 1)
+を作ってみせる
+
+P(N) の元 A = a subset of N
+から、一意に0以上1未満の数を作ればいい
+
+0以上1未満の数というのは、二進数で書けば
+0.a0 a1 a2 ..
+と表せる．つまり
+[a_i | i <- [0..], a_i <- [0, 1]]
+が0以上1未満の数を表している
+
+そしたらもう簡単で
+    f A = [ if i in A then 1 else 0 | i <- [0..] ]
+できた
+
+逆向きの単射を作れば、両方向の単射ができて、全単射の存在が
+言える. でもこっちは省略．大体同じ感じだよ
+
+Theorem.
+A ~ R, B ~ R => (union A B) ~ R
+
+A,Bは適当なRの中の区間に写せるからね
+
+Corollary.
+A1, A2 .. An ~ R =>
+    (union A1 A2 .. An) ~ R
+
+Corollary.
+A1, A2 .. An ~ R =>
+    (A1 * A2 * .. * An) ~ R
+
+Corollary.
+複素数全体の集合C
+    C ~ R
+
+Define.
+aleph-nought
+    is the cardinal number of N
+aleph
+    is the cardinal number of R
+
+Define.
+let kappa = card A
+    lambda = card B in
+kappa + lambda = card (union A B)
+kappa * lambda = card (A * B) -- product
+
+交換律、結合律、分配則が成り立つ
+
+Theorem.
+aleph-nought = n + aleph-nought ( n is positive natural number)
+             = n * aleph-nought ( // )
+             = aleph-nought + aleph-nought
+             = aleph-nought * aleph-nought
+
+aleph = n + aleph ( n is positive )
+      = n * aleph
+      = aleph-nought + aleph
+      = aleph-nought * aleph
+      = aleph + aleph
+      = aleph * aleph
+
+
+Theorem.
+    P(A) ~ {0, 1} ^ A
+    -- 冪乗
+
+A ~ C, B ~ D => B^A ~ D^C
+
+Since P(N) ~ R,
+    aleph = 2 ^ aleph-nought
+
+Theorem.
+aleph-nought ^ n = aleph-nought
+n ^ aleph-nought = aleph
+aleph-nought ^ aleph-nought = aleph
+aleph ^ n = aleph
+aleph ^ aleph-nought = aleph
+
+いつか習う選択公理を用いると
+Theorem.
+    kappa * kappa = kappa
+である
+
+Define.
+包含関係によって、濃度の大小関係(<=)を定義する
+A is subset of B
+    => let kappa = card A
+           lambda = card B in
+       kappa <= lambda
+
+濃度の=, <= には推移律をもたせる
+
+Theorem.
+２つの無限集合の濃度 kappa, lambda について、
+kappa <= lambda ならば
+    kappa + lambda = lambda
+    kappa * lambda = lambda
+の２つが成り立つ
+
+Proof.
+    lambda <= kappa + lambda
+            = lambda + lambda
+            = 2 * lambda 
+           <= lambda * lambda = lambda
+So,
+    lambda = kappa + lambda
+
+likewise,
+    lambda = kappa * lambda
+
+# Ordered Set
+

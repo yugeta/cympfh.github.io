@@ -1,0 +1,4 @@
+Sun Apr  7 02:28:35 JST 2013
+memo
+よく使ってたの
+mencoder $1 -oac mp3lame -of avi -vf scale=512:288 -ovc x264 -o $1.avi

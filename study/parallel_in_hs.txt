@@ -1,0 +1,63 @@
+Nepal – Nested Data-Parallelism in Haskell
+
+Haskellで、Neslのようなスタイルで、nested data-parallel programming(NDP)
+がしたい．そのために次のような拡張文法を提案するもの．
+
+# parallel array
+parallel array という新しいデータ構造
+[::] -- null array
+[: e1, e2, .. ,en :] :: [:t:] -- array with n elements, typeof each ei is t
+[: e1..en :] -- enum
+[: e1, e2..e3 :] -- enum from e1 to e3 with step (e2-e1)
+
+基本的にlistや配列と同様に扱えて、mapに相当するmapPと、内包表記を
+用意する．そして、それらは並列的に、1ステップで演算できるものにする．
+つまり、同時にそれぞれの要素について処理を行う．
+
+mapP (mapP (+1)) [:[:1,2:], [:3:], [::]:]
+この様な入れ子のものも、その深さにかかわらずに同様に1ステップで
+実行できるとする．
+
+# 評価戦略
+途中でbottomが現れるparallel array
+[:1, 2, bottom, 3, .. :]
+これは全体としてbottomになる．
+もっと言えば、有限長でなければ、bottomになる．
+
+# 内包表記
+文法は次．
+[:e | :] = [:e:]
+[:e | b,Q:] = if b then [:e | Q:] else [::]
+[:e | p<-l,Q:] =
+    let ok p = [:e | Q:]
+        ok _ = [::]
+    in
+    concatMapP ok l
+[:e | p1 <- l1 |
+      p2 <- l2 | Q1, Q2 :] =
+        [: e | (p1, p2) <- zipP l1 l2 | Q1, Q2 :]
+[:e | let decls, Q:] = let decls in [:e | Q:]
+
+これで再帰的に定義される．
+
+注意するのは
+[:(x,y) | x<-[:1,2,3:], y<-[:4,5,6:]:]
+これが
+[:(1,4), (2,5), (3,6) :]
+と評価されること．きっとこれも並列処理されるんだろうね．
+ほかはリスト内包表記と同じだ．
+
+# Standard Operations
+基本的にリストにある関数をparalell array に対しても用意する．
+(!:) -- indexer
+(+:+) -- concat
+mapP, filterP, zipP, concatMapP
+これらは与えた parallel array の要素について個別に処理が
+できるから並列処理に問題ない．
+でも
+foldP, scanP
+これは全体を見ないと計算できない．困る．
+
+
+
+-- vim: set ft=haskell:

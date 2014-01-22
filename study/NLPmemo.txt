@@ -1,0 +1,223 @@
+自然言語処理 (Natural Language Processing)
+についてメモを乱雑に書きます
+
+上に行くほど新しい
+
+{{{ Wed Dec  4 09:11:23 JST 2013
+やろうとしてたこと
+http://arakilab.media.eng.hokudai.ac.jp/~ptaszynski/data/2011.02.24_HRC-Symposium.pdf
+これまんまじゃん
+
+}}}
+
+{{{ Fri Nov 29 00:17:16 JST 2013
+
+二週間以上間空いてる
+実際その間何もしてなかったのかも
+
+CRFの実装方法が分かった
+
+まずこちらでCRFが何か分かったけど実装方法は丁寧にかかれてなかった
+
+  > 言語処理における識別モデルの発展 – HMMから CRFまで
+  > 2boy.org/~yuta/publications/nlp2006-revised-20070227.pdf
+
+CRFはHMMをより一般に拡張したものと考えられそう．そんな説明はどこにもないけど
+次だけをいきなり読んでも良かったかもしれない
+実装の方法が詳しく書いてある
+ただし，「１次リニアチェーンCRF」のみである．一列に並んだ系列ラベリング問題には
+それで問題ない，のだと思う．もっと木のノードについてラベル付けとかそういうことも
+一般的にはできるのかな
+
+  > Linear-chain CRF
+  > aiweb.cs.ehime-u.ac.jp/~ninomiya/ai2/ai2-12.pptx
+  > 人工知能特論II 第12回. 二宮 崇. 1. 今日の講義の予定. 系列ラベリングのための確率的識別モデル(Linear-chain CRF). 解析 (ビタビアルゴリズム); 学習 (前向き後ろ向きアルゴリズム). 教科書. 高村 大也 (著), 奥村 学 (監修) 言語処理のための機械学習入門 ...
+
+今日明日で実装してみよう
+
+}}}
+{{{ Thu Nov 14 22:20:06 JST 2013
+
+下の論文についてもう一度ちゃんと読む
+これをまとめて明日発表する
+
+"Exploiting emoticons in sentiment analysis."
+ Hogenboom, Alexander, et al.
+Proceedings of the 28th Annual ACM Symposium on Applied Computing. ACM, 2013.
+http://eprints.eemcs.utwente.nl/23268/01/sac13-senticon.pdf
+
+# 目的
+
+どんな顔文字がどんな感情を表すかの解析をしたい
+顔文字，単語についてアノテーションした lexicon (辞書?) を
+予め用意する
+
+# 性質
+
+* 顔文字の場所
+84.0% の顔文字は段落の最後
+9.0% の顔文字は中間くらい
+7.0% が段落の最初
+また中間に現れる顔文字は文と文をつなぐ (associate) ように使われる
+
+仮定
+emoticons have local effect
+段落が複数の顔文字を含む場合には文に作用する
+一つなら段落全体に対して affect すると仮定する
+作用する対象を text segment という
+segment は文または段落である
+
+* 使われ方
+
+emoticons are used in 3 types
+
+例．一般的に次の顔文字は次のような意味だろう
+  (^^) ... positive
+  -_-  ... negative
+
+1. テキストに感情が not clearly で，顔文字でexpress する
+   (^^) I got a promotion
+2. stress sentiment
+   I love my work (^^)
+3. negation
+   I love my work -_-
+
+# 解析
+
+* step 1
+split document -> segments (paragraphs or text)
+
+* step 2
+check that each segment has emoticons (or not)
+
+use an emoticon sentiment lexicon
+a list of `character sequence with sentiment scores`
+
+* step 3a
+辞書を用いて，顔文字から感情スコアを出す
+顔文字eに対してスコアを
+  sent(e)
+と書く
+
+* step 3b
+辞書を用いて，語から感情スコアを出す
+語wに対してスコアを
+  sent(w)
+と書く．但しここで語は，sentiment-carrying word もしくは形容詞に
+限定する
+
+ここで2種類の感情スコアを得るわけだが，先ほどの negation の例も
+あるから，顔文字がある場合にはそちらのスコアのみを使う
+
+* step 4
+sentiment score of segment
+
+segment s に
+  v コの顔文字 (e[1] .. e[v])
+  t コの sentiment-carrying or modifying word (w[1] .. w[t])
+があるとする
+
+s の感情スコアを次のようにする
+
+sent(s) = 
+  if v > 0 then
+    (sum e[i]) / v
+  else
+    (sum w[i]) / t
+
+最後に，document に対する感情スコア
+
+d = s[1] .. s[p]
+
+sent(d) =
+  (sum_i=1^p (if v[i] > 0 then (sum e[j]) else (sum w[j])))
+  / (sum (if v[i] > 0 then v[i] else t[i]))
+
+class(d) = if sent d < 0 then -1 else +1
+
+# 評価
+2080 の Dutch tweets and forum messages (Google discussion)
+について
+class d
+を人手でつけて
+比べた
+87.5%正しかった
+
+
+}}}
+{{{ Tue Nov 12 15:43:08 JST 2013
+
+論文
+"Exploiting Emoticons in Sentiment Analysis (2013)"
+
+顔文字と単語で，文書のセンチメント抽出する
+顔文字があったらそれを優先して使って，なかったら単語を使う感じ
+辞書データと照らしあわせてなんか計算するだけ
+九〇％ で上手く行ったと言ってる
+
+文章の単位として
+
+> data class = [document]
+> data document = [segment]
+なんだね．
+> type segment = sentence
+であってるのかな？ ".", "!", "?" で区切られるもの，とあるし
+
+
+}}}
+{{{ Tue Nov 10 くらい
+
+HMM実装した．学習は，ビタビアルゴリズムしてって上手くいかなかったらその
+直前の確率をランダムに調整する，という乱暴で，案外上手く動いてしまった．
+
+}}}
+{{{ Sun Nov  3 17:59:43 JST 2013
+
+HMMを構成するツールを使ってみたい．HTKというのがあるみたいだけど
+難しそう．HTKは音声認識のためのツールらしく，それ以外に応用する例が
+ないのでむり．「フリーソフトで作る音声認識システム」っての借りて
+読んだ．HTKの音声認識のための使い方が数ページ載ってた．
+でも私には使えなさそう
+
+-title=自然言語処理ツール http://www.phontron.com/nlptools.php?lang=ja
+
+こんなページ見つけた
+今は必要ないかも
+
+}}}
+{{{ 顔文字抽出したい
+CRFというのがある，らしい
+
+既存の，ツールでデモが公開されてるもの
+
+http://www.haroperi.info/cgi-bin/emext.cgi
+これはCRFが使われてる？論文も一緒に公開されてて，それは英語だけど
+同じ内容の日本語で書かれたものもどっかにある
+ダウンロードしたものは全然抽出されなくて，デモのほうが良いけど
+精度は下に落ちる
+
+http://www.nishiohirokazu.org/kaomoji/kaomoji.py
+これは，もうかなり良い
+デモとして公開されてるみたいだけど，抽出に失敗したものを
+送信すると即座にオンライン学習してくれる
+
+}}}
+{{{
+
+輪読会で「Foundations of Statistical Natural Language Processing」読んでる
+Section 2, Section 3 が終わった
+
+}}}
+{{{
+著書「PRML」
+上巻は後半だけ読んだ．ニューラルネットワークは単純な実装はできる
+ようになった．でも単純なだけあって，すぐ限界がある．
+今，下巻のカーネル法読んでる
+
+著書「サポートベクターマシン入門」(Nello Cristianini, 大北訳)
+どこかからカーネルという何かがくれば，なんだって線形分離できるよ！
+っていう話だった，と読みました
+
+著書「言語と計算-4 確率的言語モデル」p.143 くらいまで．
+Nグラムモデルとかマルコフ過程が何かくらいが薄く知ったくらい
+}}}

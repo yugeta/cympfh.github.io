@@ -1,0 +1,98 @@
+データ構造とアルゴリズム
+
+-- Index
+
+計算量、O記法について
+
+配列とリスト
+スタック
+待ち行列
+木
+
+優先度付待ち行列
+二分探索記
+平衡木
+ハッシュ
+集合群
+
+バブルソート
+クイックソート
+マージソート
+ヒープソート
+バケットソート
+基数ソート
+
+(向き有りグラフ)
+ダイクストラのアルゴリズム
+フロイドのアルゴリズム
+有向グラフの探索
+強連結成分
+
+(向き無しグラフ)
+最小木
+関節点
+
+文字列の単純な検索
+KMPアルゴリズム
+BMアルゴリズム
+
+
+-- memo
+
+array. random access in O(1), insert or delete in O(n)
+list is O(n), and in O(1).
+
+queue can be represented by "ring buffer".
+
+priority queue is represented by semi-order binary tree.
+root is the min of set.
+the operator "add" and "delete" is in O(log(n)).
+this tree has always two children (perfect binary tree),
+so this represented in an array.  this is called "heap."
+
+binary search tree.
+left < root < right
+the height of tree is log(n) as average.
+so "add", "delete" and "find" in O(log(n)).
+in worst case, the height become n.
+
+balanced tree. for example, 2-3tree. each node has
+two or three children. and the node has one or two
+indexes.
+a node with two child has one index, i.
+the left is less than i. the right is greater than i or equally.
+a node with three child has two indexes, i and j.
+the left is less than i. the middle is less than j.
+the right is greater than j or equally.
+
+hash. all in nearly O(1).
+computing hash in O(1).
+when collision, there are two method, chain method and
+open addressing method.
+
+in chain method, the length of chain is N/B. 
+so "add", "access", "delete" in O(N/B + 1).
+in opening addressing, "find" done in O((the times of collision)+1).
+probably of collision more i times is
+    (N/B)^i - (N/B)^(i-1)
+=> mean is B/(B-N) = 1/(1-alpha).
+
+
+some sets.
+think of two operator "find" and "merge"
+find: in which set a element is.
+merge: merge two sets.
+
+two method to manage set. they are "pointer" (this is list) and ID.
+
+{{a,b}, {c}}
+in poiter ['(a b) '(c)]
+    find in O(n)
+    merge in O(1)
+in ID [a->0, b->0, c->1]
+    find in O(1)
+    merge in O(n)
+
+merge in ID, when always write over IDs of  less set than another 
+, it done in O(n*log(n)).
+

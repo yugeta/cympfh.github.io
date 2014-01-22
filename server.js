@@ -14,11 +14,11 @@ http.createServer(function(request, response) {
                 "Access-Control-Allow-Origin":"*",
                 "Pragma": "no-cache",
                 "Cache-Control" : "no-cache",
-                "Content-Type" : "text/html"
+                "Content-Type" : "text/html;charset=utf-8"
             }
 
             response.writeHead(200, header);
-            response.write(file);
+            response.write(file, 'utf8');
             response.end();
         },
         "404":function(){
@@ -44,7 +44,7 @@ http.createServer(function(request, response) {
         if (!exists) { Response["404"](); return ; }
         if (fs.statSync(filename).isDirectory()) { filename += '/index.html'; }
 
-        fs.readFile(filename, "binary", function(err, file){
+        fs.readFile(filename, "utf8", function(err, file){
         if (err) { Response["500"](err); return ; }
             Response["200"](file, filename);   
         }); 

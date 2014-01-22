@@ -1,0 +1,107 @@
+2013年  3月  6日 水曜日 18:18:09 JST
+
+Essentials of Programming languages / 2nd edition
+を読み始めた。たぶん全然難しい本じゃない。
+ちょっとSchemeが読み書きできるようになれば読める。
+まあ、わざわざ図書館で借りちゃったので、今日一日くらいちゃんと
+読むことにした。
+
+define-datatype とかいう謎の"tool"が導入されてた。
+たぶんどこの処理系にもない。
+Haskellとかでいうとこの
+--  data Bintree = Leaf Int | Node Int Bintree Bintree
+ができる。型τから τ U τ を作るアレだ。せっかくなのでマクロで
+実装してみた。
+
+---
+(define-syntax define-datatype
+  (syntax-rules ()
+    ((_ type-predicate-name (variant-name pred ...) ...)
+      (begin
+        (define (type-predicate-name S)
+          (case (car S) ((variant-name ...) #t) (else #f)))
+        (define (variant-name . args) (cons 'variant-name (apply list args)))
+        ...)
+      )))
+
+(define-syntax cases
+  (syntax-rules ()
+    ((_ var ((variant-name x ...) body ...) ...)
+      (case (car var)
+        ((variant-name) (receive (x ...) (apply values (cdr var)) body ...))
+        ...)
+      )))
+
+; 元のdefine-datatypeとだいぶ違うけど。
+; ある <datatype> を定義するのに、
+; (define-datatype <datatype>?
+;   (<variant-name> <arg1>? ...)
+;   ...)
+; と定義する。<arg1>?はさも型を指定するための述語であるが、実際型のチェックは
+; しないどころか、ただ引数の数と型を、プログラマに教えるためのメモにすぎない。
+; そしてこの define-datatype は、実際には <datatype>? という述語と、 その型の
+; データを作る為の、 <variant-name> ... という手続きを作る。
+
+; (define-datatype bintree?
+;   (leaf number?)
+;   (node number? bintree? bintree?) )
+; 大抵の完全二分木のデータはこうだろう。
+
+; (define a (node 3 (leaf 1) (leaf 2)))
+; このように作る。
+; (node x y z) (leaf x) という2つの手続きができてる。
+
+; gosh> (bintree? a)
+; #t
+; bintreeという型のチェックをする bintree? という手続きができてる。
+
+; gosh>
+; (cases a
+;   ((leaf n) n)
+;   ((node n left right) n) )
+; 3
+; まさしくパターンマッチ
+
+; (define (count bintree)
+;   (cases bintree
+;     ((leaf _) 1)
+;     ((node _ l r) (+ 1 (count l) (count r))) ))
+; node 及び node を数える。
+; 
+; (define a
+;   (node 0
+;     (node 0 (leaf 1) (leaf 1))
+;     (leaf 1)))
+; 
+; gosh> (count a)
+; 5
+
+こんな長々と日本語で説明するより、マクロがどう展開されるかを書いて
+見せたほうがずっと説明になる気がした。
+
+(define-datatype bintree?
+  (leaf _)
+  (node _ _ _))
+=>
+(begin
+  (define (bintree? S)
+     (case (car S)
+      ((leaf node) #t) (else #f)))
+  (define (leaf . x)
+    (cons 'leaf (apply list x)))
+  (define (node . x)
+    (cons 'node (apply list x))) )
+
+(cases a
+  ((leaf x) body1)
+  ((node x y z) body2))
+=>
+(case (car a)
+  ((leaf) (receive (x) (apply values (cdr a)) body1))
+  ((node) (receive (x y z) (apply values (cdr a)) body2)) )
+
+---
+悪いことなのは分かってるけど、でもやっぱり生まれを恨むことは
+よくあることなんでしょうかね。あんまり、こう、食パンしか食べない
+毎日を過ごしてると将来お金を持ったら, いろんな美味しい物食べて
+ブクブク太るか、その前に自殺するかな。
