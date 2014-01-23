@@ -1,0 +1,33 @@
+body {
+  background-color: white;
+  color: black;
+}
+a {
+  font-size: 14px
+}
+code {
+  width: 450px;
+  white-space: pre;
+  display: block;
+  color: #faf;
+  border-top: 1px solid #dad;
+  border-left: 5px solid #dad;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  margin-top: 5px;
+}
+
+div#W {
+  display: block;
+  background-color:black;
+  color:white;
+  padding:3px;
+  font-size: 13px;
+}
+
+textarea {
+ height: 80%;
+ width:100%;
+ white-space: nowrap;
+}
+
