@@ -39,7 +39,7 @@ pls.onchange = function(e) {
   load_pls(T, e.currentTarget.value);
 }
 
-load_pls(T, 0);
+init_pls(T, pls);
 
 }
 //---------------------
@@ -57,15 +57,7 @@ load_pls(T, 0);
   <form style='height:100%;width:450px'>
 <textarea id='T'># my playlist</textarea>
 
-  <select id='pls'>
-    <option value='0'>myfav.pls</option>
-    <option value='1'>imas.pls</option>
-    <option value='2'>anime2010.pls</option>
-    <option value='3'>anime2011.pls</option>
-    <option value='4'>anime2012.pls</option>
-    <option value='5'>anime2013.pls</option>
-    <option value='6'>animeRemix.pls</option>
-  </select>
+  <select id='pls'></select>
   <input type='checkbox' id='R'> random
   <input type='button' value='play' onclick='listset()'>
 
