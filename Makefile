@@ -1,4 +1,4 @@
-all : index push
+all : push
 
 index:
 	echo '<pre>' > index.html
