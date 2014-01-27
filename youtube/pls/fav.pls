@@ -1,3 +1,4 @@
+# vim: set ft=youtube:
 -Rizow2u8ig Dekiru Kanatte Hoshimittsu -exit trance remix- Hidamari Sketch xHoshimittsu
 -ko4sS0KEfg [Tales] Party! Love Beat!
 -q1MMx9fwDQ Armando Land of confusion
@@ -87,7 +88,7 @@ PQ0x8M4vb18 気分は大発明♪ - Wonder Strawberry ☆ F
 PrreUUhP6Nw -MADLAX-nowhere
 QSqLlN8p74A 寝・に・げでリセット！(Hypo77's E.P.P. remix)
 QUuYW2w-vYI " DOKI" ryofuko chan- op full
-QXh8Q_oFrQM はしゃいでみたり悩んでみたり恋する乙女はゆるゆり
+QXh8Q_oFrQM ドキドキ!プリキュア ＥＤ
 QaRmIOOKLE0 TVアニメ『中二病でも恋がしたい！』 OP [ChuNiByo Demo Koi ga Shitai!]
 R-hotvkE__k Sweets Parade ~ Lyrics ~ Karuta Roromiya [FULL]
 Reg0qrEQKvY Let's Go Lovely Henshin Time!
@@ -161,11 +162,17 @@ sk52iyFM2Z0 花澤香菜 - まじかる☆まーじゃん☆わーるど ver.玄
 tl_t90HebC4 Natsuko Aso - Lovely Girls Anthem PV
 uTJt865Kht4 [Opening 1] Sengoku Collection
 uh63curZgaE 魔界天使ジブリール4 Opening Full in HD
+ukm3tmdQeBE おぱーい！～鹿野優以のテーマ～
 vNq5XNvCYCk すたこらごらく部
+vOJYA7mdBls 《僕は友達が少ない》 二人の季節 Full ver. 夜空x星奈 混唱
+vtvVwgQCKrM arthur ながれぼし
+w4ooZaElHzs 【俗＆獄・】さよなら絶望先生OP「空想ルンバ」　比較動画　【フルHD】
 x4LFrAss2N0 恋のダブルパンチ
+x5vtfjlChCQ ベン・トーop 「狼たちの夜」full
 xBA4OZJgU9Y Spank Happy ♡ ラブクランクイン
 xy6ogSdE8ZE GUITAR FREAKS V5 ＆ drummania V5 Rock to Infinity 　[からふるぱすてる]
 yEy1H-8FKF4 Denki Groove - Reaktion (HD)
+ysdPmXwYVTc ももいろクローバーZ　曲途中でPA故障 アカペラで歌いきる
 yu75h31t0LI 【戦国コレクション】「UNLUCKY GIRL!!」on bass【ベース】
 z4TaZay2GGI Denki Groove - Fuji-san [Live at FUJI ROCK FESTIVAL 2006]
 zDXCrdfOK1s Baby please kill me Remix.wmv
@@ -174,4 +181,3 @@ zMI23phBgJo 電気グルーヴ　『Upside Down』
 37g9a_7Tp74 vvotaru - Joke
 fWFljWFjjTg Green Night Parade (feat.星子) - Green Night Parade
 xt5h8xgEqFQ fu_mou - Green Night Parade - 01. Prelude
-

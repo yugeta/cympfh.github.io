@@ -44,3 +44,4 @@ afn34JQvWDw アウトブレイク・カンパニー ED 「私の宝石箱」
 W8puYEvVgqs 「のんのん日和」FULL のんのんびよりED
 TcTEzFGDQHw 勇者になれなかった俺はしぶしぶ就職を決意しました｡  ED「Sticking Places」 FULL
 nHK8XFKD9iQ 機巧少女は傷つかないED　回れ！雪月花　FULL 　歌詞つき
+nHK8XFKD9iQ 機巧少女は傷つかないED　回れ！雪月花　FULL 　歌詞つき

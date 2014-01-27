@@ -1,0 +1,35 @@
+0sOPeAMojJY ラブリンク(ドキドキプリキュア 後期ＥＤ) Full　歌詞付き
+3t5T80E8sJE ガンバランスdeダンス～夢みる奇跡たち
+6VXQ8y8MFkw 歴代プリキュア変身ＢＧＭメドレー　～初代からドキドキまで～
+7nTf8CDVlu0 HCP　ED1
+9HD-8iAy_w0 Lets!フレッシュプリキュア!
+9nOB6ykJ1GY ♯キボウレインボウ♯　FULL　歌詞付き
+9uGlxvn_Dpk ドキドキプリキュア ED この空の向こう [DokiDoki! Precure Endning]
+BPA-QAEvD6Y スマイルプリキュア! イェイ! イェイ! イェイ!
+H6VFNYpbHmk Ｍａｘ　ＨｅａｒｔでＧＯ　ＧＯ　ＧＯ！！
+K_4Vf3JNYMs ドキドキ！プリキュア エンディング曲 「この空の向こう」
+MB-9s4ziPXg Yes! Precure 5 Insert Song Track01
+NxP7qEA5P9M 満開＊スマイル!( スマイルプリキュア後期ＥＤ) full  歌詞付き
+OH_3mPfcnLg H@ppy Together!!! (フレッシュプリキュア 後期ED)
+OSFEFHffKIY Yes! プリキュア5 ガンバランスdeダンス〜夢見る奇跡たち〜
+ObOHTH5UpDw 【プリキュアMAD】OP＋αで永遠のともだち～2013Ver～【歌詞付】
+PvcxK2HH1KE きみという未来Ｆｕｌｌ　ＲＥＭＩ
+QEvv5LmClkg PRECURE GOES ON
+U39X1KjGHt4 ドキドキ！プリキュア OP [DokiDoki! Precure Opening]
+ZkcWALxxtzc 19. プリキュア5、スマイル go go! / Starving Trancer feat. MAKI
+_HnFAczHtUA キラキラしちゃってMy True Love (Yes! プリキュア5 前期ED)
+byKl2_OM8Xg HEART GOES ON
+c87NoaE_qYI ゲッチュウ!らぶらぶぅ?!
+cYW9gVOeiaY [HD]フレッシュプリキュア!【ED】ノンテロップ版　You make me happy!
+d9dAperEjnw ラ♪ラ♪ラ♪スイートプリキュア♪～∞UNLIMITED∞ ver.～　FULL　歌詞付き
+g6wn8l62wdg Suite Precure Vocal Album 2 Kanade's Character Song
+iDiLspKwCoM ＶＪ向　ハートキャッチプリキュア　ＥＤ
+iN8bfzmrSKg Private video
+iXeog1OluUs Pretty Cure Max Heart - NC ED 01
+mVQp6eQLf-s Tomorrow Song ~あしたのうた~
+mmZRHGMWXzw 映画プリキュアオールスターズnewstage2　ED 「この空の向こう」
+rOhH4-v5rz0 [iFbS]Pretty Cure All Stars Go Go! Dream Live
+ux0y-rs_00I プリキュア～永遠のともだち～ｆｕｌｌ
+vcu0maaQSJs ふたりはプリキュア MaxHeart.
+xTRao6w6pE8 EXIT TRANCE - Track 09 - LET'S GO!スマイルプリキュア!
+z1rU35EmAos ふたりはプリキュアSplashStar　EDテーマ2『ガンバランス de ダンス』
