@@ -1,0 +1,12 @@
+2014年 1月27日 月曜日 17時29分56秒 JST
+
+isgd コマンド
+url短縮サービスの一つをコマンドラインから利用したい
+
+    $ isgd http://cympfh.github.io/youtube/player.html
+    http://is.gd/LTwa3F
+
+    $ cat /usr/bin/isgd
+    #!/bin/sh
+    curl -s http://is.gd/create.php -d url=$1 | grep load_qrcode | sed 's/^.*load_qrcode..//' | sed 's/..;.*$//'
+
