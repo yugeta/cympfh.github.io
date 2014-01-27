@@ -45,6 +45,6 @@ anime/suzumiyaHaruhi.pls
 artists/denki.pls
 artists/kraftwerk.pls
 artists/momoiro.pls
+artists/ootudi.pls
+artists/rel.pls
 artists/timers.pls
-artists/オーケン.pls
-artists/相対性理論.pls
