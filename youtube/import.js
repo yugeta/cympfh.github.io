@@ -3,11 +3,15 @@
 
 var exec = require('child_process').exec
 
+if (process.argv.length < 4) {
+  console.log('usage$ ./% plsFileName IDorURL')
+  process.exit(0);
+}
+
 var path = process.argv[2];
 
 var id = process.argv[3];
 id = id.slice(id.indexOf('v=') + 2);
-
 
 exec('curl http://www.youtube.com/watch?v=' + id, function(err, stdout, stderr) {
   var idx = stdout.indexOf('<title>') + '<title>'.length
