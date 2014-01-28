@@ -63,15 +63,4 @@ function tw() {
   setTitle();
 }
 
-function ytExit() {
-  idx = -1;
-  setTitle();
-  D.removeChild(player);
-  var v = document.createElement("div");
-  v.id = "V";
-  v.width = "640px";
-  v.height = "0px";
-  D.appendChild(v);
-  P.style.display = "block";
-}
 
