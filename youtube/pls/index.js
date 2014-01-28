@@ -1,12 +1,13 @@
 fav.pls
+anime/luckyStar.pls
+myAlbums/amb.pls
 albums/TsukasaRecord.pls
 albums/xxNONOWAxx.pls
 albums/anime2014.pls
-anime/suzumiyaHaruhi.pls
+anime/Haruhi.pls
 anime/precure.pls
 anime/natsuNoArashi.pls
 anime/milkyHomes.pls
-anime/luckyStar.pls
 anime/kawase.pls
 anime/hidamari.pls
 anime/haganai.pls
@@ -34,7 +35,6 @@ artists/rel.pls
 artists/denki.pls
 artists/momoiro.pls
 myAlbums/Honduras.pls
-myAlbums/amb.pls
 myAlbums/Mine.pls
 myAlbums/longhand.pls
 myAlbums/OPs.pls

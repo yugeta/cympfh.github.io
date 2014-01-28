@@ -4,7 +4,6 @@
 x-HWd12guAg Motteke! Sailor Fuku [Naka no Hito on the floor mix]
 Ld3x4SpRKeo Motteke! Sailor Fuku [-Undakada ~ Kyou no Yabou-]
 wmYxTAS4fak Motteke! Sailor Fuku [Seishun orz Mix]
-wmYxTAS4fak Motteke! Sailor Fuku [Seishun orz Mix]
 nS1NOzLSpHM 田村ひより/も、妄想マシーン/らき☆すた
 wFN-A0WOkWs らき☆すた 泉こなた　Ｖol１ キャラソンＭＡＤ
 sc13G7j68AI らき☆すた 柊かがみ Vol2 キャラソンＭＡＤ
@@ -27,3 +26,4 @@ jT4WlrKg2P0 かえして！ニーソックス (Dog tails Remix)
 pezM-aBsHcU らき☆すた MAD　「かえして！ニーソックス」
 rmOSVn4FoOs らき☆すたの徒然なるままに（柊つかさ）
 _z2TbXhmydw 返して！ニーソックス kaeshite knee socks (Full)【高音質】
+QUFP8mC5InM Kachigumi [Konata x Kagami] Miyakawa Ke No Kuufuku Full Ver.
