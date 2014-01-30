@@ -181,3 +181,5 @@ zMI23phBgJo 電気グルーヴ　『Upside Down』
 37g9a_7Tp74 vvotaru - Joke
 fWFljWFjjTg Green Night Parade (feat.星子) - Green Night Parade
 xt5h8xgEqFQ fu_mou - Green Night Parade - 01. Prelude
+bCQAMNXwH_Q 戦国コレクション OP 『目をとじてギュッしよ』　高音質
+le6t5Zu0KyQ [Opening 2] Sengoku Collection

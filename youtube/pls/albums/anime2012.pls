@@ -21,3 +21,5 @@ LcigAiYTnbY 	Tonari no Kaibutsu-kun Opening [HD]
 QmX3AZL6sBs 	リアルワールド　人類は衰退しました
 lKdbr-TqIak 	SENGOKU COLLECTION [AMV] - back into my world
 lKdbr-TqIak 	SENGOKU COLLECTION [AMV] - back into my world
+bCQAMNXwH_Q 戦国コレクション OP 『目をとじてギュッしよ』　高音質
+le6t5Zu0KyQ [Opening 2] Sengoku Collection
