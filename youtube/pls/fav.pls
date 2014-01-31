@@ -183,3 +183,6 @@ fWFljWFjjTg Green Night Parade (feat.星子) - Green Night Parade
 xt5h8xgEqFQ fu_mou - Green Night Parade - 01. Prelude
 bCQAMNXwH_Q 戦国コレクション OP 『目をとじてギュッしよ』　高音質
 le6t5Zu0KyQ [Opening 2] Sengoku Collection
+ZB3DQ0iW9e4 VERY NICE DROOL
+P7Nfc-sv0BE [AMV] RHYTHM CIRCUS
+lPlq6gbksnY Madotsuki&#39;s Porch
