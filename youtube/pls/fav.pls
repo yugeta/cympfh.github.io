@@ -186,3 +186,5 @@ le6t5Zu0KyQ [Opening 2] Sengoku Collection
 ZB3DQ0iW9e4 VERY NICE DROOL
 P7Nfc-sv0BE [AMV] RHYTHM CIRCUS
 lPlq6gbksnY Madotsuki&#39;s Porch
+nsci5T-gK6U NoNoWire11_The Shouty Track
+bLLLbbghVLs na-na-nana-nananana-nana-(mihotyan)
