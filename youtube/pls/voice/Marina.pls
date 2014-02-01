@@ -29,3 +29,8 @@ u27RTwijalQ 三日月夜空 (CV:井上麻里奈) - 二人の季節
 egUEMfXyG8A 絶望歌謡大全集・薔薇の棺
 Skuf_k7aV3I 僕は友達が少ないED　私のキ・モ・チ 三日月夜空
 tDxDaFN00oI 【うみねこのなく頃に】 どっきゅん☆ハート
+ZBdwwBDSIx0 ココロノツバサ　Featuring KANA
+UXluZiGbF74 経験値速上々↑↑ Featuring KANA
+FHdCR7PAmZM 絶対カラフル宣言 Featuring KANA
+Hw9AbAamZPo その声が聴きたくて　Featuring KANA
+Rk8ZYqvWMKU カラフルDAYS Featuring KANA
