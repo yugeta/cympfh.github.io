@@ -273,7 +273,7 @@ function draw() {
 draw();
 
 C.onmousemove = function (e) {
-  var idx = nearest(e.clientX);
+  var idx = nearest((e.clientX-C.offsetLeft) * 1600 / C.clientWidth);
 
   var x = transX(hist[idx].time)
     , y = transY(hist[idx].wds);
