@@ -292,8 +292,13 @@ C.onmousemove = function (e) {
 
   point(x, y);
 
-  ctx.fillText(hist[idx].wds + ' words', x+3, y+25);
-  ctx.fillText('at ' + hist[idx].when, x+3, y+50);
+  if (idx > 40) {
+    ctx.fillText(hist[idx].wds + ' words', x+3, y+25);
+    ctx.fillText('at ' + hist[idx].when, x+3, y+50);
+  } else {
+    ctx.fillText(hist[idx].wds + ' words', x - 180, y-25);
+    ctx.fillText('at ' + hist[idx].when, x - 180, y-0);
+  }
 
 };
 
