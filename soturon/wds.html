@@ -292,7 +292,10 @@ C.onmousemove = function (e) {
 
   point(x, y);
 
-  if (idx > 40) {
+  if (idx > 190) {
+    ctx.fillText(hist[idx].wds + ' words', x+3, y-75);
+    ctx.fillText('at ' + hist[idx].when, x+3, y-50);
+  } else if (idx > 40) {
     ctx.fillText(hist[idx].wds + ' words', x+3, y+25);
     ctx.fillText('at ' + hist[idx].when, x+3, y+50);
   } else {
