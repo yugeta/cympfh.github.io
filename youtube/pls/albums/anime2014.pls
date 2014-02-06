@@ -12,3 +12,4 @@ llfL1fuCziE ハピネスチャージプリキュア！OP
 ojA69S5-fZ4 ハピネスチャージプリキュア！ED 「プリキュア・メモリ」
 qb4DP13Hlq0 桜Trick (Sakura Trick) OP
 J4hOR7penpk 桜Trick (Sakura Trick) ED
+bt7P3rmd6GY ニセコイOP Claris 「CLICK」
