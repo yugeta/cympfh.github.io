@@ -79,3 +79,4 @@ Rm02zZ-84SY [Random4fun] 真宵が音楽に合わせて阿良々木さんの名�
 x2XbTK6pM1c 七咲逢 - 恋はみずいろ (CBKN House Remix)
 u1yVTgo7A6U Dubstep - Magia (Mindfuck Remix)
 Xf_hJ4Pkyq0 ナイショの話(A Electro Remix)
+rRervevYGR0 Mousou Express - Hanazawa Kana full remix
