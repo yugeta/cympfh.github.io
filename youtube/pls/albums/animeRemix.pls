@@ -78,3 +78,4 @@ Qlqdm-0XRIg Lucky Star + Haruhi Mashup
 Rm02zZ-84SY [Random4fun] 真宵が音楽に合わせて阿良々木さんの名前を呼ぶ動画 音MAD
 x2XbTK6pM1c 七咲逢 - 恋はみずいろ (CBKN House Remix)
 u1yVTgo7A6U Dubstep - Magia (Mindfuck Remix)
+Xf_hJ4Pkyq0 ナイショの話(A Electro Remix)
