@@ -7,6 +7,7 @@ albums/anime2014.pls
 albums/animeRemix.pls
 albums/TsukasaRecord.pls
 albums/xxNONOWAxx.pls
+anime/amagami.pls
 anime/djibril.pls
 anime/doasa.pls
 anime/girlsUndPantzer.pls
@@ -35,7 +36,6 @@ myAlbums/amb.pls
 myAlbums/bgmbgm.pls
 myAlbums/cawaii.pls
 myAlbums/EDs.pls
-myAlbums/expand.pls
 myAlbums/hiwai.pls
 myAlbums/Honduras.pls
 myAlbums/jubeat.pls
