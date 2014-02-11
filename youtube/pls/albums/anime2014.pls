@@ -13,3 +13,4 @@ ojA69S5-fZ4 ハピネスチャージプリキュア！ED 「プリキュア・�
 qb4DP13Hlq0 桜Trick (Sakura Trick) OP
 J4hOR7penpk 桜Trick (Sakura Trick) ED
 bt7P3rmd6GY ニセコイOP Claris 「CLICK」
+FGG6PVhUhB8 悠木碧「ビジュメニア」Music Video short ver.
