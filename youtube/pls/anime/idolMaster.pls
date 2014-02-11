@@ -34,3 +34,6 @@ IAZumavmCiA THE iDOLM@STER 「フラワーガール」(Blessed Latina arr.)
 JEpSj0HIq90 【アイマスRemix】relations(Liesy HARDCORE☆Remix!!)
 PqUpoeLVcPM THE iDOLM@STER - NOW LOADING (MYTK Remix)
 WWrWeudSUsw THE iDOLM@STER: Agent Yoru wo Yuku 「エージェント夜を往く」 Full English Sub
+fvkrVL7x4PE THE iDOLM@STER: Kimi wa Melody 「キミはメロディ」 Full English Sub
+OH_rGQbXgyU THE iDOLM@STER: 「Colorful Days」 Full English Sub
+b93TIbWS98M THE iDOLM@STER: Overmaster「オーバーマスター」 Full English Sub
