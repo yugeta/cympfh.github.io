@@ -33,3 +33,4 @@ IAZumavmCiA THE iDOLM@STER 「フラワーガール」(Blessed Latina arr.)
 3M41C2kUDfM アイドルマスター　relations (Trance Remix)
 JEpSj0HIq90 【アイマスRemix】relations(Liesy HARDCORE☆Remix!!)
 PqUpoeLVcPM THE iDOLM@STER - NOW LOADING (MYTK Remix)
+WWrWeudSUsw THE iDOLM@STER: Agent Yoru wo Yuku 「エージェント夜を往く」 Full English Sub
