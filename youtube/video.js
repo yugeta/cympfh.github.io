@@ -1,5 +1,5 @@
 function draw(ids) {
-  ls = ids.slice(1);
+  ls = ids;
   idx = 0;
   setTitle(idx);
 
