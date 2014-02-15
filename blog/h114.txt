@@ -1,9 +1,0 @@
-2013年  9月 14日 土曜日 19:36:08 JST
-
-細かいオプションつけるわけでもないのでメモするほどじゃないのかもだけど
-
-web-camera が /dev/video0 なら
-
-mplayer tv:// -tv device=/dev/video0
-
-みたいに
