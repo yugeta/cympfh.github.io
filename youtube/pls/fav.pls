@@ -50,7 +50,7 @@ ArJ7No_iuwc オトメスイッチ紹介ムービー その1
 AzP2PnyWYbo ゆゆ式 OP せーのっ！z-mix／AnimeSkeetIt'sMeal remix
 B5Fsdz_TbvQ Yes! Pretty Cure 5 OP - Full Throttle Go! Go! （Japanese full version）
 BNLQEdx3z0Y Kimi No Shiranai Monogatari (Drum N Bass Mix)
-BQMXtYiTrWE シングルベッドはせまいのです
+BQMXtYiTrWE 京都旅行 ;シングルベッドはせまいのです
 BVglLeAgdUY メーウ 「pair」(ほんとにあった！霊媒先生　歌詞付き ver.)
 CLKO4yWY-0g やくしまるえつこ『ロンリープラネット』(RADIO ONSEN EUTOPIA) MV Full ver.
 Cl_kIDKU9s4 ニョキニョキ
