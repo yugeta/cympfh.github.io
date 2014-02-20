@@ -42,7 +42,6 @@ LFj2q98FMM8 To the Edge of the Dream - Yume Nikki Remix
 2vDSHkdjJhU Shi Pa - Bonobono Remix
 BaY4HII4ryk Macross F - Nyan Nyan House
 5qYmJkY2Zdc Ichigo Attack - Novier Records PV
-AMGzBjSZ7_8 Tamai-san band （　　　∵　　　）
 KtI5c_8yGFA Amagami House Ai
 gdZJWUOye3I Non-stop of Suzumiya Haruhi Remix
 qNoAMBztXqA psychedeliK-on!!
