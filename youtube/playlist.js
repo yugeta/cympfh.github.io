@@ -10,7 +10,7 @@ function load_pls(textarea, name) {
   }
   con.send(null);
 
-  log.innerHTML = 'http://cympfh.github.io/youtube/player.html?' + name + '<br>' + log0;
+  log.innerHTML = 'http://cympfh.github.io/youtube/player.html?' + name.slice(0, name.lastIndexOf('.pls'));
 }
 
 function init_pls(textarea, select, search) {

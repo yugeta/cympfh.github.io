@@ -36,8 +36,6 @@ function listset() {
 
 }
 
-var log0;
-
 function ytExit() {
   idx = -1;
   setTitle();
@@ -48,17 +46,14 @@ function ytExit() {
   v.height = "0px";
   D.appendChild(v);
   P.style.display = "block";
-  log.innerHTML = log0;
 }
 
 function init() {
 
-  log0 = log.innerHTML;
-
   pls.onchange = function(e) {
     load_pls(T, e.currentTarget.value);
   }
-  init_pls(T, pls, location.search);
+  init_pls(T, pls, location.search + '.pls');
 
 }
 
@@ -72,7 +67,7 @@ function init() {
 </div>
 
 <div id='P'>
-  <form style='height:100%;width:450px'>
+  <form style='width:450px'>
   <textarea wrap="off" id='T'># my playlist</textarea>
   <br>
 
