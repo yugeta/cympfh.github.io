@@ -45,3 +45,4 @@ W8puYEvVgqs 「のんのん日和」FULL のんのんびよりED
 TcTEzFGDQHw 勇者になれなかった俺はしぶしぶ就職を決意しました｡  ED「Sticking Places」 FULL
 nHK8XFKD9iQ 機巧少女は傷つかないED　回れ！雪月花　FULL 　歌詞つき
 nHK8XFKD9iQ 機巧少女は傷つかないED　回れ！雪月花　FULL 　歌詞つき
+Wl70W7z57QU 【高音質】さくら荘のペットな彼女 ED2(Full) Prime number～君と出会える日～

@@ -23,3 +23,4 @@ lKdbr-TqIak 	SENGOKU COLLECTION [AMV] - back into my world
 lKdbr-TqIak 	SENGOKU COLLECTION [AMV] - back into my world
 bCQAMNXwH_Q 戦国コレクション OP 『目をとじてギュッしよ』　高音質
 le6t5Zu0KyQ [Opening 2] Sengoku Collection
+JuBIK4_ygFA さくら荘のペットな彼女　op　full
