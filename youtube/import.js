@@ -10,6 +10,9 @@ if (process.argv.length < 4) {
 var path = process.argv[2];
 var id = process.argv[3];
 
+// cut after &
+if (id.indexOf('&') > 0) id = id.split('&')[0];
+
 // full url?
 if (id.indexOf('v=') > 0) id = id.slice(id.indexOf('v=') + 2);
 

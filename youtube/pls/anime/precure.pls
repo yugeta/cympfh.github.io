@@ -33,3 +33,6 @@ ux0y-rs_00I プリキュア～永遠のともだち～ｆｕｌｌ
 vcu0maaQSJs ふたりはプリキュア MaxHeart.
 xTRao6w6pE8 EXIT TRANCE - Track 09 - LET'S GO!スマイルプリキュア!
 z1rU35EmAos ふたりはプリキュアSplashStar　EDテーマ2『ガンバランス de ダンス』
+FHOZfD7mOUc FRESH-PRECURE-ORIGINAL-HENSHIN MUSIC
+9kxB74j_swU HEARTCATCH PRECURE-ORIGINAL -HENSHIN MUSIC
+b0GKrKNRlrY Suite Precure Henshin Music
