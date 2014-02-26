@@ -10,3 +10,6 @@
     + JavaScript, Scheme (,Haskell, OCaml)
   - 将来の夢
     + Precure
+  - 嫌いなもの
+    + 仕事とお金
+    + 世界から消してあげるので仕事とお金下さい
