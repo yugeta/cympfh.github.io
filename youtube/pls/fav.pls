@@ -98,7 +98,7 @@ SRJ2sEoYlWg 小倉優子 オンナのコ♡オトコのコ
 SbTsN86I3z4 ニンジーン Loves you yeah!
 Skuf_k7aV3I 僕は友達が少ないED　私のキ・モ・チ 三日月夜空
 T0XjJW0uSRs ハローソフマップワールド
-T517qbUQH_8 乙女よ大志を抱け!!
+T517qbUQH_8 異国迷路のクロワーゼOP フル 世界は踊るよ、君と。
 U7bh__iN7uw Un-Go Ending Fantasy - Full Version
 UA_3giFOac0 寝・逃・げでリセット！ / Ne Ni Ge de Reset! Acapella
 UPQUFQBNk5E 君を知ること Kimi wo Shiru Koto (侵略!?イカ娘 Shinryaku!? Ika Musume ED, FULL)
@@ -192,3 +192,4 @@ fWyQxVqAFzc Mikuru &#39;N&#39; Bass
 Fq7Zh_kpOGg 【Remix】鉄腕バーディーDECODE 02 【OP】Nirgilis「kiseki」Remix
 LFFrmguBPRk Gurren Lagann Opening Theme Full
 ymsr-9q36hY Melocure - Meguriai
+COIWYfqfVAs 乙女よ大志を抱け
