@@ -193,3 +193,4 @@ Fq7Zh_kpOGg 【Remix】鉄腕バーディーDECODE 02 【OP】Nirgilis「kiseki�
 LFFrmguBPRk Gurren Lagann Opening Theme Full
 ymsr-9q36hY Melocure - Meguriai
 COIWYfqfVAs 乙女よ大志を抱け
+Os9RtDCc2UU Space Dandy - Welcome to the X Dimension [Ending Extended]
