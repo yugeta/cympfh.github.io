@@ -16,3 +16,4 @@ IN6Vyvara3U ゆるしてあげないもん - [110930]GWAVE Super Feature's vol.1
 Ez1IoxT8ex4 テンシノスイッチ - [110930]GWAVE Super Feature's vol.19 U 2nd フルアルバム
 8sBl9FsGD7k merry-go-round - [110930]GWAVE Super Feature's vol.19 U 2nd フルアルバム
 BrUKYUuYWmQ U - かんしゃ☆かんげき
+PAS3FDs_fmk きらきらきらめく - [110930]GWAVE Super Feature&#39;s vol.19 U 2nd フルアルバム
