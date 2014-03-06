@@ -15,3 +15,5 @@ J4hOR7penpk 桜Trick (Sakura Trick) ED
 bt7P3rmd6GY ニセコイOP Claris 「CLICK」
 FGG6PVhUhB8 悠木碧「ビジュメニア」Music Video short ver.
 Os9RtDCc2UU Space Dandy - Welcome to the X Dimension [Ending Extended]
+qURWGTx_CLk Wake Up, Girls! - Opening &quot;Tachiagare!&quot; (Full Edit)
+RACY7iBYO74 「半永久的に愛してよ ♡」 Golden Time (ED2)
