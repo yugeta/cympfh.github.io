@@ -1,5 +1,5 @@
 fav.pls
-albums/animeRemix.pls
+albums/step.pls
 albums/TsukasaRecord.pls
 albums/xxNONOWAxx.pls
 anime/200x.pls
@@ -26,6 +26,7 @@ anime/natsuNoArashi.pls
 anime/pingdrum.pls
 anime/precure.pls
 anime/PSG.pls
+anime/remix.pls
 anime/saki.pls
 artists/denki.pls
 artists/kraftwerk.pls
