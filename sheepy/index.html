@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sheepy UI like Commandline</title>
+    <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="jquery.console.js"></script>
+    <script type="text/javascript" src="sheep.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+         var console2 = $('<div class="console2">');
+         $('body').append(console2);
+         var controller2 = console2.console({
+           promptLabel: '> ',
+           commandValidate:function(line){
+             if (line == "") return false;
+             else return true;
+           },
+           commandHandle:function(line){
+             return evaluate(line);
+           },
+           animateScroll:true,
+           promptHistory:true,
+           welcomeMessage:'Sheepy command line ver. 1.0.0'
+         });
+         controller2.promptText('help');
+       });
+    </script>
+    <style type="text/css" media="screen">
+      div.console2 { word-wrap: break-word; }
+      div.console2 { font-size: 14px; margin-top:1em }
+      div.console2 div.jquery-console-inner
+       { width:900px; height:300px; background:#efefef; padding:0.5em;
+         overflow:auto }
+      div.console2 div.jquery-console-prompt-box
+       { color:#444; font-family:monospace; }
+      div.console2 div.jquery-console-focus span.jquery-console-cursor
+       { background:#333; color:#eee; font-weight:bold }
+      div.console2 div.jquery-console-message-error
+       { color:#ef0505; font-family:sans-serif; font-weight:bold;
+         padding:0.1em; }
+      div.console2 div.jquery-console-message-success
+       { color:#187718; font-family:monospace;
+         padding:0.1em; }
+      div.console2 span.jquery-console-prompt-label { font-weight:bold }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <p><strong>Please enable JavaScript or upgrade your browser.</strong></p>
+    </noscript>
+  </body>
+</html>
