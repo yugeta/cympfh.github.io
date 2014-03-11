@@ -559,8 +559,7 @@ Card.Rakurai.use = function() {
   var m = -1;
   for (var i=0; i<sheep_ours.length; ++i) {
     var n = sheep_ours[i].number;
-    if (sheep_ours[i].frozen) return;
-    if (m < n) {
+    if (sheep_ours[i].frozen === false && m < n) {
       m = n;
     }
   }
