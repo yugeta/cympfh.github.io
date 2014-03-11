@@ -725,6 +725,7 @@ Card.Toketsu.use = function(ls) {
   for (var i=0; i < sheep_ours.length; ++i) {
     if (sheep_ours[i].frozen === false && sheep_ours[i].number === n) {
       sheep_ours[i].frozen = true;
+      break;
     }
   }
   discard(Card.Toketsu);
