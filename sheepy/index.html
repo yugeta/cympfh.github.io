@@ -10,7 +10,7 @@
     <script type="text/javascript">
       $(document).ready(function(){
          var console2 = $('<div class="console2">');
-         $('body').append(console2);
+         $('div').append(console2);
          var controller2 = console2.console({
            promptLabel: '> ',
            commandValidate:function(line){
@@ -31,7 +31,7 @@
       div.console2 { word-wrap: break-word; }
       div.console2 { font-size: 14px; margin-top:1em }
       div.console2 div.jquery-console-inner
-       { width:900px; height:300px; background:#efefef; padding:0.5em;
+       { width:800px; height:400px; background:#efefef; padding:0.5em;
          overflow:auto }
       div.console2 div.jquery-console-prompt-box
        { color:#444; font-family:monospace; }
@@ -50,5 +50,31 @@
     <noscript>
       <p><strong>Please enable JavaScript or upgrade your browser.</strong></p>
     </noscript>
+    <div class='kon'></div>
+    <hr><pre>
+helpコマンドも見て。
+
+alias ls='show'
+> ls
+(フィールドの状態)
+
+> man freeze
+イベントカードの説明
+
+> freeze 3
+[凍結」カードを消費して、「3羊カード」を凍結する
+
+> unzip 3
+凍結された3羊カードを見つけたら解凍する。
+いつでも実行できる。
+
+alias r='location.reload()' # reload for new game
+</pre>
+    <hr><pre>
+2014/3/11: とりあえずのもの
+TODO: inspire list がタダ見するコマンドになる
+</pre>
+
   </body>
 </html>
+
