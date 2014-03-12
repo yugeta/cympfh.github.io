@@ -51,6 +51,10 @@
       <p><strong>Please enable JavaScript or upgrade your browser.</strong></p>
     </noscript>
     <div class='kon'></div>
+
+    <hr>
+    <b>rule</b><a href="http://stst.cocot.jp/mygame/store2011/trots/rule.html">http://stst.cocot.jp/mygame/store2011/trots/rule.html</a>
+
     <hr><pre>
 helpコマンドも見て。
 
@@ -69,6 +73,355 @@ alias ls='show'
 いつでも実行できる。
 
 alias r='location.reload()' # reload for new game
+</pre>
+
+<pre style='height:400px; width: 800px; overflow: scroll; background:#efefef;'>
+Sheepy command line ver. 1.0.0
+> help
+command: 行頭からコロン(:)のイチ文字手前までを入力してエンター
+help:
+　これ
+show:
+　諸々の情報の表示
+　羊の後ろの * はそれが凍結されてることを示す。
+[card]:
+　カードを用いる。[card]は括弧内に表示される。
+　例えば '産めよ(bear)' ならば 'bear' がそれ。
+　ただし引数を取るものもある。manを使うこと。
+man [card]:
+　man bear のように。
+unzip [n]:
+　何(n)匹羊かで指定して、凍ってるのを一枚見つけたら解凍する
+> ls
+enemy: 100
+ours: 1
+deck: 20 枚
+remain sheep cards:
+　[1]: 9枚　[3]: 10枚　[10]: 10枚　[30]: 10枚　[100]: 9枚　[300]: 10枚　[1000]: 10枚
+hands: 落石(rock), 敵(enemy), 敵(enemy), 万能羊(almight), ファイア羊(fire)
+> fire enemy
+success
+> ls
+enemy: 100
+ours: 1
+deck: 18 枚
+remain sheep cards:
+　[1]: 9枚　[3]: 10枚　[10]: 10枚　[30]: 10枚　[100]: 9枚　[300]: 10枚　[1000]: 10枚
+hands: 落石(rock), 敵(enemy), 万能羊(almight), 霊感(inspire), 凍結(freeze)
+> enemy
+敵は200
+> ls
+enemy: 100, 100
+ours: 1
+deck: 17 枚
+remain sheep cards:
+　[1]: 9枚　[3]: 10枚　[10]: 10枚　[30]: 10枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 落石(rock), 万能羊(almight), 霊感(inspire), 凍結(freeze), 疫病(epi)
+> inspire gold
+gotten 黄金の蹄
+> ls
+enemy: 100, 100
+ours: 1
+deck: 16 枚
+remain sheep cards:
+　[1]: 9枚　[3]: 10枚　[10]: 10枚　[30]: 10枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 落石(rock), 万能羊(almight), 凍結(freeze), 疫病(epi), 黄金の蹄(gold)
+> almight gold 1
+from 1 to 3
+> ls
+enemy: 100, 100
+ours: 3
+deck: 15 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 10枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 落石(rock), 凍結(freeze), 疫病(epi), 黄金の蹄(gold), ダッシュ(dash)
+> gold 1
+Error: 1羊を持ってない
+> ls
+enemy: 100, 100
+ours: 3
+deck: 15 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 10枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 落石(rock), 凍結(freeze), 疫病(epi), 黄金の蹄(gold), ダッシュ(dash)
+> gold 3
+from 3 to 10
+> ls
+enemy: 100, 100
+ours: 10
+deck: 14 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 10枚　[10]: 9枚　[30]: 10枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 落石(rock), 凍結(freeze), 疫病(epi), ダッシュ(dash), 増やせよ(add)
+> add
+3羊が増えた
+> ls
+enemy: 100, 100
+ours: 10, 3
+deck: 13 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 9枚　[30]: 10枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 落石(rock), 凍結(freeze), 疫病(epi), ダッシュ(dash), 産めよ(bear)
+> bear 10
+10羊が産まれた
+> ls
+enemy: 100, 100
+ours: 10, 3, 10
+deck: 12 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 8枚　[30]: 10枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 落石(rock), 凍結(freeze), 疫病(epi), ダッシュ(dash), 産めよ(bear)
+> bear 10
+10羊が産まれた
+> ls
+enemy: 100, 100
+ours: 10, 3, 10, 10
+deck: 11 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 7枚　[30]: 10枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 落石(rock), 凍結(freeze), 疫病(epi), ダッシュ(dash), 望郷(home)
+> dash rock epi
+success
+> ls
+enemy: 100, 100
+ours: 10, 3, 10, 10
+deck: 10 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 7枚　[30]: 10枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 凍結(freeze), 望郷(home), 統率(command), 落雷(thunder), 地に満ちよ(fill)
+> command 10 10 10
+30を得た
+> ls
+enemy: 100, 100
+ours: 3, 30
+deck: 9 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 凍結(freeze), 望郷(home), 落雷(thunder), 地に満ちよ(fill), 牧羊犬(shepherd)
+> shepherd thunder
+success
+> ls
+enemy: 100, 100
+ours: 3, 30
+deck: 7 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 凍結(freeze), 望郷(home), 地に満ちよ(fill), 狼(wolf), 核(nuclear)
+> freeze 30
+success
+> ls
+enemy: 100, 100
+ours: 3, 30*
+deck: 6 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 望郷(home), 地に満ちよ(fill), 狼(wolf), 核(nuclear), 過密(crowd)
+> crowd
+success
+> ls
+enemy: 100, 100
+ours: 3, 30*
+deck: 5 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 望郷(home), 地に満ちよ(fill), 狼(wolf), 核(nuclear), 繁栄(bluete)
+> fill 5
+5枚の1羊を得た
+> ls
+enemy: 100, 100
+ours: 3, 30*, 1, 1, 1, 1, 1
+deck: 4 枚
+remain sheep cards:
+　[1]: 5枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 望郷(home), 狼(wolf), 核(nuclear), 繁栄(bluete), 敵(enemy)
+> wolf
+1羊が失くなった
+> ls
+enemy: 100, 100
+ours: 3, 30*, 1, 1, 1, 1
+deck: 3 枚
+remain sheep cards:
+　[1]: 6枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 望郷(home), 核(nuclear), 繁栄(bluete), 敵(enemy), 敵(enemy)
+> nuclear
+success
+> ls
+enemy: 100, 100
+ours: 3, 30*, 1, 1, 1, 1
+deck: 0 枚
+remain sheep cards:
+　[1]: 6枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 10枚　[1000]: 10枚
+hands: 望郷(home), 繁栄(bluete), 敵(enemy), 敵(enemy)
+> home
+success
+> ls
+enemy: 300
+ours: 3, 30*, 1, 1, 1, 1
+deck: 13 枚
+remain sheep cards:
+　[1]: 6枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 10枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 敵(enemy), 敵(enemy), 過密(crowd), 地に満ちよ(fill)
+> crowd 1 1 
+Error: 足りない
+> crowd 1 1 1 1
+success
+> ls
+enemy: 300
+ours: 3, 30*
+deck: 12 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 10枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 敵(enemy), 敵(enemy), 地に満ちよ(fill), 凍結(freeze)
+> enemy
+敵は400
+> ls
+enemy: 300, 100
+ours: 3, 30*
+deck: 11 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 9枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 敵(enemy), 地に満ちよ(fill), 凍結(freeze), 霊感(inspire)
+> inspire list
+万能羊(almight), 牧羊犬(shepherd), 狼(wolf), 統率(command), 産めよ(bear), 黄金の蹄(gold), ダッシュ(dash), 落雷(thunder), 産めよ(bear), 増やせよ(add), 敵(enemy)
+> unzip 30
+success
+> ls
+enemy: 300, 100
+ours: 3, 30
+deck: 11 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 9枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 敵(enemy), 地に満ちよ(fill), 凍結(freeze), 霊感(inspire)
+> inspire gold
+gotten 黄金の蹄
+> ls
+enemy: 300, 100
+ours: 3, 30
+deck: 10 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 9枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 敵(enemy), 地に満ちよ(fill), 凍結(freeze), 黄金の蹄(gold)
+> enemy
+敵は500
+> ls
+enemy: 300, 100, 100
+ours: 3, 30
+deck: 9 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 地に満ちよ(fill), 凍結(freeze), 黄金の蹄(gold), 統率(command)
+> fill 5
+5枚の1羊を得た
+> ls
+enemy: 300, 100, 100
+ours: 3, 30, 1, 1, 1, 1, 1
+deck: 8 枚
+remain sheep cards:
+　[1]: 5枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 凍結(freeze), 黄金の蹄(gold), 統率(command), 狼(wolf)
+> freeze 30
+success
+> ls
+enemy: 300, 100, 100
+ours: 3, 30*, 1, 1, 1, 1, 1
+deck: 7 枚
+remain sheep cards:
+　[1]: 5枚　[3]: 9枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 黄金の蹄(gold), 統率(command), 狼(wolf), 増やせよ(add)
+> wolf
+1羊が失くなった
+> add
+3羊が増えた
+> ls
+enemy: 300, 100, 100
+ours: 3, 30*, 1, 1, 1, 1, 3
+deck: 5 枚
+remain sheep cards:
+　[1]: 6枚　[3]: 8枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 黄金の蹄(gold), 統率(command), 産めよ(bear), 産めよ(bear)
+> unzip 30
+success
+> ls
+enemy: 300, 100, 100
+ours: 3, 30, 1, 1, 1, 1, 3
+deck: 5 枚
+remain sheep cards:
+　[1]: 6枚　[3]: 8枚　[10]: 10枚　[30]: 9枚　[100]: 8枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 黄金の蹄(gold), 統率(command), 産めよ(bear), 産めよ(bear)
+> command 3 3 1 1 1 1
+10を得た
+> ls
+enemy: 300, 100, 100
+ours: 30, 10
+deck: 4 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 10枚　[10]: 9枚　[30]: 9枚　[100]: 8枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 黄金の蹄(gold), 産めよ(bear), 産めよ(bear), 敵(enemy)
+> bear 30
+30羊が産まれた
+> ls
+enemy: 300, 100, 100
+ours: 30, 10, 30
+deck: 3 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 10枚　[10]: 9枚　[30]: 8枚　[100]: 8枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 黄金の蹄(gold), 産めよ(bear), 敵(enemy), 万能羊(almight)
+> almight gold 30
+from 30 to 100
+> ls
+enemy: 300, 100, 100
+ours: 100, 10, 30
+deck: 2 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 10枚　[10]: 9枚　[30]: 9枚　[100]: 7枚　[300]: 9枚　[1000]: 10枚
+hands: 繁栄(bluete), 産めよ(bear), 敵(enemy), 黄金の蹄(gold), 牧羊犬(shepherd)
+> gold 100
+from 100 to 300
+> ls
+enemy: 300, 100, 100
+ours: 300, 10, 30
+deck: 1 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 10枚　[10]: 9枚　[30]: 9枚　[100]: 8枚　[300]: 8枚　[1000]: 10枚
+hands: 繁栄(bluete), 産めよ(bear), 敵(enemy), 牧羊犬(shepherd), ダッシュ(dash)
+> bear 300
+300羊が産まれた
+> ls
+enemy: 300, 100, 100
+ours: 300, 10, 30, 300
+deck: 0 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 10枚　[10]: 9枚　[30]: 9枚　[100]: 8枚　[300]: 7枚　[1000]: 10枚
+hands: 繁栄(bluete), 敵(enemy), 牧羊犬(shepherd), ダッシュ(dash), 落雷(thunder)
+> dash enemy thunder
+success
+> ls
+enemy: 300, 100, 100
+ours: 300, 10, 30, 300
+deck: 0 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 10枚　[10]: 9枚　[30]: 9枚　[100]: 8枚　[300]: 7枚　[1000]: 10枚
+hands: 繁栄(bluete), 牧羊犬(shepherd), 敵(enemy), 落雷(thunder)
+> enemy
+敵は600
+> ls
+enemy: 300, 300
+ours: 300, 10, 30, 300
+deck: 0 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 10枚　[10]: 9枚　[30]: 9枚　[100]: 10枚　[300]: 6枚　[1000]: 10枚
+hands: 繁栄(bluete), 牧羊犬(shepherd), 落雷(thunder)
+> shepherd thunder
+success
+> ls
+enemy: 300, 300
+ours: 300, 10, 30, 300
+deck: 0 枚
+remain sheep cards:
+　[1]: 10枚　[3]: 10枚　[10]: 9枚　[30]: 9枚　[100]: 10枚　[300]: 6枚　[1000]: 10枚
+hands: 繁栄(bluete)
+> bluete 300
+カードが無くなった。あなたの負け
 </pre>
     <hr><pre>
 2014/3/11: とりあえずのもの
