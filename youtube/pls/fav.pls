@@ -194,3 +194,4 @@ LFFrmguBPRk Gurren Lagann Opening Theme Full
 ymsr-9q36hY Melocure - Meguriai
 COIWYfqfVAs 乙女よ大志を抱け
 Os9RtDCc2UU Space Dandy - Welcome to the X Dimension [Ending Extended]
+AYefYbOw41Y [Yuki]&quot;Disco☆Chocolatheque&quot; english subbed (annotation) [romaji / english in the description]
