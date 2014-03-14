@@ -5,7 +5,12 @@ function load_pls(textarea, name) {
   con.open('GET', "pls/" + name, true);
   con.onreadystatechange = function() {
     if (con.readyState === 4 && con.status === 200) {
-      textarea.value = con.responseText;
+      textarea.value =
+        con.responseText.split('\n')
+                        .filter(function(l){return !!l && l[0] !== '#'})
+                        .reverse()
+                        .join('\n')
+                        ;
     }
   }
   con.send(null);
