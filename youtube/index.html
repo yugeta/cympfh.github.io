@@ -1,11 +1,88 @@
-<pre>
-total <a href="56">56</a>
--rw-r--r--   1 staff     6B  1 27 16:54 <a href="index.html">index.html</a>
--rw-r--r--   1 staff   125B  1 27 16:53 <a href="Makefile">Makefile</a>
-drwxr-xr-x  10 staff   340B  1 27 16:51 <a href="pls">pls</a>
--rw-r--r--   1 staff   948B  1 27 16:45 <a href="pls.js">pls.js</a>
--rw-r--r--   1 staff   448B  1 25 21:54 <a href="player.css">player.css</a>
--rw-r--r--   1 staff   1.6K  1 25 21:54 <a href="player.html">player.html</a>
--rw-r--r--   1 staff   1.9K  1 25 21:54 <a href="video.js">video.js</a>
--rwxr-xr-x   1 staff   688B  1  3 13:08 <a href="import.js">import.js</a>
-2014年 1月27日 月曜日 16時54分21秒 JST
+<head>
+<meta charset="UTF-8">
+<title>YTl ver 1.4.1</title>
+<link rel="stylesheet" type="text/css" href="./player.css">
+<script type="text/javascript" src="../js/swfobject.js"></script>
+<script type="text/javascript" src="./video.js"></script>
+<script type="text/javascript" src="./playlist.js"></script>
+<script type="text/javascript">
+
+var ls, idx;
+
+function shuffle() {
+  T.value =
+    T.value.split('\n')
+     .filter(function(l){ return (l.trim())[0] !== '#' })
+     .filter(function(l){ return l.length >= 3 && l.indexOf(' ') > 0 })
+     .map(function(l){ return [Math.random(), l] })
+     .sort(function(x,y){ return x[0] > y[0] })
+     .map(function(pair){ return pair[1] })
+     .join('\n')
+     ;
+}
+
+function listset() {
+
+  var ids = 
+    T.value.split('\n')
+     .filter(function(l){ return (l.trim())[0] !== '#' })
+     .filter(function(l){ return l.length >= 3 && l.indexOf(' ') > 0 })
+     .map(function(l) {
+        var i = l.indexOf(' ');
+        return { id : l.slice(0, i) , name : l.slice(i+1) } })
+     ;
+
+  draw(ids);
+
+}
+
+function ytExit() {
+  idx = -1;
+  setTitle();
+  D.removeChild(player);
+  var v = document.createElement("div");
+  v.id = "V";
+  v.width = "640px";
+  v.height = "0px";
+  D.appendChild(v);
+  P.style.display = "block";
+}
+
+function init() {
+
+  pls.onchange = function(e) {
+    load_pls(T, e.currentTarget.value);
+  }
+  init_pls(T, pls, location.search + '.pls');
+
+}
+
+</script>
+</head>
+<body onload='init()'>
+
+<div style="width:450px;display:block" id="D">
+<div id="W">push ``play''</div>
+<embed id='V' width='640px' height='0px' src=''>
+</div>
+
+<div id='P'>
+  <form style='width:450px'>
+  <textarea wrap="off" id='T'># my playlist</textarea>
+  <br>
+
+  <select id='pls'></select>
+  <input type='button' value='shuffle' onclick='shuffle()'>
+  <input type='button' value='play' onclick='listset()'>
+
+  </form>
+</div>
+<code id='log'>
+ver 1.4.1 : 2014/02/11 : random mode &rarr; shuffle buttom, bug that skips first line
+ver 1.4.0 : 2014/01/28 : location.search accesses the playlist
+ver 1.3.2 : 2014/01/28 : playlists, recently changed order
+ver 1.3.0 : 2014/01/24 : load a playlist
+ver 1.2.4 : 2014/01/24 : adjust for Chrome
+ver 1.2.3 : 2014/01/21 : add exit button
+ver 1.2.2 : 2014/01/20 : loop in default
+</code>
