@@ -23,3 +23,17 @@ oya7lw2Wv2U Dance×Mixerで「苺ましまろ」OVA OP「あっかん berry berr
 s1J0Z7NchyA 苺ましまろ - 苺ましまろ画像集 .flv
 t9dYj97jcgc 苺ましまろ画像集
 wee4Evp3mP4 Ichigo Mashimaro - Ana's Song (Full)
+ogJ4Slmy1pQ いちごコンプリート - Ichigo Mashimaro Full Opening
+M2WMljlThCA ~Akkan Berry Berry~
+LtgWwzWQqrM Saeko Chiba - Ichigo Splash (Full song)
+WwAmC-_NZQg Classmate
+Uvc627txYPI Orikasa Fumiko - Yuumachi no Kaze
+Y3OAGPI6rX8 苺ましまろencore ED
+WGtdHLRosP4 Ichigo Mashimaro - Chika&#39;s Song (Full)
+DCAIwAAV9j8 Ichigo Mashimaro - Chika&#39;s song (Jam Mix)
+6nBOYjFiRd8 Ichigo Mashimaro - Matsuri&#39;s Song (Full)
+gOj5vJYXoqg Ichigo Mashimaro - Matsuri&#39;s Song (Chiffon Mix)
+wee4Evp3mP4 Ichigo Mashimaro - Ana&#39;s Song (Full)
+otItDu6QY1Y Ichigo Mashimaro - Ana&#39;s Song (Milk Mix)
+HjzgV_vokPo Ichigo Mashimaro - Miu&#39;s Song (Full)
+OvJ4zpLOMZY Ichigo Mashimaro - Miu&#39;s song (Parfait Mix)
