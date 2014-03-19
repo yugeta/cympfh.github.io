@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>もうやらないと思ってたけど <a href="http://projecteuler.net/problem=48">Project Euler - Problem 48</a></p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">main <span class="fu">=</span> print <span class="fu">$</span> foldl plus <span class="dv">0</span> <span class="fu">$</span> map self_pow [<span class="dv">1</span> <span class="fu">..</span> <span class="dv">1000</span>]
+    <span class="kw">where</span>
+        plus a b <span class="fu">=</span> (a<span class="fu">+</span>b) <span class="ot">`mod`</span> rr
+        self_pow n <span class="fu">=</span> pow n n
+        pow n <span class="dv">0</span> <span class="fu">=</span> <span class="dv">1</span>
+        pow n <span class="dv">1</span> <span class="fu">=</span> n <span class="ot">`mod`</span> rr
+        pow n m <span class="fu">=</span>
+            <span class="kw">if</span> m<span class="ot">`mod`</span><span class="dv">2</span> <span class="fu">==</span> <span class="dv">0</span> <span class="kw">then</span>
+                (mod ((pow n (div m <span class="dv">2</span>)) <span class="fu">^</span> <span class="dv">2</span>) rr)
+            <span class="kw">else</span>
+                (mod (n <span class="fu">*</span> ((pow n (div m <span class="dv">2</span>)) <span class="fu">^</span> <span class="dv">2</span>)) rr)
+        rr <span class="fu">=</span> <span class="dv">10000000000</span></code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">letrec</span> ((rr    <span class="dv">10000000000</span>)
+         (plus (^ (a b) (<span class="kw">modulo</span> (<span class="kw">+</span> a b) rr)))
+         (pow  (^ (n m)
+                 (<span class="kw">cond</span> [(<span class="kw">=</span> m <span class="dv">0</span>) <span class="dv">1</span>]
+                       [(<span class="kw">=</span> m <span class="dv">1</span>) (<span class="kw">modulo</span> n rr)]
+                       [(<span class="kw">zero?</span> (<span class="kw">modulo</span> m <span class="dv">2</span>))
+                           (mod (<span class="kw">expt</span> (pow n (div m <span class="dv">2</span>)) <span class="dv">2</span>) rr)]
+                       [<span class="kw">else</span>
+                           (mod (* (<span class="kw">expt</span> (pow n (div m <span class="dv">2</span>)) <span class="dv">2</span>) n) rr)])))
+         (self_pow (^n (pow n n))) )
+(<span class="kw">display</span> (fold plus <span class="dv">0</span> (map self_pow (iota <span class="dv">1000</span> <span class="dv">1</span>)))) )</code></pre>
+<p>最後の行のは、gauche0.9.3から標準になった$マクロによって、</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">($ <span class="kw">display</span> $ fold plus <span class="dv">0</span> $ map self_pow $ iota <span class="dv">1000</span> <span class="dv">1</span>) )</code></pre>
+<p>と書ける．</p>
+<p>SRFI-49 というものを知った．S式の代わりにI式で書く． I式のIはインデントのIですか？さすがにこれは極端だよね．</p>
+<p>こんなのあっても使わなそうだけど、ノートに手書きで擬似コードを 書くときに、lispで書いちゃうことがあって、そういう時は S式とI式の折衷になっちゃう．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">; let多相</span>
+(let1 id (^x x) (id id) )
+
+<span class="co">; 謎の多相 (MLなんかでは型推論に失敗する)</span>
+((^f (f f)) (^x x))</code></pre>
+</body>
+</html>

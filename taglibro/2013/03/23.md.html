@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>Sat Mar 23 18:32:54 JST 2013</p>
+<p>Stateモナドって結局、値と状態のタプルを持って回ってるだけで、 大げさなことやるわりに大したことない</p>
+<p>Control.Arrowを昨日読解してた 実際、これもやることは大したことない でも大げさに行わない分、分かりやすい</p>
+<p>Arrowを使って、スタックを実装する (値、スタック) というタプルを &gt;&gt;&gt; で流すだけだけど</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- import Control.Monad.State</span>
+<span class="kw">import </span><span class="dt">Control.Arrow</span>
+
+(<span class="fu">|&gt;</span>) x f <span class="fu">=</span> f x
+<span class="kw">infixl</span> <span class="dv">0</span> <span class="fu">|&gt;</span>
+
+<span class="ot">start ::</span> (<span class="dt">Int</span>, [<span class="dt">Int</span>])
+start <span class="fu">=</span> (<span class="dv">0</span>, [])
+
+<span class="ot">push ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> (a, [<span class="dt">Int</span>]) <span class="ot">-&gt;</span> (<span class="dt">Int</span>, [<span class="dt">Int</span>])
+push n <span class="fu">=</span> const n <span class="fu">***</span> (n<span class="fu">:</span>)
+
+<span class="ot">pop  ::</span> (a, [<span class="dt">Int</span>]) <span class="ot">-&gt;</span> (<span class="dt">Int</span>, [<span class="dt">Int</span>])
+pop (_, (x<span class="fu">:</span>xs)) <span class="fu">=</span> (x, xs)</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">1</span>
+(<span class="dv">1</span>,[<span class="dv">1</span>])
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">1</span> <span class="fu">&gt;&gt;&gt;</span> push <span class="dv">2</span>
+(<span class="dv">2</span>,[<span class="dv">2</span>,<span class="dv">1</span>])
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">1</span> <span class="fu">&gt;&gt;&gt;</span> push <span class="dv">2</span> <span class="fu">&gt;&gt;&gt;</span> pop
+(<span class="dv">2</span>,[<span class="dv">1</span>])</code></pre>
+<p>問題ない</p>
+<p>いくつかのArrowを使ったコードではたいてい</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> f <span class="fu">=</span> hoge <span class="fu">&gt;&gt;</span> hage <span class="fu">&gt;&gt;</span> moge
+f <span class="dv">3</span></code></pre>
+<p>みたいに使ってるからいいけど、</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">(hoge <span class="fu">&gt;&gt;&gt;</span> hage <span class="fu">&gt;&gt;&gt;</span> moge) <span class="dv">3</span></code></pre>
+<p>とかかっこ悪くて、上の |&gt; を使えば</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dv">3</span> <span class="fu">|&gt;</span> hoge <span class="fu">&gt;&gt;&gt;</span> hage <span class="fu">&gt;&gt;&gt;</span> moge</code></pre>
+<p>とかけてすごいパイプラインぽい で、|&gt;を左結合にしたので</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dv">3</span> <span class="fu">|&gt;</span> hoge <span class="fu">|&gt;</span> hage <span class="fu">|&gt;</span> moge</code></pre>
+<p>としても同じ意味になる．個人的にはこちらのほうが好き</p>
+<p>ただスタックを作っただけじゃ勿体ないからスタックの上での計算機を 作ってみる</p>
+<p>足し算なら、二度ポップして出てきたのを足してプッシュする 一度ポップしたものは <code>(a, state)</code> のaとして保持されるけど、そのまま二度目のポップをしたらaは破棄されるので なんとかして別のものとして持っとく必要があるけれど、これはまさしくArrowで 言う、パイプラインの分岐だ</p>
+<p>`<code>haskell *Main&gt; start |&gt; push 1 |&gt; push 2 |&gt; pop (2,[1]) *Main&gt; start |&gt; push 1 |&gt; push 2 |&gt; pop |&gt; fst &amp;&amp;&amp; pop (2,(1,[])) *Main&gt; start |&gt; push 1 |&gt; push 2 |&gt; pop |&gt; fst &amp;&amp;&amp; pop |&gt; (\(x,ys@(y,s)) -&gt; push (x+y) ys) (3,[3])</code></p>
+<p>appの存在はしってるけど、直接タプルを受け取るような関数を書いた方が早いしコード短いよね</p>
+<p>従って、次のような汎用のスタックの上で動く二項演算子が作れる</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">op f <span class="fu">=</span>
+    pop <span class="fu">&gt;&gt;&gt;</span> fst<span class="fu">&amp;&amp;&amp;</span>id <span class="fu">&gt;&gt;&gt;</span> second pop
+    <span class="fu">&gt;&gt;&gt;</span> (\(x,ys<span class="fu">@</span>(y,s)) <span class="ot">-&gt;</span> push (f x y) ys)
+
+add <span class="fu">=</span> op (<span class="fu">+</span>)
+sub <span class="fu">=</span> op (<span class="fu">-</span>)
+mul <span class="fu">=</span> op (<span class="fu">*</span>)
+
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">2</span> <span class="fu">|&gt;</span> push <span class="dv">3</span> <span class="fu">|&gt;</span> add
+(<span class="dv">5</span>,[<span class="dv">5</span>])
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">2</span> <span class="fu">|&gt;</span> push <span class="dv">3</span> <span class="fu">|&gt;</span> push <span class="dv">7</span> <span class="fu">|&gt;</span> add <span class="fu">|&gt;</span> mul
+(<span class="dv">20</span>,[<span class="dv">20</span>])</code></pre>
+<p>頭に runState とか書くの煩わしいし、コレでいいよね、普通に</p>
+</body>
+</html>

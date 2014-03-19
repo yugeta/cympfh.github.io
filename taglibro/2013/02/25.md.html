@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>Mon Feb 25 13:46:11 JST 2013</p>
+<h2 id="stalinの使い方">Stalinの使い方</h2>
+<pre class="sourceCode c"><code class="sourceCode c"><span class="co">// ta.c</span>
+<span class="dt">int</span> tarai(<span class="dt">int</span> x,<span class="dt">int</span> y,<span class="dt">int</span> z){
+    <span class="kw">if</span> (x&lt;=y)  <span class="kw">return</span> y;
+    <span class="kw">return</span> tarai(tarai(x<span class="dv">-1</span>,y,z), tarai(y<span class="dv">-1</span>,z,x),tarai(z<span class="dv">-1</span>,x,y));
+}
+main(){
+    printf(<span class="st">&quot;%d</span><span class="ch">\n</span><span class="st">&quot;</span>,tarai(<span class="dv">13</span>,<span class="dv">6</span>,<span class="dv">0</span>));
+}</code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">; tarai.scm</span>
+(<span class="kw">define</span><span class="fu"> </span>(tarai x y z)
+    (<span class="kw">if</span> (<span class="kw">&lt;=</span> x y) y
+        (tarai (tarai (<span class="kw">-</span> x <span class="dv">1</span>) y z)
+               (tarai (<span class="kw">-</span> y <span class="dv">1</span>) z x)
+               (tarai (<span class="kw">-</span> z <span class="dv">1</span>) x y))))
+
+(<span class="kw">write</span> (tarai <span class="dv">13</span> <span class="dv">6</span> <span class="dv">0</span>))</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">gcc</span> -O3 ta.c<span class="kw">;</span> <span class="kw">time</span> ./a.out
+<span class="kw">ta.c</span>: In function ‘main’:
+<span class="kw">ta.c</span>:6:5: warning: incompatible implicit declaration of built-in function ‘printf’ [enabled by default]
+<span class="kw">13</span>
+
+<span class="kw">real</span>    0m0.205s
+<span class="kw">user</span>    0m0.204s
+<span class="kw">sys</span>     0m0.000s
+
+$ <span class="kw">stalin</span> tarai.scm
+<span class="kw">For</span> now, you must specify -On because safe fixnum arithmetic is not (yet) <span class="kw">implemented</span></code></pre>
+<p>何もオプション付けないと-Onはつけろと言われる．intのoverflowチェックで あると man stalin には書いてある．</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">stalin</span> -On tarai.scm<span class="kw">;</span> <span class="kw">time</span> ./tarai
+<span class="kw">13</span>
+<span class="kw">real</span>    0m0.635s
+<span class="kw">user</span>    0m0.628s
+<span class="kw">sys</span>     0m0.004s</code></pre>
+<p>全然速くないじゃん、と思ってたけど、以下のようにするのが正しい．</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">stalin</span> -On -copt -O3 tarai.scm<span class="kw">;</span> <span class="kw">time</span> ./tarai
+<span class="kw">13</span>
+<span class="kw">real</span>    0m0.191s
+<span class="kw">user</span>    0m0.188s
+<span class="kw">sys</span>     0m0.000s</code></pre>
+<p>stalinはそもそもschemeソースコードをCのソースコードに翻訳するもので、 あとはcc、デフォルトではgccに投げるものらしい．-coptの後ろのオプションは gccへのオプションとして働く．</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">stalin</span> -On -k tarai.scm</code></pre>
+<p>とすると、翻訳されたCのソースコードが残って見ることができる．</p>
+<p>まあでも実際、StalinのSchemeは実用に耐えない．SRFIとかないし．</p>
+<hr />
+<p>たらい回し関数は、遅延評価でかなり計算が削減されて、</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(tarai x y z)
+    (<span class="kw">if</span> (<span class="kw">&lt;=</span> (<span class="kw">force</span> x) (<span class="kw">force</span> y)) (<span class="kw">force</span> y)
+        (tarai (lazy (tarai (<span class="kw">-</span> (<span class="kw">force</span> x) <span class="dv">1</span>) (<span class="kw">force</span> y) (<span class="kw">force</span> z)))
+               (lazy (tarai (<span class="kw">-</span> (<span class="kw">force</span> y) <span class="dv">1</span>) (<span class="kw">force</span> z) (<span class="kw">force</span> x)))
+               (lazy (tarai (<span class="kw">-</span> (<span class="kw">force</span> z) <span class="dv">1</span>) (<span class="kw">force</span> x) (<span class="kw">force</span> y))))))
+
+(<span class="kw">write</span> (tarai (lazy <span class="dv">13</span>) (lazy <span class="dv">6</span>) (lazy <span class="dv">0</span>)))</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">time</span> gosh tarai.scm
+<span class="kw">13</span>
+
+<span class="kw">real</span>    0m0.143s
+<span class="kw">user</span>    0m0.104s
+<span class="kw">sys</span>     0m0.024s</code></pre>
+<p>Gaucheのほうが，Stalinコンパイルしたものより速い． 速いというか計算を削減してるんだから．</p>
+<p>Stalinだとまずlazyって名前がダメでdelayにするとなんかエラーが 一杯出て分からない．</p>
+</body>
+</html>

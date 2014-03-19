@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>2012/x/g.md のjavascriptバージョン。</p>
+<p>javascriptにおけるstring to int は、Numberコンストラクタ(?関数?)か 弱い型付けであること、暗黙の型キャストが頻繁に行われることを 利用して+単項演算子を付けるのがよくあると思う。最悪evalもある。</p>
+<p>10万回 &quot;123&quot; をintに変換したものを要素とする配列の作成。 普通なら、私はこうする。</p>
+<pre><code>a = &quot;123&quot;;
+
+ret = [];
+for (i=0;i&lt;=100000;++i) ret[i] = +a;
+/*
+$ time node test.js
+
+real    0m0.133s
+user    0m0.084s
+sys 0m0.016s
+*/</code></pre>
+<p>おお、Haskellより早い。意外。 何かで読んだけど、実際こういう型キャストは処理系の中で アセンブリで書かれて最適化されているらしい。</p>
+<p>次に自前のパースを用意したバージョン</p>
+<pre><code>a = &quot;123&quot;;
+
+ret = [];
+read_int = function(str) {
+    var x = 0;
+    for (var i=0,l=str.length;i&lt;l;) x = x*10 + str.charCodeAt(i++) - 48;
+    return x;
+}
+for (i=0;i&lt;=100000;++i) ret[i] = read_int(a);
+/*
+$ time node test.js
+
+real    0m0.127s
+user    0m0.080s
+sys 0m0.016s
+*/</code></pre>
+<p>わずかに速くなった。 まあ、このくらいなら型キャストさせるね。</p>
+</body>
+</html>

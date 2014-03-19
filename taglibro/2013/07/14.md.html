@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>Sun Jul 14 20:27:00 JST 2013</p>
+<h1 id="疑問点">疑問点</h1>
+<p>あたかも継続を返すように名前付きletは返せないのか なんでエラーが出ず下のコードは動いてしまうのか</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(hoge)
+  (<span class="kw">let</span> loop ((i <span class="dv">0</span>))
+    (<span class="kw">if</span> (<span class="kw">odd?</span> i) (<span class="kw">values</span> i (delay (loop (<span class="kw">+</span> i <span class="dv">1</span>)))) (loop (<span class="kw">+</span> i <span class="dv">1</span>)))))</code></pre>
+<p>hogeは自然数を見ていって、奇数とその次の奇数を探す「継続もどき」の多値を返す</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (hoge)
+<span class="dv">1</span>
+#&lt;promise <span class="dv">0x8786910</span>&gt;</code></pre>
+<p>2つ目を実行してみよう</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (receive (j next) (hoge) (<span class="kw">force</span> next))
+<span class="dv">3</span></code></pre>
+<p>あれ？ ここは多値が帰ってきて欲しいのだけれど？？？？</p>
+<h2 id="追記">追記</h2>
+<p>Tue Aug 6 10:53:06 JST 2013</p>
+<p>名前付きletの名前を返すことは，確かに再帰手続きを返すことに等しい</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">let</span> rec ((x -<span class="dv">1</span>))
+  (<span class="kw">cond</span> [(<span class="kw">&lt;</span> x <span class="dv">0</span>) rec]
+        [(<span class="kw">zero?</span> x) <span class="dv">1</span>]
+        [exe (* x (rec (<span class="kw">-</span> x <span class="dv">1</span>)))]))
+#&lt;closure rec&gt;</code></pre>
+<p>ここで，(&lt; x 0) というのはrecを返すためだけのもの</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> f </span>(<span class="kw">let</span> rec ((ls -<span class="dv">1</span>)) (<span class="kw">cond</span> [(<span class="kw">&lt;</span> ls <span class="dv">0</span>) rec] [(<span class="kw">zero?</span> ls) <span class="dv">1</span>] [<span class="kw">else</span> (* ls (rec (<span class="kw">-</span> ls <span class="dv">1</span>)))])))
+f
+gosh&gt; (f <span class="dv">10</span>)
+<span class="dv">3628800</span></code></pre>
+<p>最初のやつの問題は，単にこういうこと</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">values</span> <span class="dv">1</span> <span class="dv">2</span>)
+<span class="dv">1</span>
+<span class="dv">2</span>
+gosh&gt; (<span class="kw">force</span> (delay (<span class="kw">values</span> <span class="dv">1</span> <span class="dv">2</span>)))
+<span class="dv">1</span></code></pre>
+<p>valuesじゃなくてやっぱりちゃんとcons使うべき</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">let</span> rec ((ls &#39;(<span class="dv">9</span> <span class="dv">8</span> <span class="dv">7</span> <span class="dv">6</span> <span class="dv">5</span>))) (<span class="kw">if</span> (<span class="kw">null?</span> ls) <span class="dv">#f</span> (<span class="kw">cons</span> (<span class="kw">car</span> ls) (delay (rec (<span class="kw">cdr</span> ls))))))
+(<span class="dv">9</span> . #&lt;promise <span class="dv">0x9d5f590</span>&gt;)</code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">let</span> rec ((ls &#39;(<span class="dv">9</span> <span class="dv">8</span> <span class="dv">7</span> <span class="dv">6</span> <span class="dv">5</span>))) (<span class="kw">if</span> (<span class="kw">null?</span> ls) <span class="dv">#f</span> (<span class="kw">begin</span> (set! cc (delay (rec (<span class="kw">cdr</span> ls)))) (<span class="kw">car</span> ls))))
+<span class="dv">9</span>
+gosh&gt; (<span class="kw">force</span> cc)
+<span class="dv">8</span>
+gosh&gt; (<span class="kw">force</span> cc)
+<span class="dv">7</span></code></pre>
+<p>はい，call/ccとか必要ない</p>
+</body>
+</html>

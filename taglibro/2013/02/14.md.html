@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>この日付管理、ちょっと信用できなくなってきた</p>
+<p>一つ上の人の卒論発表会見に行った． あんな、誰でも自由に入って見聞きできるカンジなんだ． 日付と場所さえ、どこかから聞きつけられれば、部外者 でも行ける．修士論文とかは知らんけど．</p>
+<p>自分があの場所に立ってあんなこと発表するなんて 信じられないな．ムリだろうな．研究室次第だろうな とも思った．</p>
+<hr />
+<p>Maybeモナドをschemeで．</p>
+<p><a href="http://d.hatena.ne.jp/kzk/20050902">Monad in Scheme (2) - moratorium</a> のパクリなんだけど、思い出しながらで書いたのであって、丸写しではないという 意味で、自分としては重要なので、</p>
+<p>/scheme/monad.scm.txt</p>
+<p>として残しておくのと、思い出すまでのスケッチも残しておこう． あんまり、他人が読んで面白いかは分からない．</p>
+<h1 id="目次">目次．</h1>
+<ul>
+<li>私の持っているモナドに対する知識．</li>
+<li>実装 までのスケッチ</li>
+<li>遊んでみる</li>
+</ul>
+<h2 id="私の持っているモナドに対する知識">私の持っているモナドに対する知識．</h2>
+<p>Maybeモナドを構成するのは、return と &gt;&gt;= , あと最後に中身を出す為の M. あと失敗を表す為の fail と fail であるかを判定する述語 fail?.</p>
+<p>Mというのは、例えば (return 1) は1を何かで包んでいる．中身の1をむき出しに するもの．</p>
+<p>GHCiで実験してみると</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Prelude</span><span class="fu">&gt;</span> return <span class="dv">1</span>
+<span class="dv">1</span></code></pre>
+<p>あ、こう表示されるんだ．</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="kw">let</span> a <span class="fu">=</span> return <span class="dv">1</span>
+
+<span class="fu">&lt;</span>interactive<span class="fu">&gt;:</span><span class="dv">20</span><span class="fu">:</span><span class="dv">9</span><span class="fu">:</span>
+    <span class="dt">Ambiguous</span> <span class="kw">type</span> variable <span class="ot">`m0&#39; in the constraint:</span>
+<span class="ot">      (Monad m0) arising from a use of `</span>return&#39;
+  <span class="dt">Probable</span> fix<span class="fu">:</span> add a <span class="kw">type</span> signature that fixes these <span class="kw">type</span> variable(s)
+  <span class="dt">In</span> the expression<span class="fu">:</span> return <span class="dv">1</span>
+  <span class="dt">In</span> an equation for <span class="ot">`a&#39;: a = return 1</span></code></pre>
+<p>単に return 1 では何のモナドなのかわからないので、型を与える． いわゆる文脈ってやつだよね？？</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="kw">let</span> a <span class="fu">=</span> return <span class="dv">1</span><span class="ot"> ::</span> <span class="dt">Maybe</span> <span class="dt">Int</span>
+<span class="dt">Prelude</span><span class="fu">&gt;</span> a
+<span class="dt">Just</span> <span class="dv">1</span>
+
+<span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="kw">let</span> a <span class="fu">=</span> return <span class="dv">1</span><span class="ot"> ::</span> [<span class="dt">Int</span>]
+<span class="dt">Prelude</span><span class="fu">&gt;</span> a
+[<span class="dv">1</span>]</code></pre>
+<p>( :: Maybe Int) という修飾子のつもりで、M は定義した．</p>
+<p>そして、どのように実行されるべきか．ここからはSchemeのコードで書く． 以下は実際にgoshで実験した結果だけど、はじめに想定していた通りだ．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (return <span class="dv">1</span>)
+#&lt;closure&gt;
+gosh&gt; (M (return <span class="dv">1</span>))
+<span class="dv">1</span>
+gosh&gt; (M ( (return <span class="dv">1</span>) &gt;&gt;= (^x (return <span class="dv">2</span>)) ))
+<span class="dv">2</span>
+gosh&gt; (M ( (return <span class="dv">1</span>) &gt;&gt;= (^x (return <span class="dv">2</span>)) &gt;&gt;= (^x (return <span class="dv">3</span>)) ))
+<span class="dv">3</span></code></pre>
+<p>S式で、律儀に書くのなら、bindは</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(&gt;&gt;= (&gt;&gt;= (return <span class="dv">1</span>) (^x (return ...))) &gt;&gt;= (^x (return ...)))</code></pre>
+<p>と書くべきだ．つまり</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(&gt;&gt;= m f) ... )</code></pre>
+<p>とされるべきで 実際、 <a href="http://howm.sourceforge.jp/cgi-bin/hiki/hiki.cgi?Monad">howm wiki - モナド</a> ここでの実装ではそうなってた．</p>
+<p>はじめにも挙げた方の <a href="http://d.hatena.ne.jp/kzk/20050902">Monad in Scheme (2) - moratorium</a> では、</p>
+<pre><code>(m &gt;&gt;= f &gt;&gt;= g &gt;&gt;= h ...)</code></pre>
+<p>という書き方を想定しており、なんだかとてもかっこいい． かっこよすぎて私はその記事でのモナドの実装をノートに書きまくった．</p>
+<p>人間の体は夜ふかしができるようになっていて、つまり、一日の周期が24時間よりも長い ということがよく知られていて、だから後ろへずらすことが容易なのである．逆に 前にずらすことは出来ないけれど．私はこの一週間でズラしまくった結果、昼の12時過ぎに 寝て夜中の1時に起きた．睡眠時間だけは相変わらずである．外もそろそろ白んできて ふと思い出したので、あのモナドの実装を思い出しながら、思い出せない部分は なんとしても自分一人の発想で補ってやろうとして書いたのだった．</p>
+<pre><code>(m &gt;&gt;= f &gt;&gt;= g)</code></pre>
+<p>までできれば、きっと</p>
+<pre><code>(m &gt;&gt;= f &gt;&gt;= g &gt;&gt;= h)</code></pre>
+<p>は自然とできているだろう．でも取り敢えずは簡単に</p>
+<pre><code>(m &gt;&gt;= f)</code></pre>
+<p>から考えるべきだった．反省だ．おかげで時間がかかった．</p>
+<p>failは一番最後に実装した．ほんの少しの修正ですんだ．failはこのように動くべき．</p>
+<pre><code>gosh&gt; (M ( (return 1) &gt;&gt;= fail &gt;&gt;= (^x (return 3)) ))
+Nothing</code></pre>
+<p>つまり、failのあとに実行されるものはreturn の結果には影響を与えない． 始めの引数評価の時以外、評価されることもない．</p>
+<h2 id="実装-までのスケッチ">実装 までのスケッチ</h2>
+<p>私が思い出すために、裏紙に書きまくったラムダ式を写すとともに、精一杯 何を考えてたのかを言葉にした．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(return x)</code></pre>
+<p>xを包んだものを返す．よくあるのは、ローカル変数として定義してやること．すなわち</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">lambda</span> (f) (f x))</code></pre>
+<p>このようなラムダ式をreturnは返す．</p>
+<p>似たものとして</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(my-cons x y)
+    (<span class="kw">lambda</span> (f) (f x y)))</code></pre>
+<p>というのがあった．これは定番だろう．my-consに対してmy-car, my-cdr は簡単だ．</p>
+<p>cons に対してcar, cdr があるように、きっと return に対しては M であろう． Mはreturn が包んだものをひん剥くから．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(M m) <span class="co">; m &lt;- (return 1)</span>
+    (m (<span class="kw">lambda</span> (x) x)))</code></pre>
+<p>簡単だ．</p>
+<p>そしたら、bindさえ書ければ、実質終わり． いきなり何を書いたらいいのか分からないので、こうなるべきだというベータ簡約の様子 を書いた．</p>
+<pre><code>((return 1) &gt;&gt;= (^x (return 2)))
+ -&gt; (&gt;&gt;= 1 (list (^x (return 2))))
+ -&gt; ((^x (return 2)) 1)
+ -&gt; (return 2)</code></pre>
+<p>この調子に、&gt;&gt;=をもうひとつ並べる</p>
+<pre><code>(return 1) &gt;&gt;= (^x (return 2)) &gt;&gt;= (^x (return 3))
+ -&gt; (&gt;&gt;= 1 (list (^x (return 2)) &gt;&gt;= (^x (return 3))))
+ -&gt; ((return 2) &gt;&gt;= (^x (return 3)))</code></pre>
+<blockquote>
+<blockquote>
+<p>= を中に置くために</p>
+</blockquote>
+</blockquote>
+<pre><code> (return 1) &gt;&gt;= ..</code></pre>
+<p>が</p>
+<pre><code>(&gt;&gt;= 1 ..)</code></pre>
+<p>のようになって、そして</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(&gt;&gt;= <span class="dv">1</span> ls)</code></pre>
+<p>は、 <code>scheme (let1 op (car ls)   (apply (op ls 1) ls))</code>scheme</p>
+<p>となってほしい．returnは今まで1引数を取るようなラムダ式を返すことにしてたけど、 ここで (&gt;&gt;= ..)という複数の値を渡すことで&gt;&gt;=を実行させるので、書き換えが必要だ．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(return x)
+    (<span class="kw">lambda</span> (f . rest) (f x rest)))</code></pre>
+<p>これで、 <code>((return 1) &gt;&gt;= (^x ...))</code> は <code>(&gt;&gt;= 1 ((^x ..)))</code> となった．&gt;&gt;= への第二引数はリストであるのに注意．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(&gt;&gt;= x ls)
+    (apply
+        ((<span class="kw">car</span> ls) x)
+        (<span class="kw">cdr</span> ls)))</code></pre>
+<p>これで <code>(&gt;&gt;= 1 ((^x ..)))</code> は <code>(apply ((^x ..) 1) '())</code> となる． applyへの第二引数は残りの '(&gt;&gt;= (^x ...)) が入る予定だったが&gt;&gt;= 一つだけの 並びだと空になる．このときapplyはエラーを出す．null?で分岐が必要だった．</p>
+<p>私としては、思い出すべきことは、これでひと通り全て思い出せた．</p>
+<p>(fail)は(return 'Nothing)とするだけだし、 述語 (define fail? (pa$ equal 'Nothing)) を用意してやれば、 &gt;&gt;= の中で、まず (&gt;&gt;= x ls) の x について fail? して #t だったら(fail)を 返してやる．</p>
+<p>以上でできたことになる．</p>
+<ul>
+<li>遊んでみる</li>
+</ul>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; zero
+#&lt;closure (return return)<span class="kw">&gt;</span>
+gosh&gt; (M zero)
+<span class="dv">0</span>
+gosh&gt; (M one)
+<span class="dv">1</span>
+gosh&gt; succ
+#&lt;closure succ&gt;
+gosh&gt; pred
+#&lt;closure pred&gt;
+gosh&gt; (M (one &gt;&gt;= succ))
+<span class="dv">2</span>
+gosh&gt; (M (one &gt;&gt;= succ &gt;&gt;= succ))
+<span class="dv">3</span>
+gosh&gt; (M (one &gt;&gt;= succ &gt;&gt;= fail &gt;&gt;= succ))
+Nothing
+
+gosh&gt; (<span class="kw">define</span><span class="fu"> </span>(find x)
+(let1 result (<span class="kw">assoc</span> x &#39;((<span class="dv">1</span> . minamike) (<span class="dv">3</span> . okaeri) (<span class="dv">4</span> . tadaima)))
+(<span class="kw">if</span> result ($ return $ <span class="kw">cdr</span> result) (fail)) ))
+find
+gosh&gt; (M (one &gt;&gt;= find))
+minamike
+gosh&gt; (M (one &gt;&gt;= succ &gt;&gt;= find))
+Nothing
+gosh&gt; (M (one &gt;&gt;= succ &gt;&gt;= succ &gt;&gt;= find))
+okaeri
+gosh&gt; (M (one &gt;&gt;= succ &gt;&gt;= succ &gt;&gt;= pred &gt;&gt;= find))
+Nothing</code></pre>
+<p>モナドは途中で失敗するっていう事例を見せるくらいでしか 有用性を示せないよね．それでたいていみんなゼロで割るよね．</p>
+</body>
+</html>

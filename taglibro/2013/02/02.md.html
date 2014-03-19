@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>ファイル名は &quot;.scm&quot; としてたほうがそれっぽいな． gosh -l で読み込めるかが心配だったんだけど杞憂だった．</p>
+<p>それと、pwd, cd, ls なんかがあったほうも便利だ． これは (http://practical-scheme.net/gauche/man/gauche-refj_140.html) を使ったほうがよかろう．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">;; .scm</span>
+(use srfi<span class="dv">-1</span>)
+(use file.util)
+(use gauche.process)
+
+(<span class="kw">define-syntax</span><span class="fu"> e</span>
+    (<span class="kw">syntax-rules</span> ()
+        ((_ name) (<span class="kw">begin</span> (run-process `(vim ,name) :wait <span class="dv">#t</span>)
+                         (<span class="kw">load</span> (<span class="kw">string-append</span> <span class="st">&quot;./&quot;</span>
+                                 (<span class="kw">if</span> (<span class="kw">symbol?</span> name) (<span class="kw">symbol-&gt;string</span> name) name)))) )))
+
+(<span class="kw">define-syntax</span><span class="fu"> cd</span>
+    (<span class="kw">syntax-rules</span> ()
+        ((_)      (current-directory))
+        ((_ dir)  (current-directory (<span class="kw">if</span> (<span class="kw">symbol?</span> dir) (<span class="kw">symbol-&gt;string</span> dir) dir))) ))
+(<span class="kw">define</span><span class="fu"> </span>(pwd) (cd))
+
+(<span class="kw">define-syntax</span><span class="fu"> ls</span>
+    (<span class="kw">syntax-rules</span> ()
+        ((_)      (ls <span class="st">&quot;.&quot;</span>))
+        ((_ dir)  
+    (receive (ds fs) (directory-list2 (<span class="kw">if</span> (<span class="kw">symbol?</span> dir) (<span class="kw">symbol-&gt;string</span> dir) dir))
+    (let1 ls (<span class="kw">append</span> (map (cut <span class="kw">string-append</span> &lt;&gt; <span class="st">&quot;/&quot;</span>) (drop ds <span class="dv">2</span>)) fs)
+    (<span class="kw">display</span> (string-join ls (<span class="kw">if</span> (<span class="kw">&lt;</span> (<span class="kw">length</span> ls) <span class="dv">10</span>) <span class="st">&quot;\n&quot;</span> <span class="st">&quot;\t&quot;</span>)))
+    (<span class="kw">newline</span>) )))))
+
+(<span class="kw">define-syntax</span><span class="fu"> cat</span>
+    (<span class="kw">syntax-rules</span> ()
+        ((_ fname) (<span class="kw">display</span> (<span class="kw">call-with-input-file</span> (<span class="kw">if</span> (<span class="kw">symbol?</span> fname) (<span class="kw">symbol-&gt;string</span> fname) fname) port-&gt;string)))))</code></pre>
+<p>基本的にいちいち&quot;で括りたくないので、文字列ではなくシンボルで ファイル名なんかを指定．</p>
+<pre><code>(e &#39;test.scm)</code></pre>
+<p>gauche ファイルの編集. vimプロセスが終了後、インタプリタはロードを試みる．</p>
+<pre><code>(cd [dir])</code></pre>
+<p>current directory の変更．(cd)は (pwd)に等しい．</p>
+<pre><code>(ls)
+(cat &#39;test.scm)</code></pre>
+</body>
+</html>

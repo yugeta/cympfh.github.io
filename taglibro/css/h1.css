@@ -1,0 +1,25 @@
+body {
+  color: white;
+  background-color: #202020;
+  filter: alpha(opacity=40);
+}
+
+code {
+  display: block;
+  padding: 3px;
+  background-color: #604040;
+  border: 1px solid red;
+  border-left: 9px solid red;
+}
+
+blockquote {
+  background-color: #242424;
+  border: 1px solid white;
+  padding: 3px;
+}
+
+h1 {
+}
+
+h2 {
+}

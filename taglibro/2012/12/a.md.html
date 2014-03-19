@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>考えてみりゃ、関数型だなんて、しかもF#だなんて、 そんな簡単にかける言語で処理まで速いなんて夢を 見過ぎなんだ．</p>
+<pre class="sourceCode fsharp"><code class="sourceCode fsharp">//<span class="co"> test.fs</span>
+<span class="ot">open</span> System
+
+<span class="kw">let</span> fib i =
+    <span class="kw">let</span> <span class="kw">rec</span> fib&#39; a b i =
+        <span class="kw">if</span> i=0 <span class="kw">then</span> a <span class="kw">else</span> fib&#39; b (a+b) (i<span class="dv">-1</span>)
+    <span class="kw">in</span>
+    fib&#39; 0 1 i
+
+<span class="kw">for</span> _ <span class="kw">in</span> 0 .. 99 <span class="kw">do</span>
+    ignore &lt;| fib 40
+
+//<span class="co"> F# Compiler for F# 3.0 (Open Source Edition)</span>
+//<span class="co"> real 0m0.018s</span>
+//<span class="co"> user 0m0.012s</span>
+//<span class="co"> sys  0m0.004s</span></code></pre>
+<p>出力はしてないけどちゃんと計算してるらしい． fsharpcには三種類ほど最適化オプションが用意 されているが、入れても入れなくてもタイムは 変わらなかったので、全く効果がないか、何も 指定しなければ自動的にオンになるかだ．</p>
+<p><code>c++ // test.cpp #include &lt;cstdio&gt; int fibsub(int a, int b, int i) {     if (i==0) return a;     else return fibsub(b,a+b,i-1); } int fib(int i) {     return fibsub(0,1,i); } main() {     for (int i=0;i&lt;100;++i) fib(40);     return 0; } // /usr/lib/gcc/i686-linux-gnu/4.7/lto-wrapper // real 0m0.002s // user 0m0.000s // sys  0m0.000s</code></p>
+<p>素晴らしい．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">; test.scm</span>
+(<span class="kw">define</span><span class="fu"> </span>(fib i)
+    (<span class="kw">define</span><span class="fu"> </span>(fib* a b i)
+        (<span class="kw">if</span> (<span class="kw">=</span> i <span class="dv">0</span>) a (fib* b (<span class="kw">+</span> a b) (<span class="kw">-</span> i <span class="dv">1</span>))))
+    (fib* <span class="dv">0</span> <span class="dv">1</span> i))
+
+(<span class="kw">let</span> loop ((i <span class="dv">0</span>))
+    (<span class="kw">if</span> (<span class="kw">&lt;</span> i <span class="dv">100</span>) (<span class="kw">begin</span> (fib <span class="dv">40</span>) (loop (<span class="kw">+</span> i <span class="dv">1</span>))) ))
+
+<span class="co">; Gauche scheme shell, version 0.9.1 [utf-8,pthreads], i686-pc-linux-gnu</span>
+<span class="co">; real  0m0.013s</span>
+<span class="co">; user  0m0.008s</span>
+<span class="co">; sys   0m0.004s</span></code></pre>
+<p>F#をコンパイルしたより速い． そういうこともあるかもしれない．</p>
+<pre><code>; stalin でのコンパイル
+; real  0m0.001s
+; user  0m0.000s
+; sys   0m0.000s</code></pre>
+<p>バカみたいに速い．本当に計算されてるのか、つまり計算結果は 捨ててるのでもしかして除去されてるのではないかと毎回display させてみると、時間は二倍になってC++とやっと並んだ．</p>
+<p>スクリプトとしてそのまま動かしても速いし、 Schemeで書くことにしよう．</p>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>Sat Jun 29 13:16:47 JST 2013</p>
+<p>Schemeの継続を利用する例としてambオペレーター 未だに分かったようで分かってない そもそも継続を使わないといけないものなのか、これは あとfailの初期化がみんなわざわざ継続使ってなんか やってるけどどうしてそんなことする必要があるのか</p>
+<p>これは関数版 failの初期化も自己流</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">;; choose is function version for amb</span>
+
+(<span class="kw">define</span><span class="fu"> *paths* </span>&#39;())
+(<span class="kw">define</span><span class="fu"> *nopath-sym* </span>&#39;no-paths)
+(<span class="kw">define</span><span class="fu"> </span>(fail)
+  (<span class="kw">if</span> (<span class="kw">null?</span> *paths*) (error *nopath-sym*)
+    ((pop! *paths*))))
+(<span class="kw">define</span><span class="fu"> </span>(choose . ls)
+  (<span class="kw">if</span> (<span class="kw">null?</span> ls) (fail)
+    (let/cc return
+      (push! *paths* (<span class="kw">lambda</span> () (return (apply choose (<span class="kw">cdr</span> ls)))))
+      (<span class="kw">car</span> ls))))
+
+(<span class="kw">define-syntax</span><span class="fu"> require</span>
+  (<span class="kw">syntax-rules</span> ()
+    ((_ b) (<span class="kw">if</span> (<span class="kw">not</span> b) (fail)))))</code></pre>
+<p>グラフのパス探索でもしてみる</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">;; define of graph</span>
+
+(<span class="kw">define</span><span class="fu"> vertexes </span>&#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))
+(<span class="kw">define</span><span class="fu"> edges</span>
+  &#39;((<span class="dv">0</span> . <span class="dv">1</span>) (<span class="dv">1</span> . <span class="dv">0</span>) (<span class="dv">0</span> . <span class="dv">2</span>) (<span class="dv">2</span> . <span class="dv">0</span>)
+    (<span class="dv">1</span> . <span class="dv">2</span>) (<span class="dv">2</span> . <span class="dv">1</span>) (<span class="dv">1</span> . <span class="dv">3</span>) (<span class="dv">3</span> . <span class="dv">1</span>)
+    (<span class="dv">2</span> . <span class="dv">3</span>) (<span class="dv">3</span> . <span class="dv">2</span>)) )
+(<span class="kw">define</span><span class="fu"> </span>(conj? u v)
+  (find (cut <span class="kw">equal?</span> &lt;&gt; (<span class="kw">cons</span> u v)) edges))
+
+<span class="co">;; 任意の長さのuからvへのパスを探す</span>
+<span class="co">;; 同じ点を重複させると、深さ優先なので止まらない</span>
+<span class="co">;; 履歴を持たせて、同じ点は一度しか辿らせない</span>
+
+(<span class="kw">define</span><span class="fu"> </span>(reachable? u v)
+  (<span class="kw">define</span><span class="fu"> </span>(%r u his)
+    (<span class="kw">if</span> (conj? u v)
+      (<span class="kw">list</span> v)
+      (let1 w (apply choose vertexes)
+        (require (conj? u w))
+        (require (<span class="kw">not</span> (find (cut <span class="kw">=</span> w &lt;&gt;) his)))
+        (<span class="kw">cons</span> w (%r w (<span class="kw">cons</span> u his))) )))
+
+  (string-join (map x-&gt;string (<span class="kw">cons</span> u (%r u &#39;()))) <span class="st">&quot; -&gt; &quot;</span>) )
+
+<span class="co">;; no-paths エラーが出るまで fail させる</span>
+
+(<span class="kw">define</span><span class="fu"> </span>(all-paths u v)
+  (<span class="kw">display</span> (reachable? u v)) (<span class="kw">newline</span>)
+  (<span class="kw">let</span> <span class="kw">while</span> ()
+    (<span class="kw">display</span> (fail)) (<span class="kw">newline</span>)
+    (<span class="kw">while</span>) ))
+
+<span class="co">; gosh&gt; (all-paths 0 3)</span>
+<span class="co">; 0 -&gt; 1 -&gt; 3</span>
+<span class="co">; 0 -&gt; 2 -&gt; 3</span>
+<span class="co">; *** ERROR: no-paths</span>
+<span class="co">; (ry)</span></code></pre>
+<p>2つは確かにパスを見つけられてるけど、長さ3のパスが見つけられない</p>
+<pre><code>0 -&gt; 1 -&gt; 2 -&gt; 3
+0 -&gt; 2 -&gt; 1 -&gt; 3</code></pre>
+<p>とかいうパスもあるのに</p>
+<p>わからん</p>
+</body>
+</html>

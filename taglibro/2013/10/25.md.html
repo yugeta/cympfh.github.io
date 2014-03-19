@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>2013年 10月 25日 金曜日 09:26:24 JST</p>
+<p>高校生→受験生→浪人生→大学生→就活生 いつまで生きればいいんだ Fri Oct 25 15:40:50 JST 2013</p>
+<p>node.js child.execは出力を適当な文字数に打ち切る</p>
+<p>書きかけのソースコードの断片</p>
+<p>前にも遭遇したけどね，この問題 問題はどこに問題があるのか見つけるのが大変なこと</p>
+<p>まず，解決したソースコード</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">const</span> child = <span class="fu">require</span>(<span class="st">&quot;child_process&quot;</span>)
+
+<span class="ot">child</span>.<span class="fu">exec</span>(<span class="st">&quot;curl &quot;</span>+url+<span class="st">&quot;|nkf &gt; /tmp/asaloondat.dat&quot;</span>, <span class="kw">function</span>(er,out) {
+  <span class="kw">var</span> rs =
+    <span class="ot">fs</span>.<span class="fu">readFileSync</span>(<span class="st">&quot;/tmp/asaloondat.dat&quot;</span>, <span class="st">&quot;utf-8&quot;</span>)
+      .<span class="fu">split</span>(<span class="st">&quot;&lt;&gt;&lt;&gt;&quot;</span>)
+  <span class="co">// do something</span>
+});</code></pre>
+<p>「curlで何か読みだして，nkfでutf-8になることを期待してから，適当なファイルに出力する」をchild.execで実行する 実行結果の出力は別に利用せずに，実行が終わったら出力されたファイルを同期的に読んで色々する</p>
+<p>問題だったソースコード</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">child</span>.<span class="fu">exec</span>(<span class="st">&quot;curl &quot;</span>+url+<span class="st">&quot;|nkf&quot;</span>, <span class="kw">function</span>(er,out) {
+  <span class="kw">var</span> rs = <span class="ot">out</span>.<span class="fu">split</span>(<span class="st">&quot;&lt;&gt;&lt;&gt;&quot;</span>)
+  <span class="co">// do something</span>
+});</code></pre>
+<p>普通はこうするべきでしょ 「curlで何か読みだして，nkfでutf-8になることを期待する」をchild.execで実行したら，出力を引数outとして 無名関数が呼ばれる．関数の中ではoutを利用する．</p>
+<p>問題は，outがあんまり長い(文字列)と，途中で打ち切られること．curlが悪いのかnkfが悪いのか１０分くらい悩んでた．</p>
+<hr />
+<p>Fri Oct 25 19:03:45 JST 2013</p>
+<p>自転車で信号を待ってるタイミングに果物を売りつけられそうになったのはこれで二度目です</p>
+<p>青々としたミカンを８玉525円で売られそうになった 今日中に売れないと帰れないと言いつつ，二週間持つと言い，矛盾していたことに 少ししてから気附いて面白かった その時に気づかなかったのが，人が詐欺にかかる心理を示してるのだろうか</p>
+<p>イライザを動かすためだけに研究室に行き，10分して帰ってったのを見て 研究室のメンバーはきっと変な奴と認識させたに違いない</p>
+</body>
+</html>

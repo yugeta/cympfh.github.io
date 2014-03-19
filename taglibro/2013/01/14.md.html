@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>1/14 This says &quot;More Use Me!&quot;</p>
+<p>お題: 「手を切断した人が、無いはずの手に痛みを感じるように」 答例: 無いはずの2013年に非日常を感じてる</p>
+<p>文体練習 三日ぶりに外に出ると雪が積もっていた もう夕方なのでずいぶん踏み荒らされているが私は 未踏の箇所を慎重に選んで歩く 湿気たかき氷の音がした 雪が靴に侵入して地面は濡れていた どうやら私は滑って頭を打ったようだ</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(f x) (* x <span class="dv">2</span>))</code></pre>
+<p>という手続きについて、以下を生成したい．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">lambda</span> (x) (f (f x)))</code></pre>
+<p>よくみればただの関数合成だけれど、それは置いておいて． cutを使って簡潔に表したい．</p>
+<pre><code>&gt;    (cut f (f &lt;&gt;))
+gosh&gt; f</code></pre>
+<p>としたいのだが、上手く関数適用できない．</p>
+<pre><code>&gt;    ((cut f (f &lt;&gt;)) 3)
+gosh&gt; *** ERROR: Compile Error: wrong number of arguments: #f requires 0, but got 1
+&quot;(stdin)&quot;:2:((cut f (f &lt;&gt;)) 3)
+
+Stack Trace:
+_______________________________________
+gosh&gt; </code></pre>
+<p>fに関数適用はできないよ、というメッセージに読める．</p>
+<p>試しに</p>
+<pre><code>    (disasm (cut f &lt;&gt;))
+gosh&gt; CLOSURE #&lt;closure #f&gt;
+main_code (name=#f, code=0x833e5d0, size=4, const=1, stack=4):
+args: #f
+     0 LREF0-PUSH               ; x
+     1 GREF-TAIL-CALL(1) #&lt;identifier user#f&gt;; (f x)
+     3 RET </code></pre>
+<p>xをとって、fを呼んで、返す．</p>
+<pre><code>(disasm (cut f (f &lt;&gt;)))
+gosh&gt; CLOSURE #&lt;closure #f&gt;
+main_code (name=#f, code=0x83c4dc0, size=9, const=3, stack=11):
+args: #f
+     0 PRE-CALL(1) 6
+     2 GREF-PUSH #&lt;identifier user#&lt;&gt;&gt;; &lt;&gt;
+     4 GREF-CALL(1) #&lt;identifier user#f&gt;; (f &lt;&gt;)
+     6 PUSH-GREF-TAIL-CALL(1) #&lt;identifier user#f&gt;; (f (f &lt;&gt;))
+     8 RET </code></pre>
+<p>マクロによって&lt;&gt;を引数とするlambdaで囲まれるはずなのに、 &lt;&gt;がそのままIDとして生き残ってる．マクロそのものについての 勉強と、その後改めてcutの仕様を知るべきだ．</p>
+<hr />
+<p>恥ずかしいけれど、(use srfi-1)で、take, drop, iota, fold, fold-right が使えることを今日はじめてしった．composeもその中にあった．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; ((compose f (cut f &lt;&gt;)) <span class="dv">3</span>)
+<span class="dv">12</span></code></pre>
+<p>めでたしめでたい</p>
+</body>
+</html>

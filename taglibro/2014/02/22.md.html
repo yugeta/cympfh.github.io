@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<h1 id="libsvm-の-memo">libsvm の memo</h1>
+<p>参考; http://www.okuma.nuee.nagoya-u.ac.jp/~sakaguti/wiki/index.php?LibSVM</p>
+<h2 id="テストデータ形式">テストデータ形式</h2>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// test.js</span>
+<span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
+  <span class="kw">var</span> a = [];
+  <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">10</span>; ++j) {
+    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+  }
+  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  t = t &gt; <span class="dv">5</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
+  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+           , t
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+}</code></pre>
+<blockquote>
+<p>間違ってた。番号を0スタートにしてるけど、 よく見るとWARNINGが出てて、1スタートにしてほしかったらしい。 ちゃんと動いてるっぽいからまぁいっか</p>
+</blockquote>
+<h2 id="分割公差検証">分割公差検証</h2>
+<pre><code>-t 0 : 線形
+-v 10 : 10分割</code></pre>
+<pre class="make"><code>do:
+    svm-train -t 0 -v 10 train.scale
+
+train.scale: test.js
+    node test.js &gt; train
+    svm-scale train &gt; train.scale</code></pre>
+<p>-t で設定した kernel type によって出力が２つあるみたいだけど、</p>
+<pre class="output"><code>(前略)
+*.*
+optimization finished, #iter = 102
+nu = 0.112336
+obj = -5.000000, rho = 0.999823
+nSV = 38, nBSV = 1
+Total nSV = 38
+Cross Validation Accuracy = 100%</code></pre>
+<h2 id="入力を倍">入力を倍</h2>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
+  <span class="kw">var</span> a = [];
+  <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">20</span>; ++j) {
+    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+  }
+  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  t = t &gt; <span class="dv">10</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
+  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+           , t
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+}</code></pre>
+<pre><code>$ svm-train -t 0 -v 10 train.scale
+
+(前略)
+..........*......................*
+optimization finished, #iter = 2885
+nu = 0.094086
+obj = -4.186700, rho = 0.285305
+nSV = 19, nBSV = 0
+Total nSV = 19
+Cross Validation Accuracy = 99%</code></pre>
+<h2 id="パリティ-xor">パリティ (xor)</h2>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
+  <span class="kw">var</span> a = [];
+  <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">10</span>; ++j) {
+    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+  }
+  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
+  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+           , t
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+}</code></pre>
+<ul>
+<li>線形</li>
+</ul>
+<pre><code>$ svm-train -t 0 -v 10 train.scale
+
+(前略)
+.........*
+optimization finished, #iter = 860
+nu = 0.669745
+obj = -59.094108, rho = 0.338879
+nSV = 65, nBSV = 53
+Total nSV = 65
+Cross Validation Accuracy = 61%</code></pre>
+<ul>
+<li>多項式</li>
+</ul>
+<pre><code>$ svm-train -t 1 -v 10 train.scale
+
+(前略)
+.*
+optimization finished, #iter = 139
+nu = 0.710394
+obj = -43.537098, rho = 0.154695
+nSV = 81, nBSV = 40
+Total nSV = 81
+Cross Validation Accuracy = 41%</code></pre>
+<ul>
+<li>RBF</li>
+</ul>
+<pre><code>$ svm-train -t 1 -v 10 train.scale
+
+(前略)
+*.*
+optimization finished, #iter = 104
+nu = 0.778061
+obj = -51.085066, rho = 0.243366
+nSV = 86, nBSV = 52
+Total nSV = 86
+Cross Validation Accuracy = 59%</code></pre>
+<p>50%は下回らないで欲しかった。</p>
+<h2 id="簡単なパリティ">簡単なパリティ</h2>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
+  <span class="kw">var</span> a = [];
+  <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">10</span>; ++j) {
+    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+  }
+  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">slice</span>(<span class="dv">0</span>,<span class="dv">2</span>).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
+  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+           , t
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+}</code></pre>
+<p>入力は10だけど初めの２つだけで答えは実は決まってる。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">-t</th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Ac.</td>
+<td align="right">52%</td>
+<td align="right">62%</td>
+<td align="right">82%</td>
+</tr>
+</tbody>
+</table>
+<p>パラメタのいじり方はわかってないので -t と -v 10 以外のオプション以外はつけてない。</p>
+<h2 id="入力を倍-1">入力を倍</h2>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
+  <span class="kw">var</span> a = [];
+  <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">20</span>; ++j) {
+    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+  }
+  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">slice</span>(<span class="dv">0</span>,<span class="dv">2</span>).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
+  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+           , t
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+}</code></pre>
+<p>入力の数は倍だけど、やはり最初の２つだけで答えは決まる。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">-t</th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Ac.</td>
+<td align="right">49%</td>
+<td align="right">45%</td>
+<td align="right">70%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="section"></h2>
+<p>期待してたような数字は出なかったのだけど、 あとSVMは入力次元がどんなに大きくてもうまい事取捨してくれるとか聞いた気がするんだけど、 けどけど、 パラメタのイジリ方勉強しないとだ。</p>
+<h3 id="分かった">分かった</h3>
+<p>はじめの方に書いたように (今気付いて追記した) 1スタートにして、 それとテストデータの数を10倍にしたら上手く行った。 入力次元20に対してテストデータ100件ってのは多くなかったみたい。</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">1000</span>; ++i) {
+  <span class="kw">var</span> a = [];
+  <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">20</span>; ++j) {
+    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+  }
+  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">slice</span>(<span class="dv">0</span>,<span class="dv">2</span>).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
+  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+           , t
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> (i<span class="dv">+1</span>)+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+}</code></pre>
+<pre><code>$ svm-train -t 2 -v 10 train.scale
+
+(前略)
+..*.*
+optimization finished, #iter = 3026
+nu = 0.597604
+obj = -276.353274, rho = -0.007254
+nSV = 823, nBSV = 199
+Total nSV = 823
+Cross Validation Accuracy = 100%</code></pre>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>Sat Mar 2 15:16:05 JST 2013</p>
+<p>この前のやつ． lconsはcdrのみを遅延させるのに対して、util.streamで定義されてる stream-consは、carもcdrも遅延させる．そうすると、なんか上手く いくようになるみたい．</p>
+<p><a href="http://practical-scheme.net/gauche/man/gauche-refj_184.html">Gauche ユーザリファレンス: 11.58 util.stream - ストリームライブラリ</a></p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (use util.stream)
+#&lt;undef&gt;
+gosh&gt; (<span class="kw">define</span><span class="fu"> fib </span>(stream-cons <span class="dv">0</span> (stream-cons <span class="dv">1</span> (stream-map <span class="kw">+</span> (stream-cdr fib) fib))))
+fib
+gosh&gt; (stream-&gt;list (stream-take fib <span class="dv">10</span>))                                      (<span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">5</span> <span class="dv">8</span> <span class="dv">13</span> <span class="dv">21</span> <span class="dv">34</span>)</code></pre>
+<p>2013年 3月 2日 土曜日 20:48:14 JST</p>
+<p>On Lisp は、殊、継続についてはSchemeのコードも載せててくれる。 やっぱりSchemeはいいなって思う。 非決定性計算については Scheme による choose, fail 関数も載ってた。 マクロじゃないんだね。 せっかくだからそのコードを書き写した。</p>
+<blockquote>
+<p>本に載ってるコードをそのまま載せちゃうのって問題ないのかな。 著作権がどうとか。引用ということに出来ればいいだろうけど。</p>
+</blockquote>
+<p>/scheme/choose-fail.scm.txt</p>
+<p>に対して、自分が書いたのが</p>
+<p>/scheme/amb.scm.txt</p>
+<p>failの定義の仕方が違う。自分は、自分が書いたヤツでいいと思うんだけど。</p>
+<p>思うことに、ただひとつの大域変数 <em>paths</em> に、複数のchooseが突っ込んでる けど、これって大丈夫なのかなあ。On Lisp なんかのは、よくある実装と 違って、後ろに追加して前から取り出す。いわゆるキューにしていて、 だから幅優先探索になるんだろうな。きっと。</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (choose <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>)
+<span class="dv">1</span>
+gosh&gt; *paths*
+(#&lt;closure (choose <span class="dv">#f</span> <span class="dv">#f</span> <span class="dv">#f</span>)<span class="kw">&gt;</span> #&lt;closure (choose <span class="dv">#f</span> <span class="dv">#f</span> <span class="dv">#f</span>)<span class="kw">&gt;</span>)
+gosh&gt; () <span class="co">; 2つ残ってる</span>
+()
+gosh&gt; (choose <span class="dv">0</span>)
+<span class="dv">2</span></code></pre>
+<p>当然、次のchooseをしても前のが残るよね</p>
+<p>これって実用したい時に問題じゃん？</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">;; 奇数がほしいよお</span>
+gosh&gt; (let1 a (choose <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span> <span class="dv">9</span> <span class="dv">11</span>) (<span class="kw">if</span> (<span class="kw">odd?</span> a) a (fail)))
+<span class="dv">9</span>
+<span class="co">;; 今度は偶数がほしいよお</span>
+gosh&gt; (let1 a (choose <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span> <span class="dv">9</span> <span class="dv">11</span>) (<span class="kw">if</span> (<span class="kw">even?</span> a) a (fail)))
+<span class="dv">11</span>
+<span class="co">;; ふぁっ？！</span></code></pre>
+</body>
+</html>

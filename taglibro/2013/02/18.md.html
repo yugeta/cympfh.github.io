@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>schemeの継続を見ていたけど、大域脱出に用いる様は、モナドで途中で失敗する例に似てるよね． 具体的にはこんなイメージが湧いた．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define-syntax</span><span class="fu"> &gt;&gt;</span>=
+    (<span class="kw">syntax-rules</span> ()
+        ((_ x f)     (f x))
+        ((_ x f g ...) (&gt;&gt;= (f x) g ...)) ))</code></pre>
+<p>計算の予定を順番に並べる． <code>(&gt;&gt;= x f g ...)</code> と書くと、これは<code>(..(g (f x))..)</code>に展開される． 左から読める方がいいよね．</p>
+<p>記号は|&gt;が良かったんだけど(F#ぽく)、Schemeで変数名に|は使えないというか特別な意味を 持つので、もうbindの記号にしちゃった．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> 1+ </span>(<span class="kw">lambda</span>(x) (<span class="kw">+</span> x <span class="dv">1</span>)))
+(<span class="kw">define</span><span class="fu"> 1- </span>(<span class="kw">lambda</span>(x) (<span class="kw">-</span> x <span class="dv">1</span>)))
+(<span class="kw">define</span><span class="fu"> sq </span>(<span class="kw">lambda</span>(x) (* x x)))</code></pre>
+<p>例えば</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (&gt;&gt;= <span class="dv">2</span> sq <span class="dv">1</span>+)
+<span class="dv">5</span></code></pre>
+<p>途中で失敗するというのは、 その計算の列の途中に、例えば</p>
+<p>逆数を求める手続き</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> </span>(inv x) (<span class="kw">if</span> (<span class="kw">zero?</span> x) (fail &#39;inverse-error) (<span class="kw">/</span> x)))
+inv</code></pre>
+<p>引数が0の時、failを行う． failはグローバル変数</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> fail </span><span class="dv">#f</span>)
+fail
+gosh&gt; (<span class="kw">call/cc</span> (<span class="kw">lambda</span>(cc) (set! fail cc) (&gt;&gt;= <span class="dv">3</span> <span class="dv">1</span>- inv sq)))
+<span class="dv">1</span>/<span class="dv">4</span>
+gosh&gt; (<span class="kw">call/cc</span> (<span class="kw">lambda</span>(cc) (set! fail cc) (&gt;&gt;= <span class="dv">1</span> <span class="dv">1</span>- inv sq)))
+inverse-error</code></pre>
+<p>というか、じゃあ、(call/cc ... も含めてマクロにするべきだった．</p>
+<p>さっきの&gt;&gt;= を %&gt;&gt;= ということにして、</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define-syntax</span><span class="fu"> </span>%&gt;&gt;=
+    (<span class="kw">syntax-rules</span> ()
+        ((_ x f)     (f x))
+        ((_ x f g ...) (%&gt;&gt;= (f x) g ...)) ))
+
+(<span class="kw">define-syntax</span><span class="fu"> &gt;&gt;</span>=
+    (<span class="kw">syntax-rules</span> ()
+        ((_ x ...)
+            (<span class="kw">begin</span>
+                (<span class="kw">define</span><span class="fu"> fail </span><span class="dv">#f</span>)
+                (<span class="kw">call/cc</span> (<span class="kw">lambda</span> (cc) (set! fail cc) (%&gt;&gt;= x ...)))) )))</code></pre>
+<p>毎回 大域変数 fail を define しちゃうのが、若干気持ち悪いけど</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (&gt;&gt;= <span class="dv">3</span> inv sq)
+<span class="dv">1</span>/<span class="dv">9</span>                
+gosh&gt; (&gt;&gt;= <span class="dv">0</span> inv sq)
+inverse-error</code></pre>
+<p>おお、でけた</p>
+<hr />
+<p>で、なんで考えたかと言うと、<br />別にこれができたからってモナドが畏怖に値するのには変わらないんだけど、 途中で失敗するかもしれないという例で使われるとき、失敗してるかのチェック を個別の関数でする必要がなく、bind関数がするという利点を挙げる． 今、自分が実験した例でも、そうなっている．</p>
+</body>
+</html>

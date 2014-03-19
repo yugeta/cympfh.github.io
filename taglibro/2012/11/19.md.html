@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>Mon Nov 19 02:17</p>
+<p>昨日全く寝ずに、そのまま東京Node学園祭に行き（はっきりいって くだらなかった．同じ学科の連中の発表のほうがもっと刺激的だ） その帰りの足でアキバで小林ゆうを見た．遠近法の効果により 豆粒ほど小さかった．</p>
+<p>今年の目標を決めた．あと１ヶ月半だけなのだから具合がいい． 人とあまり馴れ馴れしくしないこと． 自立すること．</p>
+<hr />
+<p>JavaScript におけるパターンマッチ．</p>
+<p>ググっても正規表現マッチしか出てこないけれど、関数型言語 におけるパターンマッチのはなし．</p>
+<pre><code>type Nat = Zero | Succ of Nat
+
+match n with
+| Zero -&gt; &quot;zero&quot;
+| Succ(Zero) -&gt; &quot;one&quot;
+| _ -&gt; &quot;takusan&quot;</code></pre>
+<p>これはswitch文以上につよい． 入れ子にできるから． これをjavascriptでどう表現するか． 1.8の構文を用いれば、letによる分割代入ができて、</p>
+<p>パターンマッチだ！とか書いてる記事があるけれど ちょっとそれは意味が違う． その記事がいうのは</p>
+<pre><code>let [[a,b],c,d] = [[1,2],3,4]</code></pre>
+<p>が可能という意味で、それはOcamlでは</p>
+<pre><code>match [[1;2];3;4] with
+| (a::b::[])::c::d::[] -&gt; ...
+| _ -&gt; failwith &quot;&quot;</code></pre>
+<p>とまあ確かにパターンマッチでよくやる．</p>
+<p>私がやりたいパターンマッチは最初にかいたやつ． どう表現するか．</p>
+<p>私が昨日一昨日発見して今気に入ってるのは オブジェクトのキーにパターンを列挙するもの． パターンマッチのパターンは有限に列挙するのだから これは可能だ．</p>
+<pre><code>match[&quot;Zero&quot;] = &quot;zero&quot;
+match[&quot;Succ(Zero)&quot;] = &quot;one&quot;
+if (n in match) match[n];
+    else &quot;takusan&quot;;</code></pre>
+<p>ほら、できた． 問題は、オブジェクトのキーは処理系によって 文字列型にキャストされることであり、 上の例ならSucc(Zero)というデータ構造（これも もちろんjavascriptでうまく定義しなければならない） がどう文字列にキャストされるかを知って置かなければ ならないこと． いっそのこととして私はデータ構造を文字列で持っておく ことにした．</p>
+<p>これはまた変態的と言われるかもしれないが、 パターンマッチのwhenも表現できる．</p>
+<pre><code>match n with
+| _ when n%2=1 -&gt; &quot;odd&quot;
+| _ -&gt; &quot;even&quot;</code></pre>
+<p>を次のように</p>
+<pre><code>match[true] = &quot;odd&quot;
+when = n%2 == 1;
+if (when in match) match[when];
+    else &quot;even&quot;;</code></pre>
+<p>はじめ、</p>
+<pre><code>exp == Int ? exp.val :
+exp == Float ? exp.val :</code></pre>
+<p>みたいに書いててそれをパターンマッチだと言い張ってた のだけれど、ただswitch文を式として書いてるだけだと 気づいたし見た目が最悪なので先のものを思いついた．</p>
+<p>ifを使わずにfizzbuzzを書く、などというお題に対して 使ったトリックだ．</p>
+</body>
+</html>

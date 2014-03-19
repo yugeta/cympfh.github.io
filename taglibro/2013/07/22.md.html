@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>Mon Jul 22 16:30:14 JST 2013</p>
+<p>syntax-rules のキーワードは無くてもいいようなものにしか使えない 区切りとしては決して使えない</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">  (<span class="kw">define-syntax</span><span class="fu"> two-list</span>
+    (<span class="kw">syntax-rules</span> (delminator)
+      ((two-list x ... delminator y ...)
+        (<span class="kw">values</span> (<span class="kw">list</span> x ...) (<span class="kw">list</span> y ...)))))</code></pre>
+<p>... というのは直後に括弧閉じが来るような場所にしか来られないので 上はコンパイルエラーを起こす．</p>
+<p>でも大体上みたいなことがしたい．</p>
+<p><code>(two-list 1 2 3 delminator 4 5)</code> =&gt; <code>(values (list 1 2 3) (list 4 5))</code></p>
+<p>syntax-rulesでもってそれを実現するコードはちょっと，すぐには書けそうにない.</p>
+<p>現実的には <code>(two-list (1 2 3) delminator (4 5))</code> こう書いてもらえば解決する でもちょっとね．括弧は出来るだけ減らしたいしね</p>
+<p>マクロで相互再帰とかして一応動くコードを書こうと試行錯誤したけど やっぱり描けませんでした</p>
+<p>define-macroは，引数をクオートされた状態で，普通の scheme 手続きを 用いて操作できるから，ほんと何でもできていい</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(use srfi<span class="dv">-1</span>)
+(<span class="kw">define-macro</span><span class="fu"> </span>(two-list . ls)
+  (receive (a b) (split-at ls (list-index (cut <span class="kw">equal?</span> &#39;* &lt;&gt;) ls))
+  `(<span class="kw">values</span> (<span class="kw">list</span> ,@a) (<span class="kw">list</span> ,@(<span class="kw">cdr</span> b)))))</code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (macroexpand &#39;(two-list <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> * <span class="dv">4</span> <span class="dv">5</span>))
+(<span class="kw">values</span> (<span class="kw">list</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>) (<span class="kw">list</span> <span class="dv">4</span> <span class="dv">5</span>))
+gosh&gt; (two-list <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> * <span class="dv">4</span> <span class="dv">5</span>)
+(<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>)
+(<span class="dv">4</span> <span class="dv">5</span>)</code></pre>
+<p>で， やりたかったのはこれ</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">begin</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>)
+<span class="dv">3</span>
+gosh&gt; (<span class="kw">begin</span> <span class="dv">1</span> <span class="dv">2</span> a where (a <span class="dv">3</span>))
+<span class="dv">3</span></code></pre>
+<p>Haskellのwhere. <code>(begin a ... where (var val) ...)</code> というのはただ <code>(let* ((var val) ...) a ...)</code> に変換してる let*だから，where後で定義する変数は相互に参照できるわけではないので注意</p>
+<p>コードは以下の通り beginのオーバーロードになってる</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(use srfi<span class="dv">-1</span>)
+(<span class="kw">define-macro</span><span class="fu"> </span>(<span class="kw">begin</span> . body)
+  (let1 idx (list-index (cut <span class="kw">equal?</span> &#39;where &lt;&gt;) body)
+  (<span class="kw">if</span> idx
+      (receive (a b) (split-at body idx) `(<span class="kw">let*</span> ,(<span class="kw">cdr</span> b) ,@a))
+      `(<span class="kw">let*</span> () ,@body))))</code></pre>
+</body>
+</html>

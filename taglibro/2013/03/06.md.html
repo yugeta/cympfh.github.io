@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>2013年 3月 6日 水曜日 04:43:00 JST</p>
+<p>A sample code should not answer 7 because the character, 7 seems to see ?.</p>
+<hr />
+<p>R5RSを初めて読んだ。 call/ccが少しわからなくなった。 多値を返すためのvaluesをcall/ccで定義してて、なんで多値になるのか分からない。</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(<span class="kw">values</span> . things)
+    (<span class="kw">call/cc</span> (<span class="kw">lambda</span> (cc) (apply cc things))) )</code></pre>
+<p>とあって、ためしに実験</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">; gosh&gt; (define (balues . things) (call/cc (lambda (cont) (apply cont things))))</span>
+<span class="co">; balues</span>
+<span class="co">; gosh&gt; (balues 1 2 3)</span>
+<span class="co">; 1</span>
+<span class="co">; 2</span>
+<span class="co">; 3</span>
+<span class="co">; gosh&gt; (receive (a b c) (balues 1 2 3) (list c b a))</span>
+<span class="co">; (3 2 1)</span></code></pre>
+<p>できてる。なんで出来るのか分からない。 values手続きの定義本体のccは、大域脱出をするただのid関数だと思うんだけど。 じゃあ、もうそれでいいのかな。</p>
+<p>2013年 3月 6日 水曜日 08:25:00 JST</p>
+<p>chooseマクロは http://www.shido.info/lisp/scheme_amb.html による。(ちょっと違う)</p>
+<p>問題は http://www.geocities.jp/m_hiroi/light/abcruby17.html にあった &gt; 出典：Leon Sterling, Ehud Shapiro (著), 松田利夫 (訳), 『Prolog の技芸』, 共立出版, 1988, (278頁より) の、もの。</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(fail) &#39;@)
+
+(<span class="kw">define-syntax</span><span class="fu"> choose</span>
+    (<span class="kw">syntax-rules</span> ()
+        ((_) (fail))
+        ((_ a) a)
+        ((_ a b ...) (<span class="kw">let</span> ((fail0 fail))
+            (<span class="kw">call/cc</span> (<span class="kw">lambda</span> (cc)
+                (set! fail (<span class="kw">lambda</span> () (set! fail fail0) (cc (choose b ...))))
+                (cc a))))) ))
+
+<span class="co">;;;</span>
+
+(<span class="kw">let</span> ((Michael (<span class="kw">list</span> (choose <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>) &#39;bascket (choose &#39;Islam &#39;Australia &#39;America)))
+      (Simon   (<span class="kw">list</span> (choose <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>) (choose &#39;bascket &#39;tennis &#39;clicket) &#39;Islam))
+      (Richard (<span class="kw">list</span> (choose <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>) (choose &#39;bascket &#39;tennis &#39;clicket) (choose &#39;Islam &#39;Australia &#39;America))) )
+
+      (<span class="kw">define</span><span class="fu"> </span>(require <span class="kw">cond</span>)
+          (<span class="kw">if</span> (<span class="kw">not</span> <span class="kw">cond</span>) (fail)))
+
+      (<span class="kw">define</span><span class="fu"> </span>(unique? ls)
+        (<span class="kw">if</span> (<span class="kw">&lt;</span> (<span class="kw">length</span> ls) <span class="dv">2</span>) <span class="dv">#t</span>
+            (<span class="kw">if</span> (<span class="kw">member</span> (<span class="kw">car</span> ls) (<span class="kw">cdr</span> ls)) <span class="dv">#f</span>
+                (unique? (<span class="kw">cdr</span> ls)))))
+
+      (require (unique?
+            (map <span class="kw">car</span> (<span class="kw">list</span> Michael Simon Richard))))
+      (require (unique?
+            (map <span class="kw">cadr</span> (<span class="kw">list</span> Michael Simon Richard))))
+      (require (unique?
+            (map <span class="kw">caddr</span> (<span class="kw">list</span> Michael Simon Richard))))
+
+      (require (<span class="kw">&lt;</span> (<span class="kw">car</span> Michael)
+                  (<span class="kw">car</span> (find (<span class="kw">lambda</span> (p) (<span class="kw">eq?</span> (<span class="kw">caddr</span> p) &#39;America))
+                             (<span class="kw">list</span> Michael Simon Richard)) )))
+
+      (require (<span class="kw">&lt;</span> (<span class="kw">car</span> Simon)
+                  (<span class="kw">car</span> (find (<span class="kw">lambda</span> (p) (<span class="kw">eq?</span> (<span class="kw">cadr</span> p) &#39;tennis))
+                             (<span class="kw">list</span> Michael Simon Richard)))))
+
+      (require (<span class="kw">=</span> <span class="dv">1</span> (<span class="kw">car</span> (find (<span class="kw">lambda</span> (p) (<span class="kw">eq?</span> (<span class="kw">cadr</span> p) &#39;clicket))
+                               (<span class="kw">list</span> Michael Simon Richard)))))
+
+      (<span class="kw">display</span> #`<span class="st">&quot;Michael : ,Michael\n&quot;</span>)
+      (<span class="kw">display</span> #`<span class="st">&quot;Simon : ,Simon\n&quot;</span>)
+      (<span class="kw">display</span> #`<span class="st">&quot;Richard : ,Richard\n&quot;</span>)
+      &#39;done)
+
+<span class="co">; Michael : (2 bascket Australia)</span>
+<span class="co">; Simon : (1 clicket Islam)</span>
+<span class="co">; Richard : (3 tennis America)</span></code></pre>
+</body>
+</html>

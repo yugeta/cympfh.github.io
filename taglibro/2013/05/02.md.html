@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>Thu May 2 17:04:40 JST 2013</p>
+<p>In syntax-rules, we use pattern language. What the pattern language? I want to write ( x y -&gt; ...) rather than (lambda (x y) ...) also in scheme. So I write the following macro.</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(split ls)
+  (<span class="kw">if</span> (<span class="kw">eq?</span> (<span class="kw">car</span> ls) &#39;-&gt;) (<span class="kw">values</span> &#39;() (<span class="kw">cdr</span> ls))
+    (receive (a b) (split (<span class="kw">cdr</span> ls)) (<span class="kw">values</span> (<span class="kw">cons</span> (<span class="kw">car</span> ls) a) b))))
+
+(<span class="kw">define-macro</span><span class="fu"> </span>(^ . ls)
+  (receive (args body) (split ls)
+  `(<span class="kw">lambda</span> ,args ,@body)))</code></pre>
+<p>this works.</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> f </span>(^ x y z -&gt; (* (<span class="kw">+</span> x y))))
+(f <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>) <span class="co">; =&gt; 9</span></code></pre>
+<p>fueee. Cannot I use syntax-rules??</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define-syntax</span><span class="fu"> </span>^
+  (<span class="kw">syntax-rules</span> (-&gt;)
+    ((^ x ... -&gt; body ...) (<span class="kw">lambda</span> (x ...) body ...))))</code></pre>
+<p>Gauche says &quot;Bad ellipsis...&quot;</p>
+<p>I cannot beleave that pattern language is turing complete.</p>
+<h2 id="追記">追記</h2>
+<p>2014年 2月 16日 日曜日 10:53:43 JST</p>
+<p><code>...</code>というキーワードはリストの一番最後の要素としてしか置けない</p>
+</body>
+</html>

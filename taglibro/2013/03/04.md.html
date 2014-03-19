@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+</head>
+<body>
+<p>2013年 3月 4日 月曜日 21:53:06 JST</p>
+<p>最近になってマクロ書くことを覚えた。</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define-syntax</span><span class="fu"> for</span>
+    (<span class="kw">syntax-rules</span> (where in)
+        ((_ expr where i in ls) (map (<span class="kw">lambda</span> (i) expr) ls))
+        ((_ expr where i in ls cnd)
+            (filter (<span class="kw">lambda</span> (i) cnd) (for expr where i in ls)))
+        ((_ expr where i in ls cnd cnd2 ...)
+            (filter (<span class="kw">lambda</span> (i) cnd) (for expr where i in ls cnd2 ...))) ))</code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (for i where i in (iota <span class="dv">10</span>))
+(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">7</span> <span class="dv">8</span> <span class="dv">9</span>)
+gosh&gt; (for (* i i) where i in (iota <span class="dv">10</span>))
+(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">4</span> <span class="dv">9</span> <span class="dv">16</span> <span class="dv">25</span> <span class="dv">36</span> <span class="dv">49</span> <span class="dv">64</span> <span class="dv">81</span>)
+gosh&gt; (for (* i i) where i in (iota <span class="dv">10</span>) (<span class="kw">odd?</span> i))
+(<span class="dv">1</span> <span class="dv">9</span> <span class="dv">25</span> <span class="dv">49</span> <span class="dv">81</span>)</code></pre>
+<p>whereの代わりに適当な区切り文字として;はコメント記号だし、|は括り文字だしで:使おう と思ったけどたぶんキーワード引数の為に使えないし、結構使えない記号多い。'を変数名 に使えないのが、個人的には一番痛い。何も考えず x に対して x' をlet束縛するとか、 MLだとしょっちゅうやるから。</p>
+<hr />
+<p>自分はどこでも言ってるけど、F#のパイプライン演算子は本当にいいなあって思う。 手続きの順序を上からただ読めばいいから。行頭をちゃんと揃えて書けばとっても わかりやすい。S式は右から左に逆に読まないといけなくなるもんね。</p>
+<p>```scheme (define-syntax pipe (syntax-rules (&gt;&gt;) ((_ x &gt;&gt; f) (f x)) ((_ x &gt;&gt; f &gt;&gt; g ...) (pipe (f x) &gt;&gt; g ...)) ))</p>
+<p>; gosh&gt; ; (pipe 10 ; &gt;&gt; iota ; &gt;&gt; (pa$ filter odd?) ; &gt;&gt; (pa$ map (^x (* x x))) ) ; (1 9 25 49 81) ```scheme</p>
+<p>普通なら <code>(map (^x (* x x)) (filter odd? (iota 10)))</code> って書いて、右から、というかカッコの内側を目で捕捉して、そこから外側へ 読んでいかないといけない。 カッコの外側が、ただ左に向かってるからまだいいものの、左にも右にも 広がってたりしたら絶望的だ。まあ、あんまりそういうのは無いか。 とくに例も思いつかないし。</p>
+</body>
+</html>
