@@ -1,25 +1,19 @@
 body {
-  color: white;
-  background-color: #202020;
-  filter: alpha(opacity=40);
+  color: black;;
+  background-color: #efefef;
 }
 
 code {
   display: block;
   padding: 3px;
-  background-color: #604040;
-  border: 1px solid red;
-  border-left: 9px solid red;
+  background-color: #e0e0e0;
+  border: 1px solid orange;
+  border-left: 9px solid orange;
 }
 
 blockquote {
-  background-color: #242424;
-  border: 1px solid white;
+  background-color: #dadada;
+  border: 1px solid black;
   padding: 3px;
 }
 
-h1 {
-}
-
-h2 {
-}
