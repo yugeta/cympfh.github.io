@@ -1,8 +1,8 @@
 all: md2html index
 
 index:
-	echo "<a href=http://is.gd/mC4zzr>http://is.gd/mC4zzr</a>"
-	echo "<pre>" > index.html
+	echo "<a href=http://is.gd/mC4zzr>see pages directly</a>" > index.html
+	echo "<pre>" >> index.html
 	ls */*/*.md | sed 's/.*\.md/<a href=&.html>&<\/a>/g' >> index.html
 
 md2html:
