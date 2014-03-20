@@ -196,3 +196,4 @@ COIWYfqfVAs 乙女よ大志を抱け
 Os9RtDCc2UU Space Dandy - Welcome to the X Dimension [Ending Extended]
 AYefYbOw41Y [Yuki]&quot;Disco☆Chocolatheque&quot; english subbed (annotation) [romaji / english in the description]
 804NtcaFLlw オトメスイッチ オープニングムービー 全年齢版
+ssnx6KmRK6s goreshit - look at me tenderly
