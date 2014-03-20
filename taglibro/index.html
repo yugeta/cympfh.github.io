@@ -1,6 +1,47 @@
-<a href=http://is.gd/mC4zzr>see pages directly</a>
-<pre>
+<a href=http://is.gd/mC4zzr>on github.com</a>
+<style>
+  a {
+    display: block;
+    width: 9em;
+    padding: 5px;
+    margin: 0px;
+    color: black;
+  }
+  a.black {
+    color: #f0f0f0;
+    background-color: #404040;
+  }
+  .black:visited {
+    color: #ffd0d0;
+  }
+  a.red {
+    color: #404040;
+    background-color: #f0f0f0;
+  }
+  .red:visited {
+    color: #773030;
+  }
+  .c { float: left; width: 9em; }
+</style>
+<script>
+  function yearColor(str) {
+    var y = +str.split('/')[0];
+    return y%2 ? 'black' : 'red';
+  }
+
+  function coloring() {
+    var ls = document.links;
+    for (var i=1; i<ls.length; ++i) {
+      ls[i].className = yearColor(ls[i].innerHTML);
+    }
+  }
+
+</script>
+<body onload="coloring()">
+<div class=c>
 <a href=2011/07/28.md.html>2011/07/28.md</a>
+</div>
+<div class=c>
 <a href=2012/11/12.md.html>2012/11/12.md</a>
 <a href=2012/11/18.md.html>2012/11/18.md</a>
 <a href=2012/11/19.md.html>2012/11/19.md</a>
@@ -18,6 +59,8 @@
 <a href=2012/x/h.md.html>2012/x/h.md</a>
 <a href=2012/x/i.md.html>2012/x/i.md</a>
 <a href=2012/x/j.md.html>2012/x/j.md</a>
+</div>
+<div class=c>
 <a href=2013/01/14.md.html>2013/01/14.md</a>
 <a href=2013/01/a.md.html>2013/01/a.md</a>
 <a href=2013/01/b.md.html>2013/01/b.md</a>
@@ -102,6 +145,8 @@
 <a href=2013/12/22.md.html>2013/12/22.md</a>
 <a href=2013/12/28.md.html>2013/12/28.md</a>
 <a href=2013/12/30.md.html>2013/12/30.md</a>
+</div>
+<div class=c>
 <a href=2014/01/01.md.html>2014/01/01.md</a>
 <a href=2014/01/19.md.html>2014/01/19.md</a>
 <a href=2014/01/21.md.html>2014/01/21.md</a>
@@ -125,3 +170,4 @@
 <a href=2014/03/13.md.html>2014/03/13.md</a>
 <a href=2014/03/19.md.html>2014/03/19.md</a>
 <a href=2014/03/20.md.html>2014/03/20.md</a>
+</div>
