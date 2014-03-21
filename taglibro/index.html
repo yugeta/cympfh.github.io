@@ -12,14 +12,14 @@
     color: #f0f0f0;
     background-color: #404040;
   }
-  div .black:visited {
+  div.black:visited {
     color: #ffd0d0;
   }
   div.red a {
     color: #404040;
     background-color: #f0f0f0;
   }
-  div .red:visited {
+  div.red:visited {
     color: #773030;
   }
   div { float: left; width: 9em; }
