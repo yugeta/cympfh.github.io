@@ -1,4 +1,4 @@
-all: md2html index
+all: md2html index git
 
 index:
 	cp index.html.h index.html
@@ -14,3 +14,4 @@ git:
 	git add --all
 	git commit -a -m "`kasitime`"
 	git push
+
