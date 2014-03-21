@@ -17,3 +17,4 @@ FGG6PVhUhB8 悠木碧「ビジュメニア」Music Video short ver.
 Os9RtDCc2UU Space Dandy - Welcome to the X Dimension [Ending Extended]
 qURWGTx_CLk Wake Up, Girls! - Opening &quot;Tachiagare!&quot; (Full Edit)
 RACY7iBYO74 「半永久的に愛してよ ♡」 Golden Time (ED2)
+Z5gz0H6tEsQ Wake Up Girls OP Opening Full - 7 Girls War
