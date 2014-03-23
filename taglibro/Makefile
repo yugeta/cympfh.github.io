@@ -7,6 +7,9 @@ index:
 md2html:
 	ls 2014/*/*.md | xargs -n1 -i bash -c "pandoc -t html5 -s {} -o {}.html --css ../../css/h1.css"
 
+%.md.html: %.md
+	pandoc -t html5 -s $^ -o $@ --css ../../css/h1.css
+
 today:
 	vim `date +"%Y/%m/%d.md"`
 

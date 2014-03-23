@@ -30,13 +30,43 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>``` 19:03:47 test$ time gosh test.scm 354224848179261915075</p>
-<p>real 0m0.027s user 0m0.008s sys 0m0.008s 19:04:02 test$ time gosh test.scm 354224848179261915075</p>
-<p>real 0m0.029s user 0m0.008s sys 0m0.012s 19:04:05 test$ time runghc test.hs 354224848179261915075</p>
-<p>real 0m0.189s user 0m0.160s sys 0m0.030s 19:04:13 test$ time runghc test.hs 354224848179261915075</p>
-<p>real 0m0.188s user 0m0.172s sys 0m0.018s 19:04:15 test$ time go run test.go 3736710778780434371</p>
-<p>real 0m0.171s user 0m0.146s sys 0m0.027s 19:04:20 test$ time go run test.go 3736710778780434371</p>
-<p>real 0m0.159s user 0m0.136s sys 0m0.025s ```</p>
+<h1 id="go-の実験">go の実験</h1>
+<pre class="sh"><code>19:03:47 test$ time gosh test.scm
+354224848179261915075
+
+real    0m0.027s
+user    0m0.008s
+sys     0m0.008s
+19:04:02 test$ time gosh test.scm
+354224848179261915075
+
+real    0m0.029s
+user    0m0.008s
+sys     0m0.012s
+19:04:05 test$ time runghc test.hs
+354224848179261915075
+
+real    0m0.189s
+user    0m0.160s
+sys     0m0.030s
+19:04:13 test$ time runghc test.hs
+354224848179261915075
+
+real    0m0.188s
+user    0m0.172s
+sys     0m0.018s
+19:04:15 test$ time go run test.go
+3736710778780434371
+
+real    0m0.171s
+user    0m0.146s
+sys     0m0.027s
+19:04:20 test$ time go run test.go
+3736710778780434371
+
+real    0m0.159s
+user    0m0.136s
+sys     0m0.025s</code></pre>
 <p>Goとかいう動的型付け言語だけ答えが違うのはint64でやっちゃったから</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(fib a b n)
   (<span class="kw">if</span> (<span class="kw">zero?</span> n) a (fib b (<span class="kw">+</span> a b) (<span class="kw">-</span> n <span class="dv">1</span>))))
