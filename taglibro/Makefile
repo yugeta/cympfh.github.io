@@ -5,7 +5,7 @@ index:
 	ls */*/*.md | runghc script/byYear.hs >> index.html
 
 md2html:
-	ls 2014/*/*.md | xargs -n1 -i bash -c "pandoc {} -o {}.html --css ../../css/h1.css"
+	ls 2014/*/*.md | xargs -n1 -i bash -c "pandoc -t html5 -s {} -o {}.html --css ../../css/h1.css"
 
 today:
 	vim `date +"%Y/%m/%d.md"`

@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,7 +27,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>Sat Sep 7 09:39:35 JST 2013</p>
@@ -35,7 +37,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>「整数からなるリストが与えられる．奇数がN個，偶数がM個 含まれるとするとき， N &gt; M を判定せよ」</p>
 </blockquote>
 <p>考えなしにHaskellで書くと</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">\ls <span class="ot">-&gt;</span> length(filter odd ls) <span class="fu">&gt;</span> length(filter even ls)</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">\ls <span class="ot">-&gt;</span> <span class="fu">length</span>(<span class="fu">filter</span> <span class="fu">odd</span> ls) <span class="fu">&gt;</span> <span class="fu">length</span>(<span class="fu">filter</span> <span class="fu">even</span> ls)</code></pre>
 <p>引数lsが二箇所に出てくるのがどうしようもなくて<br />ポイントフリーにできそうにない<br />lengthって二回出てくるのもいやだ</p>
 <p>Jではこう書ける まだ全然洗練されてないけれど</p>
 <pre><code>([: +/ 2|]) &gt; [: +/ 1-2|]</code></pre>
@@ -48,9 +50,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="hsakell"><code>length.filter odd &gt; length.filter even</code></pre>
 <p>と書いていて，J言語特有のフォークという機能によって<br />ポイントフリーで書き表せる</p>
 <p>フォークなんてのは他の言語には聞いたことないと<br />思ったけれど，Control.Arrowは似てる</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">length<span class="fu">.</span>filter odd <span class="fu">&amp;&amp;&amp;</span> length<span class="fu">.</span>filter even <span class="fu">&gt;&gt;&gt;</span> \(x,y) <span class="ot">-&gt;</span> x<span class="fu">&gt;</span>y</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">length.filter</span> <span class="fu">odd</span> <span class="fu">&amp;&amp;&amp;</span> <span class="fu">length.filter</span> <span class="fu">even</span> <span class="fu">&gt;&gt;&gt;</span> \(x,y) <span class="ot">-&gt;</span> x<span class="fu">&gt;</span>y</code></pre>
 <p>或いは</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">filter odd <span class="fu">&amp;&amp;&amp;</span> filter even <span class="fu">&gt;&gt;&gt;</span> length<span class="fu">***</span>length <span class="fu">&gt;&gt;&gt;</span> \(x,y) <span class="ot">-&gt;</span> x<span class="fu">&gt;</span>y</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">filter</span> <span class="fu">odd</span> <span class="fu">&amp;&amp;&amp;</span> <span class="fu">filter</span> <span class="fu">even</span> <span class="fu">&gt;&gt;&gt;</span> <span class="fu">length***length</span> <span class="fu">&gt;&gt;&gt;</span> \(x,y) <span class="ot">-&gt;</span> x<span class="fu">&gt;</span>y</code></pre>
 <p>なんか， <code>let both f = f *** f</code> みたいなのがあれば，lengthって二回もタイプしなくて済むんだけど<br />すぐには見つからなかった</p>
 <p>あと，<code>\(x,y)-&gt;</code> ってのはたしかにダサい<br />Jなら <code>first &gt; second</code> って書けるのに！</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> fork f g h <span class="fu">=</span> \x <span class="ot">-&gt;</span> (f x) <span class="ot">`g`</span> (h x)</code></pre>

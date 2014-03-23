@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,25 +27,25 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>Sat Jul 27 16:56:51 JST 2013</p>
 <p>データ構築子に中間値記法使えたんだ！</p>
 <p>:^: っていう文法があるみたい？</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="kw">data</span> <span class="dt">Tree</span> a <span class="fu">=</span> <span class="dt">Leaf</span> a <span class="fu">|</span> <span class="dt">Tree</span> a <span class="fu">:^:</span> <span class="dt">Tree</span> a <span class="kw">deriving</span> <span class="dt">Show</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="kw">data</span> <span class="dt">Tree</span> a <span class="fu">=</span> <span class="dt">Leaf</span> a <span class="fu">|</span> <span class="dt">Tree</span> a <span class="fu">:^:</span> <span class="dt">Tree</span> a <span class="kw">deriving</span> <span class="kw">Show</span>
 <span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="kw">let</span> treeMap f t <span class="fu">=</span> <span class="kw">case</span> t <span class="kw">of</span> { <span class="dt">Leaf</span> x <span class="ot">-&gt;</span> <span class="dt">Leaf</span> <span class="fu">$</span> f x ; l <span class="fu">:^:</span> r <span class="ot">-&gt;</span> (treeMap f l) <span class="fu">:^:</span> (treeMap f r) }
-<span class="dt">Prelude</span><span class="fu">&gt;</span> treeMap succ ((<span class="dt">Leaf</span> <span class="dv">0</span>) <span class="fu">:^:</span> (((<span class="dt">Leaf</span> <span class="dv">2</span>) <span class="fu">:^:</span> (<span class="dt">Leaf</span> <span class="dv">3</span>)) <span class="fu">:^:</span> (<span class="dt">Leaf</span> <span class="dv">4</span>)))
+<span class="dt">Prelude</span><span class="fu">&gt;</span> treeMap <span class="fu">succ</span> ((<span class="dt">Leaf</span> <span class="dv">0</span>) <span class="fu">:^:</span> (((<span class="dt">Leaf</span> <span class="dv">2</span>) <span class="fu">:^:</span> (<span class="dt">Leaf</span> <span class="dv">3</span>)) <span class="fu">:^:</span> (<span class="dt">Leaf</span> <span class="dv">4</span>)))
 <span class="dt">Leaf</span> <span class="dv">1</span> <span class="fu">:^:</span> ((<span class="dt">Leaf</span> <span class="dv">3</span> <span class="fu">:^:</span> <span class="dt">Leaf</span> <span class="dv">4</span>) <span class="fu">:^:</span> <span class="dt">Leaf</span> <span class="dv">5</span>)</code></pre>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Tr</span> a <span class="fu">=</span> <span class="dt">Lf</span> a <span class="fu">|</span> <span class="dt">Tr</span> a <span class="fu">:^:</span> <span class="dt">Tr</span> a <span class="kw">deriving</span> <span class="dt">Show</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Tr</span> a <span class="fu">=</span> <span class="dt">Lf</span> a <span class="fu">|</span> <span class="dt">Tr</span> a <span class="fu">:^:</span> <span class="dt">Tr</span> a <span class="kw">deriving</span> <span class="kw">Show</span>
 
-<span class="kw">instance</span> <span class="dt">Functor</span> <span class="dt">Tr</span> <span class="kw">where</span>
-  fmap f (<span class="dt">Lf</span> x) <span class="fu">=</span> <span class="dt">Lf</span> (f x)
-  fmap f (l <span class="fu">:^:</span> r) <span class="fu">=</span> (fmap f l) <span class="fu">:^:</span> (fmap f r)
+<span class="kw">instance</span> <span class="kw">Functor</span> <span class="dt">Tr</span> <span class="kw">where</span>
+  <span class="fu">fmap</span> f (<span class="dt">Lf</span> x) <span class="fu">=</span> <span class="dt">Lf</span> (f x)
+  <span class="fu">fmap</span> f (l <span class="fu">:^:</span> r) <span class="fu">=</span> (<span class="fu">fmap</span> f l) <span class="fu">:^:</span> (<span class="fu">fmap</span> f r)
 
-main <span class="fu">=</span> print <span class="fu">$</span> a <span class="kw">where</span>
+main <span class="fu">=</span> <span class="fu">print</span> <span class="fu">$</span> a <span class="kw">where</span>
   t <span class="fu">=</span> ((<span class="dt">Lf</span> <span class="dv">1</span> <span class="fu">:^:</span> <span class="dt">Lf</span> <span class="dv">2</span>) <span class="fu">:^:</span> <span class="dt">Lf</span> <span class="dv">3</span>) <span class="fu">:^:</span> <span class="dt">Lf</span> <span class="dv">4</span>
-  a <span class="fu">=</span> fmap (<span class="fu">+</span><span class="dv">1</span>) t</code></pre>
+  a <span class="fu">=</span> <span class="fu">fmap</span> (<span class="fu">+</span><span class="dv">1</span>) t</code></pre>
 <h2 id="追記">追記</h2>
 <p>Tue Aug 6 10:42:14 JST 2013</p>
 <p>別に :^: じゃなくても，なんだっていいらしい． 使われてないトークンなら で，コロンで挟むようなものは定義されてることがないことに なってるらしいです. 自分で新しく使うのに，後腐れがないだとか</p>

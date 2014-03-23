@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,7 +27,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>Fri Feb 22 13:56:48 JST 2013</p>
@@ -36,21 +38,15 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>ラムダ項をSKIで表す変換器を書いた． /scheme/SKI.scm.txt</p>
 <p>私がテスト前に地下でホワイトボードに向かって黙々とflip関数をSKに変換してたのが 一瞬で出る．</p>
 <p><code>(S (S (K S) (S (K K) (S (K S) (S (S (K S) (S (K K) I)) (K I))))) (K (S (K K) I)))</code></p>
-<p>これが、</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">    flip f y x <span class="fu">=</span> f x y</code></pre>
-<p>であるらしい．本当かな？ うん．だれか確かめてください．私はSKIをSchemeで書こうとしたけど、lambda-caseで 定義したけど、なんかうまくいきませんでした．flipに渡す3つの値も上手く調整しないと いけないだろうね．</p>
-<p>そして</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">    <span class="dt">K</span> x y z <span class="fu">=</span> x z (y z)</code></pre>
-<p>というKを、SKIに変換したのが次</p>
+<p>これが、 <code>haskell     flip f y x = f x y</code> であるらしい．本当かな？ うん．だれか確かめてください．私はSKIをSchemeで書こうとしたけど、lambda-caseで 定義したけど、なんかうまくいきませんでした．flipに渡す3つの値も上手く調整しないと いけないだろうね．</p>
+<p>そして <code>haskell     K x y z = x z (y z)</code> というKを、SKIに変換したのが次</p>
 <pre class="lisp"><code>(S (S (K S) (S (K K) (S (K S) (S (S (K S) (S (K K) I)) (K I))))) (K (S (S (K S) (S (K K) I)) (K I))))</code></pre>
 <p>まあ、その変換器は、とにかくあまさず、ラムダ項をSKIに変換する為のものだから、 別に短い式にするのが目的じゃないし、ね．</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">s/I</span>/<span class="kw">(SKK)/g</span></code></pre>
 <p>とすることで、SKIの式はSKのみの式になる．</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">s/K</span>/<span class="kw">(XXX)/g</span>
 :<span class="kw">s/S</span>/<span class="kw">(X</span>(XX<span class="kw">)</span>)<span class="kw">/g</span></code></pre>
-<p>とすることで、Xのみの式になる．ここで</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">X</span> x <span class="fu">=</span> x <span class="dt">K</span> <span class="dt">S</span> <span class="dt">K</span></code></pre>
-<p>である．</p>
+<p>とすることで、Xのみの式になる．ここで <code>haskell X x = x K S K</code> である．</p>
 <h2 id="追記">追記</h2>
 <p>Sun Jun 9 11:13:14 JST 2013</p>
 <p>18行目のKは，普通Sコンビネータのことだよね KとSを間違えてこの記事かいたのかな プログラムの方では間違えてないといいけれど</p>

@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,7 +27,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>Wed Jul 10 00:54:17 JST 2013</p>
@@ -39,11 +41,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- 複数あるブロックの座標を与えます</span>
 b <span class="fu">=</span> [[<span class="dv">1</span>,<span class="dv">3</span>], [<span class="dv">2</span>,<span class="dv">1</span>], [<span class="dv">5</span>,<span class="dv">3</span>], [<span class="dv">5</span>,<span class="dv">6</span>]]</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- 私はこう書いた</span>
-b <span class="dv">1</span> <span class="dv">3</span> <span class="fu">=</span> <span class="dt">True</span>
-b <span class="dv">2</span> <span class="dv">1</span> <span class="fu">=</span> <span class="dt">True</span>
-b <span class="dv">5</span> <span class="dv">3</span> <span class="fu">=</span> <span class="dt">True</span>
-b <span class="dv">5</span> <span class="dv">6</span> <span class="fu">=</span> <span class="dt">True</span>
-b _ _ <span class="fu">=</span> <span class="dt">False</span></code></pre>
+b <span class="dv">1</span> <span class="dv">3</span> <span class="fu">=</span> <span class="kw">True</span>
+b <span class="dv">2</span> <span class="dv">1</span> <span class="fu">=</span> <span class="kw">True</span>
+b <span class="dv">5</span> <span class="dv">3</span> <span class="fu">=</span> <span class="kw">True</span>
+b <span class="dv">5</span> <span class="dv">6</span> <span class="fu">=</span> <span class="kw">True</span>
+b _ _ <span class="fu">=</span> <span class="kw">False</span></code></pre>
 <p>だって、リストから具体的にデータを取得するの面倒でしょ getter関数どうせ定義するんでそ？ 線形時間かかるし 私のなら、データを直接 getter関数として書くことになる</p>
 <p>人に見せたら、このコードはやばいと言われたけれど</p>
 <p>で、本題</p>

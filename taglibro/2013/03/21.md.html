@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,20 +27,20 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>2013年 3月 21日 木曜日 14:35:29 JST</p>
 <p>Stateモナド、大体使い方分かったつもり StateTも大体同じみたいだし</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Control.Monad.State</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> Control.Monad.State
 
-<span class="kw">data</span> <span class="dt">Tree</span> <span class="fu">=</span> <span class="dt">Nil</span> <span class="fu">|</span> <span class="dt">Node</span> <span class="dt">Int</span> <span class="dt">Tree</span> <span class="dt">Tree</span> <span class="kw">deriving</span> <span class="dt">Show</span>
+<span class="kw">data</span> <span class="dt">Tree</span> <span class="fu">=</span> <span class="dt">Nil</span> <span class="fu">|</span> <span class="dt">Node</span> <span class="dt">Int</span> <span class="dt">Tree</span> <span class="dt">Tree</span> <span class="kw">deriving</span> <span class="kw">Show</span>
 
 push_t tr n <span class="fu">=</span>
     <span class="kw">case</span> tr <span class="kw">of</span>
       <span class="dt">Nil</span> <span class="ot">-&gt;</span> <span class="dt">Node</span> n <span class="dt">Nil</span> <span class="dt">Nil</span>
       <span class="dt">Node</span> m l r <span class="fu">|</span> n <span class="fu">&lt;</span> m <span class="ot">-&gt;</span> <span class="dt">Node</span> m (push_t l n) r
-                 <span class="fu">|</span> <span class="dt">True</span>  <span class="ot">-&gt;</span> <span class="dt">Node</span> m l (push_t r n)
+                 <span class="fu">|</span> <span class="kw">True</span>  <span class="ot">-&gt;</span> <span class="dt">Node</span> m l (push_t r n)
 
 pop_t tr <span class="fu">=</span>
     <span class="kw">case</span> tr <span class="kw">of</span>
@@ -51,10 +53,10 @@ pop_t tr <span class="fu">=</span>
                (m, <span class="dt">Node</span> n tr r)
 
 <span class="ot">push ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">State</span> <span class="dt">Tree</span> <span class="dt">Int</span>
-push n <span class="fu">=</span> get <span class="fu">&gt;&gt;=</span> put<span class="fu">.</span>(\tr <span class="ot">-&gt;</span> push_t tr n) <span class="fu">&gt;&gt;</span> return n
+push n <span class="fu">=</span> get <span class="fu">&gt;&gt;=</span> put<span class="fu">.</span>(\tr <span class="ot">-&gt;</span> push_t tr n) <span class="fu">&gt;&gt;</span> <span class="fu">return</span> n
 
 <span class="ot">pop ::</span> <span class="dt">State</span> <span class="dt">Tree</span> <span class="dt">Int</span>
-pop <span class="fu">=</span> get <span class="fu">&gt;&gt;=</span> (\(n,tr) <span class="ot">-&gt;</span> put tr <span class="fu">&gt;&gt;</span> return n)<span class="fu">.</span>pop_t</code></pre>
+pop <span class="fu">=</span> get <span class="fu">&gt;&gt;=</span> (\(n,tr) <span class="ot">-&gt;</span> put tr <span class="fu">&gt;&gt;</span> <span class="fu">return</span> n)<span class="fu">.</span>pop_t</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span> <span class="dt">Control.Monad.State</span><span class="fu">&gt;</span> runState (push <span class="dv">0</span>) <span class="dt">Nil</span>
 (<span class="dv">0</span>,<span class="dt">Node</span> <span class="dv">0</span> <span class="dt">Nil</span> <span class="dt">Nil</span>)
 <span class="fu">*</span><span class="dt">Main</span> <span class="dt">Control.Monad.State</span><span class="fu">&gt;</span> runState (push <span class="dv">0</span> <span class="fu">&gt;&gt;</span> push <span class="dv">1</span> <span class="fu">&gt;&gt;</span> push <span class="dv">2</span>) <span class="dt">Nil</span>

@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,11 +27,11 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>もうやらないと思ってたけど <a href="http://projecteuler.net/problem=48">Project Euler - Problem 48</a></p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">main <span class="fu">=</span> print <span class="fu">$</span> foldl plus <span class="dv">0</span> <span class="fu">$</span> map self_pow [<span class="dv">1</span> <span class="fu">..</span> <span class="dv">1000</span>]
+<pre class="sourceCode haskell"><code class="sourceCode haskell">main <span class="fu">=</span> <span class="fu">print</span> <span class="fu">$</span> <span class="fu">foldl</span> plus <span class="dv">0</span> <span class="fu">$</span> <span class="fu">map</span> self_pow [<span class="dv">1</span> <span class="fu">..</span> <span class="dv">1000</span>]
     <span class="kw">where</span>
         plus a b <span class="fu">=</span> (a<span class="fu">+</span>b) <span class="ot">`mod`</span> rr
         self_pow n <span class="fu">=</span> pow n n
@@ -37,9 +39,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
         pow n <span class="dv">1</span> <span class="fu">=</span> n <span class="ot">`mod`</span> rr
         pow n m <span class="fu">=</span>
             <span class="kw">if</span> m<span class="ot">`mod`</span><span class="dv">2</span> <span class="fu">==</span> <span class="dv">0</span> <span class="kw">then</span>
-                (mod ((pow n (div m <span class="dv">2</span>)) <span class="fu">^</span> <span class="dv">2</span>) rr)
+                (<span class="fu">mod</span> ((pow n (<span class="fu">div</span> m <span class="dv">2</span>)) <span class="fu">^</span> <span class="dv">2</span>) rr)
             <span class="kw">else</span>
-                (mod (n <span class="fu">*</span> ((pow n (div m <span class="dv">2</span>)) <span class="fu">^</span> <span class="dv">2</span>)) rr)
+                (<span class="fu">mod</span> (n <span class="fu">*</span> ((pow n (<span class="fu">div</span> m <span class="dv">2</span>)) <span class="fu">^</span> <span class="dv">2</span>)) rr)
         rr <span class="fu">=</span> <span class="dv">10000000000</span></code></pre>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">letrec</span> ((rr    <span class="dv">10000000000</span>)
          (plus (^ (a b) (<span class="kw">modulo</span> (<span class="kw">+</span> a b) rr)))

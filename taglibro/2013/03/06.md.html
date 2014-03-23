@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,7 +27,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>2013年 3月 6日 水曜日 04:43:00 JST</p>
@@ -44,6 +46,37 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="co">; gosh&gt; (receive (a b c) (balues 1 2 3) (list c b a))</span>
 <span class="co">; (3 2 1)</span></code></pre>
 <p>できてる。なんで出来るのか分からない。 values手続きの定義本体のccは、大域脱出をするただのid関数だと思うんだけど。 じゃあ、もうそれでいいのかな。</p>
+<table>
+<col style="width: 4%" /><tbody>
+<tr class="odd">
+<td style="text-align: left;">dynamic-windで出てくるサンプルコードも果てしなく難しい。 意義は分かった。そのthunkがどのタイミングででも呼び出される前後には beforeとafterが呼び出される。それはいいんだけど</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">```scheme (define path '()) (define c #f) (define (add s) (push! path s))</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(dynamic-wind (lambda () (add 'connect)) (lambda () (add (call/cc (lambda (c0) (set! c c0) 'talk1)))) (lambda () (add 'disconnect)) )</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(c 'talk2) ```</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">これを読み込ませてREPLで実験</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">```scheme gosh&gt; path (disconnect talk2 connect disconnect talk1 connect) gosh&gt; c #<subr continuation> gosh&gt; (c 'talk-final)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">シェルが値を返しました 70 ```</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">なんか、エラーなのかよく分からないエラーが出る。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">以上。</td>
+</tr>
+</tbody>
+</table>
 <p>2013年 3月 6日 水曜日 08:25:00 JST</p>
 <p>chooseマクロは http://www.shido.info/lisp/scheme_amb.html による。(ちょっと違う)</p>
 <p>問題は http://www.geocities.jp/m_hiroi/light/abcruby17.html にあった &gt; 出典：Leon Sterling, Ehud Shapiro (著), 松田利夫 (訳), 『Prolog の技芸』, 共立出版, 1988, (278頁より) の、もの。</p>

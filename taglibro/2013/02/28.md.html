@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,7 +27,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>Thu Feb 28 01:59:35 JST 2013</p>
@@ -56,12 +58,7 @@ gosh&gt; (g <span class="dv">3</span>)
 gosh&gt; (<span class="kw">define</span><span class="fu"> g </span>(&gt;&gt; inc sq inc))
 gosh&gt; (g <span class="dv">3</span>)
 <span class="dv">17</span></code></pre>
-<p>それより、ついつい</p>
-<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define-syntax</span><span class="fu"> &gt;&gt;</span>
-(<span class="kw">syntax-rules</span> ()
-  ((_ f g) (.$ g f))
-  ((_ f g ...) (&gt;&gt; (.$ g f) ...)) ))</code></pre>
-<p>と書いてしまう．まだまだ慣れが足りない． しかし、それでも何かしら定義は出来て、そうすると</p>
+<p>それより、ついつい <code>scheme gosh&gt; (define-syntax &gt;&gt; (syntax-rules ()   ((_ f g) (.$ g f))   ((_ f g ...) (&gt;&gt; (.$ g f) ...)) ))</code> と書いてしまう．まだまだ慣れが足りない． しかし、それでも何かしら定義は出来て、そうすると</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> g </span>(&gt;&gt; inc sq inc))
 gosh&gt; (g <span class="dv">3</span>)
 <span class="dv">18</span></code></pre>
@@ -75,11 +72,7 @@ gosh&gt; (g <span class="dv">3</span>)
     ((_ x f g ...) (\&gt; (f x) g ...)) ))
 gosh&gt; (\&gt; <span class="dv">2</span> inc sq sq)
 <span class="dv">81</span></code></pre>
-<p>Schemeで|は使えない．へんちくりんな変数名を|で括るから．</p>
-<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> </span>|<span class="st">&quot;| 1)</span>
-<span class="st">|&quot;</span>|
-gosh&gt; |<span class="st">&quot;|</span>
-<span class="st">1</span></code></pre>
+<p>Schemeで|は使えない．へんちくりんな変数名を|で括るから． <code>scheme gosh&gt; (define |&quot;| 1) |&quot;| gosh&gt; |&quot;| 1</code></p>
 <p>Haskellみたいなの方が、コードが少なくなるのは知ってるんだよ． まあ、どうせ趣味で使うんだから、その時々で好きなの使えばいいんだ．</p>
 <p>もしかしてと思ってできたけど、.$は別に引数2つに限ってなかった． そうか、LISPのLISPたる所以は、引数はたいていいくつでもいいんだ． listをapplyしてるのが正しい形なんだから．</p>
 <p>つまり、+という演算子は、Haskell含めてたいていは二項演算子だけど、 LISPだと、(+ 1 2 3 ...) というのが当たり前</p>
@@ -155,7 +148,7 @@ limit +---------+</code></pre>
 <span class="kw">usage</span>: js [options] [scriptfile] [scriptarg...]
 <span class="kw">Options</span>:
   <span class="kw">-h</span>            Display this information
-  <span class="kw">(</span>略<span class="kw">)</span>
+  <span class="kw">(略)</span>
 
 <span class="kw">cympfh@sazanami</span>:~/test$ time node tarai.js
 <span class="kw">13</span>

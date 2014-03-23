@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,7 +27,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>2013年 8月 26日 月曜日 09:51:59 JST</p>
@@ -36,14 +38,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
       <span class="fu">|</span> n <span class="ot">`mod`</span> <span class="dv">3</span> <span class="fu">==</span> <span class="dv">0</span> <span class="fu">=</span> <span class="dv">1</span>
       <span class="fu">|</span> n <span class="ot">`mod`</span> <span class="dv">1</span> <span class="fu">==</span> <span class="dv">0</span> <span class="fu">=</span> <span class="dv">0</span>
 
-fizzbuzz n <span class="fu">=</span> [show n, <span class="st">&quot;Fizz&quot;</span>, <span class="st">&quot;Buzz&quot;</span>, <span class="st">&quot;FizzBuzz&quot;</span>] <span class="fu">!!</span> (idx n)
+fizzbuzz n <span class="fu">=</span> [<span class="fu">show</span> n, <span class="st">&quot;Fizz&quot;</span>, <span class="st">&quot;Buzz&quot;</span>, <span class="st">&quot;FizzBuzz&quot;</span>] <span class="fu">!!</span> (idx n)
 
-main <span class="fu">=</span> print <span class="fu">$</span> map fizzbuzz [<span class="dv">1</span><span class="fu">..</span><span class="dv">100</span>]</code></pre>
+main <span class="fu">=</span> <span class="fu">print</span> <span class="fu">$</span> <span class="fu">map</span> fizzbuzz [<span class="dv">1</span><span class="fu">..</span><span class="dv">100</span>]</code></pre>
 <p>思いついたのは，こういうやり方</p>
 <pre class="j"><code>idx =: (0=5|]) + 2 * 0=3|]</code></pre>
 <p>大変そのままである もっとJらしく書くべきかもと</p>
 <pre class="j"><code>idx =: +/ @ (1 2 # 0=3 5 |])</code></pre>
-<p>書いててわかったことに，Jでは全ては右結合と思っていたけれど， <span class="citation">@のような接続詞は例外らしい</span> 詰めれば，短くはなってるか？でも分かりにくくは，なった</p>
+<p>書いててわかったことに，Jでは全ては右結合と思っていたけれど， @のような接続詞は例外らしい 詰めれば，短くはなってるか？でも分かりにくくは，なった</p>
 <pre class="j"><code>   table =: 13 : &#39;(y; &#39;&#39;Fizz&#39;&#39;; &#39;&#39;Buzz&#39;&#39;; &#39;&#39;FizzBuzz&#39;&#39;)&#39;
    table
 (&lt;;._1 &#39; Fizz Buzz FizzBuzz&#39;) ;~ ]</code></pre>

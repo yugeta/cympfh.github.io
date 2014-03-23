@@ -1,12 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>Thu Jul 25 21:12:28 JST 2013</p>
@@ -23,20 +25,7 @@
 <li><p>, が append か cons になる</p></li>
 <li><p>フィボナッチ</p></li>
 </ul>
-<p>再帰爆発するやつ</p>
-<pre class="j"><code>  fib =: 3 : &#39;if. y &lt;: 1 do. y else. (fib y-1) + (fib y-2) end.&#39;
-  fib 1
-1
-  fib 2
-1
-  fib 2
-1
-  fib 3
-2
-  fib 4
-3
-  fib 1 2 3 4 5
-1 2 3 4 5</code></pre>
+<p>再帰爆発するやつ <code>j   fib =: 3 : 'if. y &lt;: 1 do. y else. (fib y-1) + (fib y-2) end.'   fib 1 1   fib 2 1   fib 2 1   fib 3 2   fib 4 3   fib 1 2 3 4 5 1 2 3 4 5</code></p>
 <p>リスト渡してmapしてくれない. なにゆえ</p>
 <p>線形時間で終わるタイプの再帰呼び出し</p>
 <pre class="j"><code>  next

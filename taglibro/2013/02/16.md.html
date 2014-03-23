@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,26 +27,21 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>2012 2/16 (Sat.)</p>
 <p>無限リスト (遅延リスト) を用いた、フィボナッチ数列の計算．</p>
 <p>Haskell でのコード．あまりにも有名．</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">main <span class="fu">=</span> print <span class="fu">$</span> take <span class="dv">10</span> fib
+<pre class="sourceCode haskell"><code class="sourceCode haskell">main <span class="fu">=</span> <span class="fu">print</span> <span class="fu">$</span> <span class="fu">take</span> <span class="dv">10</span> fib
     <span class="kw">where</span>
-    fib <span class="fu">=</span> <span class="dv">0</span> <span class="fu">:</span> <span class="dv">1</span> <span class="fu">:</span> (zipWith (<span class="fu">+</span>) fib <span class="fu">$</span> tail fib)</code></pre>
+    fib <span class="fu">=</span> <span class="dv">0</span> <span class="fu">:</span> <span class="dv">1</span> <span class="fu">:</span> (<span class="fu">zipWith</span> (<span class="fu">+</span>) fib <span class="fu">$</span> <span class="fu">tail</span> fib)</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">[<span class="kw">0</span>,1,1,2,3,5,8,13,21,34]
 
 <span class="kw">real</span>    0m0.003s
 <span class="kw">user</span>    0m0.000s
 <span class="kw">sys</span> 0m0.000s</code></pre>
-<p>十分シンプル． fib!!0, fib!!1 までは、consによって与えられ、例えば fib!!2 は</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">fib<span class="fu">!!</span><span class="dv">2</span> <span class="fu">=</span> head (zipWith (<span class="fu">+</span>) <span class="fu">..</span> <span class="fu">..</span>)
-       <span class="fu">=</span> (head fib) <span class="fu">+</span> (head <span class="fu">$</span> tail fib)
-       <span class="fu">=</span> <span class="dv">0</span> <span class="fu">+</span> (head (<span class="dv">1</span> <span class="fu">:</span> <span class="fu">..</span>))
-       <span class="fu">=</span> <span class="dv">0</span> <span class="fu">+</span> <span class="dv">1</span></code></pre>
-<p>何も問題ない．</p>
+<p>十分シンプル． fib!!0, fib!!1 までは、consによって与えられ、例えば fib!!2 は <code>haskell fib!!2 = head (zipWith (+) .. ..)        = (head fib) + (head $ tail fib)        = 0 + (head (1 : ..))        = 0 + 1</code> 何も問題ない．</p>
 <p>Scheme での実験．Gauche 0.9.3 には、プリミティブ型としてのlconsが あり、cdrにのみ、遅延が入るconsであり、しかもこれは、一度評価したら その値をメモしておく．</p>
 <p>上の Haskell でのコードをほとんどそのまま翻訳したもの．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(use gauche.lazy)
@@ -61,9 +58,7 @@ _______________________________________
   <span class="dv">1</span>  (take fib <span class="dv">10</span>)
         [unknown location]</code></pre>
 <p>などと実行時エラーを吐く． <code>(info 'lcons)</code> を見てると、そのまんま、このコードはバグを含んでいて、「不幸にも」 Gaucheはこれを計算できないのだと書いてある．</p>
-<p>即ち、<code>(lcons a b)</code>はbのみを遅延するが、それ自体を評価するときに aとbを計算してしまう．</p>
-<pre class="sourceCode scheme"><code class="sourceCode scheme">(lcons* a b c) <span class="co">;; (lcons a (lcons b c))</span></code></pre>
-<p>ならば、まず a, b を計算する． cdr部の評価の時に、b, c を計算する．bは先の計算結果がメモされている．</p>
+<p>即ち、<code>(lcons a b)</code>はbのみを遅延するが、それ自体を評価するときに aとbを計算してしまう． <code>scheme (lcons* a b c) ;; (lcons a (lcons b c))</code> ならば、まず a, b を計算する． cdr部の評価の時に、b, c を計算する．bは先の計算結果がメモされている．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> a </span>(lcons* (<span class="kw">display</span> <span class="st">&quot;car\n&quot;</span>) (<span class="kw">display</span> <span class="st">&quot;cadr\n&quot;</span>) (<span class="kw">display</span> <span class="st">&quot;caddr\n&quot;</span>)))
 <span class="kw">car</span>
 <span class="kw">cadr</span>

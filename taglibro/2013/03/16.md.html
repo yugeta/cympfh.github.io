@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,7 +27,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>Sat Mar 16 11:27:39 JST 2013</p>
@@ -38,11 +40,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Sat Mar 16 13:09:15 JST 2013</p>
 <p>やっとfayをインストールできた． <code>fay :: Haskell -&gt; JavaScript</code></p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install fay</code></pre>
-<p>ってすると</p>
-<pre><code>test-framework-th-0.2.4 depends on haskell-src-exts-1.13.5 which failed to install</code></pre>
-<p>とか言われて、すぐ上の行に happy 1.7以上が必要とか書いてて、でもhappy はあって、すぐググってPATHに~/.cabal/bin/は追加して．それでもダメで． しょうがナシに</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># ln ~/.cabal/bin/happy /bin/</span></code></pre>
-<p>とかやって、ともかくfay入れれた． fayのためのサンプルコードは、fayが全然開発段階なので、githubに置いてある のを見たほうがよくて https://github.com/faylang/fay/tree/master/examples</p>
+<p>ってすると <code>test-framework-th-0.2.4 depends on haskell-src-exts-1.13.5 which failed to install</code> とか言われて、すぐ上の行に happy 1.7以上が必要とか書いてて、でもhappy はあって、すぐググってPATHに~/.cabal/bin/は追加して．それでもダメで． しょうがナシに <code>bash # ln ~/.cabal/bin/happy /bin/</code> とかやって、ともかくfay入れれた． fayのためのサンプルコードは、fayが全然開発段階なので、githubに置いてある のを見たほうがよくて https://github.com/faylang/fay/tree/master/examples</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">fay</span> --version
 <span class="kw">fay</span> 0.14.2.0</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> test.hs
@@ -60,10 +58,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 $ <span class="kw">fay</span> -O -o test.js test.hs<span class="kw">;</span> <span class="kw">node</span> test.js
 <span class="kw">Hello</span>, World!</code></pre>
 <p>print という関数は無いみたい．show はあって</p>
-<p>先の該当箇所を</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">main ::</span> <span class="dt">Fay</span> ()
-main <span class="fu">=</span> alert <span class="fu">$</span> show <span class="fu">$</span> <span class="st">&quot;Hello, World!&quot;</span></code></pre>
-<p>とだけして、</p>
+<p>先の該当箇所を <code>haskell main :: Fay () main = alert $ show $ &quot;Hello, World!&quot;</code> とだけして、</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">fay</span> -O -o test.js test.hs<span class="kw">;</span> <span class="kw">node</span> test.js
 {<span class="st">&quot;car&quot;</span>:<span class="st">&quot;H&quot;</span>,<span class="st">&quot;cdr&quot;</span>:{<span class="st">&quot;car&quot;</span>:<span class="st">&quot;e&quot;</span>,<span class="st">&quot;cdr&quot;</span>:{<span class="st">&quot;car&quot;</span>:<span class="st">&quot;l&quot;</span>,<span class="st">&quot;cdr&quot;</span>:{<span class="st">&quot;car&quot;</span>:<span class="st">&quot;l&quot;</span>,<span class="st">&quot;cdr&quot;</span>:{<span class="st">&quot;car&quot;</span>:<span class="st">&quot;o&quot;</span>,<span class="st">&quot;cdr&quot;</span>:{<span class="st">&quot;car&quot;</span>:<span class="st">&quot;,&quot;</span>,<span class="st">&quot;cdr&quot;</span>:{<span class="st">&quot;car&quot;</span>:<span class="st">&quot; &quot;</span>,<span class="st">&quot;cdr&quot;</span>:<span class="dt">{&quot;car&quot;:&quot;W&quot;,&quot;cdr&quot;:{&quot;car&quot;:&quot;o&quot;,&quot;cdr&quot;:{&quot;car&quot;:&quot;r&quot;,&quot;cdr&quot;:{&quot;car&quot;:&quot;l&quot;,&quot;cdr&quot;:{&quot;car&quot;:&quot;d&quot;,&quot;cdr&quot;:{&quot;car&quot;:&quot;!&quot;,&quot;cdr&quot;:null}}}}}}}}}}}}}</span></code></pre>
 <p>ちゃんとStringが[Char]になってる．しかもたぶん、showはただの#toString じゃなくて、オブジェクトの中身を列挙させてる．組み込みの#toStringは 使い物にならないからね．</p>
@@ -74,14 +69,14 @@ main <span class="fu">=</span> alert <span class="fu">$</span> show <span class=
 <p>はっきり言って使い物にならない．そのまま通せば型検査通って 欲しいようなものも通らないし．いや、まあ、私が使いこなせてない だけだろうけど．fayはHaskellじゃなくてHaskellのようなものを 扱うものらしい．</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Alert</span> <span class="kw">where</span>
 
-<span class="kw">import </span><span class="dt">FFI</span>
-<span class="kw">import </span><span class="dt">Prelude</span>
+<span class="kw">import</span> FFI
+<span class="kw">import</span> Prelude
 
 <span class="ot">main ::</span> <span class="dt">Fay</span> ()
-main <span class="fu">=</span> alert <span class="fu">$</span> show <span class="fu">$</span> a
+main <span class="fu">=</span> alert <span class="fu">$</span> <span class="fu">show</span> <span class="fu">$</span> a
     <span class="kw">where</span>
 <span class="ot">    a ::</span> [<span class="dt">Int</span>]
-    a <span class="fu">=</span>  map (\x <span class="ot">-&gt;</span> x<span class="fu">*</span>x) [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]
+    a <span class="fu">=</span>  <span class="fu">map</span> (\x <span class="ot">-&gt;</span> x<span class="fu">*</span>x) [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]
 
 <span class="ot">alert ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Fay</span> ()
 alert <span class="fu">=</span> ffi <span class="st">&quot;console.log(%1)&quot;</span></code></pre>
@@ -116,11 +111,11 @@ show_list&#39; ls =
 <p>case of 使ってるけど、引数でのパターンマッチはできなかった．</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Alert</span> <span class="kw">where</span>
 
-<span class="kw">import </span><span class="dt">FFI</span>
-<span class="kw">import </span><span class="dt">Prelude</span>
+<span class="kw">import</span> FFI
+<span class="kw">import</span> Prelude
 
 <span class="ot">main ::</span> <span class="dt">Fay</span> ()
-main <span class="fu">=</span> alert <span class="fu">$</span> show <span class="fu">$</span> fact <span class="dv">10</span>
+main <span class="fu">=</span> alert <span class="fu">$</span> <span class="fu">show</span> <span class="fu">$</span> fact <span class="dv">10</span>
     <span class="kw">where</span>
 
 <span class="ot">    fact ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>
@@ -137,11 +132,11 @@ alert <span class="fu">=</span> ffi <span class="st">&quot;console.log(%1)&quot;
 <hr />
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Alert</span> <span class="kw">where</span>
 
-<span class="kw">import </span><span class="dt">FFI</span>
-<span class="kw">import </span><span class="dt">Prelude</span>
+<span class="kw">import</span> FFI
+<span class="kw">import</span> Prelude
 
 <span class="ot">main ::</span> <span class="dt">Fay</span> ()
-main <span class="fu">=</span> alert <span class="fu">$</span> show <span class="fu">$</span> fact <span class="dv">10</span>
+main <span class="fu">=</span> alert <span class="fu">$</span> <span class="fu">show</span> <span class="fu">$</span> fact <span class="dv">10</span>
     <span class="kw">where</span>
 
     fact <span class="dv">0</span> <span class="fu">=</span> <span class="dv">1</span>
@@ -175,17 +170,17 @@ alert <span class="fu">=</span> ffi <span class="st">&quot;console.log(%1)&quot;
 <p>はい．subsetなのですね．気をつけます．</p>
 <p>前回、printが無いとか言ったけど、putStrLnならあった． console.logであると中で定義されてる．show関数はJSONへの変換程度． リストなんかを綺麗に表示するのは自分の手でやるのかな．</p>
 <p>なにをどう変換してから型検査に掛けてるのかわからん．</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">FFI</span>
-<span class="kw">import </span><span class="dt">Prelude</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> FFI
+<span class="kw">import</span> Prelude
 
 <span class="ot">main ::</span> <span class="dt">Fay</span> ()
-main <span class="fu">=</span> putStrLn <span class="fu">$</span> list_show <span class="fu">$</span> [ i <span class="fu">|</span> i <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]]
+main <span class="fu">=</span> <span class="fu">putStrLn</span> <span class="fu">$</span> list_show <span class="fu">$</span> [ i <span class="fu">|</span> i <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]]
 
 <span class="ot">list_show ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]
 list_show ls <span class="fu">=</span> <span class="st">&quot;[&quot;</span> <span class="fu">++</span> list_show&#39; ls <span class="fu">++</span> <span class="st">&quot;]&quot;</span>
 list_show&#39; [] <span class="fu">=</span> <span class="st">&quot;&quot;</span>
-list_show&#39; (x<span class="fu">:</span>[]) <span class="fu">=</span> show x
-list_show&#39; (x<span class="fu">:</span>xs) <span class="fu">=</span> show x <span class="fu">++</span> <span class="st">&quot;, &quot;</span> <span class="fu">++</span> list_show&#39; xs</code></pre>
+list_show&#39; (x<span class="fu">:</span>[]) <span class="fu">=</span> <span class="fu">show</span> x
+list_show&#39; (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="fu">show</span> x <span class="fu">++</span> <span class="st">&quot;, &quot;</span> <span class="fu">++</span> list_show&#39; xs</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">fay</span> -O -o test.js test.hs
 <span class="kw">fay</span>:
 <span class="kw">test.hs</span>:5:19:
@@ -204,6 +199,25 @@ list_show&#39; (x<span class="fu">:</span>xs) <span class="fu">=</span> show x <
     <span class="kw">In</span> the expression: <span class="st">&quot;[&quot;</span> ++ list_show<span class="st">&#39; ls ++ &quot;]&quot;</span>
 
 <span class="st">make: *** [test] Error 1</span></code></pre>
+<table>
+<col style="width: 4%" /><tbody>
+<tr class="odd">
+<td style="text-align: left;">Sat Mar 16 19:44:42 JST 2013</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ああ、もういいです．もう満足しました</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="http://d.hatena.ne.jp/podhmo/20101217/1292565023">部分継続便利だなー。 - podhmoの日記</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>scheme gosh&gt; (define k #f) k gosh&gt; (reset (for-each (^x (shift cc (set! k cc) x)) (list 1 2 3))) 1 gosh&gt; (k) 2 gosh&gt; (k) 3 gosh&gt; (k) #&lt;undef&gt;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ええっと、reset-shiftで作った継続は引数を取らないのね．まずそこから 初めて知った．で、これの有用性は、既にそこにあるループを中断、再開 させること．再帰なんかでこれを実現するには、中身が使ってるパラメータ なんかを全部、再帰の引数にして、中断・再開にはそのパラメータは保存 しておくのだろう．それらをパッと実現できるので、継続は有用である． ということかな．</td>
+</tr>
+</tbody>
+</table>
 <p><a href="http://outer-inside.blogspot.jp/2011/03/blog-post.html">部分継続チュートリアル</a></p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">cons</span> <span class="dv">0</span> (reset (<span class="kw">cons</span> <span class="dv">1</span> (shift k (<span class="kw">cons</span> <span class="dv">2</span> &#39;null )))))
 (<span class="dv">0</span> <span class="dv">2</span> . null)

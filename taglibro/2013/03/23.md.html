@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,7 +27,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/h1.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>Sat Mar 23 18:32:54 JST 2013</p>
@@ -33,7 +35,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Control.Arrowを昨日読解してた 実際、これもやることは大したことない でも大げさに行わない分、分かりやすい</p>
 <p>Arrowを使って、スタックを実装する (値、スタック) というタプルを &gt;&gt;&gt; で流すだけだけど</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- import Control.Monad.State</span>
-<span class="kw">import </span><span class="dt">Control.Arrow</span>
+<span class="kw">import</span> Control.Arrow
 
 (<span class="fu">|&gt;</span>) x f <span class="fu">=</span> f x
 <span class="kw">infixl</span> <span class="dv">0</span> <span class="fu">|&gt;</span>
@@ -42,7 +44,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 start <span class="fu">=</span> (<span class="dv">0</span>, [])
 
 <span class="ot">push ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> (a, [<span class="dt">Int</span>]) <span class="ot">-&gt;</span> (<span class="dt">Int</span>, [<span class="dt">Int</span>])
-push n <span class="fu">=</span> const n <span class="fu">***</span> (n<span class="fu">:</span>)
+push n <span class="fu">=</span> <span class="fu">const</span> n <span class="fu">***</span> (n<span class="fu">:</span>)
 
 <span class="ot">pop  ::</span> (a, [<span class="dt">Int</span>]) <span class="ot">-&gt;</span> (<span class="dt">Int</span>, [<span class="dt">Int</span>])
 pop (_, (x<span class="fu">:</span>xs)) <span class="fu">=</span> (x, xs)</code></pre>
@@ -53,23 +55,14 @@ pop (_, (x<span class="fu">:</span>xs)) <span class="fu">=</span> (x, xs)</code>
 <span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">1</span> <span class="fu">&gt;&gt;&gt;</span> push <span class="dv">2</span> <span class="fu">&gt;&gt;&gt;</span> pop
 (<span class="dv">2</span>,[<span class="dv">1</span>])</code></pre>
 <p>問題ない</p>
-<p>いくつかのArrowを使ったコードではたいてい</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> f <span class="fu">=</span> hoge <span class="fu">&gt;&gt;</span> hage <span class="fu">&gt;&gt;</span> moge
-f <span class="dv">3</span></code></pre>
-<p>みたいに使ってるからいいけど、</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">(hoge <span class="fu">&gt;&gt;&gt;</span> hage <span class="fu">&gt;&gt;&gt;</span> moge) <span class="dv">3</span></code></pre>
-<p>とかかっこ悪くて、上の |&gt; を使えば</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dv">3</span> <span class="fu">|&gt;</span> hoge <span class="fu">&gt;&gt;&gt;</span> hage <span class="fu">&gt;&gt;&gt;</span> moge</code></pre>
-<p>とかけてすごいパイプラインぽい で、|&gt;を左結合にしたので</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dv">3</span> <span class="fu">|&gt;</span> hoge <span class="fu">|&gt;</span> hage <span class="fu">|&gt;</span> moge</code></pre>
-<p>としても同じ意味になる．個人的にはこちらのほうが好き</p>
+<p>いくつかのArrowを使ったコードではたいてい <code>haskell let f = hoge &gt;&gt; hage &gt;&gt; moge f 3</code> みたいに使ってるからいいけど、 <code>haskell (hoge &gt;&gt;&gt; hage &gt;&gt;&gt; moge) 3</code> とかかっこ悪くて、上の |&gt; を使えば <code>haskell 3 |&gt; hoge &gt;&gt;&gt; hage &gt;&gt;&gt; moge</code> とかけてすごいパイプラインぽい で、|&gt;を左結合にしたので <code>haskell 3 |&gt; hoge |&gt; hage |&gt; moge</code> としても同じ意味になる．個人的にはこちらのほうが好き</p>
 <p>ただスタックを作っただけじゃ勿体ないからスタックの上での計算機を 作ってみる</p>
 <p>足し算なら、二度ポップして出てきたのを足してプッシュする 一度ポップしたものは <code>(a, state)</code> のaとして保持されるけど、そのまま二度目のポップをしたらaは破棄されるので なんとかして別のものとして持っとく必要があるけれど、これはまさしくArrowで 言う、パイプラインの分岐だ</p>
 <p>`<code>haskell *Main&gt; start |&gt; push 1 |&gt; push 2 |&gt; pop (2,[1]) *Main&gt; start |&gt; push 1 |&gt; push 2 |&gt; pop |&gt; fst &amp;&amp;&amp; pop (2,(1,[])) *Main&gt; start |&gt; push 1 |&gt; push 2 |&gt; pop |&gt; fst &amp;&amp;&amp; pop |&gt; (\(x,ys@(y,s)) -&gt; push (x+y) ys) (3,[3])</code></p>
 <p>appの存在はしってるけど、直接タプルを受け取るような関数を書いた方が早いしコード短いよね</p>
 <p>従って、次のような汎用のスタックの上で動く二項演算子が作れる</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">op f <span class="fu">=</span>
-    pop <span class="fu">&gt;&gt;&gt;</span> fst<span class="fu">&amp;&amp;&amp;</span>id <span class="fu">&gt;&gt;&gt;</span> second pop
+    pop <span class="fu">&gt;&gt;&gt;</span> <span class="fu">fst&amp;&amp;&amp;id</span> <span class="fu">&gt;&gt;&gt;</span> second pop
     <span class="fu">&gt;&gt;&gt;</span> (\(x,ys<span class="fu">@</span>(y,s)) <span class="ot">-&gt;</span> push (f x y) ys)
 
 add <span class="fu">=</span> op (<span class="fu">+</span>)
