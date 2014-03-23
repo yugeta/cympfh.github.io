@@ -18,7 +18,7 @@ showHTML ls =
       showHTML' _ _ [] ac = reverse ac
       showHTML' b prev ((m, l) : rest) ac =
         showHTML' b' m rest ac'
-          where link = "<a href=\"./" ++ l ++ "\">" ++ l ++ "</a>"
+          where link = "<a href=\"./" ++ l ++ ".html\">" ++ l ++ "</a>"
                 b' = if prev < m then not b else b
                 ac' = if prev < m then link : ("<div class=" ++ className b ++ ">") : "</div>" : ac
                                   else link : ac
