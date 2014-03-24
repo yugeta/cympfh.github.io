@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
@@ -40,21 +41,21 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </blockquote>
 <hr />
 <p>上のを改めて引用</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">flip</span> fix (<span class="dv">0</span><span class="ot">::</span><span class="dt">Int</span>) <span class="fu">$</span> \loop i <span class="ot">-&gt;</span> <span class="kw">do</span>
-  <span class="fu">putStrLn</span> <span class="fu">$</span> <span class="st">&quot;total &quot;</span> <span class="fu">++</span> <span class="fu">show</span> i
-  n <span class="ot">&lt;-</span> <span class="fu">readLn</span>
-  <span class="kw">if</span> n <span class="fu">&gt;=</span> <span class="dv">0</span> <span class="kw">then</span> loop <span class="fu">$!</span> n <span class="fu">+</span> i <span class="kw">else</span> <span class="fu">return</span> () </code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">flip fix (<span class="dv">0</span><span class="ot">::</span><span class="dt">Int</span>) <span class="fu">$</span> \loop i <span class="ot">-&gt;</span> <span class="kw">do</span>
+  putStrLn <span class="fu">$</span> <span class="st">&quot;total &quot;</span> <span class="fu">++</span> show i
+  n <span class="ot">&lt;-</span> readLn
+  <span class="kw">if</span> n <span class="fu">&gt;=</span> <span class="dv">0</span> <span class="kw">then</span> loop <span class="fu">$!</span> n <span class="fu">+</span> i <span class="kw">else</span> return () </code></pre>
 <p><code>\loop i -&gt; do {}</code> を <code>loop i = do {}</code> と何故か勘違いして脳内型推論にずっと失敗してた。</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">fix ::</span> (a <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> a</code></pre>
 <p>flip は第一引数に <code>a -&gt; b -&gt; c</code> が欲しいから fix の a を <code>b -&gt; c</code> だと解釈することで (HaskellやMLで、第n引数なんて言っていいのかしら)</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">flip</span><span class="ot"> fix ::</span> b <span class="ot">-&gt;</span> ((b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> c</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">flip<span class="ot"> fix ::</span> b <span class="ot">-&gt;</span> ((b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> c</code></pre>
 <p>更に</p>
 <pre><code>b = Int
 c = IO ()</code></pre>
 <p><code>\loop i</code> の <code>loop</code> という名前は、ただ処理の続行の表現にしか 使ってなくて、<code>call/cc</code>による大域脱出みたいで、すごくカッコイイ。</p>
 <hr />
 <p><code>\loop i</code>以下をバラして書くと</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> Data.Function
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.Function</span>
 
 <span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span>
@@ -62,10 +63,10 @@ main <span class="fu">=</span>
   <span class="kw">where</span>
 <span class="ot">    loop ::</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()) <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()
     loop cont i <span class="fu">=</span>
-      <span class="kw">if</span> i <span class="fu">&lt;</span> <span class="dv">0</span> <span class="kw">then</span> <span class="fu">return</span> ()
-               <span class="kw">else</span> <span class="kw">do</span> { <span class="fu">print</span> i; cont (i<span class="fu">-</span><span class="dv">1</span>) }</code></pre>
+      <span class="kw">if</span> i <span class="fu">&lt;</span> <span class="dv">0</span> <span class="kw">then</span> return ()
+               <span class="kw">else</span> <span class="kw">do</span> { print i; cont (i<span class="fu">-</span><span class="dv">1</span>) }</code></pre>
 <p>多少分かりやすいと思うけど、 ここまで書くならSchemeでもおなじみのただの再帰で</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> Data.Function
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.Function</span>
 
 <span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span>
@@ -73,8 +74,8 @@ main <span class="fu">=</span>
   <span class="kw">where</span>
 <span class="ot">    loop ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()
     loop i <span class="fu">=</span>
-      <span class="kw">if</span> i <span class="fu">&lt;</span> <span class="dv">0</span> <span class="kw">then</span> <span class="fu">return</span> ()
-               <span class="kw">else</span> <span class="kw">do</span> { <span class="fu">print</span> i; loop (i<span class="fu">-</span><span class="dv">1</span>) }</code></pre>
+      <span class="kw">if</span> i <span class="fu">&lt;</span> <span class="dv">0</span> <span class="kw">then</span> return ()
+               <span class="kw">else</span> <span class="kw">do</span> { print i; loop (i<span class="fu">-</span><span class="dv">1</span>) }</code></pre>
 <p>でいいやんな。。。 というか、型に恨み重ねるくらいなら、無理に<code>loop</code>使いたくない。</p>
 <p>それよりも、中では一体どんな計算順序を行ってるのか 一回くらい教えてもらわないと気持ち悪い。</p>
 <hr />
@@ -85,15 +86,15 @@ main <span class="fu">=</span>
 <p>instance ArrowLoop (-&gt;) where<br /> loop f b = let (c,d) = f (b,d) in c</p>
 </blockquote>
 <p>使えるかな。</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">loop f b <span class="fu">=</span> <span class="fu">fst</span> <span class="fu">$</span> f (b, d)
-         <span class="fu">=</span> <span class="fu">fst</span> <span class="fu">$</span> f (b, <span class="fu">snd</span> <span class="fu">$</span> f (b, d))
-         <span class="fu">=</span> <span class="fu">fst</span> <span class="fu">$</span> f (b, <span class="fu">snd</span> <span class="fu">$</span> f (b, <span class="fu">snd</span> <span class="fu">$</span> f (b, d)))</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">loop f b <span class="fu">=</span> fst <span class="fu">$</span> f (b, d)
+         <span class="fu">=</span> fst <span class="fu">$</span> f (b, snd <span class="fu">$</span> f (b, d))
+         <span class="fu">=</span> fst <span class="fu">$</span> f (b, snd <span class="fu">$</span> f (b, snd <span class="fu">$</span> f (b, d)))</code></pre>
 <p>d の必要がある回数+1 だけ、fが呼ばれる。</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">f <span class="fu">=</span> \(b, d) <span class="ot">-&gt;</span> (b<span class="fu">-</span><span class="dv">1</span>, d)
-loop f <span class="dv">3</span> <span class="fu">=</span> <span class="fu">fst</span> <span class="fu">$</span> f (<span class="dv">3</span>, d)
-         <span class="fu">=</span> <span class="fu">fst</span> <span class="fu">$</span> (<span class="dv">2</span>, d)
+loop f <span class="dv">3</span> <span class="fu">=</span> fst <span class="fu">$</span> f (<span class="dv">3</span>, d)
+         <span class="fu">=</span> fst <span class="fu">$</span> (<span class="dv">2</span>, d)
          <span class="fu">=</span> <span class="dv">2</span></code></pre>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">flip</span> loop <span class="dv">2</span> <span class="fu">$</span> \(b, d) <span class="ot">-&gt;</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">flip loop <span class="dv">2</span> <span class="fu">$</span> \(b, d) <span class="ot">-&gt;</span>
     (d b, \x <span class="ot">-&gt;</span> <span class="kw">if</span> x <span class="fu">&lt;</span> <span class="dv">0</span> <span class="kw">then</span> [] <span class="kw">else</span> x <span class="fu">:</span> d (x<span class="fu">-</span><span class="dv">1</span>))
 
 <span class="fu">=</span> loop f <span class="dv">2</span>
