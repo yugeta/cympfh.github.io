@@ -198,3 +198,4 @@ AYefYbOw41Y [Yuki]&quot;Disco☆Chocolatheque&quot; english subbed (annotation) 
 804NtcaFLlw オトメスイッチ オープニングムービー 全年齢版
 ssnx6KmRK6s goreshit - look at me tenderly
 R7t-P2Y6KwQ goreshit - sayonara utsukushii usagi. anata o aishite imasu
+6GLg6u7PTQU Bakemonogatari Suteki Meppou (MIDI)
