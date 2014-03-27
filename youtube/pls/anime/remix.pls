@@ -81,3 +81,4 @@ u1yVTgo7A6U Dubstep - Magia (Mindfuck Remix)
 Xf_hJ4Pkyq0 ナイショの話(A Electro Remix)
 rRervevYGR0 Mousou Express - Hanazawa Kana full remix
 GAf8ZsTGPY8 じゃ、いってみよー！
+uzmt5Dju67w Rainbow JakkaJan
