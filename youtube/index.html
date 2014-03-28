@@ -1,6 +1,6 @@
 <head>
 <meta charset="UTF-8">
-<title>YTl ver 1.4.1</title>
+<title>YTl ver 1.5.0</title>
 <link rel="stylesheet" type="text/css" href="./player.css">
 <script type="text/javascript" src="../js/swfobject.js"></script>
 <script type="text/javascript" src="./video.js"></script>
@@ -52,8 +52,8 @@ function init() {
 
   pls.onchange = function(e) {
     load_pls(T, e.currentTarget.value);
-  }
-  init_pls(T, pls, location.search + '.pls');
+  };
+  init_pls(T, pls);
 
 }
 
@@ -77,12 +77,3 @@ function init() {
 
   </form>
 </div>
-<code id='log'>
-ver 1.4.1 : 2014/02/11 : random mode &rarr; shuffle buttom, bug that skips first line
-ver 1.4.0 : 2014/01/28 : location.search accesses the playlist
-ver 1.3.2 : 2014/01/28 : playlists, recently changed order
-ver 1.3.0 : 2014/01/24 : load a playlist
-ver 1.2.4 : 2014/01/24 : adjust for Chrome
-ver 1.2.3 : 2014/01/21 : add exit button
-ver 1.2.2 : 2014/01/20 : loop in default
-</code>
