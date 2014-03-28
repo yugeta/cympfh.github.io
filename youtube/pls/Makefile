@@ -3,7 +3,7 @@ do:
 
 index:
 	ls *.pls > index.js
-	ls */*.pls >> index.js
+	ls */* >> index.js
 
 git:
 	git add --all
