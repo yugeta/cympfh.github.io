@@ -7,7 +7,7 @@
 <script type="text/javascript" src="./playlist.js"></script>
 <script type="text/javascript">
 
-var ls, idx;
+var ls, idx = -1;
 
 function shuffle() {
   T.value =
@@ -22,6 +22,7 @@ function shuffle() {
 }
 
 function listset() {
+  if (idx > -1) { ytExit(); }
   var ids = 
     T.value.split('\n')
      .filter(function(l){ return (l.trim())[0] !== '#' })

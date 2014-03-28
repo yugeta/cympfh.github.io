@@ -23,6 +23,7 @@ div#W {
   font-size: 13px;
   padding: 3px;
   display: none;
+  overflow: hidden;
 }
 
 div#D {
