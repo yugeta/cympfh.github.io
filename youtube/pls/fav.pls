@@ -1,8 +1,8 @@
 # vim: set ft=youtube:
--Rizow2u8ig Dekiru Kanatte Hoshimittsu -exit trance remix- Hidamari Sketch xHoshimittsu
--ko4sS0KEfg [Tales] Party! Love Beat!
+-Rizow2u8ig 出来るかなって星3つ -exit trance remix-
+-ko4sS0KEfg Party! Love Beat!
 -q1MMx9fwDQ Armando Land of confusion
-0EHne2id_Kk [MAD]ハイスクールD×D OP Trip -innocent of D-[FULL]
+0EHne2id_Kk ハイスクールD×D OP Trip -innocent of D-
 0HAHMr6vDII フラワーガール
 0_fjcejlk_8 ココロコネクト OP FULL
 0f_7ReIlw3E けいおんキャラクターソング　澪Ver
@@ -26,16 +26,16 @@
 4xa4oqaSLOc [Tales] ラヴ・ビート(Love Beat)
 5DVVURPFznU Chocola ni Muuchu (full song)
 5O_lZjRh4CE あの夏で待ってる OP
-5_nw2B_2sKk 生徒会役員共 Seitokai Yakuin Domo ED [蒼い春(Aoi Haru)/angela] 8bit(LSDj on GB) ver
-6Cse3zSeiTs もってけ！セーラーふくElectro 乙女ちっくｍｉｘ勝手にアレンジ音質改善
-6M17xH5DoZY 【高音質】百花繚乱 サムライガールズ ED 恋にせっせ通りゃんせ　FULL
+5_nw2B_2sKk 生徒会役員共 ED [蒼い春(Aoi Haru)/angela] 8bit(LSDj on GB) ver
+6Cse3zSeiTs もってけ！セーラーふくElectro 乙女ちっくmix
+6M17xH5DoZY 百花繚乱 サムライガールズ ED 恋にせっせ通りゃんせ　FULL
 6jexItFW36Q Sleepless Tsukasa, Pt. 14
 6vdVYk9gjao おねがいマイメロディ♪ 比較ＯＰ集　
 781GWx0WSnk miii - Dead at Chelsea Hotel
 7AYAiYeGZGA Yukari Fresh - Yukarin Disco
 7Cfl8ydFNnw Tsukasa Cut Up or something like that
 7zEDRjSaE9E Takeshi Nakatsuka - Your Voice(sings with Asako Toki)
-8P48GxucJ4M Area Arena- Denki Groove/電気グルーヴ
+8P48GxucJ4M Area Arena/電気グルーヴ
 8QOxKCKC09A YELLE - Ce Jeu
 8xL-QKMvmLI Yamanote Song
 9LbtkJ2UZ6E WE CALL IT TECHNO! Documentary Trailer
@@ -48,11 +48,11 @@ ASE1VclYJIg シャルロ － なごみのポーズ
 AavV-vAQ9Tw パプリカOP　club mix（long）
 ArJ7No_iuwc オトメスイッチ紹介ムービー その1
 AzP2PnyWYbo ゆゆ式 OP せーのっ！z-mix／AnimeSkeetIt'sMeal remix
-B5Fsdz_TbvQ Yes! Pretty Cure 5 OP - Full Throttle Go! Go! （Japanese full version）
+B5Fsdz_TbvQ Yes! Pretty Cure 5 OP - Full Throttle Go! Go!
 BNLQEdx3z0Y Kimi No Shiranai Monogatari (Drum N Bass Mix)
 BQMXtYiTrWE 京都旅行 ;シングルベッドはせまいのです
-BVglLeAgdUY メーウ 「pair」(ほんとにあった！霊媒先生　歌詞付き ver.)
-CLKO4yWY-0g やくしまるえつこ『ロンリープラネット』(RADIO ONSEN EUTOPIA) MV Full ver.
+BVglLeAgdUY メーウ 「pair」(ほんとにあった！霊媒先生)
+CLKO4yWY-0g やくしまるえつこ『ロンリープラネット』
 Cl_kIDKU9s4 ニョキニョキ
 D7asqzFiBW0 Monofrog_4sk - Soda Float
 EGWrLjsbjOo 筋肉少女帯（ナゴム時代）
