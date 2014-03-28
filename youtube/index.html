@@ -22,7 +22,6 @@ function shuffle() {
 }
 
 function listset() {
-
   var ids = 
     T.value.split('\n')
      .filter(function(l){ return (l.trim())[0] !== '#' })
@@ -31,9 +30,7 @@ function listset() {
         var i = l.indexOf(' ');
         return { id : l.slice(0, i) , name : l.slice(i+1) } })
      ;
-
   draw(ids);
-
 }
 
 function ytExit() {
@@ -45,35 +42,31 @@ function ytExit() {
   v.width = "640px";
   v.height = "0px";
   D.appendChild(v);
-  P.style.display = "block";
+
+  // where video
+  D.style.display = "none";
+  W.style.display = "none";
 }
 
 function init() {
-
-  pls.onchange = function(e) {
-    load_pls(T, e.currentTarget.value);
-  };
+  pls.onchange = function(e) { load_pls(T, e.currentTarget.value); };
   init_pls(T, pls);
-
 }
 
 </script>
 </head>
 <body onload='init()'>
 
-<div style="width:450px;display:block" id="D">
-<div id="W">push ``play''</div>
-<embed id='V' width='640px' height='0px' src=''>
+<div id="D">
+  <div id="W">push ``play''</div>
+  <embed id='V' width='640px' height='0px' src=''>
 </div>
 
 <div id='P'>
-  <form style='width:450px'>
-  <textarea wrap="off" id='T'># my playlist</textarea>
-  <br>
-
-  <select id='pls'></select>
-  <input type='button' value='shuffle' onclick='shuffle()'>
-  <input type='button' value='play' onclick='listset()'>
-
+  <textarea id='T'></textarea><br>
+  <form>
+    <select id='pls'></select>
+    <input type='button' value='shuffle' onclick='shuffle()'>
+    <input type='button' value='play' onclick='listset()'>
   </form>
 </div>

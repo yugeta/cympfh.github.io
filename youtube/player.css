@@ -18,16 +18,25 @@ code {
 }
 
 div#W {
-  display: block;
-  background-color:black;
   color:white;
-  padding:3px;
+  background-color:black;
   font-size: 13px;
+  padding: 3px;
+  display: none;
+}
+
+div#D {
+  display: block;
+  float: left;
 }
 
 textarea {
- height: 200px;
- width:100%;
- white-space: nowrap;
+  display: block;
+  height: 200px;
+  width: 450px;
+  padding: 5px;
+  border: 1px solid #d0d0ff;
+  background-color: #fafaff;
+  overflow: scroll;
 }
 

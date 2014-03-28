@@ -9,20 +9,19 @@ function draw(ids) {
       "http://www.youtube.com/v/"+id+"?enablejsapi=1&autoplay=1&playerapiid=player"
       , "V", "450", "320", "8", null, null
       , { allowScriptAccess: "always" }, { id: "player" }); 
+  
+  // where video
+  D.style.display = "block";
+  W.style.display = "block";
 }
 
 function onYouTubePlayerReady() {
-  P.style.display = "none";
   player.addEventListener('onStateChange', 'onStateChange');
   player.addEventListener('onError', 'onError');
 }
 
-function onStateChange(newState) { 
-  if (newState == 0) next();
-}
-function onError(st) {
-  next();
-}
+function onStateChange(newState) { if (newState == 0) next(); }
+function onError(st) { next(); }
 
 function load() {
   setTitle(idx);
@@ -34,10 +33,11 @@ function load() {
 }
 
 function setTitle() {
-  if (idx in ls)
+  if (idx in ls) {
     W.innerHTML = "<a onclick='showMenu()'>Now playing: " + ls[idx].name + "</a>";
-  else
+  } else {
     W.innerHTML = "push ``play''";
+  }
 }
 
 function showMenu() {
@@ -62,5 +62,4 @@ function tw() {
   open(url);
   setTitle();
 }
-
 
