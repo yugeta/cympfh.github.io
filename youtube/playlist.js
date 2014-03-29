@@ -59,6 +59,8 @@ function init_pls(textarea, select) {
       } else {
         select.appendChild(optgroup);
         optgroup = document.createElement('optgroup');
+        optgroup.appendChild(option);
+        optgroup.label = head;
       }
       last_group_name = head;
     }
