@@ -201,3 +201,5 @@ R7t-P2Y6KwQ goreshit - sayonara utsukushii usagi. anata o aishite imasu
 6GLg6u7PTQU Bakemonogatari Suteki Meppou (MIDI)
 v2rNyYQt5Jk High School DxD NEW Ending 2
 6s2TwbJEzLw HIGHSCHOOL DxD ENDING
+jikQmrkvEYc The LASTTRAK - Light between the clouds
+8taiKjt4CZA あんずのうた / Anzu&#39;s Song / Anzu no Uta -cruz remix-
