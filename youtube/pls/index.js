@@ -30,9 +30,9 @@ anime/remix
 anime/saki
 artists/denki.pls
 artists/kraftwerk.pls
+artists/maruestu
 artists/momoiro.pls
 artists/ootudi.pls
-artists/rel.pls
 artists/timers.pls
 myAlbums/amb.pls
 myAlbums/bgmbgm.pls
