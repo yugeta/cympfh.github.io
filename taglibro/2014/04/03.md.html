@@ -13,7 +13,24 @@
 </head>
 <body>
 <figure>
-<img src="../../../img/140403.png" />
+<img src="../../img/140403.png" />
 </figure>
+<p>GNU screen には screen 一つに対して一つの hardstatus と、window 一つに対して一つの caption があって、別々のタイトルを付けたかった。なぜなら、hardstatus には %W で全てのwindowsのタイトルを列挙させるけど、平気で10とか開いちゃうとどうせ全部見られなくて一部省略されるのがすごく気に触るから。</p>
+<ul>
+<li>captionには、そのwindow一つの情報を一行で表示して、</li>
+<li>hardstatusには、全体の情報を一行で表示</li>
+</ul>
+<p>する必要がある。</p>
+<p>やりたかったのは、</p>
+<ul>
+<li>caption には、起動してる中で最後のプロセスの名前と、カレントディレクトリ</li>
+<li>hardstatus には、全てのwindow について、起動してるプロセスの名前</li>
+</ul>
+<p>を表示させたかったけど、分からなかった。</p>
+<p>妥協策として</p>
+<ul>
+<li>caption には、カレントディレクトリ</li>
+<li>hardstatus には、もうwindowに関する情報は一切表示さしない</li>
+</ul>
 </body>
 </html>
