@@ -16,5 +16,14 @@
 <h1 id="gnu-screen">GNU screen</h1>
 <h2 id="backtick-は遅延評価である">backtick は遅延評価である。</h2>
 <p>必要に成るまで、実行しない。 すなわち、表示をしない限り、実行しない。</p>
+<h2 id="backtick-は-cron-の代替品ではない">backtick は cron の代替品ではない。</h2>
+<p>cron使うの苦労した</p>
+<pre><code>$ crontab -l
+0 1,3,5,7,9,11,13,15,17,19,21,23 * * * /bin/sh /home/cympfh/path/it.sh
+
+$ cat /home/cympfh/path/it.sh
+#!/bin/sh
+/usr/local/bin/node ~/git/info/index.js &gt; ~/Dropbox/info.md</code></pre>
+<p>できるだけ丁寧に、フルパスを与えてやることが重要である。</p>
 </body>
 </html>
