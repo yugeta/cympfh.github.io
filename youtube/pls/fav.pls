@@ -204,3 +204,4 @@ v2rNyYQt5Jk High School DxD NEW Ending 2
 jikQmrkvEYc The LASTTRAK - Light between the clouds
 8taiKjt4CZA あんずのうた / Anzu&#39;s Song / Anzu no Uta -cruz remix-
 Jp1zvaFiKyY Pollarstars - Tick Tock
+wyU_0kDWWN8 クドわふたーOP『one&#39;s future』 Fullバージョン
