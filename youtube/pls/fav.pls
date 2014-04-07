@@ -72,9 +72,9 @@ JxyIV9si5eg Platinum by Mio (Yuuki Aoi)
 KRJhfYdjW2w adventure monsters　/ instant cytron
 KiPVNwOLn78 Calla Soiled - Invisible Cry
 KuuKLIL1W_g そんなこと裏のまた裏話でしょ_ h-mix／AnimeSkeetIt'sMeal remix
-LcigAiYTnbY Q＆Aリサイタル　（FULL　歌詞付き）
+LcigAiYTnbY Q＆Aリサイタル
 Ld3x4SpRKeo Motteke! Sailor Fuku [-Undakada ~ Kyou no Yabou-]
-LoQsvRDTGRU きんいろモザイク OP - Jumping!! (you &amp; saqwz Remix)
+LoQsvRDTGRU きんいろモザイク OP - Jumping!! (you & saqwz Remix)
 LxHvOBVnKy8 伊藤真澄「ユメのなかノわたしのユメ」90秒PV.mov
 M5wDjFL9BbY tawagoto(戯言スピーカーRap.ver) - daoko
 Mb97y3V2kPQ small happiness feat. フレネシ - たしかなこと
@@ -87,9 +87,9 @@ OyFAONSMy54 アニマル横町OP曲～飛んでもNotning～
 PQ0x8M4vb18 気分は大発明♪ - Wonder Strawberry ☆ F
 PrreUUhP6Nw -MADLAX-nowhere
 QSqLlN8p74A 寝・に・げでリセット！(Hypo77's E.P.P. remix)
-QUuYW2w-vYI " DOKI" ryofuko chan- op full
-QXh8Q_oFrQM ドキドキ!プリキュア ＥＤ
-QaRmIOOKLE0 TVアニメ『中二病でも恋がしたい！』 OP [ChuNiByo Demo Koi ga Shitai!]
+QUuYW2w-vYI " DOKI" ryofuko chan- OP
+QXh8Q_oFrQM ドキドキ!プリキュア ED
+QaRmIOOKLE0 中二病でも恋がしたい OP
 R-hotvkE__k Sweets Parade ~ Lyrics ~ Karuta Roromiya [FULL]
 Reg0qrEQKvY Let's Go Lovely Henshin Time!
 S6KJ3Bcej_o オートバイで「涼宮ハルヒの憂鬱」の聖地巡礼 GoPro HD
@@ -104,7 +104,7 @@ UA_3giFOac0 寝・逃・げでリセット！ / Ne Ni Ge de Reset! Acapella
 UPQUFQBNk5E 君を知ること Kimi wo Shiru Koto (侵略!?イカ娘 Shinryaku!? Ika Musume ED, FULL)
 UXotv3GooFw Yui Makino お願いジュンブライト (Onegai Jun Bright)
 UtKE9eE1FH8 Denki Groove - The Words (HD)
-VDvKghU_IuY 12. Wind Climbing ~Kaze ni Asobarete~ / Boido &amp; Meramipoppu
+VDvKghU_IuY 12. Wind Climbing ~Kaze ni Asobarete~ / Boido & Meramipoppu
 VhxzMQ_SYQA 青春いいじゃないかっ　鶴屋さん
 VmMwtk3s0Hs 続・生意気☆いちごミルクDAYO！！ -ツン成分63％増量CHU（当社比） - あらら、ど～も☆CHUぅ, あべにゅうぷろじぇくと(ave;new) feat.草柳順子
 Vs4prOSOL2o Nathan Fake - The sky was pink (James Holden)
@@ -185,16 +185,16 @@ bCQAMNXwH_Q 戦国コレクション OP 『目をとじてギュッしよ』　�
 le6t5Zu0KyQ [Opening 2] Sengoku Collection
 ZB3DQ0iW9e4 VERY NICE DROOL
 P7Nfc-sv0BE [AMV] RHYTHM CIRCUS
-lPlq6gbksnY Madotsuki&#39;s Porch
+lPlq6gbksnY Madotsuki's Porch
 nsci5T-gK6U NoNoWire11_The Shouty Track
 bLLLbbghVLs na-na-nana-nananana-nana-(mihotyan)
-fWyQxVqAFzc Mikuru &#39;N&#39; Bass
+fWyQxVqAFzc Mikuru 'N' Bass
 Fq7Zh_kpOGg 【Remix】鉄腕バーディーDECODE 02 【OP】Nirgilis「kiseki」Remix
 LFFrmguBPRk Gurren Lagann Opening Theme Full
 ymsr-9q36hY Melocure - Meguriai
 COIWYfqfVAs 乙女よ大志を抱け
 Os9RtDCc2UU Space Dandy - Welcome to the X Dimension [Ending Extended]
-AYefYbOw41Y [Yuki]&quot;Disco☆Chocolatheque&quot; english subbed (annotation) [romaji / english in the description]
+AYefYbOw41Y [Yuki]"Disco☆Chocolatheque" english subbed (annotation) [romaji / english in the description]
 804NtcaFLlw オトメスイッチ オープニングムービー 全年齢版
 ssnx6KmRK6s goreshit - look at me tenderly
 R7t-P2Y6KwQ goreshit - sayonara utsukushii usagi. anata o aishite imasu
@@ -202,6 +202,6 @@ R7t-P2Y6KwQ goreshit - sayonara utsukushii usagi. anata o aishite imasu
 v2rNyYQt5Jk High School DxD NEW Ending 2
 6s2TwbJEzLw HIGHSCHOOL DxD ENDING
 jikQmrkvEYc The LASTTRAK - Light between the clouds
-8taiKjt4CZA あんずのうた / Anzu&#39;s Song / Anzu no Uta -cruz remix-
+8taiKjt4CZA あんずのうた / Anzu's Song / Anzu no Uta -cruz remix-
 Jp1zvaFiKyY Pollarstars - Tick Tock
-wyU_0kDWWN8 クドわふたーOP『one&#39;s future』 Fullバージョン
+wyU_0kDWWN8 クドわふたーOP『one's future』 Fullバージョン
