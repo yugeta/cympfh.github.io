@@ -1,4 +1,4 @@
-all: index_ taglibro_ games_ today
+all: index_ taglibro_ games_ study_
 
 index_:
 	### template
@@ -12,8 +12,12 @@ index_:
 	echo `ls -1F|grep /|xargs -n1 -i bash -c "echo '<a href={}>{}</a>'"` >> index.html
 	echo "</div>" >> index.html
 
+study_:
+	echo "<pre>" >study/index.html
+	ls -1F study/ | xargs -n1 -i bash -c "echo '<a href={}>{}</a>'" >> study/index.html
+
 games_:
-	>games/index.html
+	echo "<pre>" >games/index.html
 	ls -1F games/ | xargs -n1 -i bash -c "echo '<a href={}>{}</a>'" >> games/index.html
 
 taglibro_:
