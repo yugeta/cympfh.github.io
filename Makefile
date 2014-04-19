@@ -13,7 +13,8 @@ index_:
 	echo "</div>" >> index.html
 
 games_:
-	echo `ls -1F games/* |xargs -n1 -i bash -c "echo '<a href={}>{}</a>'"` >> games/index.html
+	>games/index.html
+	ls -1F games/ | xargs -n1 -i bash -c "echo '<a href={}>{}</a>'" >> games/index.html
 
 taglibro_:
 	cd taglibro/; make
