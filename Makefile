@@ -1,4 +1,4 @@
-all: index_ taglibro_ games_
+all: index_ taglibro_ games_ today
 
 index_:
 	### template
@@ -17,6 +17,9 @@ games_:
 
 taglibro_:
 	cd taglibro/; make
+
+today:
+	cd taglibro/; make today
 
 git:
 	git add --all
