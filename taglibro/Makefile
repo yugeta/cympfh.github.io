@@ -1,4 +1,4 @@
-all: md2html index git
+all: md2html index
 
 index:
 	cp index.html.h index.html
