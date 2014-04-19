@@ -1,18 +1,19 @@
-all: imitNews index.html
+all: index_ taglibro_
 
-imitNews:
-	touch news
+taglibro_:
+	cd taglibro/; make
 
-index.html: news
+index_:
+	### template
 	cp index.html.h index.html
 	### fortune
-	echo "<div class=fortune>" >> $@
-	echo `fortune` >> $@
-	echo "</div>" >> $@
+	echo "<div id=fortune>" >> index.html
+	echo `fortune` >> index.html
+	echo "</div>" >> index.html
 	### ls
-	echo "<div class=ls>" >> $@
-	echo `ls -1F|grep /|xargs -n1 -i bash -c "echo '<a href={}>{}</a>'"` >> $@
-	echo "</div>" >> $@
+	echo "<div id=ls>" >> index.html
+	echo `ls -1F|grep /|xargs -n1 -i bash -c "echo '<a href={}>{}</a>'"` >> index.html
+	echo "</div>" >> index.html
 
 git:
 	git add --all

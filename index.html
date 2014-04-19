@@ -1,9 +1,44 @@
+<!-- vim: set ft=html: -->
 <title>cympfh.github.io</title>
-<link rel='stylesheet' href='css/te.css'>
+<style>
+body {
+  background-image: url(./img/nekomezaka.gif);
+  background-repeat: no-repeat;
+  background-position: right 0;
+  background-size: 200px;
+}
+#wrap {
+  font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+  font-size: 14px;
+  line-height: 1.2;
+}
+#ls {
+  position: absolute;
+  display: none;
+  top: 60%;
+  left: 40%;
+  width: 40%;
+  background-color: #fff9f9;
+  border: 10px white solid;
+}
+#fortune {
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  width: 40%;
+  background-color: #faf9e0;
+}
+a {
+  color: #402020;
+}
+</style>
+<script>
+setTimeout("ls.style.display='block'",10000-location.search.slice(1))
+</script>
 <body><div id='wrap'>
-<div class=fortune>
-"You have waited a bit too long for an answer, here it is in the middle of big holidays - haven't done anything with my computer other than reading the newspapers for a couple of days." Husse Jun 23 2007
+<div id=fortune>
+I must have a prodigious quantity of mind; it takes me as much as a week sometimes to make it up. -- Mark Twain, "The Innocents Abroad"
 </div>
-<div class=ls>
-<a href=css/>css/</a> <a href=img/>img/</a> <a href=js/>js/</a> <a href=jubito/>jubito/</a> <a href=sheepy/>sheepy/</a> <a href=soturon/>soturon/</a> <a href=study/>study/</a> <a href=taglibro/>taglibro/</a> <a href=youtube/>youtube/</a>
+<div id=ls>
+<a href=games/>games/</a> <a href=img/>img/</a> <a href=js/>js/</a> <a href=study/>study/</a> <a href=taglibro/>taglibro/</a> <a href=youtube/>youtube/</a>
 </div>
