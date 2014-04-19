@@ -1,0 +1,30 @@
+body {
+  background-image: url(../img/nekomezaka.gif);
+  background-repeat: no-repeat;
+  background-position: right 0;
+  background-size: 200px;
+}
+#wrap {
+  font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+  font-size: 14px;
+  line-height: 1.2;
+}
+.ls {
+  position: absolute;
+  top: 60%;
+  left: 40%;
+  width: 40%;
+  background-color: #fff9f9;
+}
+
+.fortune {
+  position: absolute;
+  top: 30%;
+  left: 20%;
+  width: 40%;
+  background-color: #fefff9;
+}
+
+a {
+  color: #402020;
+}
