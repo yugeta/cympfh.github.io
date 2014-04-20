@@ -1,5 +1,4 @@
-do:
-	cat Makefile
+all: index
 
 index:
 	ls *.pls > index.js

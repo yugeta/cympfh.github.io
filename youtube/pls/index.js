@@ -1,4 +1,5 @@
 fav.pls
+albums/demba_b
 albums/step
 albums/tsukasa-record
 albums/xxNONOWAxx
