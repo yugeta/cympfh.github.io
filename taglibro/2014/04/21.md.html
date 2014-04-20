@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=2226">vimwiki</a> という2008年からのプラグイン 未だに vba で配布されてるタイプの vimプラグイン</p>
+<p>wiki記法なるものに親しみはないので できれば markdownで書きたい</p>
+<p>http://nanasi.jp/articles/vim/vimwiki/vimwiki_vim_syntax.html</p>
+<p>に１ページで説明された少ない文法だけで充分ではありそうなのでしばらく使ってみる</p>
+<pre><code>Bundle &quot;vimwiki&quot;</code></pre>
+<p>最低限 私には次のように書き換えた おそらくどこかで設定するんだろうけど 本体を書き換える方が早い</p>
+<p>(元ファイルが無いので diff の出力を載せるという手法ができない また 手で diff の出力を再現させる自信もない)</p>
+<pre class="sourceCode diff"><code class="sourceCode diff">@ftplugin/vimwiki.vim l409
+<span class="ot">+ nmap &lt;silent&gt;&lt;buffer&gt; ! &lt;Plug&gt;VimwikiToggleListItem</span></code></pre>
+<pre class="sourceCode diff"><code class="sourceCode diff">@autoload/vimwiki/base.vim l444
+<span class="st">-   call system(&#39;hoge-open &#39; . shellescape(a:url, 1).&#39; &amp;&#39;)</span>
+<span class="ot">+   call system(&#39;firefox &#39; . shellescape(a:url, 1).&#39; &amp;&#39;)</span></code></pre>
+<p>こんなものに違いない</p>
+<p>前から必要に感じていた 論文の読んだ文献もこれで管理しよう</p>
+</body>
+</html>
