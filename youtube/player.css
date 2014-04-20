@@ -24,6 +24,8 @@ div#W {
   padding: 3px;
   display: none;
   overflow: hidden;
+  width: 450px;
+  height: 15px;
 }
 
 div#D {

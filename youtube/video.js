@@ -34,7 +34,7 @@ function load() {
 
 function setTitle() {
   if (idx in ls) {
-    W.innerHTML = "<a onclick='showMenu()'>Now playing: " + ls[idx].name + "</a>";
+    W.innerHTML = "<a onclick='showMenu()'>" + ls[idx].name + "</a>";
   } else {
     W.innerHTML = "push ``play''";
   }
