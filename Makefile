@@ -1,4 +1,4 @@
-all: index_ taglibro_ games.pre study.pre latex.pre
+all: index_ taglibro_ games.pre study.pre latex.pre git
 
 index_:
 	### template

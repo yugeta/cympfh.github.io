@@ -50,5 +50,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>https://github.com/cympfh/vimwiki</p>
 <pre class="vim"><code>Bundle &quot;cympfh/vimwiki&quot;
 let g:vimwiki_list = [{&#39;path&#39;: &#39;~/Dropbox/wiki&#39;, &#39;path_html&#39;: &#39;~/Dropbox/wiki/html/&#39;}]</code></pre>
+<hr />
+<p><code>:help vimwiki-options</code> してみると syntaxとして markdown が選択できるらしかった</p>
+<pre class="vim"><code>let g:vimwiki_list = [{&#39;path&#39;: &#39;~/Dropbox/wiki&#39;, &#39;syntax&#39;: &#39;markdown&#39;, &#39;ext&#39;: &#39;.md&#39;}]</code></pre>
+<p>このようにする</p>
+<p>残念ながら 見出しくらいが markdown式になるだけで さらに残念なことに</p>
+<pre class="vim"><code>:VimwikiAll2HTML
+
+vimwiki: conversion to HTML is not supported for this syntax!!!</code></pre>
+<p>HTML化ができなくなった 当然ながら wiki に戻した</p>
 </body>
 </html>
