@@ -1,0 +1,204 @@
+\documentclass{beamer}
+
+\usepackage{graphicx}
+\usepackage{amsmath, cite, url}
+
+\usetheme{Antibes}
+\usecolortheme{beaver}
+
+\setbeamertemplate{navigation symbols}{}   % ナビゲーションバーを表示しません
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\mathversion{bold}
+
+%%%
+
+\title{Chap. 12 {[}Probabilistic Parsing{]}}
+\author[]{HATTORI KAZUHIRO}
+\institute[CS]{Univ. of Tokyo, CS}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+
+  \begin{itemize}
+    \itemsep1pt\parskip0pt\parsep0pt
+    \item
+      The practice of parsing is an implementation of \emph{chunking}
+
+      \begin{itemize}
+        \itemsep1pt\parskip0pt\parsep0pt
+        \item
+          \emph{chunking} -- recognizing higher level units of structre
+      \end{itemize}
+    \item
+      The overall goal is to produce a system that can place a probably
+      useful structure over arbitrary sentences, that is, to build a
+      \emph{parser}
+  \end{itemize}
+
+\end{frame}
+
+\section{12.1 {[}Some Concepts{]}}
+
+\subsection{12.1.1 {[}Parsing for disambiguation{]}}
+
+\begin{frame}
+パーザーを考えるとき, 次の3種類の確率が登場する. \\この章では特に3つ目を説明する. 
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \textbf{determining the sentence}:\\ パーザーとして, ある word lattice
+  (わからない. Figure 12.1) 上の言語モデルを用いる場合(e.g.~音声認識), 
+  文章を語の列と見て, 確率を決定する. 最大化する. 
+\item
+  \textbf{speedier parsing}:\\
+  パーザーの探索空間における枝刈りのための確率
+\item
+  \textbf{choosing between parses}:\\
+  パーザーは多くの候補の中から尤もらしいものを選択する. 
+\end{itemize}
+\end{frame}
+
+\subsubsection{Example.}
+
+\begin{frame}
+次の例文に対して, いくつかのパージング結果が考えられる.
+
+\begin{quote}
+The post office will hold out discounts and service concessions as
+incentives.
+\end{quote}
+\end{frame}
+
+\begin{frame}[fragile]
+結果 (a)
+
+\begin{verbatim}
+((S (NP The post office) (Aux will))
+ (VP (V hold out)
+     (NP (NP discounts)
+         (Conj and)
+         (NP service concessins))
+     (PP as incentives)))
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+結果 (b)
+
+\begin{verbatim}
+((S (NP The post office) (Aux will))
+ (VP (VP (V hold out)
+         (NP discounts))
+     (Conj and)
+     (VP (VV service)
+         (NP concessions)
+         (PP as incentives))))
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+結果 (d)
+
+\begin{verbatim}
+((S (NP The post office) (Aux will))
+ (VP (V hold)
+     (PP (P out)
+         (NP (NP discounts)
+             (Conj and)
+             (NP service concessions)))
+     (PP as incentives)))
+\end{verbatim}
+\end{frame}
+
+\begin{frame}
+  \% Such ambiguities are actually ubiquitous.
+
+  一部は明らかな文法ミスとして除外できる. 
+  例えば, 結果(d)は, \texttt{(V hold)}の目的句\texttt{NP}が無いために除外される. 
+\end{frame}
+
+\subsection{12.1.2 {[}Treebanks{]}}
+
+\begin{frame}
+正しいパージング結果の構文木のコレクションを \emph{treebank} という. 
+機械学習をしようとする時に用いる.  最も多くの人に使われてるのが
+\emph{Penn Treebank} である. 
+\end{frame}
+
+\subsubsection{Example. {[}A Penn Treebank tree{]}}
+
+\begin{frame}[fragile]
+\begin{verbatim}
+((S (NP-SBI The move)
+    (VP followed
+        (NP (NP a round)
+            (PP of
+                (NP (NP similar increases)
+                    (PP by
+                        (NP other leaders))
+                    (PP against
+                        (NP Arizona real estate loans)))))
+        (S-ADV (NP-SBI *)
+               (VP reflecting
+                   (NP (NP a continuing decline)
+                       (PP-LOC in
+                               (NP that market))))))
+    .))
+\end{verbatim}
+
+単語の子を持たない空のノードは, \texttt{*}
+を子として表現. 最後はピリオドで終わる. 
+\end{frame}
+
+\subsection{12.1.3 {[}Parsing models vs.~language models{]}}
+
+\subsubsection{PARSING MODEL}
+
+\begin{frame}
+パージングとは, ある文法 $G$ によって文 $s$ から木 $t$ を作ること. 
+確率的パージングにおいては, 次のような確率を考える. 
+
+\[ P(t \vert  s, G) \textrm{~where~} \sum_t P(t \vert  s, G) = 1 \]
+
+この時, パーザーは次の探索をすればいい. 
+
+\[ t' = \arg \max P(t \vert  s, G) \]
+\end{frame}
+
+\subsubsection{LANGUAGE MODEL}
+
+\begin{frame}
+文法$G$によって生成され得る全ての木に対して確率 $P(t, s)$
+を次のように与える. 
+
+\def\yield{\textrm{yield}}
+
+\begin{center}
+$P(t, s | G) = P(t | G)$, if $\yield(t) = s$, and $0$ otherwise.
+\end{center}
+
+以下, $\vert G$を省略する. 
+
+\[ P(s) = \sum_t P(s, t) = \sum_{\yield(t) = s} P(t) \]
+
+この時, パーザーは次の探索をすればよい. 
+
+\[ t' = \arg \max P(t\vert s) = \arg \max P(t, s) \]
+\end{frame}
+
+\subsection{12.1.4}
+
+\subsubsection{Lexicalization}
+
+\begin{frame}
+確率文脈自由文法 (Probabilistic context-free grammar, PCFG) を仮定する
+\end{frame}
+
+\end{document}

@@ -1,4 +1,4 @@
-all: index_ taglibro_ games_ study_
+all: index_ taglibro_ games.pre study.pre latex.pre
 
 index_:
 	### template
@@ -12,19 +12,16 @@ index_:
 	echo `ls -1F|grep /|xargs -n1 -i bash -c "echo '<a href={}>{}</a>'"` >> index.html
 	echo "</div>" >> index.html
 
-study_:
-	echo "<pre>" >study/index.html
-	ls -1F study/ | xargs -n1 -i bash -c "echo '<a href={}>{}</a>'" >> study/index.html
-
-games_:
-	echo "<pre>" >games/index.html
-	ls -1F games/ | xargs -n1 -i bash -c "echo '<a href={}>{}</a>'" >> games/index.html
-
 taglibro_:
 	cd taglibro/; make
 
 today:
 	cd taglibro/; make today
+
+# lsしてindexにするだけ
+%.pre: %
+	echo "<pre>" > $^/index.html
+	ls -1F $^/ | xargs -n1 -i bash -c "echo '<a href={}>{}</a>'" >> $^/index.html
 
 git:
 	git add --all
