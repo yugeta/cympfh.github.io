@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
@@ -38,20 +37,20 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Python 132 の倍以上なので、ちゃんと頑張らないと、 Haskellの面汚しになりそう。 でも素直に言えばSuccessしただけで満足。</p>
 <p>圧縮前のコードは下。</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">main <span class="fu">=</span> <span class="kw">do</span>
-    xs<span class="ot">&lt;-</span>getLine<span class="fu">&gt;&gt;=</span>return<span class="fu">.</span>map read<span class="fu">.</span>words
-    <span class="kw">let</span> m <span class="fu">=</span> maximum xs
-    putStrLn <span class="fu">$</span> unlines [ trim <span class="fu">$</span> ins (yoko xs i) (tate xs i) <span class="fu">|</span> i <span class="ot">&lt;-</span> [m, m<span class="fu">-</span><span class="dv">1</span> <span class="fu">..</span> <span class="dv">0</span>]]
+    xs<span class="ot">&lt;-</span><span class="fu">getLine&gt;&gt;=return.map</span> <span class="fu">read.words</span>
+    <span class="kw">let</span> m <span class="fu">=</span> <span class="fu">maximum</span> xs
+    <span class="fu">putStrLn</span> <span class="fu">$</span> <span class="fu">unlines</span> [ trim <span class="fu">$</span> ins (yoko xs i) (tate xs i) <span class="fu">|</span> i <span class="ot">&lt;-</span> [m, m<span class="fu">-</span><span class="dv">1</span> <span class="fu">..</span> <span class="dv">0</span>]]
     <span class="kw">where</span>
       yoko xs i <span class="fu">=</span>
         [ <span class="kw">if</span> xs<span class="fu">!!</span>j <span class="fu">==</span> i <span class="kw">then</span> <span class="st">&quot;__&quot;</span> <span class="kw">else</span> <span class="st">&quot;  &quot;</span>
-        <span class="fu">|</span> j <span class="ot">&lt;-</span> [<span class="dv">0</span> <span class="fu">..</span> length xs<span class="fu">-</span><span class="dv">1</span>]]
+        <span class="fu">|</span> j <span class="ot">&lt;-</span> [<span class="dv">0</span> <span class="fu">..</span> <span class="fu">length</span> xs<span class="fu">-</span><span class="dv">1</span>]]
       tate xs i <span class="fu">=</span>
         [ <span class="kw">if</span> xs&#39; <span class="fu">!!</span> j <span class="fu">&gt;</span> i <span class="fu">||</span> xs&#39; <span class="fu">!!</span> (j<span class="fu">+</span><span class="dv">1</span>) <span class="fu">&gt;</span> i <span class="kw">then</span> <span class="st">&quot;|&quot;</span> <span class="kw">else</span> <span class="st">&quot; &quot;</span> 
-        <span class="fu">|</span> j <span class="ot">&lt;-</span> [<span class="dv">0</span> <span class="fu">..</span> length xs]]
+        <span class="fu">|</span> j <span class="ot">&lt;-</span> [<span class="dv">0</span> <span class="fu">..</span> <span class="fu">length</span> xs]]
         <span class="kw">where</span> xs&#39; <span class="fu">=</span> <span class="dv">0</span><span class="fu">:</span>xs<span class="fu">++</span>[<span class="dv">0</span>]
       ins [] [x] <span class="fu">=</span> x
       ins (x<span class="fu">:</span>xs) (y<span class="fu">:</span>ys) <span class="fu">=</span> y <span class="fu">++</span> x <span class="fu">++</span> ins xs ys
-      trim <span class="fu">=</span> reverse <span class="fu">.</span> dropWhile (<span class="fu">==</span> <span class="ch">&#39; &#39;</span>) <span class="fu">.</span> reverse</code></pre>
+      trim <span class="fu">=</span> <span class="fu">reverse</span> <span class="fu">.</span> <span class="fu">dropWhile</span> (<span class="fu">==</span> <span class="ch">&#39; &#39;</span>) <span class="fu">.</span> <span class="fu">reverse</span></code></pre>
 <p>yoko, tate, trim はインライン展開して提出したけど ins はトップレベル定義したまま出しちゃった。 というかもっとキレイに書けるような関数が絶対あると思うんだけど。</p>
 </body>
 </html>
