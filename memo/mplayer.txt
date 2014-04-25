@@ -38,6 +38,8 @@ $ mplayer -af scaletempo
 
 $ mplayer -af karaoke
 
+でもほとんど使い物にはならなそう
+
 # playlist
 
 $ mplayer <file1> <file2> ...
