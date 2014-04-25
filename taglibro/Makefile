@@ -5,7 +5,7 @@ index:
 	ls */*/*.md | runghc script/byYear.hs >> index.html
 
 md2html:
-	for m in `seq 4 12`; do ls 2014/${m}/*.md | xargs -n1 -i bash -c "pandoc --mathml -t html5 -s {} -o {}.html --css ../../css/h1.css"; done
+	for m in `seq 4 12`; do ls 2014/$${m}/*.md | xargs -n1 -i bash -c "pandoc --mathml -t html5 -s {} -o {}.html --css ../../css/h1.css"; done
 
 %.md.html: %.md
 	pandoc -t html5 -s $^ -o $@ --css ../../css/h1.css
