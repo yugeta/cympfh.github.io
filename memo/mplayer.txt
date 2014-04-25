@@ -66,10 +66,25 @@ Found audio CD with 4 tracks.
 のようにトラック数が出力される
 この場合、このCDには<track-numer>として1,2,3,4 が有効で
 
-$ mplayer --cd-rom /dev/cdrw1 cdda://<track-number>
-$ mplayer --cd-rom /dev/cdrw1 cdda://<track-number>-<track-number>
+$ mplayer -cdrom-device /dev/cdrw1 cdda://<track-number>
+$ mplayer -cdrom-device /dev/cdrw1 cdda://<track-number>-<track-number>
 
 トラック間での移動の方法は不明
+
+## CD からの取り込み
+
+Banshee とかからやったほうが楽曲情報もつくし便利だと思うけど
+mplayerでも一応何かしらできて
+
+$ mplayer -cdrom-device /dev/cdrw1 cdda://3 -ao pcm:file=track3.wav -vo null -vc null
+$ file track3.wav
+track3.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+
+wav形式でしか分かんないから ffmpeg なりで変換
+
+$ ffmpeg -i track3.wav track3.mp3
+
+`-ao pcm:file=` は別にCDからじゃなくても、動画ファイルにも適応できる
 
 # カメラ
 
