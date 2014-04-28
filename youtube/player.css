@@ -24,7 +24,7 @@ div#W {
   padding: 3px;
   display: none;
   overflow: hidden;
-  width: 450px;
+  width: 444px;
   height: 15px;
 }
 
@@ -35,8 +35,8 @@ div#D {
 
 textarea {
   display: block;
-  height: 200px;
-  width: 450px;
+  height: 700px;
+  width: 550px;
   padding: 5px;
   border: 1px solid #d0d0ff;
   background-color: #fafaff;
