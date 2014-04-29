@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
@@ -41,18 +42,19 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>ノード <code>a</code> の行き先、<code>c a = @ [c1 .. cn]</code> が自然に考えられるデータ構造について、 (木とか) 根ノード <code>a0</code> から初めて、幅優先探索で辿った順をリストとして返すことにすれば目的は果たされた。</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">bfs a0 <span class="fu">=</span> a0 <span class="fu">:</span> something</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">walk (a <span class="fu">:</span> rest) <span class="fu">=</span> c a <span class="fu">++</span> walk rest</code></pre>
-<p>i.e. <code>haskell walk q = c (head q) ++ walk (tail q)</code></p>
+<p>i.e.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">walk q <span class="fu">=</span> c (head q) <span class="fu">++</span> walk (tail q)</code></pre>
 <p>初めから、完全な<code>a : rest</code> が与えられてれば、 <code>walk</code> とは所詮 <code>map</code> に近い何かだけど、</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">queue <span class="fu">=</span> a <span class="fu">:</span> walk queue</code></pre>
 <p>このようにリストの再帰的定義を用いると、違うことになる。</p>
 <pre><code>walk q = c (head q) ++ walk (tail q)</code></pre>
 <p>の下で(ちょっと書きなおした)、</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">q <span class="fu">=</span> a <span class="fu">:</span> walk q
-  <span class="fu">=</span> a <span class="fu">:</span> c (<span class="fu">head</span> q) <span class="fu">++</span> walk (<span class="fu">tail</span> q)
+  <span class="fu">=</span> a <span class="fu">:</span> c (head q) <span class="fu">++</span> walk (tail q)
 
   <span class="kw">where</span>
-  walk (<span class="fu">tail</span> q) <span class="fu">=</span> c <span class="fu">$</span> <span class="fu">head</span> (<span class="fu">tail</span> q)
-                <span class="fu">=</span> c <span class="fu">$</span> c <span class="fu">$</span> <span class="fu">head</span> q
+  walk (tail q) <span class="fu">=</span> c <span class="fu">$</span> head (tail q)
+                <span class="fu">=</span> c <span class="fu">$</span> c <span class="fu">$</span> head q
                 <span class="fu">=</span> c (c a)
 
 q <span class="fu">=</span> a <span class="fu">++</span> c a <span class="fu">++</span> c (c a) <span class="fu">++</span> c (c (c a)) <span class="fu">++</span> <span class="fu">..</span></code></pre>

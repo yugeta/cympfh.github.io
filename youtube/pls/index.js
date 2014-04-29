@@ -30,6 +30,7 @@ anime/precure
 anime/remix
 anime/saki
 artists/denki-groove
+artists/KOTOKO
 artists/kraftwerk
 artists/maruestu
 artists/momoiro
