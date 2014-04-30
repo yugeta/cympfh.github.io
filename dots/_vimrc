@@ -1,0 +1,98 @@
+syntax on
+set nobackup noswapfile
+set ambiwidth=single
+set number ruler showcmd incsearch nohlsearch showmatch
+set autoindent smartindent
+set modeline history=50
+set foldlevel=100 foldmethod=marker
+set tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+set backspace=start,indent,eol
+set wildmode=longest,list,full
+set timeout ttimeoutlen=100
+set mouse=
+
+"===============
+" plugin
+"================
+
+filetype plugin indent on
+set rtp+=~/.vim/vundle.git/
+call vundle#rc()
+" Bundle "eagletmt/ghcmod-vim"
+" Bundle "Shougo/vimproc.vim"
+" Bundle "dag/vim2hs"
+" Bundle "eagletmt/neco-ghc"
+" Bundle "tpope/vim-fireplace"
+Bundle "mru.vim"
+" Bundle 'scrooloose/syntastic'
+" Bundle "Blackrush/vim-gocode"
+Bundle 'wting/rust.vim'
+
+Bundle "cympfh/vimwiki"
+let g:vimwiki_list = [{'path': '~/Dropbox/wiki', 'syntax': 'markdown', 'ext': '.wiki'}]
+
+" syntax
+Bundle 'plasticboy/vim-markdown'
+
+
+"===============
+"外見
+"================
+
+colo delek "slate
+hi SpellBad     ctermbg=White
+
+set laststatus=2
+set statusline=%<%f\ %m%r%h%w
+set statusline+=%{'['.(&fenc!=''?&fenc:&enc).']['.&fileformat.']'}
+set statusline+=%=%l/%L,%c%V%8P
+
+set cursorline
+hi CursorLine   cterm=NONE ctermbg=7 ctermfg=NONE
+hi CursorLineNr cterm=NONE ctermbg=0 ctermfg=white
+nn <leader>c :set cursorline!<cr>
+
+"========================
+" eninvalid some vim operator
+"==================================
+
+map <F1> <nop>
+map q: <nop>
+map Q <nop>
+map <C-Space> <nop>
+
+"========================
+" command
+"==================================
+
+" operate tab
+nnoremap <C-t> :tabnew<CR>
+nnoremap gb gT
+nnoremap <C-p> gT
+nnoremap <C-n> gt
+
+" delete opening file
+fun! s:deleteThis()
+    let c = input("delete this? [Y/n] > ")
+    if c != "no" || c != "の"
+      :!rm %
+      :norm ZQ
+    endif
+endfun
+nn <silent> <Del><Del> :call <SID>deleteThis()<cr>
+
+nn <silent> <leader>f :let @f=expand("%:p")<cr>:echo @f<cr>
+ino <c-o> <c-x><c-k>
+
+nn ] :cnext<cr>
+nn [ :cprevious<cr>
+
+"================================================
+" for programming
+"================================================
+
+source ~/Dropbox/cympfh/vim/prg.vim
+source ~/Dropbox/cympfh/vim/math.vim
+
+"=======================
+set fencs=utf8,euc-jp,sjis,cp932,default,latin1
