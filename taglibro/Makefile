@@ -1,14 +1,14 @@
-all: md2html index
+all: today md2html index
 
 index:
 	cp index.html.h index.html
 	ls */*/*.md | runghc script/byYear.hs >> index.html
 
 md2html:
-	ls 2014/04/*.md | xargs -n1 -i bash -c "pandoc --mathml -t html5 -s {} -o {}.html --css ../../css/h1.css"
+	for i in 2014/*/*.md; do make $${i}.html; done
 
 %.md.html: %.md
-	pandoc -t html5 -s $^ -o $@ --css ../../css/h1.css
+	pandoc --mathml -t html5 -s $^ -o $@ --css ../../css/h1.css
 
 today:
 	vim `date +"%Y/%m/%d.md"`
