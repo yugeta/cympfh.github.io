@@ -23,7 +23,7 @@ pres: games.pre study.pre latex.pre memo.pre dots.pre
 
 %.pre: %
 	echo "<pre>" > $^/index.html
-	ls -1F $^/ | xargs -n1 -i bash -c "echo '<a href={}>{}</a>'" >> $^/index.html
+	ls -1F $^/ | grep -v index | xargs -n1 -i bash -c "echo '<a href={}>{}</a>'" >> $^/index.html
 
 git:
 	git add --all
