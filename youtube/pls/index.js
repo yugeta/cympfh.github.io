@@ -48,6 +48,7 @@ myAlbums/Mine
 myAlbums/noise
 myAlbums/OP
 myAlbums/PV-and-CM
+myAlbums/schrantz-has-gone
 myAlbums/vektor-und-struct
 voice/AiNonaka
 voice/AyaHirano
