@@ -5,7 +5,7 @@ index:
 	ls */*/*.md | runghc script/byYear.hs >> index.html
 
 md2html:
-	for i in 2014/*/*.md; do make $${i}.html; done
+	for i in 201*/*/*.md; do make $${i}.html; done
 
 %.md.html: %.md
 	pandoc --mathml -t html5 -s $^ -o $@ --css ../../css/h1.css
