@@ -1,0 +1,81 @@
+<title>Affect Analysis System </title>
+<style>
+  ul { list-style-type: none }
+  .cb { display: block }
+  .cn { display: none }
+  code {
+    font-family: monospace;
+    margin-left: 20px;
+    background-color: #fffbfa;
+    padding: 4px;
+    border: 1px orange solid;
+    border-left: 10px orange solid;
+  }
+</style>
+<script>
+  function init() {
+  }
+  function s(obj) {
+    var i = +obj.selectedIndex + 1;
+    D.innerHTML  = 'Figure. 長さ ' + i + ' の seq'
+    for (var j=1; j<8; ++j) {
+      document.getElementById('c'+j).className='cn';
+    }
+    document.getElementById('c'+i).className='cb';
+  }
+</script>
+<body onload='init()'>
+<p>テキストの感情なるものがあって、</p>
+
+<p>個人的には
+"そんなものはあるわけがない"
+と思ってしまってるので
+意味を考えるのは一旦やめにして</p>
+
+<p>そういうツールを使って、
+ツイートを入力にして、感情を推定させてみる。</p>
+
+<p>のだけど、一つのテキストすなわち一つの入力にせず、
+適当に細切れにして、複数の入力にする</p>
+
+<code>[A1, A2, .. An] = split(tweet)</code>
+
+<p>用いた感情推定ツールは、
+ゼロ以上の感情タグを出力する。
+すなわち感情タグの有限集合。</p>
+
+<code>Ei = sent(Ai) // Ei は集合</code>
+
+<p>この時、私は次を
+「1ツイートにおける感情の遷移」
+であるとした。</p>
+
+<code>seq = [ Ei | i ← [1 .. n], size Ei &gt; 0 ]</code>
+
+<p>Aiの順序は保ってること。</p>
+
+<p>seq の長さによって、その遷移を図にしてみた。
+赤い線は左から右に走ってると見る。</p>
+
+<ul>
+  <li><img id='c1' class='cb' src='../img/canvas1.png'></li>
+  <li><img id='c2' class='cn' src='../img/canvas2.png'></li>
+  <li><img id='c3' class='cn' src='../img/canvas3.png'></li>
+  <li><img id='c4' class='cn' src='../img/canvas4.png'></li>
+  <li><img id='c5' class='cn' src='../img/canvas5.png'></li>
+  <li><img id='c6' class='cn' src='../img/canvas6.png'></li>
+  <li><img id='c7' class='cn' src='../img/canvas7.png'></li>
+</ul>
+<div id='D'>Figure. 長さ の seq</div>
+<fieldset>
+  seq の長さ
+  <select onchange='s(this)'>
+    <option value='1'> 1 </option>
+    <option value='2'> 2 </option>
+    <option value='3'> 3 </option>
+    <option value='4'> 4 </option>
+    <option value='5'> 5 </option>
+    <option value='6'> 6 </option>
+    <option value='7'> 7 </option>
+  </select>
+</filedset>
