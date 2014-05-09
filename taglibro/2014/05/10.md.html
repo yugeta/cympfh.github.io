@@ -62,5 +62,12 @@ gosh&gt; (info &#39;display)
 -- Function: display obj :optional port
            [R5RS] Produces a printable representation of an object OBJ to the</code></pre>
 <p>できた！</p>
+<hr />
+<pre><code>alias f=&#39;echo this is ef&#39;</code></pre>
+<p>aliasは''でくくるなりしないといけなくて、中に'を含めるのにエスケープがちょっと今の眠たい頭じゃ無理そうなので関数として</p>
+<pre><code>gauche() {
+  rlwrap -pRED -b &quot;&#39;&quot;&#39;(){}[].,#@;|`&quot;&#39; -f ~/Dropbox/cympfh/.gosh_complements -q&#39;&quot;&#39; -m gosh
+}</code></pre>
+<p>aliasならば、名前と中からの呼び出しに同じ名前があっても、 関数とは違って、再帰呼び出しにはならない。 というわけで、上の関数は <code>gosh</code> とは異なる名前にした。</p>
 </body>
 </html>
