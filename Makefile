@@ -13,6 +13,7 @@ index_:
 	echo "</div>" >> index.html
 
 today:
+	cd taglibro/; make today
 	cd taglibro/; make
 
 # lsしてindexにするだけ
