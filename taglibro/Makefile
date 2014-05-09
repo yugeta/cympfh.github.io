@@ -1,4 +1,4 @@
-all: today md2html index
+all: md2html index
 
 index:
 	cp index.html.h index.html
