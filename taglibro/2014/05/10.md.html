@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="gosh-info-のインストール-ビルド">gosh, info のインストール (ビルド)</h1>
+<p>2014年 5月 10日 土曜日 01:58:20 JST</p>
+<p>gosh の組み込み関数、 <code>apropos</code> と <code>info</code> が大変便利なんだけれど、 <code>info</code>を呼ぶと、参照するだけで</p>
+<pre><code>gosh&gt; info
+*** ERROR: Compile Error: Compile Error: cannot find &quot;rfc/zlib&quot; in (&quot;/usr/local/share/gauche-0.9/site/lib&quot; &quot;/usr/local/share/gauche-0.9/0.9.3.3/lib&quot; &quot;/usr/local/share/gauche/site/lib&quot; &quot;/usr/local/share/gauche/0.9/lib&quot;)
+    &quot;/usr/local/share/gauche-0.9/0.9.3.3/lib/text/info.scm&quot;:34:(define-module text.info (use srfi-1 ...
+
+    &quot;/usr/local/share/gauche-0.9/0.9.3.3/lib/gauche/interactive/info.scm&quot;:34:(define-module gauche.interactive.in ...</code></pre>
+<p>このように出る。zlibというSchemeモジュールがないという。 一度だけうまく行ったんだけれど、 75％くらいの確率で解決できたことがなかった。</p>
+<p>たまにはちゃんとエラーメッセージを読んで解決を試みよう。 <code>configure</code>のメッセージ</p>
+<pre><code>checking for makeinfo... no</code></pre>
+<p><code>gauche-refe.info.gz</code>を作るために<code>makeinfo</code>が必要。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">sudo</span> apt-get install makeinfo</code></pre>
+<pre><code>configure: WARNING: &quot;Can&#39;t find zlib.h so I turned off using zlib; you may want to use --with-zlib=PATH.&quot;</code></pre>
+<p>zlibっていうSchemeモジュールがないって言うので、Scheme側の問題かと思ってたのだけれど、 そもそも共有ヘッダファイルがないので、生成されてなかったらしい。</p>
+<pre><code>$ sudo apt-get install zlib1g-dev</code></pre>
+<p>このパッケージ名は自分で見つけられなかったので</p>
+<p><a href="http://d.hatena.ne.jp/embedded/20081101/p3">Ubuntuで足りないファイルがどのパッケージにあるか調べる方法Add Starmacchayoshihiro503</a> を参照した。</p>
+<pre><code>gosh&gt; info
+#&lt;closure info&gt;
+gosh&gt; (info &#39;display)
+6.22.8 Output
+-------------
+
+    For the following procedures, the optional PORT argument must be an
+    output port, and when omitted, the current output port is assumed.
+
+-- Function: write obj :optional port
+-- Function: display obj :optional port
+           [R5RS] Produces a printable representation of an object OBJ to the</code></pre>
+<p>できた！</p>
+</body>
+</html>
