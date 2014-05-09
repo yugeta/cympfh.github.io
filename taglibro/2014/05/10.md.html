@@ -69,5 +69,13 @@ gosh&gt; (info &#39;display)
   rlwrap -pRED -b &quot;&#39;&quot;&#39;(){}[].,#@;|`&quot;&#39; -f ~/Dropbox/cympfh/.gosh_complements -q&#39;&quot;&#39; -m gosh
 }</code></pre>
 <p>aliasならば、名前と中からの呼び出しに同じ名前があっても、 関数とは違って、再帰呼び出しにはならない。 というわけで、上の関数は <code>gosh</code> とは異なる名前にした。</p>
+<p>補完のためのファイルには、存在する手続きの名前を列挙するのだけど、</p>
+<p><a href="http://d.hatena.ne.jp/rui314/20070604/p1">http://d.hatena.ne.jp/rui314/20070604/p1</a> には、そのためのGauche用スクリプトがあった。</p>
+<p>でも、私は、gosh REPLから</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(apropos &#39;||)</code></pre>
+<p>として、出力結果をコピペして、ちょっとだけ整形してやる手間を加えた。</p>
+<blockquote>
+<p>/dots/gosh_complements.txt</p>
+</blockquote>
 </body>
 </html>
