@@ -38,7 +38,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
     &quot;/usr/local/share/gauche-0.9/0.9.3.3/lib/text/info.scm&quot;:34:(define-module text.info (use srfi-1 ...
 
     &quot;/usr/local/share/gauche-0.9/0.9.3.3/lib/gauche/interactive/info.scm&quot;:34:(define-module gauche.interactive.in ...</code></pre>
-<p>このように出る。zlibというSchemeモジュールがないという。 一度だけうまく行ったんだけれど、 75％くらいの確率で解決できたことがなかった。</p>
+<p>このように出る。rfc/zlibというSchemeモジュールがないという。</p>
+<p>今まで何度もgoshをいくつものマシンにインストールしてきて、 <code>info</code>が使えるようになったのは一度だけで、 それも何故使えるようになったのか理解していなかった。</p>
 <p>たまにはちゃんとエラーメッセージを読んで解決を試みよう。 <code>configure</code>のメッセージ</p>
 <pre><code>checking for makeinfo... no</code></pre>
 <p><code>gauche-refe.info.gz</code>を作るために<code>makeinfo</code>が必要。</p>
