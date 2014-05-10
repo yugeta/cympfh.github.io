@@ -25,8 +25,8 @@ body {
   position: absolute;
   top: 30%;
   left: 15%;
-  width: 40%;
-  background-color: #faf9e0;
+  /* width: 40%; */
+  background-color: #fae9e0;
 }
 a {
   color: #402020;
