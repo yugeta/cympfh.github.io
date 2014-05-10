@@ -26,7 +26,7 @@ body {
   top: 30%;
   left: 15%;
   /* width: 40%; */
-  background-color: #fae9e0;
+  background-color: #fdf4f4;
 }
 a {
   color: #402020;
