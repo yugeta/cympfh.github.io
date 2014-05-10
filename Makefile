@@ -5,7 +5,7 @@ index:
 	cp index.html.h index.html
 	### fortune
 	echo "<pre id=fortune>" >> index.html
-	echo `./fortune` >> index.html
+	./fortune >> index.html
 	echo "</pre>" >> index.html
 	### ls
 	echo "<div id=ls>" >> index.html
