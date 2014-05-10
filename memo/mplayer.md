@@ -86,6 +86,20 @@ $ ffmpeg -i track3.wav track3.mp3
 
 `-ao pcm:file=` は別にCDからじゃなくても、動画ファイルにも適応できる
 
+# DVD
+
+```
+mplayer -speed 1.0 -dvd-device /dev/dvdrw1 dvd://
+```
+
+`dvd://`には整数値を与えることで、例えば
+
+```
+mplayer -speed 1.0 -dvd-device /dev/dvdrw1 dvd://2
+```
+
+とすることで、chapter 2 から再生
+
 # カメラ
 
 例えば私の使っているPCの内蔵カメラは /dev/video0 であるらしく

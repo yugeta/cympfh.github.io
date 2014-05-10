@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>mplayer, mplayer2</p>
+<h1 id="ローカルファイル動画音楽-の再生">ローカルファイル(動画、音楽) の再生</h1>
+<p>$ mplayer <file></p>
+<p>実行中に命令を与えるには キーを送ればいい</p>
+<p><Space> 再生/一時停止 (toggle) q 終了 右クリック 再生/一時停止 (toggle) s スクリーンショット (カレントディレクトリに適当にrenameしたpngが生成される) <Right> 数秒次に送る <Left> 数秒前に送る</p>
+<p>再生速度とは、0より大きい実数で [ 再生速度をいくらか下げる ] 再生速度をいくらか上げる { 再生速度をかなり下げる } 再生速度をかなり上げる <BackSpace> 再生速度を 1.0 にする</p>
+<h2 id="便利なオプション">便利なオプション</h2>
+<p>初めから再生速度を与えることができて</p>
+<p>$ mplayer -speed 1.3</p>
+<p>再生速度を変更するとデフォルトでは周波数もそのまま変わる たとえば再生速度を上げると高く聴こえる 次のオプションは元の周波数をできるだけ保ってくれて</p>
+<p>$ mplayer -af scaletempo</p>
+<p>あと今こんなのも見つけた 音声が2chの場合、一般にボーカルの音声だけを取り除くことができて</p>
+<p>$ mplayer -af karaoke</p>
+<p>でもほとんど使い物にはならなそう</p>
+<h1 id="playlist">playlist</h1>
+<p>$ mplayer <file1> <file2> ... $ cat pls.txt <file1> <file2> $ mplayer -playlist pls.txt</p>
+<p><Enter> プレイリストで次のファイルの再生を開始. 次が無ければ終了</p>
+<h2 id="便利なオプション-1">便利なオプション</h2>
+<p>$ mplayer -shuffle <file1> <file2> ...</p>
+<h1 id="cd-rom">CD-ROM</h1>
+<p>$ mplayer --cd-rom /dev/cdrw1 cdda://</p>
+<p>CD中身を全部再生する 複数トラックが入ってても一つのファイルとして扱う</p>
+<p>Found audio CD with 4 tracks.</p>
+<p>のようにトラック数が出力される この場合、このCDには<track-numer>として1,2,3,4 が有効で</p>
+<p>$ mplayer -cdrom-device /dev/cdrw1 cdda://<track-number> $ mplayer -cdrom-device /dev/cdrw1 cdda://<track-number>-<track-number></p>
+<p>トラック間での移動の方法は不明</p>
+<h2 id="cd-からの取り込み">CD からの取り込み</h2>
+<p>Banshee とかからやったほうが楽曲情報もつくし便利だと思うけど mplayerでも一応何かしらできて</p>
+<p>$ mplayer -cdrom-device /dev/cdrw1 cdda://3 -ao pcm:file=track3.wav -vo null -vc null $ file track3.wav track3.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz</p>
+<p>wav形式でしか分かんないから ffmpeg なりで変換</p>
+<p>$ ffmpeg -i track3.wav track3.mp3</p>
+<p><code>-ao pcm:file=</code> は別にCDからじゃなくても、動画ファイルにも適応できる</p>
+<h1 id="dvd">DVD</h1>
+<pre><code>mplayer -speed 1.0 -dvd-device /dev/dvdrw1 dvd://</code></pre>
+<p><code>dvd://</code>には整数値を与えることで、例えば</p>
+<pre><code>mplayer -speed 1.0 -dvd-device /dev/dvdrw1 dvd://2</code></pre>
+<p>とすることで、chapter 2 から再生</p>
+<h1 id="カメラ">カメラ</h1>
+<p>例えば私の使っているPCの内蔵カメラは /dev/video0 であるらしく</p>
+<p>$ mplayer tv:// -tv device=/dev/video0</p>
+</body>
+</html>
