@@ -1,0 +1,5 @@
+#!/bin/bash
+
+MSG=`fortune`
+OBJ=`echo "www	milk	default	turtle	gnu	mutilated	ghostbusters" | cut -f $(($RANDOM % 3 + 1))`
+cowsay -f ${OBJ} ${MSG}

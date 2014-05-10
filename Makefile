@@ -1,12 +1,12 @@
-all: index_ pres git
+all: index pres git
 
-index_:
+index:
 	### template
 	cp index.html.h index.html
 	### fortune
-	echo "<div id=fortune>" >> index.html
-	echo `fortune` >> index.html
-	echo "</div>" >> index.html
+	echo "<pre id=fortune>" >> index.html
+	echo `./fortune` >> index.html
+	echo "</pre>" >> index.html
 	### ls
 	echo "<div id=ls>" >> index.html
 	echo `ls -1F|grep /|xargs -n1 -i bash -c "echo '<a href={}>{}</a>'"` >> index.html
