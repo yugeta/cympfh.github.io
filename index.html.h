@@ -6,6 +6,7 @@ body {
   background-repeat: no-repeat;
   background-position: right 0;
   background-size: 200px;
+  background-color: white;
 }
 #wrap {
   font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
@@ -26,7 +27,7 @@ body {
   top: 30%;
   left: 15%;
   /* width: 40%; */
-  background-color: #fdf4f4;
+  background-color: white;
 }
 a {
   color: #402020;
