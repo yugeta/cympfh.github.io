@@ -6,10 +6,11 @@
 <style>
   a {
     display: block;
-    width: 8.2em;
+    width: 8em;
     padding: 5px;
     margin: 0px;
     color: black;
+    font-size: 1em;
     text-decoration: none;
   }
 
@@ -37,7 +38,7 @@
   div#article {
     float: right;
     display: none;
-    width: 56em;
+    width: 48em;
   }
   iframe {
     padding: 0;
