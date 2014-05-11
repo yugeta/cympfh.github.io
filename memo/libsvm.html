@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title></title>
+  <title>libsvm</title>
   <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <link rel='stylesheet' href='../taglibro/css/h1.css'>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -27,24 +28,13 @@ code > span.ot { color: #007020; }
 code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
-pre {
-  background-color: #fff0d0;
-  border: 1px #ffda00 solid;
-  border-left: 20px white solid;
-}
-table {
-  border: 1px black solid;
-}
-h2 {
-  text-decoration: underline;
-}
   </style>
-  <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <h1 id="libsvm-の-memo">libsvm の memo</h1>
 <p>参考; http://www.okuma.nuee.nagoya-u.ac.jp/~sakaguti/wiki/index.php?LibSVM</p>
 <h2 id="テストデータ形式">テストデータ形式</h2>
+以下の javascript コードはテストデータ形式にそったテキストを出力する。
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// test.js</span>
 <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
   <span class="kw">var</span> a = [];
@@ -55,21 +45,23 @@ h2 {
   t = t &gt; <span class="dv">5</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
   <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> (i+1)+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
 }</code></pre>
-<blockquote>
-<p>間違ってた。番号を0スタートにしてるけど、 よく見るとWARNINGが出てて、1スタートにしてほしかったらしい。 ちゃんと動いてるっぽいからまぁいっか</p>
-</blockquote>
+
 <h2 id="分割公差検証">分割公差検証</h2>
+
+以下のオプションを持つ。
 <pre><code>-t 0 : 線形
 -v 10 : 10分割</code></pre>
+
+実際に使うための Makefile 
 <pre class="make"><code>do:
     svm-train -t 0 -v 10 train.scale
 
 train.scale: test.js
     node test.js &gt; train
     svm-scale train &gt; train.scale</code></pre>
-<p>-t で設定した kernel type によって出力が２つあるみたいだけど、</p>
+出力はこうであった
 <pre class="output"><code>(前略)
 *.*
 optimization finished, #iter = 102
@@ -78,7 +70,12 @@ obj = -5.000000, rho = 0.999823
 nSV = 38, nBSV = 1
 Total nSV = 38
 Cross Validation Accuracy = 100%</code></pre>
-<h2 id="入力を倍">入力を倍</h2>
+
+<h2 id="入力を倍">入力(の次元)を倍</h2>
+
+先程は、訓練データの中の一つのデータは10次元であった。
+20次元にしてみると
+
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
   <span class="kw">var</span> a = [];
   <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">20</span>; ++j) {
@@ -88,7 +85,7 @@ Cross Validation Accuracy = 100%</code></pre>
   t = t &gt; <span class="dv">10</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
   <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> (i+1)+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
 }</code></pre>
 <pre><code>$ svm-train -t 0 -v 10 train.scale
 
@@ -100,7 +97,11 @@ obj = -4.186700, rho = 0.285305
 nSV = 19, nBSV = 0
 Total nSV = 19
 Cross Validation Accuracy = 99%</code></pre>
+
 <h2 id="パリティ-xor">パリティ (xor)</h2>
+
+何か意味のある訓練データとして、パリティを学習させてみる。
+
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
   <span class="kw">var</span> a = [];
   <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">10</span>; ++j) {
@@ -110,8 +111,12 @@ Cross Validation Accuracy = 99%</code></pre>
   t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
   <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> (i+1)+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
 }</code></pre>
+
+普通SVMが用いるカーネルといったら、線形、多項式、RBFの三種類だろう。
+それぞれパラメータ調整まではしないけど、試してみる。
+
 <ul>
 <li>線形</li>
 </ul>
@@ -162,7 +167,7 @@ Cross Validation Accuracy = 59%</code></pre>
   t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
   <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> (i+1)+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
 }</code></pre>
 <p>入力は10だけど初めの２つだけで答えは実は決まってる。</p>
 <table>
@@ -194,9 +199,9 @@ Cross Validation Accuracy = 59%</code></pre>
   t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
   <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> (i+1)+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
 }</code></pre>
-<p>入力の数は倍だけど、やはり最初の２つだけで答えは決まる。</p>
+<p>入力の次元は倍だけど、やはり最初の２つだけで答えは決まる。</p>
 <table>
 <thead>
 <tr class="header">
