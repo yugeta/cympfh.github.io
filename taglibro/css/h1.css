@@ -11,15 +11,16 @@ code {
   margin-left: 3px;
   margin-right: 3px;
   padding: 1px;
-  background-color: #f2f2f2;
+  background-color: #fff9f9;
   border: 1px solid orange;
 }
 pre code {
   display: block;
   padding: 3px;
-  background-color: #f2f2f2;
+  background-color: #fff9f9;
   border: 1px solid orange;
   border-left: 9px solid orange;
+  border-right: 0;
 }
 
 blockquote {
