@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
@@ -48,8 +49,17 @@ gosh&gt; (for (* i i) where i in (iota <span class="dv">10</span>) (<span class=
 <p>whereの代わりに適当な区切り文字として;はコメント記号だし、|は括り文字だしで:使おう と思ったけどたぶんキーワード引数の為に使えないし、結構使えない記号多い。'を変数名 に使えないのが、個人的には一番痛い。何も考えず x に対して x' をlet束縛するとか、 MLだとしょっちゅうやるから。</p>
 <hr />
 <p>自分はどこでも言ってるけど、F#のパイプライン演算子は本当にいいなあって思う。 手続きの順序を上からただ読めばいいから。行頭をちゃんと揃えて書けばとっても わかりやすい。S式は右から左に逆に読まないといけなくなるもんね。</p>
-<p>```scheme (define-syntax pipe (syntax-rules (&gt;&gt;) ((_ x &gt;&gt; f) (f x)) ((_ x &gt;&gt; f &gt;&gt; g ...) (pipe (f x) &gt;&gt; g ...)) ))</p>
-<p>; gosh&gt; ; (pipe 10 ; &gt;&gt; iota ; &gt;&gt; (pa$ filter odd?) ; &gt;&gt; (pa$ map (^x (* x x))) ) ; (1 9 25 49 81) ```scheme</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define-syntax</span><span class="fu"> pipe</span>
+    (<span class="kw">syntax-rules</span> (&gt;&gt;)
+        ((_ x &gt;&gt; f) (f x))
+        ((_ x &gt;&gt; f &gt;&gt; g ...) (pipe (f x) &gt;&gt; g ...)) ))
+
+<span class="co">; gosh&gt; </span>
+<span class="co">; (pipe 10</span>
+<span class="co">;   &gt;&gt; iota</span>
+<span class="co">;   &gt;&gt; (pa$ filter odd?)</span>
+<span class="co">;   &gt;&gt; (pa$ map (^x (* x x))) )</span>
+<span class="co">; (1 9 25 49 81)</span></code></pre>
 <p>普通なら <code>(map (^x (* x x)) (filter odd? (iota 10)))</code> って書いて、右から、というかカッコの内側を目で捕捉して、そこから外側へ 読んでいかないといけない。 カッコの外側が、ただ左に向かってるからまだいいものの、左にも右にも 広がってたりしたら絶望的だ。まあ、あんまりそういうのは無いか。 とくに例も思いつかないし。</p>
 </body>
 </html>
