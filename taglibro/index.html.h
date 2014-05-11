@@ -26,10 +26,16 @@
   div.black a {
     color: #f0f0f0;
     background-color: #404040;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px #808080 dashed;
   }
   div.red a {
     color: #404040;
     background-color: #f0f0f0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px #808080 dashed;
   }
   div.black a:visited { color: #ffd0d0; }
   div.red a:visited { color: #773030; }
