@@ -35,6 +35,7 @@
   }
   iframe {
     padding: 0;
+    position: fixed;
     margin: 2em;
     width: 100%;
     height: 100%;
