@@ -3,7 +3,7 @@ body {
   background-color: white;
   margin: 2em;
   padding: 0;
-  width: 48em;
+  width: 30em;
   font-size: 16px;
 }
 code {
@@ -32,5 +32,5 @@ blockquote {
 a {
   color: #600;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 17px;
 }
