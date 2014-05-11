@@ -6,11 +6,17 @@
 <style>
   a {
     display: block;
-    width: 9em;
+    width: 8.2em;
     padding: 5px;
     margin: 0px;
     color: black;
     text-decoration: none;
+  }
+
+  /* menu for each articles */
+  div {
+    float: left;
+    width: 8em;
   }
   div.black a {
     color: #f0f0f0;
@@ -26,8 +32,8 @@
   div.red a:visited {
     color: #773030;
   }
-  div { float: left; width: 9em; }
 
+  /* preview window */
   div#article {
     float: right;
     display: none;
