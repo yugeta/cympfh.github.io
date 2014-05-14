@@ -51,12 +51,12 @@
     position: fixed;
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
+    width: 62%;
+    height: 96%; /* for scroll bar */
     border: 0;
     border-left: 1px black solid;
   }
 </style>
 <body onload='main()'>
 <div class='article' id='article'></div>
-<div class='dates'><a href=http://is.gd/mC4zzr>on github.com</a>
+<div class='dates'><input type='checkbox' id='check_if_iframe'>view on iframe<br>
