@@ -3,15 +3,63 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
+<h1 id="英和辞書">英和辞書．</h1>
+<p>英和辞書のデータをどこかから持ってくる．</p>
+<p>私のデータは</p>
+<pre><code>&lt;datum&gt; ::= &lt;line&gt; | &lt;datum&gt;
+&lt;line&gt; ::= &lt;word&gt;\t&lt;description&gt;
+&lt;word&gt; ::= cat | ...
+&lt;description&gt; ::= 『猫』;(ライオン,トラ,ヒョウなどの)ネコ科の動物 | ...</code></pre>
+<p>みたいに、タブ区切りになってる．</p>
+<p>こっから目的の英単語を探すだけだから <code>grep コマンド</code>でも使えばいいけど、 <code>look コマンド</code> は二分探索をしてくれるという噂があるのでそちらを使う． だから予め、英和辞書のデータをソートしておく．</p>
+<h2 id="bash">bash</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+
+<span class="kw">function</span><span class="fu"> ej()</span> <span class="kw">{</span>
+  <span class="kw">look</span> <span class="ot">$1</span><span class="st">$&#39;</span><span class="dt">\t</span><span class="st">&#39;</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
+<span class="kw">}</span>
+<span class="kw">function</span><span class="fu"> ej2()</span> <span class="kw">{</span>
+  <span class="kw">look</span> <span class="ot">$1</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
+<span class="kw">}</span></code></pre>
+<p><code>ej</code>は英単語の完全一致、<code>ej2</code>は前方一致をする．スペルが怪しいものを探すときに使うことにする．</p>
+<h2 id="vim">vim</h2>
+<pre class="vim"><code>&quot; look-up English-Japanese dictionary
+
+fun! g:lookup(word, suff)
+  let dict = &quot; ~/Dropbox/txt/EngJa&quot;
+  exe &quot;!look &quot; . tolower(a:word) . a:suff . &quot; &quot; . dict
+endfun
+nnoremap L :call g:lookup(expand(&quot;&lt;cword&gt;&quot;), &quot;&quot;)&lt;cr&gt;
+nnoremap K :call g:lookup(expand(&quot;&lt;cword&gt;&quot;), &quot;$&#39;\t&#39;&quot;)&lt;cr&gt;</code></pre>
+<p>カーソルの下にある単語で<code>look</code>するだけ． どうやって単語を取得するんだろうとちょっとググったら <code>expand 関数</code> でできる事を初めて知った． ファイル名の取得以外にも使うんだ．</p>
+<hr />
 <ul class="incremental">
 <li>米2kgで1098円</li>
 <li>米5kgで1980円</li>
