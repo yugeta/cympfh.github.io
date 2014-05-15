@@ -15,10 +15,11 @@ test:
 
 today:
 	vim `date +"%Y/%m/%d.md"`
+	make md2html
 
 git:
 	git add --all
-	git commit -a -m "`kasitime`"
+	git commit -a -m "`date`"
 	git push
 
 
