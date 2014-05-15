@@ -43,10 +43,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
 
 <span class="kw">function</span><span class="fu"> ej()</span> <span class="kw">{</span>
-  <span class="kw">look</span> <span class="ot">$1</span><span class="st">$&#39;</span><span class="dt">\t</span><span class="st">&#39;</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
+  <span class="kw">look</span> -f <span class="ot">$1</span><span class="st">$&#39;</span><span class="dt">\t</span><span class="st">&#39;</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
 <span class="kw">}</span>
 <span class="kw">function</span><span class="fu"> ej2()</span> <span class="kw">{</span>
-  <span class="kw">look</span> <span class="ot">$1</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
+  <span class="kw">look</span> -f <span class="ot">$1</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
 <span class="kw">}</span></code></pre>
 <p><code>ej</code>は英単語の完全一致、<code>ej2</code>は前方一致をする．スペルが怪しいものを探すときに使うことにする．</p>
 <h2 id="vim">vim</h2>
@@ -54,11 +54,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 fun! g:lookup(word, suff)
   let dict = &quot; ~/Dropbox/txt/EngJa&quot;
-  exe &quot;!look &quot; . tolower(a:word) . a:suff . &quot; &quot; . dict
+  exe &quot;!look -f &quot; . tolower(a:word) . a:suff . &quot; &quot; . dict
 endfun
 nnoremap L :call g:lookup(expand(&quot;&lt;cword&gt;&quot;), &quot;&quot;)&lt;cr&gt;
 nnoremap K :call g:lookup(expand(&quot;&lt;cword&gt;&quot;), &quot;$&#39;\t&#39;&quot;)&lt;cr&gt;</code></pre>
 <p>カーソルの下にある単語で<code>look</code>するだけ． どうやって単語を取得するんだろうとちょっとググったら <code>expand 関数</code> でできる事を初めて知った． ファイル名の取得以外にも使うんだ．</p>
+<p>あと、小文字に直してから引くっていうことをしてたけど、 辞書を <code>sort -f</code> しておいてから <code>look -f</code> するという技が <a href="http://publib.boulder.ibm.com/infocenter/pseries/v5r3/index.jsp?topic=/com.ibm.aix.cmds/doc/aixcmds3/look.htm">pSeries および AIX インフォメーション・センター</a> にあった．</p>
 <hr />
 <ul class="incremental">
 <li>米2kgで1098円</li>
