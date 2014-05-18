@@ -9,7 +9,7 @@ index:
 	echo "</pre>" >> index.html
 	### ls
 	echo "<div id=ls>" >> index.html
-	echo `ls -1F|grep /|xargs -n1 -i bash -c "echo '<a href={}>{}</a>'"` >> index.html
+	echo `cat ls|grep /|xargs -n1 -i bash -c "echo '<a href={}>{}</a>'"` >> index.html
 	echo "</div>" >> index.html
 
 today:
