@@ -15,12 +15,9 @@ body {
 }
 #ls {
   position: absolute;
-  display: none;
   top: 60%;
   left: 40%;
-  width: 40%;
-  background-color: #fff9f9;
-  border: 10px white solid;
+  width: 30%;
 }
 #fortune {
   position: absolute;
@@ -33,7 +30,5 @@ a {
   color: #402020;
 }
 </style>
-<script>
-setTimeout("ls.style.display='block'",10000-location.search.slice(1))
-</script>
+<!-- <script> setTimeout("ls.style.display='block'",10000-location.search.slice(1)) </script> -->
 <body><div id='wrap'>
