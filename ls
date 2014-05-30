@@ -1,6 +1,6 @@
 dots/
 games/
-latex/
+template/
 memo/
 study/
 taglibro/

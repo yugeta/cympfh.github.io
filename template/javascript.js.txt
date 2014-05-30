@@ -1,0 +1,31 @@
+Object.prototype.toString = function(){
+  var s=[];
+  for(var i in this)if(this.hasOwnProperty(i))s.push(i+":"+this[i]);
+  return "{"+s.join(",")+"}" };
+
+Array.prototype.toString = function(){ return "["+this.join(",")+"]" };
+
+function readInts(x){return x.split(' ').map(int);
+
+function forIn(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(x); }
+function forOf(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(o[x]); }
+
+function iota(n,b,s){ b=b||0; s=s===undefined?0:s;
+  for (var r=[];n--;b+=s) r.push(b); return r }
+function int(x){return x|0}
+function splitInt(s){return s.split(' ').map(int)}
+function add(a,b){return a+b}
+function mul(a,b){return a*b}
+function sub(a,b){return a-b}
+function bus(a,b){return b-a}
+function id(x){return x}
+function max(x,y){return x>y?x:y}
+function min(x,y){return x<y?x:y}
+abs = Math.abs;
+
+require('fs').readFile('/dev/stdin', 'utf8', function(e, ls) {
+  ls = ls.split('\n').slice(0, -1);
+
+});
+
+// vim: set ft=javascript:

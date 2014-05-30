@@ -1,4 +1,4 @@
-all: index pres git
+all: index pres
 
 index:
 	### template
@@ -17,7 +17,7 @@ today:
 	cd taglibro/; make
 
 # lsしてindexにするだけ
-pres: games.pre study.pre latex.pre memo.pre dots.pre
+pres: games.pre study.pre template.pre memo.pre dots.pre
 
 %.pre: %
 	echo "<pre>" > $^/index.html
