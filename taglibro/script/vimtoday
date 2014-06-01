@@ -1,0 +1,14 @@
+#!/bin/bash
+
+file=`date +"%Y/%m/%d.md"`
+
+if [ -e $file ]; then
+  vim $file
+else
+  echo ok $file non exists
+  > $file
+  date >> $file
+  echo '===' >> $file
+  echo >> $file
+  vim $file
+fi

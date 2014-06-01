@@ -14,8 +14,8 @@ test:
 	pandoc --mathml -t html5 -s -i 2014/05/04.md -o 2014/05/04.test.html --css ../../css/h1.css
 
 today:
-	vim `date +"%Y/%m/%d.md"`
-	make md2html
+	./script/vimtoday
+	#make md2html
 
 git:
 	git add --all
