@@ -15,7 +15,7 @@ test:
 
 today:
 	./script/vimtoday
-	#make md2html
+	make md2html
 
 git:
 	git add --all
