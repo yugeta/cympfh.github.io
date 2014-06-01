@@ -63,5 +63,18 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>実際に使われてる例をまず見るのが一番だった． 実は、<code>vmail</code>に使われている．</p>
 <p>vim で gmail を見たり、送受信したりできるよ！っていう 謳い文句だけど、vimと言いながら <code>gem install</code> させるじゃねーかと 思ってたんだけど、 vim単体で実現するのが面倒そうなこと（きっとメールの送受信部分だろう） は、Rubyで実現して、vimはユーザーインターフェースであり、インターフェースへの反映に使ってると見た．</p>
 <p><a href="https://github.com/danchoi/vmail/search?q=servername&amp;ref=cmdform">Search Results</a></p>
+<hr />
+<p>i3wm で，壁紙画像をどう設定するんだって調べると，feh を使えっていう 記事が大量に出てくるので，私は少し前からそうしてた</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">feh</span> --bg-fill ~/Dropbox/Pictures/cool.jpg</code></pre>
+<p>feh はそのまま使うとただの画像ビューワとして働く．というかこちらがメインな感じもする．</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># 一枚だけ</span>
+<span class="kw">feh</span> ~/Dropbox/Pictures/cool.jpg</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># 4.0 秒で次々行くスライドショー</span>
+<span class="kw">feh</span> -D 4.0 ~/Dropbox/Pictures/</code></pre>
+<p>サムネールモードなるものがあることに気づいた． 他にもモンタージュモードだとか， リストモードだとかあるんだけど， それらの差異はそこまで大きくなくて， それよりも，アクションなるものを設定できる． それが便利だ．</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">feh</span> -t -E300 -y300 ~/Pictures/ -A <span class="st">&#39;feh --bg-fill &quot;%f&quot;&#39;</span></code></pre>
+<p>これは，~/Picutures/ 内の画像を，300x300 におさまる大きさに全部変換して， いっぺんに一枚に表示する．アクションとして， <code>'feh --bg-fill &quot;%f&quot;'</code> が設定されているが， これは，一枚の画像の上にマウスオーバーした状態で， キーボードの<code>0</code> を押すと， <code>'feh --bg-fill &quot;%f&quot;'</code> が新しい /bin/sh から実行される． ただし，<code>%f</code> は，その画像のフルパス． フォーマットは他にもたくさんあって，もちろん組み合わせられる．</p>
+<p>希望としては，マウスオーバーして，キーを押すなんてまどろっこしいことじゃなくて，クリックでいいじゃんって思うんだけど，サムネールモードにおいてクリックは，その一枚を新しいウィンドウで表示，という動作に結び付けられている．</p>
+<p>アクションは10個まで，設定できて， <code>1</code> キー以上でそのアクションを起こせる</p>
 </body>
 </html>
