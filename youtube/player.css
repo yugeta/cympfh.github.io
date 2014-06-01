@@ -35,7 +35,7 @@ div#D {
 
 textarea {
   display: block;
-  height: 700px;
+  height: 90%;
   width: 550px;
   padding: 5px;
   border: 1px solid #d0d0ff;
@@ -43,3 +43,6 @@ textarea {
   overflow: scroll;
 }
 
+form {
+  height: 8%;
+}
