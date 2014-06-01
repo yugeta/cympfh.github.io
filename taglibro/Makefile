@@ -1,4 +1,5 @@
-all: md2html index
+do:
+	cat Makefile
 
 index:
 	cp index.html.h index.html
@@ -16,6 +17,9 @@ test:
 today:
 	./script/vimtoday
 	make md2html
+
+open: md2html index
+	firefox ./index.html
 
 git:
 	git add --all
