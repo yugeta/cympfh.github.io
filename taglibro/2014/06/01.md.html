@@ -50,7 +50,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="vim"><code>&lt;C-\&gt;&lt;C-n&gt;</code></pre>
 <p>を使おうと、書いてあった． 理由は、<code>&lt;esc&gt;</code> だと、ビープ音がなったり、画面のなんていうのかあのぴかっってやつ、一瞬白くなるやつ、あれがあるように設定してる人もいるから．それにしても、<code>&lt;c-\&gt;&lt;c-n&gt;</code> なんて初めてみた．確かに今、挿入モードやコマンドモードでこれを打ってみると、ノーマルに移行できた．</p>
 <p>ノーマルモードへの移行は、頭ですることにしよう．</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">i</span> in <span class="kw">`seq</span> 1 10<span class="kw">`;</span> <span class="kw">do</span> <span class="kw">vim</span> --servername VS --remote-send <span class="st">&quot;:insert&lt;cr&gt;</span><span class="ot">${i}</span><span class="st">&lt;cr&gt;.&quot;</span><span class="kw">;</span> <span class="kw">done</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">i</span> in <span class="kw">`seq</span> 1 10<span class="kw">`;</span> <span class="kw">do</span> <span class="kw">vim</span> --servername VS --remote-send <span class="st">&quot;&lt;esc&gt;&lt;esc&gt;:insert&lt;cr&gt;</span><span class="ot">${i}</span><span class="st">&lt;cr&gt;.&quot;</span><span class="kw">;</span> <span class="kw">done</span></code></pre>
 <p><code>:insert</code> コマンドの存在は知ってたけど、実際に使ったのは初めてだ．</p>
 <pre class="vim"><code>:insert&lt;cr&gt;hoge&lt;cr&gt;fuga&lt;cr&gt;.&lt;cr&gt;</code></pre>
 <p>と使うものらしい． へぇ．</p>
