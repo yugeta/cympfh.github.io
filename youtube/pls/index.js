@@ -12,6 +12,7 @@ anime/2014
 anime/amagami
 anime/djibril
 anime/do-asa
+anime/enoshima
 anime/girls-und-panzer
 anime/haganai
 anime/haruhi
