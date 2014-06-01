@@ -1,0 +1,15 @@
+# YouTube playlist -> ids
+
+# for the sample list page,
+# "https://www.youtube.com/watch?v=DbvGGvO9c3A&list=PL757FF1CE37F090BD"
+# 
+# => ListID = 'PL757FF1CE37F090BD'
+# 
+# $ ./list2ids ${ListID}
+
+ListID=$1
+curl -s https://www.youtube.com/playlist?list=${ListID} \
+  | grep 'watch?v=' | sed 's/^.*watch\?//' \
+  | cut -d'=' -f2 | cut -d'&' -f1 \
+  | uniq
+  # | sort | uniq
