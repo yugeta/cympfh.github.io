@@ -1,0 +1,42 @@
+source ~/Dropbox/cympfh/sh/dict.txt
+source ~/Dropbox/cympfh/twurl/bash
+
+if [ $TERM == "xterm" ]; then
+  export PS1='\[\e[31m\]\t\[\e[0m\] \W\$ '
+else
+  export PS1='\[\ek\e\\\]\[\e[31m\]\t\[\e[0m\] \W\$ '
+fi
+
+# if [ ${TERM} == "screen" ] ; then
+#   export PROMPT_COMMAND='echo -ne "\ek${PWD/${HOME}/~}\e\\"'
+# fi
+
+export EDITOR=/usr/bin/vim
+export PATH=$PATH:$HOME/.cabal/bin
+export NODE_PATH='/usr/local/lib/node_modules'
+
+alias l='clear;ls --color'
+alias ll='clear;ls -lh'
+alias scrx='screen -x'
+alias g='git'
+alias mk='make'
+alias jp2a='jp2a  --colors --background=light'
+
+alias node='rlwrap -pRED node'
+
+gauche() {
+  rlwrap -pRED -b "'"'(){}[].,#@;|`"' -f ~/Dropbox/cympfh/.gosh_complements -q'"' -m gosh
+}
+
+alias google='w3m http://www.google.co.jp/'
+alias mplayer='mplayer -af scaletempo -speed 1.3'
+# alias salmon='rlwrap -f ~/Dropbox/node/.salmon_completions node ~/Dropbox/node/salmon/salmon.js'
+
+setxkbmap -option ctrl:nocaps
+
+alias vmail-cympfh='export VMAIL_HOME=~/Dropbox/vmail/cympfh; echo -ne "\ekmail-c\e\\"; vmail'
+alias vmail-duhcca='export VMAIL_HOME=~/Dropbox/vmail/duhcca; echo -ne "\ekmail-d\e\\"; vmail'
+
+export CSISV16=157.1.128.112
+
+# vim: set ft=sh:
