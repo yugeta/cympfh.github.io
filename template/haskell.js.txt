@@ -12,6 +12,7 @@ import qualified Data.ByteString.Char8 as B
 import qualified Data.Map as M
 import Text.Printf
 
+readInts :: IO [Int]
 readInts = map read . words <$> getLine
 readBInt = fst . fromJust . B.readInt
 readBInts = map readBInt . B.words <$> B.getLine

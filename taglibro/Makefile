@@ -17,6 +17,7 @@ test:
 today:
 	./script/vimtoday
 	make md2html
+	make index
 
 open: md2html index
 	firefox ./index.html
