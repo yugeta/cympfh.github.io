@@ -1,45 +1,49 @@
 # Escape Key
 escape ^kk
 
-defscrollback 30000
-termcapinfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
-
+# to use 256 colors
+defbce on 
+term screen-256color
 shell bash
+termcapinfo xterm*|screen* Co#256:pa#32767:AB=\E[48;5;%dm:AF=\E[38;5;%dm
 shelltitle "$ |bash"
 
-defbce "off"
 vbell off
 autodetach on
 startup_message off
 msgwait 5
 msgminwait 1
+defscrollback 30000
+mousetrack off
 
 # colors
-sorendition '= bk'
-# hardstatus alwayslastline '%{= dw}%L=%-w%45L>%{=bu dw}%n %t%{-}%+w %= %-15<%{=u dy}%m/%d %02c:%s%{-} '
-hardstatus alwayslastline '%= %{= yk} nw: %4` %{-} %{= Rk} core: %2` %{-} [%{= dr}%1`%{-}] %{=u dy}%m/%d %02c:%s%{-} '
-caption always '%?%F%{=bu bY}%:%{= by}%?%n. %t'
+sorendition '= Kw'
+#hardstatus alwayslastline '%= %{= Rk} %2` %{-} [%{= dr}%1`%{-}] %{=u dy}%m/%d %02c:%s%{-} '
+hardstatus ignore
+caption always '%?%F%{=b KW}%:%{= Kw}%?%n. %t'
 
-backtick 1 30 30 Dropbox/cympfh/screen_script/battery
-backtick 2 30 30 Dropbox/cympfh/screen_script/coretemp
-# backtick 3 40 40 Dropbox/cympfh/screen_script/tenki
-backtick 4 30 30 Dropbox/cympfh/screen_script/nm
-
-# bind
-bind t screen
+# resize
 bind < resize -1
 bind > resize +1
 bind H resize -5
 bind L resize +5
 
-# command! ~/bin/
+# mov
+bind ^h focus left
+bind ^j focus down
+bind ^k focus up
+bind ^l focus right
+
+# command!
+bind t screen
 bind g screen www
 bind w screen vimwiki
 bind m screen vimail
+bind s screen salmon
 
-# いつものセット
-screen 9 salmon
-title salmon
-screen 0
+# layout
+layout new
+layout select 0
+split -v
 
 # vim: set ft=screen:
