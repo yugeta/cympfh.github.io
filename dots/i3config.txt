@@ -2,7 +2,7 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod1
+set $mod Mod4
 
 # font for window titles. ISO 10646 = Unicode
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -20,6 +20,8 @@ bindsym $mod+Q kill
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
 
+new_window none
+new_float normal
 bindsym $mod+b border toggle
 
 # change focus
@@ -94,10 +96,10 @@ exec bash ~/.fehbg
 
 # specific application
 for_window [class="feh"] floating enable, border normal
-new_window none
+for_window [class="mplayer"] floating enable, border normal
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        #status_command i3status
+        status_command $HOME/Dropbox/cympfh/i3status.js
 }

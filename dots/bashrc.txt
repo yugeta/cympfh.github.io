@@ -38,5 +38,11 @@ alias vmail-cympfh='export VMAIL_HOME=~/Dropbox/vmail/cympfh; echo -ne "\ekmail-
 alias vmail-duhcca='export VMAIL_HOME=~/Dropbox/vmail/duhcca; echo -ne "\ekmail-d\e\\"; vmail'
 
 export CSISV16=157.1.128.112
+put() {
+  scp $1 hattori@${CSISV16}:~/tmp/
+}
+get() {
+  scp hattori@${CSISV16}:~/$1 .
+}
 
 # vim: set ft=sh:
