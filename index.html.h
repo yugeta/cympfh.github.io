@@ -21,8 +21,15 @@ body {
 }
 #fortune {
   position: absolute;
-  top: 30%;
-  left: 15%;
+  top: 25%;
+  left: 5%;
+  /* width: 40%; */
+  background-color: white;
+}
+#message {
+  position: absolute;
+  top: 65%;
+  left: 74%;
   /* width: 40%; */
   background-color: white;
 }
@@ -30,5 +37,7 @@ a {
   color: #402020;
 }
 </style>
-<!-- <script> setTimeout("ls.style.display='block'",10000-location.search.slice(1)) </script> -->
-<body><div id='wrap'>
+<body>
+<div id='wrap'>
+<div id='message'>also visit my gist,
+  <a href=https://gist.github.com/cympfh>https://gist.github.com/cympfh</a></div>
