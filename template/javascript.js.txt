@@ -1,10 +1,18 @@
-fs = require('fs');
+var fs = require('fs')
+  , _
+;
 
-readline = (function() {
+(function() {
   var ls = fs.readFileSync('/dev/stdin', 'utf8').split('\n').slice(0, -1);
-  return function() {
+  GLOBAL.readline = function() {
     if (ls.length === 0) return false;
-    return ls.shift();
+    _ = ls.shift();
+    return _;
+  };
+  GLOBAL.readints = function() {
+    if (ls.length === 0) return false;
+    _ = words(ls.shift()).map(int);
+    return _;
   }
 }());
 
@@ -13,17 +21,18 @@ warn = console.warn;
 int = function(x) { return x|0 };
 float = function(x) { return +x };
 
-words = function(x) { return x.split(' ') };
-ints = function(x) { return words(x).map(int) };
+// string ->
+function words(x) { return x.split(' ') };
+function ints(x) { return words(x).map(int) };
 
-// number
-add = function(x,y) { return x+y };
-max = function(x,y) { return x>y ? x : y };
-min = function(x,y) { return x<y ? x : y };
+// -> number
+function add(x,y) { return x+y };
+function max(x,y) { return x>y ? x : y };
+function min(x,y) { return x<y ? x : y };
 
-// [number]
-sort = function(ls) { return ls.sort(function(x,y) { return x - y }) };
-iota = function(n,b,s) {
+// -> [number]
+function sort(ls) { return ls.sort(function(x,y) { return x - y }) };
+function iota(n,b,s) {
   b = b||0;
   s = s===void 0?1:s;
   var ret = [];
