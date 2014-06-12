@@ -1,31 +1,33 @@
-Object.prototype.toString = function(){
-  var s=[];
-  for(var i in this)if(this.hasOwnProperty(i))s.push(i+":"+this[i]);
-  return "{"+s.join(",")+"}" };
+fs = require('fs');
 
-Array.prototype.toString = function(){ return "["+this.join(",")+"]" };
+readline = (function() {
+  var ls = fs.readFileSync('/dev/stdin', 'utf8').split('\n').slice(0, -1);
+  return function() {
+    if (ls.length === 0) return false;
+    return ls.shift();
+  }
+}());
 
-function readInts(x){return x.split(' ').map(int);
+log = console.log;
+warn = console.warn;
+int = function(x) { return x|0 };
+float = function(x) { return +x };
 
-function forIn(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(x); }
-function forOf(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(o[x]); }
+words = function(x) { return x.split(' ') };
+ints = function(x) { return words(x).map(int) };
 
-function iota(n,b,s){ b=b||0; s=s===undefined?0:s;
-  for (var r=[];n--;b+=s) r.push(b); return r }
-function int(x){return x|0}
-function splitInt(s){return s.split(' ').map(int)}
-function add(a,b){return a+b}
-function mul(a,b){return a*b}
-function sub(a,b){return a-b}
-function bus(a,b){return b-a}
-function id(x){return x}
-function max(x,y){return x>y?x:y}
-function min(x,y){return x<y?x:y}
-abs = Math.abs;
+// number
+add = function(x,y) { return x+y };
+max = function(x,y) { return x>y ? x : y };
+min = function(x,y) { return x<y ? x : y };
 
-require('fs').readFile('/dev/stdin', 'utf8', function(e, ls) {
-  ls = ls.split('\n').slice(0, -1);
+// [number]
+sort = function(ls) { return ls.sort(function(x,y) { return x - y }) };
+iota = function(n,b,s) {
+  b = b||0;
+  s = s===void 0?1:s;
+  var ret = [];
+  for (var i=0;i<n;++i) { ret[i] = b + i * s; }
+  return ret;
+};
 
-});
-
-// vim: set ft=javascript:
