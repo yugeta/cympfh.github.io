@@ -1,5 +1,5 @@
 #!/bin/bash
 
-MSG=`fortune`
-OBJ=`echo "elephant-in-snake	tux" | cut -f $(($RANDOM % 2 + 1))`
-cowsay -f ${OBJ} ${MSG}
+MSG=`fortune -s -n 90`
+OBJ=`echo "elephant-in-snake	eyes" | cut -f $(($RANDOM % 2 + 1))`
+cowsay -f ${OBJ} ${MSG} | sed 's/</\&lt;/g'
