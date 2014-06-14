@@ -37,12 +37,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <li>in a Terminal</li>
 </ul>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vim</span> --servername VS</code></pre>
-<p>VS はユニークにユーザーが与える文字列． <code>vim server</code> の頭文字のつもり．</p>
+<p><code>servername</code> にはユニークにユーザーが与える． ここでは， <code>vim server</code> の頭文字のつもりで <code>VS</code>とした．</p>
 <ul class="incremental">
 <li>in another Terminal</li>
 </ul>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vim</span> --servername VS --remote-send <span class="st">&quot;&lt;esc&gt;&lt;esc&gt;iHello, VS. Do you read this?&quot;</span></code></pre>
-<p>--remote-send で与えた文字列を、<code>VS</code>と名のついた vim で、 忠実に、キーストロークを再現してくれる． ここでvim特有のキー表記、<esc> だとか <cr> だとか <C-n> だとか が効く．</p>
+<p>--remote-send で与えた文字列を、<code>VS</code>と名のついた vim で、 忠実に、キーストロークを再現してくれる． ここでvim特有のキー表記、<code>&lt;esc&gt;</code> だとか <code>&lt;cr&gt;</code> だとか <code>&lt;C-n&gt;</code> だとか が効く．</p>
 <p>今の場合、</p>
 <pre class="vim"><code> &quot;&lt;esc&gt;&lt;esc&gt;iHello, VS. Do you read this?&quot;</code></pre>
 <p>これを送信した． 頭の <code>&quot;&lt;esc&gt;&lt;esc&gt;i&quot;</code>で確実に挿入モードに移行して、 その状態で文字列を入力する． 最後にノーマルモードに戻ることをしていない．</p>
