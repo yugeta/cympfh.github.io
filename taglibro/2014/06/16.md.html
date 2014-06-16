@@ -55,7 +55,11 @@ main <span class="fu">=</span> <span class="kw">do</span>
   <span class="fu">print</span> <span class="fu">$</span> bfs s</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">[<span class="kw">Just</span> <span class="dv">0</span>,<span class="kw">Just</span> <span class="dv">1</span>,<span class="kw">Just</span> <span class="dv">2</span>,<span class="kw">Just</span> <span class="dv">3</span>,<span class="kw">Nothing</span>,<span class="kw">Nothing</span>,<span class="kw">Just</span> <span class="dv">4</span>,<span class="kw">Nothing</span>,<span class="kw">Nothing</span>]
 [<span class="kw">Nothing</span>]</code></pre>
-<p>その前の記事と実際違うのは一行だけで、 <code>haskell     walk (Leaf : _) = []</code> と今のはしているが、前は <code>haskell     walk (Leaf : _) = [Leaf]</code> としていた． walkは次にたどるものが欲しいのであって、自身は既に返す答えに含まれている (<code>tree : walk q</code>) ．</p>
+<p>その前の記事と実際違うのは一行だけで、</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">    walk (<span class="dt">Leaf</span> <span class="fu">:</span> _) <span class="fu">=</span> []</code></pre>
+<p>と今のはしているが、前は</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">    walk (<span class="dt">Leaf</span> <span class="fu">:</span> _) <span class="fu">=</span> [<span class="dt">Leaf</span>]</code></pre>
+<p>としていた． walkは次にたどるものが欲しいのであって、自身は既に返す答えに含まれている (<code>tree : walk q</code>) ．</p>
 <hr />
 <p>で、幅優先で嬉しいというのは、深さが無限になり得る場合が一つの場合として挙げられて、</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">infinityTree <span class="fu">=</span> make <span class="dv">0</span>
