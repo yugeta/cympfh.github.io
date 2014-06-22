@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="年-6月-22日-日曜日-190159-jst">2014年 6月 22日 日曜日 19:01:59 JST</h1>
+<h2 id="論文の管理">論文の管理</h2>
+<p>自分が今までに読んだ論文、読むつもりの論文をどう管理すればいいのか 誰も教えてくれないからただテキストにメモしてる．</p>
+<p>っていうのは嘘で、 Mendeleyとかあるのは知ってるけど、 こんなもののためにGUIを使いたくないし、 できればvimでやりたいなぁと．</p>
+<p>世の中の文献管理の機能として、 文献検索と、bibtexとかの出力があるらしい． そこらへんはGoogle Scholar にまかせるとして、</p>
+<pre><code># 論文のタイトル
+:論文のカテゴリを表すタグ1
+:論文のカテゴリを表すタグ2
+:論文のカテゴリを表すタグ3
+:url webにおけるurl
+:uri ローカルに保存してる場合はそのパス
+:memo [[memo/論文を読んだならばそのメモファイル]]</code></pre>
+<p>っていうmarkdownをvimwiki使って閲覧、編集してる．</p>
+<p>いくつかの論文は大学とか特定の場所じゃないと自由に見れないので 自分は <code>~/Dropbox/pdf/</code> 以下に保存することにして、 vimwikiから <code>http://</code> の文字列の上でEnterすると gnome-open してくれて、 自分の場合はFirefoxが起動してくれる． ローカルのパスにはこれは対応しないので、 <code>db://pdf/hoge.pdf</code> を<code>~/Dropbox/pdf/hoge/pdf</code> に読み替えて gnome-open させるようにした．</p>
+<p><a href="https://github.com/cympfh/vimwiki">cympfh/vimwiki</a></p>
+<p>あと論文はどうせそのパスに保存させるので、</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/sh</span>
+
+<span class="co"># pdfwget</span>
+<span class="co">#</span>
+
+<span class="ot">URL=$1</span>
+<span class="ot">FILE=${URL##</span>*/<span class="ot">}</span>
+
+<span class="kw">while [</span> <span class="ot">-f</span> <span class="st">&quot;</span><span class="ot">$HOME</span><span class="st">/Dropbox/pdf/</span><span class="ot">$FILE</span><span class="st">&quot;</span><span class="kw"> ]</span>; <span class="kw">do</span> <span class="co"># while name duplication</span>
+  <span class="ot">FILE=</span><span class="st">&quot;</span><span class="ot">${FILE%</span>.*<span class="ot">}</span><span class="st">.1.pdf&quot;</span>
+<span class="kw">done</span>
+
+<span class="kw">wget</span> --quiet -O <span class="st">&quot;</span><span class="ot">$HOME</span><span class="st">/Dropbox/pdf/</span><span class="ot">$FILE</span><span class="st">&quot;</span> <span class="ot">$URL</span>
+
+<span class="kw">echo</span> <span class="ot">$URL</span>
+<span class="kw">echo</span> <span class="st">&quot;db://pdf/</span><span class="ot">$FILE</span><span class="st">&quot;</span></code></pre>
+<p>を使わせることにした． 名前の重複するファイルがあったら</p>
+<p><code>A.pdf</code> → <code>A.1.pdf</code> → <code>A.1.1.pdf</code></p>
+<p>と無限にファイル名を伸ばす．</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">pdfwget</span> http://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf
+<span class="kw">http</span>://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf
+<span class="kw">db</span>://A3-2.pdf</code></pre>
+<p>という具合．</p>
+</body>
+</html>
