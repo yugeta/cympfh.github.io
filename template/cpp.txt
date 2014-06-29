@@ -1,0 +1,26 @@
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+#define rep2(i,m,n) for(int i=(int)(m);i<(int)(n);i++)
+#define rep(i,n) rep2(i,0,n)
+#define INF (1e9)
+#define EPS (1e-9)
+
+typedef pair<int,int> P;
+ 
+const
+int dx[4] = {-1,0,1,0},
+    dy[4] = {0,1,0,-1};
+
+int
+main() {
+
+  cout << sizeof(int) << endl
+       << sizeof(long) << endl
+       << sizeof(long long) << endl;
+
+  return 0;
+}
