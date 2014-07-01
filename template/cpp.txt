@@ -24,20 +24,13 @@ ostream& operator<<(ostream& os, pair<S,T> p) {
 }
 template<class T>
 ostream& operator<<(ostream& os, vector<T> v) {
-  os << "(vector";
-  for (int i=0, len=v.size(); i<len; ++i) os << ' ' << v[i];
-  os << ')';
+  os << "(vector"; for (auto i : v) os << ' ' << i; os << ')';
   return os;
 }
-
-// array convert
-template <class T>
-inline
-vector<T>
-arr2vec(T* ar, int n) {
-  vector<T> ret;
-  for (int i=0; i<n; ++i) ret.push_back(ar[i]);
-  return ret;
+template<class T, size_t N>
+ostream& operator<<(ostream& os, array<T,N> v) {
+  os << "(array"; for (auto i : v) os << ' ' << i; os << ')';
+  return os;
 }
 
 int
