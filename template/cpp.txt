@@ -5,6 +5,10 @@ using namespace std;
 #define rep(i,n) rep2(i,0,n)
 #define INF (1e9)
 #define EPS (1e-9)
+#define car(a) (a.first)
+#define cdr(a) (a.second)
+#define cadr(a) (car(cdr(a)))
+#define cddr(a) (cdr(cdr(a)))
 
 typedef pair<int,int> P;
  
@@ -12,17 +16,28 @@ const
 int dx[4] = {-1,0,1,0},
     dy[4] = {0,1,0,-1};
 
-template <class T>
-ostream& operator<<(ostream& os, pair<int, T> p) {
-  os << '(' << p.first << ", " << p.second << ')';
+// log functions
+template<class S, class T>
+ostream& operator<<(ostream& os, pair<S,T> p) {
+  os << '(' << car(p) << ", " << cdr(p) << ')';
   return os;
 }
 template<class T>
-ostream& operator<<(ostream& os, vector<T> p) {
-  os << '[';
-  for (int i=0;i<p.size();i++) os << p[i] << ' ';
-  os << ']';
+ostream& operator<<(ostream& os, vector<T> v) {
+  os << "(vector";
+  for (int i=0, len=v.size(); i<len; ++i) os << ' ' << v[i];
+  os << ')';
   return os;
+}
+
+// array convert
+template <class T>
+inline
+vector<T>
+arr2vec(T* ar, int n) {
+  vector<T> ret;
+  for (int i=0; i<n; ++i) ret.push_back(ar[i]);
+  return ret;
 }
 
 int
@@ -34,3 +49,5 @@ main() {
 
   return 0;
 }
+
+// vim: set ft=cpp:
