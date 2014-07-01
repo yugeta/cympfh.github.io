@@ -12,6 +12,19 @@ const
 int dx[4] = {-1,0,1,0},
     dy[4] = {0,1,0,-1};
 
+template <class T>
+ostream& operator<<(ostream& os, pair<int, T> p) {
+  os << '(' << p.first << ", " << p.second << ')';
+  return os;
+}
+template<class T>
+ostream& operator<<(ostream& os, vector<T> p) {
+  os << '[';
+  for (int i=0;i<p.size();i++) os << p[i] << ' ';
+  os << ']';
+  return os;
+}
+
 int
 main() {
 
