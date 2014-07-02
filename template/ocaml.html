@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="ot">open</span> Printf
+<span class="ot">open</span> Str
+ 
+<span class="kw">let</span> (|&gt;) x f = f x
+<span class="kw">let</span> <span class="kw">rec</span> (--) i j = <span class="kw">if</span> i &gt; j <span class="kw">then</span> [] <span class="kw">else</span> i::i+1--j
+<span class="kw">let</span> <span class="kw">rec</span> iota n b s = <span class="kw">if</span> n == 0 <span class="kw">then</span> [] <span class="kw">else</span> b::iota (n<span class="dv">-1</span>) (b+s) s
+<span class="kw">let</span> (!!) = List<span class="kw">.</span>nth
+
+<span class="kw">let</span> print_list_int = <span class="kw">function</span>
+  | []    -&gt; print_string <span class="st">&quot;[]&quot;</span>
+  | [a]   -&gt; printf <span class="st">&quot;[ %d ]&quot;</span> a
+  | x::xs -&gt; printf <span class="st">&quot;[ %d&quot;</span> x; List<span class="kw">.</span>iter (<span class="kw">fun</span> x-&gt;printf<span class="st">&quot;; %d&quot;</span>x) xs; print_string<span class="st">&quot; ]&quot;</span>
+
+  
+<span class="kw">let</span> main =
+
+  <span class="co">(* my list range *)</span>
+  print_list_int (1 -- 10); print_newline ();
+  print_list_int (iota 10 0 (<span class="dv">-1</span>)); print_newline ();
+  <span class="co">(* N.B.</span>
+<span class="co">   * (i -- j) might be i &lt;= j</span>
+<span class="co">   * iota is from srfi-1</span>
+<span class="co">   *)</span>
+
+  <span class="co">(* F#-like pipeline *)</span>
+  <span class="kw">let</span> re = regexp <span class="st">&quot;,&quot;</span> <span class="kw">in</span>
+  <span class="kw">let</span> _ =
+    <span class="st">&quot;-1,0,-2&quot;</span>
+      |&gt; split re
+      |&gt; List<span class="kw">.</span>map int_of_string
+      |&gt; List<span class="kw">.</span>map ((+) 1)
+      |&gt; print_list_int
+      |&gt; <span class="kw">fun</span> _ -&gt; print_newline ()
+  <span class="kw">in</span>
+   
+  <span class="co">(* lazy patter *)</span>
+  <span class="kw">let</span> f = <span class="kw">function</span>
+    | (0, _) -&gt; 0
+    | (_, <span class="kw">lazy</span> x) -&gt; x
+  <span class="kw">in</span>
+    
+  <span class="kw">let</span> noisy_two = <span class="kw">lazy</span> (print_endline <span class="st">&quot;two!!&quot;</span>; 2) <span class="kw">in</span>
+  <span class="kw">let</span> a, b = (0, noisy_two), (1, noisy_two) <span class="kw">in</span>
+    print_int (f a); print_newline ();
+    print_int (f b); print_newline ();
+     
+  0
+
+<span class="co">(* vim: set ft=ocaml: *)</span></code></pre>
+</body>
+</html>

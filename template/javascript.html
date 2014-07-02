@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> fs = <span class="fu">require</span>(<span class="st">&#39;fs&#39;</span>)
+  , _
+;
+
+(<span class="kw">function</span>() {
+  <span class="kw">var</span> ls = <span class="ot">fs</span>.<span class="fu">readFileSync</span>(<span class="st">&#39;/dev/stdin&#39;</span>, <span class="st">&#39;utf8&#39;</span>).<span class="fu">split</span>(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>).<span class="fu">slice</span>(<span class="dv">0</span>, -<span class="dv">1</span>);
+  <span class="ot">GLOBAL</span>.<span class="fu">readline</span> = <span class="kw">function</span>() {
+    <span class="kw">if</span> (<span class="ot">ls</span>.<span class="fu">length</span> === <span class="dv">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
+    _ = <span class="ot">ls</span>.<span class="fu">shift</span>();
+    <span class="kw">return</span> _;
+  };
+  <span class="ot">GLOBAL</span>.<span class="fu">readints</span> = <span class="kw">function</span>() {
+    <span class="kw">if</span> (<span class="ot">ls</span>.<span class="fu">length</span> === <span class="dv">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
+    _ = <span class="fu">words</span>(<span class="ot">ls</span>.<span class="fu">shift</span>()).<span class="fu">map</span>(int);
+    <span class="kw">return</span> _;
+  }
+}());
+
+log = <span class="ot">console</span>.<span class="fu">log</span>;
+warn = <span class="ot">console</span>.<span class="fu">warn</span>;
+int = <span class="kw">function</span>(x) { <span class="kw">return</span> x|<span class="dv">0</span> };
+float = <span class="kw">function</span>(x) { <span class="kw">return</span> +x };
+
+<span class="co">// string -&gt;</span>
+<span class="kw">function</span> <span class="fu">words</span>(x) { <span class="kw">return</span> <span class="ot">x</span>.<span class="fu">split</span>(<span class="st">&#39; &#39;</span>) };
+<span class="kw">function</span> <span class="fu">ints</span>(x) { <span class="kw">return</span> <span class="fu">words</span>(x).<span class="fu">map</span>(int) };
+
+<span class="co">// -&gt; number</span>
+<span class="kw">function</span> <span class="fu">add</span>(x,y) { <span class="kw">return</span> x+y };
+<span class="kw">function</span> <span class="fu">max</span>(x,y) { <span class="kw">return</span> x&gt;y ? x : y };
+<span class="kw">function</span> <span class="fu">min</span>(x,y) { <span class="kw">return</span> x&lt;y ? x : y };
+
+<span class="co">// -&gt; [number]</span>
+<span class="kw">function</span> <span class="fu">sort</span>(ls) { <span class="kw">return</span> <span class="ot">ls</span>.<span class="fu">sort</span>(<span class="kw">function</span>(x,y) { <span class="kw">return</span> x - y }) };
+<span class="kw">function</span> <span class="fu">iota</span>(n,b,s) {
+  b = b||<span class="dv">0</span>;
+  s = s===<span class="kw">void</span> <span class="dv">0</span>?<span class="dv">1</span>:s;
+  <span class="kw">var</span> ret = [];
+  <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>;i&lt;n;++i) { ret[i] = b + i * s; }
+  <span class="kw">return</span> ret;
+};</code></pre>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;bits/stdc++.h&gt;</span>
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="ot">#define rep2(i,m,n) for(int i=(int)(m);i&lt;(int)(n);i++)</span>
+<span class="ot">#define rep(i,n) rep2(i,0,n)</span>
+<span class="ot">#define INF (1e9)</span>
+<span class="ot">#define EPS (1e-9)</span>
+<span class="ot">#define car(a) (a.first)</span>
+<span class="ot">#define cdr(a) (a.second)</span>
+<span class="ot">#define cadr(a) (car(cdr(a)))</span>
+<span class="ot">#define cddr(a) (cdr(cdr(a)))</span>
+
+<span class="kw">typedef</span> pair&lt;<span class="dt">int</span>,<span class="dt">int</span>&gt; P;
+ 
+<span class="dt">const</span>
+<span class="dt">int</span> dx[<span class="dv">4</span>] = {-<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>},
+    dy[<span class="dv">4</span>] = {<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,-<span class="dv">1</span>};
+
+<span class="co">// log functions</span>
+<span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt;
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S,T&gt; p) {
+  os &lt;&lt; &#39;(&#39; &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; &#39;)&#39;;
+  <span class="kw">return</span> os;
+}
+<span class="kw">template</span>&lt;<span class="kw">class</span> T&gt;
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt;T&gt; v) {
+  os &lt;&lt; <span class="st">&quot;(vector&quot;</span>; <span class="kw">for</span> (<span class="dt">auto</span> i : v) os &lt;&lt; &#39; &#39; &lt;&lt; i; os &lt;&lt; &#39;)&#39;;
+  <span class="kw">return</span> os;
+}
+<span class="kw">template</span>&lt;<span class="kw">class</span> T, size_t N&gt;
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, array&lt;T,N&gt; v) {
+  os &lt;&lt; <span class="st">&quot;(array&quot;</span>; <span class="kw">for</span> (<span class="dt">auto</span> i : v) os &lt;&lt; &#39; &#39; &lt;&lt; i; os &lt;&lt; &#39;)&#39;;
+  <span class="kw">return</span> os;
+}
+
+<span class="dt">int</span>
+main() {
+
+  cout &lt;&lt; <span class="kw">sizeof</span>(<span class="dt">int</span>) &lt;&lt; endl
+       &lt;&lt; <span class="kw">sizeof</span>(<span class="dt">long</span>) &lt;&lt; endl
+       &lt;&lt; <span class="kw">sizeof</span>(<span class="dt">long</span> <span class="dt">long</span>) &lt;&lt; endl;
+
+  <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+<span class="co">// vim: set ft=cpp:</span></code></pre>
+</body>
+</html>
