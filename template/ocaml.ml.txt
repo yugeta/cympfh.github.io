@@ -1,0 +1,49 @@
+open Printf
+open Str
+ 
+let (|>) x f = f x
+let rec (--) i j = if i > j then [] else i::i+1--j
+let rec iota n b s = if n == 0 then [] else b::iota (n-1) (b+s) s
+let (!!) = List.nth
+
+let print_list_int = function
+  | []    -> print_string "[]"
+  | [a]   -> printf "[ %d ]" a
+  | x::xs -> printf "[ %d" x; List.iter (fun x->printf"; %d"x) xs; print_string" ]"
+
+  
+let main =
+
+  (* my list range *)
+  print_list_int (1 -- 10); print_newline ();
+  print_list_int (iota 10 0 (-1)); print_newline ();
+  (* N.B.
+   * (i -- j) might be i <= j
+   * iota is from srfi-1
+   *)
+
+  (* F#-like pipeline *)
+  let re = regexp "," in
+  let _ =
+    "-1,0,-2"
+      |> split re
+      |> List.map int_of_string
+      |> List.map ((+) 1)
+      |> print_list_int
+      |> fun _ -> print_newline ()
+  in
+   
+  (* lazy patter *)
+  let f = function
+    | (0, _) -> 0
+    | (_, lazy x) -> x
+  in
+    
+  let noisy_two = lazy (print_endline "two!!"; 2) in
+  let a, b = (0, noisy_two), (1, noisy_two) in
+    print_int (f a); print_newline ();
+    print_int (f b); print_newline ();
+     
+  0
+
+(* vim: set ft=ocaml: *)
