@@ -17,7 +17,7 @@ today:
 	cd taglibro/; make
 
 # lsしてindexにするだけ
-pres: games.pre study.pre template.pre memo.pre dots.pre
+pres: tools.pre study.pre template.pre memo.pre dots.pre
 
 %.pre: %
 	echo "<pre>" > $^/index.html
