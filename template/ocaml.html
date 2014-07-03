@@ -31,9 +31,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="ot">open</span> Str
  
 <span class="kw">let</span> (|&gt;) x f = f x
+<span class="kw">let</span> (@@) f x = f x
 <span class="kw">let</span> <span class="kw">rec</span> (--) i j = <span class="kw">if</span> i &gt; j <span class="kw">then</span> [] <span class="kw">else</span> i::i+1--j
 <span class="kw">let</span> <span class="kw">rec</span> iota n b s = <span class="kw">if</span> n == 0 <span class="kw">then</span> [] <span class="kw">else</span> b::iota (n<span class="dv">-1</span>) (b+s) s
-<span class="kw">let</span> (!!) = List<span class="kw">.</span>nth
+<span class="kw">let</span> ignore x = ()
 
 <span class="kw">let</span> print_list_int = <span class="kw">function</span>
   | []    -&gt; print_string <span class="st">&quot;[]&quot;</span>

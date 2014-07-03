@@ -2,9 +2,10 @@ open Printf
 open Str
  
 let (|>) x f = f x
+let (@@) f x = f x
 let rec (--) i j = if i > j then [] else i::i+1--j
 let rec iota n b s = if n == 0 then [] else b::iota (n-1) (b+s) s
-let (!!) = List.nth
+let ignore x = ()
 
 let print_list_int = function
   | []    -> print_string "[]"
