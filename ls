@@ -1,5 +1,5 @@
 dots/
-games/
+tools/
 template/
 memo/
 study/
