@@ -38,12 +38,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="ot">#define cdr(a) (a.second)</span>
 <span class="ot">#define cadr(a) (car(cdr(a)))</span>
 <span class="ot">#define cddr(a) (cdr(cdr(a)))</span>
+<span class="ot">#define trace(var) cout&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;#var&lt;&lt;&quot; = &quot;&lt;&lt;var&lt;&lt;endl;</span>
 
 <span class="kw">typedef</span> pair&lt;<span class="dt">int</span>,<span class="dt">int</span>&gt; P;
  
-<span class="dt">const</span>
-<span class="dt">int</span> dx[<span class="dv">4</span>] = {-<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>},
-    dy[<span class="dv">4</span>] = {<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,-<span class="dv">1</span>};
+<span class="dt">int</span> dx[<span class="dv">4</span>] = {-<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>};
+<span class="dt">int</span> dy[<span class="dv">4</span>] = {<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,-<span class="dv">1</span>};
 
 <span class="co">// log functions</span>
 <span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt;
