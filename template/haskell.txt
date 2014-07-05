@@ -21,6 +21,6 @@ debug x = trace ("# " ++ show x) x
 
 main :: IO ()
 main = do
-    ls <- readInts
+    ls <- getInts
     print $ sum ls
 
