@@ -14,5 +14,3 @@ ref STL
 ## src/
 
 - [template](src/template.cpp.html)
-    - [include header](src/include.cpp.html)
-    - [utility macros](src/macro.cpp.html)
