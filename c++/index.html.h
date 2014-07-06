@@ -13,6 +13,4 @@ a {
   color: #402020;
 }
 </style>
-<pre>c++</pre><hr />
-<code><span class="prompt">$</span>g++ -std=c++0x ./%</code><hr />
-
+<body>
