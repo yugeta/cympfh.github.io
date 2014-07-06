@@ -35,10 +35,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">struct</span> graph {
   <span class="dt">int</span> n;
   vector&lt;edge&gt; *g;
-  graph(<span class="dt">int</span> m){
-    n = m;
-    g = <span class="kw">new</span> vector&lt;edge&gt;[m];
-  }
+  graph(<span class="dt">int</span> m){ n=m; g=<span class="kw">new</span> vector&lt;edge&gt;[m]; }
   <span class="dt">void</span> add(<span class="dt">int</span> u,<span class="dt">int</span> v,<span class="dt">int</span> c){
     edge e(u, v, c);
     g[u].push_back(e);

@@ -6,10 +6,7 @@ struct edge {
 struct graph {
   int n;
   vector<edge> *g;
-  graph(int m){
-    n = m;
-    g = new vector<edge>[m];
-  }
+  graph(int m){ n=m; g=new vector<edge>[m]; }
   void add(int u,int v,int c){
     edge e(u, v, c);
     g[u].push_back(e);
