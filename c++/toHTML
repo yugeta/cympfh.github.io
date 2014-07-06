@@ -1,6 +1,7 @@
 #!/bin/bash
 
-for f in src/*.cpp; do
+for f in ./src/*.cpp; do
+  echo $f
   echo "\`\`\`cpp" > /tmp/cpphtml.md
   cat $f >> /tmp/cpphtml.md
   echo "\`\`\`" >> /tmp/cpphtml.md

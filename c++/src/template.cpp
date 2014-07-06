@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define rep2(i,n,m) for(int i=(int)(n);i<(int)(m);++i)
+#define rep(i,n) rep2(i,0,n)
+
 #define INF (1e9)
 #define EPS (1e-9)
 #define car(a) (a.first)

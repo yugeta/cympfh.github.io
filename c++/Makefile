@@ -7,4 +7,4 @@ main.html: main.md
 	pandoc -i main.md -o main.html
 
 cpphtml:
-	./src/toHTML
+	./toHTML
