@@ -29,18 +29,32 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <body>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;bits/stdc++.h&gt;</span>
 <span class="kw">using</span> <span class="kw">namespace</span> std;
-<span class="ot">#define rep2(i,m,n) for(int i=(int)(m);i&lt;(int)(n);i++)</span>
-<span class="ot">#define rep(i,n) rep2(i,0,n)</span>
+
 <span class="ot">#define INF (1e9)</span>
 <span class="ot">#define EPS (1e-9)</span>
-
-<span class="ot">#define cons(a,b) make_pair(a,b)</span>
 <span class="ot">#define car(a) (a.first)</span>
 <span class="ot">#define cdr(a) (a.second)</span>
 <span class="ot">#define cadr(a) (car(cdr(a)))</span>
 <span class="ot">#define cddr(a) (cdr(cdr(a)))</span>
-
 <span class="ot">#define trace(var) cout&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;#var&lt;&lt;&quot; = &quot;&lt;&lt;var&lt;&lt;endl;</span>
+
+<span class="kw">typedef</span> pair&lt;<span class="dt">int</span>,<span class="dt">int</span>&gt; P;
+ 
+<span class="dt">int</span> dx[<span class="dv">4</span>] = {-<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>};
+<span class="dt">int</span> dy[<span class="dv">4</span>] = {<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,-<span class="dv">1</span>};
+
+<span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt;
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S,T&gt; p) {
+  os &lt;&lt; &#39;(&#39; &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; &#39;)&#39;;
+  <span class="kw">return</span> os;
+}
+<span class="kw">template</span>&lt;<span class="kw">class</span> T&gt;
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt;T&gt; v) {
+  os &lt;&lt; <span class="st">&quot;(vector&quot;</span>;
+  <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">0</span>, len=v.size(); i&lt;len; ++i) os &lt;&lt; &#39; &#39; &lt;&lt; v[i];
+  os &lt;&lt; &#39;)&#39;;
+  <span class="kw">return</span> os;
+}
 
 <span class="dt">int</span> main() {
   <span class="kw">return</span> <span class="dv">0</span>;
