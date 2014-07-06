@@ -16,10 +16,3 @@ a {
 <pre>c++</pre><hr />
 <code><span class="prompt">$</span>g++ -std=c++0x ./%</code><hr />
 
-<ul class="incremental">
-<li><a href="src/template.cpp.html">template</a>
-<ul class="incremental">
-<li><a href="src/include.cpp.html">include header</a></li>
-<li><a href="src/macro.cpp.html">utility macros</a></li>
-</ul></li>
-</ul>
