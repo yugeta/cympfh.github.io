@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="年-7月-7日-月曜日-235102-jst">2014年 7月 7日 月曜日 23:51:02 JST</h1>
+<p>同じコード片を書いてると気づいててもどうして何度も書いてしまうんだ． 己は本当に．</p>
+<hr />
+<p>node.js</p>
+<p>標準入力、ファイルの読み取りは <code>readFile</code> もしくは <code>readFileSync</code> を使うが、 あんまりファイルの量が多いと死ぬ． ストリームを作って受け取るのが普通．</p>
+<script src="https://gist.github.com/cympfh/45b2c711c1bfe135626f.js"></script>
+
+<p>以下のように使う．</p>
+<pre class="js"><code>var lineStream = require(&#39;./line-stream&#39;);
+
+var cx = 0;
+function proc(line) {
+  console.log(cx, line);
+  cx++;
+}
+function defer() {
+  console.log(&quot;~&quot;);
+}
+
+lineStream(&#39;/dev/stdin&#39;, proc, defer);</code></pre>
+</body>
+</html>
