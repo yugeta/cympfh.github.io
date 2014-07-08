@@ -20,8 +20,6 @@ bindsym $mod+Q kill
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
 
-new_window none
-new_float normal
 bindsym $mod+b border toggle
 
 # change focus
@@ -92,11 +90,13 @@ bindsym $mod+r mode "resize"
 
 ## start up start
 exec dropbox start
-exec bash ~/.fehbg
+exec bash ~/.xinitrc
 
 # specific application
 for_window [class="feh"] floating enable, border normal
 for_window [class="mplayer"] floating enable, border normal
+for_window [class="Wine"] floating enable, border normal
+for_window [class="Xfce4-notifyd"] floating enable, border none
 new_window none
 
 # Start i3bar to display a workspace bar (plus the system information i3status

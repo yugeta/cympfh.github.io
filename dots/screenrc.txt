@@ -44,6 +44,5 @@ bind s screen salmon
 # layout
 layout new
 layout select 0
-split -v
 
 # vim: set ft=screen:

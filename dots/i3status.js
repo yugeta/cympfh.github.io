@@ -2,8 +2,9 @@
 
 var exec = require('child_process').exec
   , red = '#ff0000'
+  , pink = '#a03030'
   , yellow = '#ffff00'
-  , pink = '#f09090'
+  , orange = '#ff9020'
   , white = '#ffffff'
   , gray = '#404040'
   ;
@@ -39,35 +40,39 @@ function date() {
 }
 
 battery = (function () {
-  var result
-    , icons = "♩♪♫♬"
+  var result;
+  var visualize = function (x, b) {
+    var icon = x > 95 ? '❦'
+             : x > 75 ? '♬'
+             : x > 50 ? '♪'
+             : x > 25 ? '♩'
+             :          (x + '%')
+      , col = b ? yellow
+            : x > 80 ? pink
+            : x > 20 ? orange
+            :          red
     ;
-  var visualize = function (x) {
-    x = Math.ceil(x / 20); // [1, 2, 3, 4, 5]
-    if (x === 5) {
-      return text("+。:.ﾟ٩(๑>◡<๑)۶:.｡+ﾟ", pink);
-    } else if (x > 1) {
-      return text(icons[x-1], yellow);
-    } else {
-      return text(icons[0], red);
-    }
+    return text(icon, col);
   };
 
+  var cx = 0;
+
   return function () {
-    if (result && Math.random() < .7) return result;
+    if (result && ++cx % 20) return result;
     exec('acpi', function(er, ou) {
       if (er) return;
-      var x = ou.match(/(\d+)%/)[1];
-      result = visualize(x);
+      var x = (ou.match(/(\d+)%/)[1]) | 0;
+      result = visualize(x, ou.indexOf('Charging') !== -1);
     });
     return result;
   };
 }());
 
 coretemp = (function () {
-  var result;
+  var result
+    , cx = 0;
   return function () {
-    if (result && Math.random() < .7) return result;
+    if (result && ++cx % 30) return result;
     exec('sensors | grep "Core 0" | cut -d "+" -f 2 | cut -c 1-4', function (err, data) {
       result = data.split('\n')[0] + '°C';
     });
@@ -80,9 +85,6 @@ tenki = (function () {
     , icons = {}
     , url = "http://api.openweathermap.org/data/2.5/weather?q=Tokyo,jp" // may change
     ;
-
-  icons.Clouds = '曇';
-  // '☀☔☇'.split('')
   
   return function () {
     if (result && Math.random() < .990) return result;
