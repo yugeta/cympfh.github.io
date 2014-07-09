@@ -51,7 +51,7 @@ Pattern ::= Var &lt;- List | let Var = Var | Predicate</code></pre>
 <p>三番目は再帰部分に相当するのだけど，順序に註意． この順でないと， <code>[x | xs &lt;- xss, x &lt;- xs]</code> を正しく展開できないから， これで正しい．</p>
 <p><code>let</code>もそんなに難しくないだろう.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">[u <span class="fu">|</span> <span class="kw">let</span> x <span class="fu">=</span> z] <span class="fu">=</span> [<span class="kw">let</span> x <span class="fu">=</span> z <span class="kw">in</span> u]
-[u <span class="fu">|</span> q1 <span class="fu">..</span> qn, <span class="kw">let</span> x <span class="fu">=</span> z] <span class="fu">=</span> <span class="fu">concat</span> [<span class="kw">let</span> x <span class="fu">=</span> z <span class="kw">in</span> u <span class="fu">|</span> q1 <span class="fu">..</span> qn]</code></pre>
+[u <span class="fu">|</span> q1 <span class="fu">..</span> qn, <span class="kw">let</span> x <span class="fu">=</span> z] <span class="fu">=</span> [<span class="kw">let</span> x <span class="fu">=</span> z <span class="kw">in</span> u <span class="fu">|</span> q1 <span class="fu">..</span> qn]</code></pre>
 <p>Predicate はちょっと困ることになった. <code>filter</code>で簡単にできると思ったけど,</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">[ y <span class="fu">|</span> x <span class="ot">&lt;-</span> ls, test]</code></pre>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(filter (<span class="kw">lambda</span> (???) (test))
