@@ -18,3 +18,6 @@ ref STL
 
 - [graph header](src/graph.head.cpp.html)
     - [Dijkstra](src/graph.dij.cpp.html)
+    - [Warshall-Floyd](src/graph.wall.cpp.html)
+        + [Warshall-Floyd-use](src/graph.wall.use.cpp.html)
+
