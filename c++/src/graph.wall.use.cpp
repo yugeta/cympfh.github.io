@@ -96,6 +96,23 @@ int main() {
     cout << endl;
   }
 
-
   return 0;
 }
+
+/*
+INF   2   5 INF INF INF INF
+  2 INF   4   6  10 INF INF
+  5   4 INF   2 INF INF INF
+INF   6   2 INF INF   1 INF
+INF  10 INF INF INF   3   5
+INF INF INF   1   3 INF   9
+INF INF INF INF   5   9 INF
+
+  0   2   5   7  11   8  16
+  2   0   4   6  10   7  15
+  5   4   0   2   6   3  11
+  7   6   2   0   4   1   9
+ 11  10   6   4   0   3   5
+  8   7   3   1   3   0   8
+ 16  15  11   9   5   8   0
+*/
