@@ -13,10 +13,13 @@ ref STL
 
 ## src/
 
-- [template](src/template.cpp.html)
-    - [alt includes](src/include.cpp.html)
+### [template](src/template.cpp.html)
 
-- [graph header](src/graph.head.cpp.html)
+- [alt includes](src/include.cpp.html)
+
+### [graph](src/graph.head.cpp.html)
+
+- Shortest path
     - [Dijkstra](src/graph.dij.cpp.html)
     - [Warshall-Floyd](src/graph.wall.cpp.html)
         + [Warshall-Floyd-use](src/graph.wall.use.cpp.html)
