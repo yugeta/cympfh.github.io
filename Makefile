@@ -1,3 +1,4 @@
+test: index
 all: index pres
 
 index:
