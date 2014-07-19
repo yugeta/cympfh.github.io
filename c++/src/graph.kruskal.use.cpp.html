@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;bits/stdc++.h&gt;</span>
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="ot">#define rep2(i,n,m) for(int i=(int)(n);i&lt;(int)(m);++i)</span>
+<span class="ot">#define rep(i,n) rep2(i,0,n)</span>
+<span class="ot">#define iota(i,n,b,s) for(int i=int(b);i&lt;int(b+s*n);i+=s)</span>
+
+<span class="ot">#define INF (1e9)</span>
+<span class="ot">#define EPS (1e-9)</span>
+<span class="ot">#define cons(a,b) (make_pair(a,b))</span>
+<span class="ot">#define car(a) (a.first)</span>
+<span class="ot">#define cdr(a) (a.second)</span>
+<span class="ot">#define cadr(a) (car(cdr(a)))</span>
+<span class="ot">#define cddr(a) (cdr(cdr(a)))</span>
+<span class="ot">#define trace(var) cout&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;#var&lt;&lt;&quot; = &quot;&lt;&lt;var&lt;&lt;endl;</span>
+
+<span class="kw">struct</span> edge {
+  <span class="dt">int</span> from, to, cost;
+  edge(<span class="dt">int</span> f,<span class="dt">int</span> t,<span class="dt">int</span> c) { from=f; to=t; cost=c; }
+};
+
+<span class="dt">bool</span> <span class="kw">operator</span>&lt; (<span class="dt">const</span> edge&amp; left, <span class="dt">const</span> edge&amp; right) {
+  <span class="kw">return</span> left.cost &lt; right.cost;
+}
+<span class="dt">bool</span> <span class="kw">operator</span>&gt; (<span class="dt">const</span> edge&amp; left, <span class="dt">const</span> edge&amp; right) {
+  <span class="kw">return</span> left.cost &gt; right.cost;
+}
+
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, <span class="dt">const</span> edge&amp; e) {
+  os&lt;&lt;<span class="st">&quot;(edge &quot;</span>&lt;&lt;e.from&lt;&lt;&#39; &#39;&lt;&lt;e.to&lt;&lt;&#39; &#39;&lt;&lt;e.cost&lt;&lt;&#39;)&#39;;
+  <span class="kw">return</span> os;
+}
+
+<span class="ot">#define N 1000</span>
+priority_queue&lt;edge,vector&lt;edge&gt;,greater&lt;edge&gt;&gt; edges;
+<span class="dt">void</span> add_edge(<span class="dt">int</span> u, <span class="dt">int</span> v, <span class="dt">int</span> c) {
+  edges.push(edge(u, v, c));
+}
+
+<span class="dt">int</span>
+kruskal() {
+  <span class="dt">int</span> total = <span class="dv">0</span>;
+  <span class="dt">bool</span> used[N];
+  rep(i, N) used[i] = <span class="kw">false</span>;
+
+  <span class="dt">auto</span> es = edges;
+  <span class="kw">while</span> (!es.empty()) {
+    edge e = es.top(); es.pop();
+    <span class="kw">if</span> (used[e.from] &amp;&amp; used[e.to]) <span class="kw">continue</span>;
+    used[e.from] = used[e.to] = <span class="kw">true</span>;
+    <span class="co">// cerr &lt;&lt; e &lt;&lt; endl;</span>
+    total += e.cost;
+  }
+  <span class="kw">return</span> total;
+}
+
+<span class="dt">int</span> main() {
+
+  <span class="co">// this graph on the page: http://ja.wikipedia.org/wiki/プリム法</span>
+  add_edge(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">7</span>);
+  add_edge(<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">5</span>);
+  add_edge(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">8</span>);
+  add_edge(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">9</span>);
+  add_edge(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">7</span>);
+  add_edge(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>);
+  add_edge(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">15</span>);
+  add_edge(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>);
+  add_edge(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">8</span>);
+  add_edge(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">9</span>);
+  add_edge(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">11</span>);
+
+  cout &lt;&lt; kruskal() &lt;&lt; endl;
+  <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+</body>
+</html>

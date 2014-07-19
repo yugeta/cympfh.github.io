@@ -27,21 +27,27 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">struct</span> edge {
-  <span class="dt">int</span> from, to, cost;
-  edge(<span class="dt">int</span> f,<span class="dt">int</span> t,<span class="dt">int</span> c) { from=f; to=t; cost=c; }
-};
-
-<span class="dt">bool</span> <span class="kw">operator</span>&lt; (<span class="dt">const</span> edge&amp; left, <span class="dt">const</span> edge&amp; right) {
-  <span class="kw">return</span> left.cost &lt; right.cost;
-}
-<span class="dt">bool</span> <span class="kw">operator</span>&gt; (<span class="dt">const</span> edge&amp; left, <span class="dt">const</span> edge&amp; right) {
-  <span class="kw">return</span> left.cost &gt; right.cost;
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#define N 1000</span>
+priority_queue&lt;edge,vector&lt;edge&gt;,greater&lt;edge&gt;&gt; edges;
+<span class="dt">void</span> add_edge(<span class="dt">int</span> u, <span class="dt">int</span> v, <span class="dt">int</span> c) {
+  edges.push(edge(u, v, c));
 }
 
-ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, <span class="dt">const</span> edge&amp; e) {
-  os&lt;&lt;<span class="st">&quot;(edge &quot;</span>&lt;&lt;e.from&lt;&lt;&#39; &#39;&lt;&lt;e.to&lt;&lt;&#39; &#39;&lt;&lt;e.cost&lt;&lt;&#39;)&#39;;
-  <span class="kw">return</span> os;
+<span class="dt">int</span>
+kruskal() {
+  <span class="dt">int</span> total = <span class="dv">0</span>;
+  <span class="dt">bool</span> used[N];
+  rep(i, N) used[i] = <span class="kw">false</span>;
+
+  <span class="dt">auto</span> es = edges;
+  <span class="kw">while</span> (!es.empty()) {
+    edge e = es.top(); es.pop();
+    <span class="kw">if</span> (used[e.from] &amp;&amp; used[e.to]) <span class="kw">continue</span>;
+    used[e.from] = used[e.to] = <span class="kw">true</span>;
+    <span class="co">// cerr &lt;&lt; e &lt;&lt; endl;</span>
+    total += e.cost;
+  }
+  <span class="kw">return</span> total;
 }</code></pre>
 </body>
 </html>
