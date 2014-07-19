@@ -3,6 +3,14 @@ struct edge {
   edge(int f,int t,int c) { from=f; to=t; cost=c; }
 };
 
+bool operator< (const edge& left, const edge& right) {
+  return left.cost < right.cost;
+}
+bool operator> (const edge& left, const edge& right) {
+  return left.cost > right.cost;
+}
+
+
 struct graph {
   int n;
   vector<edge> *g;
@@ -26,3 +34,4 @@ ostream& operator<<(ostream& os, const graph& g) {
   os << ')';
   return os;
 }
+

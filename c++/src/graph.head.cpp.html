@@ -32,6 +32,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
   edge(<span class="dt">int</span> f,<span class="dt">int</span> t,<span class="dt">int</span> c) { from=f; to=t; cost=c; }
 };
 
+<span class="dt">bool</span> <span class="kw">operator</span>&lt; (<span class="dt">const</span> edge&amp; left, <span class="dt">const</span> edge&amp; right) {
+  <span class="kw">return</span> left.cost &lt; right.cost;
+}
+<span class="dt">bool</span> <span class="kw">operator</span>&gt; (<span class="dt">const</span> edge&amp; left, <span class="dt">const</span> edge&amp; right) {
+  <span class="kw">return</span> left.cost &gt; right.cost;
+}
+
+
 <span class="kw">struct</span> graph {
   <span class="dt">int</span> n;
   vector&lt;edge&gt; *g;

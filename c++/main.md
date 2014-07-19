@@ -15,8 +15,11 @@ ref STL
 
 ### [graph](src/graph.head.cpp.html)
 
-- Shortest path
+- Shortest Path
     - [Dijkstra](src/graph.dij.cpp.html)
     - [Warshall-Floyd](src/graph.wall.cpp.html)
         + [Warshall-Floyd-use](src/graph.wall.use.cpp.html)
 
+- Minimum Spanning Tree
+    - [Prim](src/graph.prim.cpp.html)
+        + [Prim-use](src/graph.prim.use.cpp.html)

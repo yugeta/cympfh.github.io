@@ -44,7 +44,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="ot">#define trace(var) cout&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;#var&lt;&lt;&quot; = &quot;&lt;&lt;var&lt;&lt;endl;</span>
 
 <span class="kw">typedef</span> pair&lt;<span class="dt">int</span>,<span class="dt">int</span>&gt; P;
- 
+
 <span class="dt">int</span> dx[<span class="dv">4</span>] = {-<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>};
 <span class="dt">int</span> dy[<span class="dv">4</span>] = {<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,-<span class="dv">1</span>};
 
@@ -61,8 +61,61 @@ ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt
   <span class="kw">return</span> os;
 }
 
+<span class="kw">struct</span> edge {
+  <span class="dt">int</span> from, to, cost;
+};
+<span class="dt">bool</span> <span class="kw">operator</span>&gt; (<span class="dt">const</span> edge&amp; left, <span class="dt">const</span> edge&amp; right) {
+  <span class="kw">return</span> left.cost &gt; right.cost;
+}
+
+<span class="ot">#define MAXN 1000</span>
+<span class="dt">int</span> N = <span class="dv">7</span>;
+vector&lt;edge&gt; d[MAXN];
+
+<span class="dt">void</span> add_edge(<span class="dt">int</span> u,<span class="dt">int</span> v,<span class="dt">int</span> c) {
+  d[u].push_back((edge){u, v, c});
+  d[v].push_back((edge){v, u, c});
+}
+
+<span class="dt">int</span> prim() {
+  <span class="dt">int</span> begin = <span class="dv">0</span>;
+  <span class="dt">int</span> total = <span class="dv">0</span>;
+
+  <span class="dt">bool</span> *used = (<span class="dt">bool</span>*)calloc(N, <span class="kw">sizeof</span>(<span class="dt">bool</span>));
+  used[begin] = <span class="kw">true</span>;
+
+  priority_queue&lt;edge, vector&lt;edge&gt;, greater&lt;edge&gt;&gt; q;
+  <span class="kw">for</span> (<span class="dt">auto</span> e: d[begin]) q.push(e);
+  <span class="kw">while</span> (!q.empty()) {
+    edge e = q.top(); q.pop();
+    <span class="kw">if</span> (used[e.to]) <span class="kw">continue</span>;
+    <span class="co">// cerr &lt;&lt; &quot;(edge &quot; &lt;&lt; e.from &lt;&lt; &quot; &quot; &lt;&lt; e.to &lt;&lt; &quot; &quot; &lt;&lt; e.cost &lt;&lt; &quot;)&quot; &lt;&lt; endl;</span>
+    total += e.cost;
+    used[e.to] = <span class="kw">true</span>;
+    <span class="kw">for</span> (<span class="dt">auto</span> f: d[e.to]) q.push(f);
+  }
+  <span class="kw">return</span> total;
+}
+
 <span class="dt">int</span> main() {
+
+  <span class="co">// this graph on the page: http://ja.wikipedia.org/wiki/プリム法</span>
+  add_edge(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">7</span>);
+  add_edge(<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">5</span>);
+  add_edge(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">8</span>);
+  add_edge(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">9</span>);
+  add_edge(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">7</span>);
+  add_edge(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>);
+  add_edge(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">15</span>);
+  add_edge(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>);
+  add_edge(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">8</span>);
+  add_edge(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">9</span>);
+  add_edge(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">11</span>);
+
+  cout &lt;&lt; prim() &lt;&lt; endl;
+
   <span class="kw">return</span> <span class="dv">0</span>;
-}</code></pre>
+}
+</code></pre>
 </body>
 </html>

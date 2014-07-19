@@ -3,9 +3,11 @@ using namespace std;
 
 #define rep2(i,n,m) for(int i=(int)(n);i<(int)(m);++i)
 #define rep(i,n) rep2(i,0,n)
+#define iota(i,n,b,s) for(int i=int(b);i<int(b+s*n);i+=s)
 
 #define INF (1e9)
 #define EPS (1e-9)
+#define cons(a,b) (make_pair(a,b))
 #define car(a) (a.first)
 #define cdr(a) (a.second)
 #define cadr(a) (car(cdr(a)))
