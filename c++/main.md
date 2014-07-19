@@ -23,3 +23,4 @@ ref STL
 - Minimum Spanning Tree
     - [Prim](src/graph.prim.cpp.html)
         + [Prim-use](src/graph.prim.use.cpp.html)
+        + [Prim-maze](src/graph.prim.maze.cpp.html)

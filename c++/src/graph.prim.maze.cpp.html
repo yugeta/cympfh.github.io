@@ -50,13 +50,19 @@ ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, <span cla
 }
 
 <span class="ot">#define MAXN 1000</span>
-<span class="dt">int</span> N = <span class="dv">7</span>;
 vector&lt;edge&gt; d[MAXN];
 
 <span class="dt">void</span> add_edge(<span class="dt">int</span> u,<span class="dt">int</span> v,<span class="dt">int</span> c) {
   d[u].push_back((edge){u, v, c});
   d[v].push_back((edge){v, u, c});
 }
+
+<span class="dt">const</span>
+<span class="dt">int</span> W = <span class="dv">20</span>,
+    H = <span class="dv">4</span>,
+    N = W * H;
+
+<span class="dt">bool</span> walk[N][N];
 
 <span class="dt">int</span> prim() {
   <span class="dt">int</span> begin = <span class="dv">0</span>;
@@ -70,9 +76,10 @@ vector&lt;edge&gt; d[MAXN];
   <span class="kw">while</span> (!q.empty()) {
     edge e = q.top(); q.pop();
     <span class="kw">if</span> (used[e.to]) <span class="kw">continue</span>;
-    <span class="co">// cerr &lt;&lt; &quot;(edge &quot; &lt;&lt; e.from &lt;&lt; &quot; &quot; &lt;&lt; e.to &lt;&lt; &quot; &quot; &lt;&lt; e.cost &lt;&lt; &quot;)&quot; &lt;&lt; endl;</span>
     total += e.cost;
     used[e.to] = <span class="kw">true</span>;
+    walk[e.from][e.to] = <span class="kw">true</span>;
+    walk[e.to][e.from] = <span class="kw">true</span>;
     <span class="kw">for</span> (<span class="dt">auto</span> f: d[e.to]) q.push(f);
   }
   <span class="kw">return</span> total;
@@ -80,23 +87,42 @@ vector&lt;edge&gt; d[MAXN];
 
 <span class="dt">int</span> main() {
 
-  <span class="co">// this graph on the page: http://ja.wikipedia.org/wiki/プリム法</span>
-  add_edge(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">7</span>);
-  add_edge(<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">5</span>);
-  add_edge(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">8</span>);
-  add_edge(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">9</span>);
-  add_edge(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">7</span>);
-  add_edge(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>);
-  add_edge(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">15</span>);
-  add_edge(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>);
-  add_edge(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">8</span>);
-  add_edge(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">9</span>);
-  add_edge(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">11</span>);
+  rep(i, N) rep(j, N) walk[i][j] = <span class="kw">false</span>;
 
-  cout &lt;&lt; prim() &lt;&lt; endl;
+  rep(i, H) rep(j, W) {
+    <span class="dt">int</span> idx = i * W + j;
+    <span class="kw">if</span> (i &lt; H<span class="dv">-1</span>) {
+      <span class="dt">int</span> idx2 = idx + W;
+      add_edge(idx, idx2, rand() % <span class="dv">30</span>);
+    }
+    <span class="kw">if</span> (j &lt; W<span class="dv">-1</span>) {
+      <span class="dt">int</span> idx2 = idx + <span class="dv">1</span>;
+      add_edge(idx, idx2, rand() % <span class="dv">30</span>);
+    }
+  }
+
+  prim();
+
+  rep(i, <span class="dv">2</span>*H<span class="dv">+1</span>) {
+    rep(j, <span class="dv">2</span>*W<span class="dv">+1</span>) {
+      <span class="dt">char</span> c = &#39;#&#39;;
+      <span class="kw">if</span> (i % <span class="dv">2</span> &amp;&amp; j % <span class="dv">2</span>) {
+        c = &#39; &#39;;
+      }
+      <span class="kw">else</span> <span class="kw">if</span> (i % <span class="dv">2</span> &amp;&amp; j &gt; <span class="dv">0</span>) {
+        <span class="dt">int</span> idx = (i/<span class="dv">2</span>) * W + ((j<span class="dv">-1</span>)/<span class="dv">2</span>);
+        <span class="kw">if</span> (walk[idx][idx<span class="dv">+1</span>]) c = &#39; &#39;;
+      }
+      <span class="kw">else</span> <span class="kw">if</span> (j % <span class="dv">2</span> &amp;&amp; i &gt; <span class="dv">0</span>) {
+        <span class="dt">int</span> idx = ((i<span class="dv">-1</span>)/<span class="dv">2</span>) * W + (j/<span class="dv">2</span>);
+        <span class="kw">if</span> (walk[idx][idx+W]) c = &#39; &#39;;
+      }
+      cout &lt;&lt; c;
+    }
+    cout &lt;&lt; endl;
+  }
 
   <span class="kw">return</span> <span class="dv">0</span>;
-}
-</code></pre>
+}</code></pre>
 </body>
 </html>
