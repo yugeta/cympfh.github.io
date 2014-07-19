@@ -3,6 +3,7 @@ albums/demba_b
 albums/step
 albums/tsukasa-record
 albums/xxNONOWAxx
+albums/gentoo
 anime/200x
 anime/2010
 anime/2011
