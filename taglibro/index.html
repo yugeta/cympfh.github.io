@@ -11,7 +11,7 @@
 
   /* menu for each articles */
   div.dates {
-    font-size: 1em;
+    font-size: 0.8em;
     width: 30%;
     float: left;
   }
