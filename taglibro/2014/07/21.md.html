@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="年-7月21日-月曜日-19時19分55秒-jst">2014年 7月21日 月曜日 19時19分55秒 JST</h1>
+<p>Gaucheが先日 v.0.9.4 になって、さらっとR7RS-small に準拠したとあった。<br />のでさっそくR7RSがいかなる言語か仕様書を読んで、<br />ただし寝不足なのはこれだけが原因ではなくて昨日深夜にやってたイエスマンというくだらない映画のせいでもあるんだけども、</p>
+<p>R5RSからR7RSへの飛躍として新しく学ぶ必要のあるものは <code>define-record-type</code> , <code>import</code> , <code>include</code> くらいか。</p>
+<p>あと標準出力の <code>write</code>, <code>display</code> が <code>(import (scheme write))</code> しないと使えなくなった。 いちいち面倒だ、これは。 <code>print</code> は、自前で用意はできるけど、 <code>Gauche -r7</code> が用意してくれなくなった。</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(print a)
+  (<span class="kw">display</span> a)
+  (<span class="kw">newline</span>))</code></pre>
+<p>それと、<code>format</code> 手続きが使えなくなった。 どこのモジュールをimportすれば再び使えるだろうか。</p>
+<p>これも大事だ。 <code>debug-print</code>マクロも使えない。 リーダマクロ <code>#?=</code> のあれだ。 これは一大事だ。</p>
+<script src="https://gist.github.com/cympfh/22f4fec601747d9b72b9.js"></script>
+</body>
+</html>
