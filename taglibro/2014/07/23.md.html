@@ -50,15 +50,15 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="co">; =&gt; 2</span></code></pre>
 <p>と使えるようになる．</p>
 <h2 id="callcc-と自己の書き換えを使う解法">call/cc と自己の書き換えを使う解法</h2>
-<pre><code>(define (f)
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(f)
   (let/cc return
           (let/cc br
-                 (set! f (lambda () (br)))
-                 (return 0))
+                 (set! f (<span class="kw">lambda</span> () (br)))
+                 (return <span class="dv">0</span>))
           (let/cc br
-                 (set! f (lambda () (br)))
-                 (return 1))
-          (return 2)
+                 (set! f (<span class="kw">lambda</span> () (br)))
+                 (return <span class="dv">1</span>))
+          (return <span class="dv">2</span>)
           ))</code></pre>
 <p><code>return</code> は、(f)からの大域脱出で、</p>
 <p>1つ目の <code>br</code> は、</p>
