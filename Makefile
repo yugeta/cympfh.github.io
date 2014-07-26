@@ -2,16 +2,10 @@ test: index
 all: index pres
 
 index:
-	### template
 	cp index.html.h index.html
-	### fortune
-	echo "<pre id=fortune>" >> index.html
+	echo "<pre>" >> index.html
 	./fortune >> index.html
 	echo "</pre>" >> index.html
-	### ls
-	echo "<div id=ls>" >> index.html
-	echo `cat ls|grep /|xargs -n1 -i bash -c "echo '<a href={}>{}</a>'"` >> index.html
-	echo "</div>" >> index.html
 
 today:
 	cd taglibro/; make today

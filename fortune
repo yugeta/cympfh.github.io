@@ -1,5 +1,2 @@
 #!/bin/bash
-
-MSG=`fortune -s -n 90`
-OBJ=`echo "elephant-in-snake	eyes" | cut -f $(($RANDOM % 2 + 1))`
-cowsay -f ${OBJ} ${MSG} | sed 's/</\&lt;/g'
+cowsay -f eyes -W 40 "$(cat ls)" | sed 's/</\&lt;/g' | sed 's/[a-z][a-z\+]*\//<a href=&>&<\/a>/g'

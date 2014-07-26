@@ -19,7 +19,7 @@ a {
   position: absolute;
   transition-duration:1s;
   transition-timing-function: ease-out;
-  top: 45%;
+  top: 40%;
   left: 40%;
 }
 #poster > a.aimg > img {
@@ -27,31 +27,16 @@ a {
   cursor: pointer;
 }
 
-#wrap {
+#cont {
   font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
   font-size: 14px;
   line-height: 1.2;
   opacity: 0.0;
-  transition-duration:1s;
-}
-
-#message {
+  transition-duration:1.5s;
+  transition-property: opacity;
   position: absolute;
   left: -100%;
   top: -100%;
-  opacity: 0.0;
-}
-#fortune {
-  position: absolute;
-  left: -100%;
-  top: -100%;
-  opacity: 0.0;
-}
-#ls {
-  position: absolute;
-  left: -100%;
-  top: -100%;
-  opacity: 0.0;
 }
 
 </style>
@@ -64,7 +49,4 @@ a {
   <a class='aimg' href='https://github.com/cympfh'><img alt='github' src='./img/GitHub-Mark-120px-plus.png' height='60px'></a>
 </div>
 
-<div id='wrap'>
-<div id='message'>also visit my gist,
-  <a href=https://gist.github.com/cympfh>https://gist.github.com/cympfh</a>
-</div>
+<div id='cont'>
