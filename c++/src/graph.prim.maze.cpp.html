@@ -57,6 +57,8 @@ vector&lt;edge&gt; d[MAXN];
   d[v].push_back((edge){v, u, c});
 }
 
+<span class="co">// W and H are parameters to determine the size of the maze.</span>
+
 <span class="dt">const</span>
 <span class="dt">int</span> W = <span class="dv">20</span>,
     H = <span class="dv">4</span>,
@@ -123,6 +125,22 @@ vector&lt;edge&gt; d[MAXN];
   }
 
   <span class="kw">return</span> <span class="dv">0</span>;
-}</code></pre>
+}
+
+<span class="co">/* sample output</span>
+<span class="co"> *</span>
+<span class="co"> </span>
+<span class="co">#########################################</span>
+<span class="co"># #       #     #   # # #     # #     # #</span>
+<span class="co"># ### ##### ##### # # # # # ### # ##### #</span>
+<span class="co">#   #   # #   # # #   #   # #   # # # # #</span>
+<span class="co">### ### # # ### # ### # ### # # # # # # #</span>
+<span class="co"># #               # # # #     #         #</span>
+<span class="co"># ### ####### # # # # ### ### ##### #####</span>
+<span class="co">#           # # #   #       # #         #</span>
+<span class="co">#########################################</span>
+
+<span class="co"> *</span>
+<span class="co"> */</span></code></pre>
 </body>
 </html>
