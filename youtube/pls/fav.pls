@@ -205,3 +205,6 @@ jikQmrkvEYc The LASTTRAK - Light between the clouds
 8taiKjt4CZA あんずのうた / Anzu's Song / Anzu no Uta -cruz remix-
 Jp1zvaFiKyY Pollarstars - Tick Tock
 wyU_0kDWWN8 クドわふたーOP『one's future』 Fullバージョン
+SEPzCqiF5EM To Loveる -とらぶる- ダークネス ED ファールプレーにくら
+ymwVqYl67Gk forever we can make it! -Full- 歌詞付き
+6RNrpBK3JXQ もっとTo LOVEる　Loop-the-Loop　(FULLHD)
