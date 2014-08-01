@@ -1,4 +1,3 @@
-test: index
 all: index pres
 
 index:
@@ -15,7 +14,7 @@ today:
 pres: study.pre template.pre memo.pre dots.pre
 
 %.pre: %
-	echo "<h3>$(shell ./capitalize $^)/<h3>" > $^/index.html
+	echo "<h2>$(shell ./capitalize $^)/<h2>" > $^/index.html
 	echo "<pre>" >> $^/index.html
 	ls -1F $^/ | grep -v index | sed 's/\*//g' | xargs -n1 -i bash -c "echo '<a href={}>{}</a>'" >> $^/index.html
 
