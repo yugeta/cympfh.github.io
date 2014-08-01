@@ -1,0 +1,255 @@
+<head>
+<style>
+canvas {
+  border: 1px black solid;
+}
+#L:before {
+  content: "[game log]";
+}
+#L {
+  padding: 5px;
+  background: #f0f0f0;
+  width: 300px;
+  height: 670px;
+  overflow: scroll;
+  position: absolute;
+  left: 470px;
+  top: 10px;
+}
+.rest {
+  position: absolute;
+  left: 0px;
+  top: 700px;
+}
+</style>
+<script>
+function log() {
+  var s='';
+  for (var i=0; i < arguments.length; ++i) {
+    s += arguments[i];
+  }
+  L.innerHTML += '<br>' + s;
+}
+
+var bd,
+    height = 21,
+    width = 15;
+
+var focus = {},
+    state = "waiting"; 
+
+var ctx;
+
+function init() {
+
+  focus.i = -1;
+  focus.j = -1;
+
+  state = "waiting"; 
+
+  bd = [];
+  var i,j;
+  for (i=0;i<height;++i) {
+    bd[i] = [];
+    for (j=0; j<width;++j) bd[i][j] = 0;
+  }
+  bd[height/2|0][width/2|0] = -1;
+
+  C.addEventListener('click', clickEvent);
+  function clickEvent(e) {
+    var rect = e.target.getBoundingClientRect();
+    var x = e.clientX - rect.left,
+        y = e.clientY - rect.top;
+    var i = Math.round((y - 40) / 30),
+        j = Math.round((x - 30) / 28);
+    click(i, j);
+  };
+
+  C.addEventListener('mousemove', overEvent);
+  function overEvent(e) {
+    var rect = e.target.getBoundingClientRect();
+    var x = e.clientX - rect.left,
+        y = e.clientY - rect.top;
+    var i = Math.round((y - 40) / 30),
+        j = Math.round((x - 30) / 28);
+    focus.i = i;
+    focus.j = j;
+    display();
+  }
+
+  // defer
+  display();
+  log('initialized');
+};
+
+function display() {
+  if (!ctx) ctx = C.getContext('2d');
+  ctx.clearRect(0, 0, 450, 670);
+
+  var x, y;
+  for (var i=0; i<height; ++i) {
+    for (var j=0; j<width; ++j) {
+      y = 40 + i * 30;
+      x = 30 + j * 28;
+
+      if (i === focus.i && j === focus.j) {
+        ctx.beginPath();
+        ctx.strokeStyle = 'red';
+        ctx.arc(x, y, 10, 0, 7);
+        ctx.stroke();
+        ctx.strokeStyle = 'black';
+      }
+      
+      ctx.beginPath();
+      if (bd[i][j] === -1) { // ball
+        ctx.arc(x, y, 10, 0, 7);
+        ctx.stroke();
+      } else if (bd[i][j] === 1) {
+        ctx.arc(x, y, 10, 0, 7);
+        ctx.fill();
+      } else { // empty
+        if (i == 0 || i == height-1) {
+          ctx.arc(x, y, 1, 0, 7);
+        } else {
+          ctx.arc(x, y, 3, 0, 7);
+        }
+        ctx.fill();
+      }
+    }
+  }
+}
+
+function put(i, j) {
+  if (i === 0 || i === height-1) throw new Error('cannot put on the edge');
+  if (bd[i][j] !== 0) throw new Error('cannot put:' + i + ', ' + j);
+  bd[i][j] = 1;
+}
+
+function move_ball(i0, j0, i, j) {
+  if (bd[i0][j0] !== -1) {
+    throw new Error('bd of ' + i0 + ', '+ j0 + ' is not ball');
+  }
+  if (bd[i][j] !== 0) {
+    throw new Error('bd of ' + i + ', ' + j + ' is not empty');
+  }
+  if (Math.max(Math.abs(i-i0), Math.abs(j-j0)) <= 1) {
+    throw new Error('cannot move the next');
+  }
+  var di, dj;
+  if (i0 == i) {
+    di = 0;
+    dj = j0 < j ? 1 : -1;
+  } else if (j0 == j) {
+    dj = 0;
+    di = i0 < i ? 1 : -1;
+  } else {
+    if (Math.abs(i - i0) !== Math.abs(j - j0)) {
+      throw new Error('cannot move along the path');
+    }
+    di = i0 < i ? 1 : -1;
+    dj = j0 < j ? 1 : -1;
+  }
+
+  var i1 = i0 + di,
+      j1 = j0 + dj;
+  log(i0,j0,di,dj);
+  log(i1,j1);
+  for (; i1 !== i || j1 !== j; i1 += di, j1 += dj) {
+    if (bd[i1][j1] !== 1) {
+      throw new Error('ball can jump the black');
+    }
+  }
+
+  // update
+  i1 = i0 + di,
+  j1 = j0 + dj;
+  for (; i1 !== i || j1 !== j; i1 += di, j1 += dj) {
+    bd[i1][j1] = 0;
+    log('bd', i1, j1, bd[i1][j1]);
+  }
+  bd[i0][j0] = 0;
+  bd[i][j] = -1;
+
+
+}
+
+function click(i, j) {
+
+  if (state === 'waiting') {
+    if (bd[i][j] == -1) {
+      state = 'move from,' + i + ',' + j;
+    } else if (bd[i][j] == 0) {
+      try {
+        put(i, j);
+      } catch(e) {
+        log(e);
+      }
+    }
+  }
+  else if (state.indexOf('move from') === 0) {
+    var xs = state.split(',');
+    var i0 = xs[1] | 0,
+        j0 = xs[2] | 0;
+    if (bd[i][j] === 0) {
+      try { // move
+        move_ball(i0,j0,i,j);
+        state = 'move from,' + i + ',' + j;
+      } catch(e) {
+        log(e);
+        state = 'waiting';
+      }
+    } else {
+      state = 'waiting';
+    }
+
+  }
+
+  log(state);
+  display();
+}
+
+</script>
+<body onload='init()'>
+<canvas id=C width=450 height=670></canvas>
+<div id=L></div>
+
+<div class="rest">
+<hr>
+
+<h3>Overview</h3>
+Phutballの実装．
+二人ゲームであるがAIを実装してないので、
+敵も味方も自分がシミュレーションしないといけない．
+今どちらのターンであるかも自分で把握しておくこと．
+<br>
+右の [game log] に今の <kbd>state</kbd>、発生したエラー (ルール違反) を表示する．
+<kbd>waiting</kbd> は、
+黒石を置くか、白石を動かすかの選択を待っている状態．
+<br>
+この状態で、空のセルをクリックすると、そこに黒石を置く．
+座標(i,j) にある白石をクリックすると、
+次の <kbd>state</kbd>へ遷移する．
+<br>
+<kbd>move from,<i>i</i>,<i>j</i></kbd>
+は、(i,j)に白石があるはずだから、それをどこへ移動するか問うてる状態．
+ルールに適した空のセル (i<sub>next</sub>, j<sub>next</sub>) をクリックすると、
+適切に黒石の除去と白石の移動がなされた後、
+<kbd>state</kbd>
+は、
+<kbd>move from,<i>i<sub>next</sub></i>,<i>j<sub>next</sub>)</i></kbd>
+へ遷移する．
+つまり、また白石を動かそうとしている状態に移る．
+白石の移動を止めるには、白石自体をクリックする等の明らかなルール違反をすればよい．
+
+<h3>ルール違反</h3>
+ルールに反した動きをなそうとすると、ぜーんぶErrorにした．右の [game log] で分かるはず．
+ルール違反がなされると、問答無用で <kbd>state</kbd> は <kbd>waiting</kbd> に遷移する．
+
+<h3>Rule</h3>
+Read
+Wikipedia page,
+<a href=http://en.wikipedia.org/wiki/Phutball>Phutball</a>.
+
+<h3>TODO</h3>
+<ol><li>Undo,</li><li>AI.</li></ol>
+</div>
