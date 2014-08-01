@@ -25,6 +25,7 @@ set rtp+=~/.vim/vundle.git/
 call vundle#rc()
 
 source ~/Dropbox/cympfh/vim/unite.vim
+" source ~/Dropbox/cympfh/vim/peco.vim
 
 Bundle "rbtnn/rabbit-ui.vim"
 function! s:edit_csv(path)
@@ -95,7 +96,7 @@ map <C-Space> <nop>
 "==================================
 
 " operate tab
-nnoremap <C-t> :tabnew<CR>
+nnoremap <s-t> :tabnew<CR>
 nnoremap <C-p> gT
 nnoremap <C-n> gt
 

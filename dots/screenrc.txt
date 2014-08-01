@@ -17,10 +17,9 @@ defscrollback 30000
 mousetrack off
 
 # colors
-sorendition '= Kw'
-#hardstatus alwayslastline '%= %{= Rk} %2` %{-} [%{= dr}%1`%{-}] %{=u dy}%m/%d %02c:%s%{-} '
+sorendition '=b bw'
 hardstatus ignore
-caption always '%?%F%{=b KW}%:%{= Kw}%?%n. %t'
+caption always '%n. %t'
 
 # resize
 bind < resize -1
