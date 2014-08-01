@@ -20,7 +20,12 @@ iframe {
   border: 0;
   border-left: 1px black solid;
 }
+hr.shorthr {
+  width: 30%;
+  text-align: left;
+  margin-left: 0;
+}
 </style>
 <body onload='main()'>
 <div class='article' id='article'></div>
-<div class='dates'><input type='checkbox' id='check_if_iframe'>view on iframe<br>
+<div class='dates'><input type='checkbox' id='check_if_iframe'>view on iframe<hr class='shorthr'>
