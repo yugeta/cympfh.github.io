@@ -30,7 +30,7 @@
 }
 </style>
 <body>
-<img src='img/nekomezaka.gif' width='200px' style='position:absolute;top:0;right:0' onclick='location.href="./intro.html"'>
+<img src='img/nekomezaka.gif' width='200px' style='position:absolute;top:0;right:0' onclick='location.href="./resume.html"'>
 
 <div id='poster'>
   <img alt='icon' title='枚方&#x0A;cympfh&#x0A;ampeloss' src='./img/identicon.png' height='96px' onclick='show()'>
