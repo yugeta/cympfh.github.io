@@ -1,19 +1,9 @@
 <!-- vim: set ft=html: -->
 <title>cympfh.github.io</title>
+<link rel="stylesheet" type="text/css" href="css/b.css">
 <script src='./js/poster.js'></script>
+
 <style>
-
-body {
-  background-image: url(./img/nekomezaka.gif);
-  background-repeat: no-repeat;
-  background-position: right 0;
-  background-size: 200px;
-  background-color: white;
-}
-a {
-  color: #402020;
-}
-
 #poster {
   opacity: 1.0;
   position: absolute;
@@ -38,9 +28,9 @@ a {
   left: -100%;
   top: -100%;
 }
-
 </style>
 <body>
+<img src='img/nekomezaka.gif' width='200px' style='position:absolute;top:0;right:0'>
 
 <div id='poster'>
   <img alt='icon' title='枚方&#x0A;cympfh&#x0A;ampeloss' src='./img/identicon.png' height='96px' onclick='show()'>
