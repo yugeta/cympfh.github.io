@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="年-8月-7日-木曜日-223038-jst">2014年 8月 7日 木曜日 22:30:38 JST</h1>
+<p>Coffee Script のメソッドチェーンが中置演算子っぽい．</p>
+<p>javascriptの</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">obj</span>.<span class="fu">method</span>(arg)</code></pre>
+<p>をcoffeeでは</p>
+<pre class="sourceCode coffee"><code class="sourceCode coffee">obj<span class="kw">.</span>method arg</code></pre>
+<p>と書くけど、</p>
+<pre class="sourceCode coffee"><code class="sourceCode coffee">obj <span class="kw">.</span>method arg</code></pre>
+<p>と書いても全く同じだけど、中置っぽい． この演算子は常に右結合である．</p>
+<pre class="sourceCode coffee"><code class="sourceCode coffee"><span class="kw">{</span>log<span class="kw">}</span> <span class="kw">=</span> <span class="ot">console</span>
+
+<span class="ot">Object</span><span class="kw">::</span>pair <span class="kw">=</span> <span class="fu">(x) -&gt;</span> <span class="kw">[</span><span class="dt">@valueOf</span><span class="kw">(),</span> x<span class="kw">]</span>
+
+log <span class="dv">0</span> <span class="kw">.</span>pair <span class="dv">1</span> <span class="kw">.</span>pair <span class="dv">2</span> <span class="kw">.</span>pair <span class="dv">3</span>
+<span class="co"># =&gt; [ 0, [ 1, [ 2, 3 ] ] ]</span>
+log <span class="kw">(</span><span class="dv">0</span> <span class="kw">.</span>pair <span class="dv">1</span><span class="kw">)</span> <span class="kw">.</span>pair <span class="dv">2</span> <span class="kw">.</span>pair <span class="dv">3</span>
+<span class="co"># =&gt; [ [ 0, 1 ], [ 2, 3 ] ]</span>
+log <span class="kw">((</span><span class="dv">0</span> <span class="kw">.</span>pair <span class="dv">1</span><span class="kw">)</span> <span class="kw">.</span>pair <span class="dv">2</span><span class="kw">)</span> <span class="kw">.</span>pair <span class="dv">3</span>
+<span class="co"># =&gt; [ [ [ 0, 1 ], 2 ], 3 ]</span></code></pre>
+<p>本来のメソッドチェーンは左結合であるべき</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">Object</span>.<span class="ot">prototype</span>.<span class="fu">pair</span> = <span class="kw">function</span>(x){ <span class="kw">return</span> [<span class="kw">this</span>.<span class="fu">valueOf</span>(), x] };
+<span class="ot">console</span>.<span class="fu">log</span>(<span class="dv">0</span> .<span class="fu">pair</span>(<span class="dv">1</span>) .<span class="fu">pair</span>(<span class="dv">2</span>) .<span class="fu">pair</span>(<span class="dv">3</span>))
+<span class="co">// =&gt; [ [ [ 0, 1 ], 2 ], 3 ]</span></code></pre>
+<p>これを coffee で再現するには、 結局 javascript と全く同様の括弧を補う必要があったけれど、 バージョン 1.7.0 からは、</p>
+<pre class="sourceCode coffee"><code class="sourceCode coffee">x <span class="kw">=</span> <span class="dv">0</span> <span class="kw">.</span>pair <span class="dv">1</span>
+      <span class="kw">.</span>pair <span class="dv">2</span>
+      <span class="kw">.</span>pair <span class="dv">3</span>
+log x
+<span class="co"># =&gt; [ [ [ 0, 1 ], 2 ], 3 ]</span></code></pre>
+<p>などと改行によって左結合にできるようになった．</p>
+<p>それはそうと、</p>
+<pre class="sourceCode coffee"><code class="sourceCode coffee"><span class="ot">Number</span><span class="kw">::</span>cons <span class="kw">=</span> <span class="fu">(ls) -&gt;</span> <span class="kw">[</span><span class="dt">@valueOf</span><span class="kw">()]</span> <span class="kw">.</span>concat ls
+log <span class="dv">1</span> <span class="kw">.</span>cons <span class="kw">[</span><span class="dv">2</span> <span class="kw">..</span> <span class="dv">10</span><span class="kw">]</span> <span class="kw">.</span>concat <span class="kw">(</span> <span class="dv">10</span><span class="kw">*</span>i <span class="kw">for</span> i <span class="kw">in</span> <span class="kw">[</span><span class="dv">2</span><span class="kw">..</span><span class="dv">10</span><span class="kw">])</span>
+<span class="co"># =&gt; [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ]</span></code></pre>
+<p>かっこいい．</p>
+</body>
+</html>
