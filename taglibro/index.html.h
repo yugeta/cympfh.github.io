@@ -59,4 +59,5 @@
 </style>
 <body onload='main()'>
 <div class='article' id='article'></div>
-<div class='dates'><input type='checkbox' id='check_if_iframe'>view on iframe<br>
+<div class='dates'>
+<div style='position:fixed'><input type='checkbox' id='check_if_iframe'>view on iframe</div><br>
