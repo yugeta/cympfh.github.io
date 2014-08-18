@@ -6,21 +6,21 @@ a {
 }
 .page {
   width: 170px;
+  height: 250px;
   border: 3px solid pink;
-  margin: 5;
+  margin: 5px;
   padding: 1px;
   float: left;
   border-radius: 4px;
-  height: 250px;
   overflow: hidden;
 }
 .minititle {
   width: 170px;
-  height: 150px;
+  height: 210px;
   border: 3px solid #a0ff00;
   text-align: center;
-  margin: 5;
-  padding: 1px;
+  margin: 5px;
+  padding: 20px 0;
   float: left;
   border-radius: 4px;
 }

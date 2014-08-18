@@ -57,4 +57,3 @@
 <div class='article' id='article'></div>
 <div class='dates'>
 <div style='position:fixed;background-color: rgba(255,255,255,0.5);'><input type='checkbox' id='check_if_iframe'>view on iframe</div><br>
-<a class=red href=summary/>summary</a>
