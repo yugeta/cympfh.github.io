@@ -6,7 +6,7 @@ a {
 }
 .page {
   width: 170px;
-  height: 250px;
+  height: 240px;
   border: 3px solid pink;
   margin: 5px;
   padding: 1px;
