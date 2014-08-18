@@ -15,30 +15,26 @@
     width: 30%;
     float: left;
   }
-  div.black {
+  a.black {
     width: 25%;
     float: left;
-  }
-  div.red {
-    width: 25%;
-    float: left;
-  }
-  div.black a {
     color: #f0f0f0;
     background-color: #404040;
     padding-top: 5px;
     padding-bottom: 5px;
     border-bottom: 1px #808080 dashed;
   }
-  div.red a {
+  a.red {
+    width: 25%;
+    float: left;
     color: #404040;
     background-color: #f0f0f0;
     padding-top: 5px;
     padding-bottom: 5px;
     border-bottom: 1px #808080 dashed;
   }
-  div.black a:visited { color: #ffd0d0; }
-  div.red a:visited { color: #773030; }
+  a.black:visited { color: #ffd0d0; }
+  a.red:visited { color: #773030; }
 
   /* preview window */
   div#article {
@@ -60,4 +56,5 @@
 <body onload='main()'>
 <div class='article' id='article'></div>
 <div class='dates'>
-<div style='position:fixed'><input type='checkbox' id='check_if_iframe'>view on iframe</div><br>
+<div style='position:fixed;background-color: rgba(255,255,255,0.5);'><input type='checkbox' id='check_if_iframe'>view on iframe</div><br>
+<a class=red href=summary/>summary</a>

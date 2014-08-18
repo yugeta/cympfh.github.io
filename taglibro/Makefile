@@ -3,7 +3,7 @@ do:
 
 index:
 	cp index.html.h index.html
-	ls */*/*.md | runghc script/byYear.hs >> index.html
+	ls */*/*.md | sort -r | coffee script/color.coffee >> index.html
 
 md2html:
 	for i in 201*/*/*.md; do make $${i}.html; done
