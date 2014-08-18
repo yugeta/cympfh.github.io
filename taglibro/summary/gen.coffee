@@ -35,8 +35,8 @@ print = (image, page) ->
   log "</div>"
 
 # main
-log "<b class=minititle>5 recents</b>"
+log "<b class=minititle>#{n} recents</b>"
 print images[i], newest[i] for i in [0 ... n]
 
-log "<b class=minititle>5 randoms</b>"
+log "<b class=minititle>#{m} randoms</b>"
 print images[i+n], random[i] for i in [0 ... m]
