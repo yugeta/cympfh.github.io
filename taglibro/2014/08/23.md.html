@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="年-8月-23日-土曜日-145141-jst">2014年 8月 23日 土曜日 14:51:41 JST</h1>
+<h1 id="node-の-require-とか-fs-はどこ基準の相対パスか">node の require とか fs はどこ基準の相対パスか</h1>
+<p>そろそろはっきりさせよう．</p>
+<p><code>~/test</code> を作業ディレクトリに、 <code>~/test/test.*</code> というスクリプトを実行するとき を考える</p>
+<h2 id="bash-の場合">bash の場合</h2>
+<p>まずは <code>bash</code></p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">~/test</span>$ <span class="kw">cd</span> ~/test
+<span class="kw">~/test</span>$ <span class="kw">mkdir</span> src
+
+<span class="kw">~/test</span>$ <span class="kw">echo</span> <span class="st">&#39;</span>
+<span class="st">echo $PWD</span>
+<span class="st">cat thefile</span>
+<span class="st">&#39;</span> <span class="kw">&gt;</span> src/test.sh
+
+<span class="kw">~/test</span>$ <span class="kw">echo</span> <span class="st">&quot;base&quot;</span> <span class="kw">&gt;</span> thefile
+<span class="kw">~/test</span>$ <span class="kw">echo</span> <span class="st">&quot;base/src&quot;</span> <span class="kw">&gt;</span> src/thefile
+
+<span class="kw">~/test</span>$ <span class="kw">bash</span> src/test.sh
+<span class="kw">/home/cympfh/test</span>
+<span class="kw">base</span></code></pre>
+<p>これはつまり、スクリプトを作業ディレクトリにコピーしてから実行したと考えて同じ挙動である．</p>
+<pre><code>cp src/test.sh .
+bash test.sh</code></pre>
+<p>(これは上と同じ挙動)</p>
+<h2 id="node-nodejs-の場合">node (nodejs) の場合</h2>
+<p><code>src/library.js</code> を読む (require) スクリプト <code>src/test.js</code> を、 作業ディレクトリから 呼ぶ．</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// src/test.js</span>
+fs = <span class="fu">require</span>(<span class="st">&#39;fs&#39;</span>)
+cat = <span class="fu">require</span>(<span class="st">&#39;./library.js&#39;</span>).<span class="fu">cat</span>
+<span class="fu">cat</span>(<span class="st">&#39;thefile&#39;</span>)
+<span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">fs</span>.<span class="fu">readFileSync</span>(<span class="st">&#39;thefile&#39;</span>, <span class="st">&#39;utf8&#39;</span>))
+
+cat_the_file = <span class="fu">require</span>(<span class="st">&#39;./library.js&#39;</span>).<span class="fu">cat_the_file</span>
+<span class="fu">cat_the_file</span>();</code></pre>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// src/library.js</span>
+<span class="ot">exports</span>.<span class="fu">cat</span> = <span class="kw">function</span> (path) {
+  <span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">fs</span>.<span class="fu">readFileSync</span>(path, <span class="st">&#39;utf8&#39;</span>))
+};
+<span class="ot">exports</span>.<span class="fu">cat_the_file</span> = <span class="kw">function</span> () {
+  <span class="kw">var</span> path = <span class="st">&#39;thefile&#39;</span>
+  <span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">fs</span>.<span class="fu">readFileSync</span>(path, <span class="st">&#39;utf8&#39;</span>))
+}</code></pre>
+<h3 id="結果">結果</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">~/test</span>$ <span class="kw">node</span> src/test.js
+<span class="kw">base</span>
+
+<span class="kw">base</span>
+
+<span class="kw">base</span></code></pre>
+<p>つまり、<code>require</code> の中に書いた相対パスだけ、 スクリプト基準に解釈し、 その他のパスは作業ディレクトリを基準にする．</p>
+<h2 id="終わり">終わり</h2>
+<p>基準点の違う相対パス を織り交ぜて書くのが気持ち悪い．</p>
+<p>なにより、 vim のパス補完が一方が利く場合には もう一方がどうしても利かないのが不便である．</p>
+</body>
+</html>
