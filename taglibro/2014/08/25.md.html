@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="年-8月25日-月曜日-12時48分26秒-jst">2014年 8月25日 月曜日 12時48分26秒 JST</h1>
+<p><a href="http://dyama.org/2011/03/google-translate-from-commandline/">コマンドラインから Google 翻訳を利用するスクリプト | dyama's home page</a></p>
+<p>単純に url やらちょこちょこ変わってたので</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">[</span> <span class="ot">$#</span> <span class="ot">-ne</span> 2<span class="kw"> ]</span> <span class="kw">&amp;&amp;</span> <span class="kw">echo</span> <span class="st">&quot;usage: ./% en ja&quot;</span> <span class="kw">&amp;&amp;</span> <span class="kw">exit</span> 1
+
+<span class="kw">read</span> <span class="ot">Q</span>
+<span class="kw">curl</span> -s <span class="st">&quot;https://translate.google.co.jp/translate_a/single?client=t&amp;sl=</span><span class="ot">$1</span><span class="st">&amp;tl=</span><span class="ot">$2</span><span class="st">&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qc&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;dt=at&amp;dt=sw&amp;ie=UTF-8&amp;oe=UTF-8&amp;oc=1&amp;otf=2&amp;ssel=3&amp;tsel=0&amp;q=</span><span class="ot">$Q</span><span class="st">&quot;</span> -H <span class="st">&#39;Accept-Encoding: gzip, deflate&#39;</span> -H <span class="st">&#39;Host: translate.google.co.jp&#39;</span> -H <span class="st">&#39;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0&#39;</span> <span class="kw">|</span> <span class="kw">gunzip</span> -d <span class="kw">|</span> <span class="kw">cut</span> -d<span class="st">&#39;&quot;&#39;</span> -f2</code></pre>
+</body>
+</html>
