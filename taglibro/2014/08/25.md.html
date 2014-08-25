@@ -37,6 +37,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">[</span> <span class="ot">$#</span> <span class="ot">-ne</span> 2<span class="kw"> ]</span> <span class="kw">&amp;&amp;</span> <span class="kw">echo</span> <span class="st">&quot;usage: ./% en ja&quot;</span> <span class="kw">&amp;&amp;</span> <span class="kw">exit</span> 1
 
 <span class="kw">read</span> <span class="ot">Q</span>
-<span class="kw">curl</span> -s <span class="st">&quot;https://translate.google.co.jp/translate_a/single?client=t&amp;sl=</span><span class="ot">$1</span><span class="st">&amp;tl=</span><span class="ot">$2</span><span class="st">&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qc&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;dt=at&amp;dt=sw&amp;ie=UTF-8&amp;oe=UTF-8&amp;oc=1&amp;otf=2&amp;ssel=3&amp;tsel=0&amp;q=</span><span class="ot">$Q</span><span class="st">&quot;</span> -H <span class="st">&#39;Accept-Encoding: gzip, deflate&#39;</span> -H <span class="st">&#39;Host: translate.google.co.jp&#39;</span> -H <span class="st">&#39;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0&#39;</span> <span class="kw">|</span> <span class="kw">gunzip</span> -d <span class="kw">|</span> <span class="kw">cut</span> -d<span class="st">&#39;&quot;&#39;</span> -f2</code></pre>
+<span class="kw">curl</span> -s <span class="st">&quot;https://translate.google.co.jp/translate_a/single?client=t&amp;sl=</span><span class="ot">$1</span><span class="st">&amp;tl=</span><span class="ot">$2</span><span class="st">&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qc&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;dt=at&amp;dt=sw&amp;ie=UTF-8&amp;oe=UTF-8&amp;oc=1&amp;otf=2&amp;ssel=3&amp;tsel=0&amp;q=</span><span class="ot">$Q</span><span class="st">&quot;</span> \
+<span class="kw">-H</span> <span class="st">&#39;Accept-Encoding: gzip, deflate&#39;</span> \
+<span class="kw">-H</span> <span class="st">&#39;Host: translate.google.co.jp&#39;</span> \
+<span class="kw">-H</span> <span class="st">&#39;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0&#39;</span> <span class="kw">|</span> 
+<span class="kw">gunzip</span> -d <span class="kw">|</span> <span class="kw">cut</span> -d<span class="st">&#39;&quot;&#39;</span> -f2</code></pre>
+<p>curl のオプションはちょっとずつ試しながら必要最小限をそこまで目指した訳ではない。</p>
+<p>かえって来たデータのほんの一部だけを <code>cut</code> で削りだしてるけど、例文とか発音とか有用そうなものも含まれてたので、使えるかもしれない。</p>
 </body>
 </html>
