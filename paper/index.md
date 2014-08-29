@@ -2,7 +2,7 @@
 
 ## Structured models for fine-to-coarse sentiment analysis.
 
-:unread :nlp :sentiment :crf  
+:nlp :sentiment :crf  
 [:memo](memo/mcdonald-ryan-fine-to-coarse.html)
 
 ## Fine-Grained Sentiment Analysis with Structural Features
