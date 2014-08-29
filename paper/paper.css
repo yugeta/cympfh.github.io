@@ -1,0 +1,21 @@
+h2 {
+  font-size: 17px;
+  margin: 0;
+  width: 80%;
+  border-bottom: 1px black solid;
+}
+p {
+  width: 80%;
+  margin: 0 0 1em 0;
+  padding-left: 10px;
+}
+p.active {
+  color: #800;
+  font-weight: bold;
+}
+p.inactive {
+  color: #999;
+}
+a {
+  color: black;
+}

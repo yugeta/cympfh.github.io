@@ -1,19 +1,3 @@
-# tags
-
-:audio
-:crf
-:hash
-:information-extraction
-:markov-logic-networks
-:nlp
-:opinion-mining
-:search
-:sentiment
-:text-categorization
-:text-classification
-:twitter
-:hashtag
-
 # Papers
 
 ## Structured models for fine-to-coarse sentiment analysis.
@@ -75,7 +59,7 @@
 
 ## Understanding Users Query Intent with Wikipedia
 
-:nlp :search :text-categorization :text-classification
+:nlp :search :text-classification
 [:url](http://www2009.eprints.org/48/1/p471.pdf)
 [:memo](memo/understanding-user-query-intent.md)
 
@@ -97,7 +81,7 @@
 [:memo](memo/bBit.md)
 
 ## Finding Thoughtful Comments from Social Media
-:opinion-mining :information-extraction :text-categorization :text-classification
+:opinion-mining :information-extraction :text-classification
 [:url](http://t.co/wA1raxxkzW)
 
 ## 顔文字の役割に着目したツイートの文の感情値抽出手法の提案
@@ -174,3 +158,4 @@
 ## 検索エンジンを利用した未登録単語に関する単語間距離の測定
 [:url](http://nlp.dse.ibaraki.ac.jp/~shinnou/papers/gengonenji12-D2-1.pdf)
 [:memo](memo/google-similarity.html)
+
