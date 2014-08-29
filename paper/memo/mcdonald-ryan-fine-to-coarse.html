@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h2 id="structured-models-for-fine-to-coarse-sentiment-analysis.">Structured models for fine-to-coarse sentiment analysis.</h2>
+<p>McDonald, Ryan, et al. &quot;Structured models for fine-to-coarse sentiment analysis.&quot; Annual Meeting-Association For Computational Linguistics. Vol. 45. No. 1. 2007.</p>
+<h1 id="感情分析の為のレベル">感情分析の為のレベル</h1>
+<ul class="incremental">
+<li>document level (Pang et al., 2002)</li>
+<li>sentence level (Pang and Lee, 2004; Mao and Lebanon, 2006)</li>
+<li>phrase level (Turney, 2002; Choi et al., 2005)</li>
+<li>the speaker level in debates (Thomas et al., 2006)</li>
+</ul>
+<h1 id="fine-to-coarse-sentiment-analysis">fine-to-coarse sentiment analysis</h1>
+<p>document全体の感情分析及び それよりも下のレベルでの感情分析を行う</p>
+<p><code>document &gt; paragraph &gt; sentence &gt; phrase &gt; word</code></p>
+<p>それぞれのレベルで独立の感情分析を行なっても大抵上手くいかない それは文脈によって良くも悪くも解釈できる語があるから</p>
+<p><code>My 11 year old daughter has also been using it and it is a lot <b>harder</b> than it looks.</code></p>
+<p>入力 <img src="1.png"> 出力 <img src="2.png"> 出力はラベル <img src="3.png"></p>
+<p>この関係を学習できればよい</p>
+<ul class="incremental">
+<li>CRF</li>
+<li>linear classifiers (Collins, 2002) (本論文で使われた方)</li>
+</ul>
+<p>学習: MIRA学習アルゴリズム</p>
+<p>推定: y<sup>d</sup> に対してビタビアルゴリズム <img height="50px" src=6.png style="display:inline;position:relative;top:10px;"></p>
+<h1 id="実験">実験</h1>
+<p>Amazonのレビューについて重複，不完全な文，スパムを取り除いたものについて実験をした</p>
+<p><code>構成する文について :: Pos / Neg / Neu レビュー全体について :: Pos / Neg</code></p>
+<p>このようにアノテートしたデータによって訓練する (10-fold cross validation)</p>
+<h1 id="result">Result</h1>
+<p><img src="./tab2.png"></p>
+</body>
+</html>
