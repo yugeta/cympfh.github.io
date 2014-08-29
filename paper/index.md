@@ -170,3 +170,7 @@
 
 ## Distant supervision for relation extraction without labeled data
 [:url](http://web.stanford.edu/~jurafsky/mintz.pdf)
+
+## 検索エンジンを利用した未登録単語に関する単語間距離の測定
+[:url](http://nlp.dse.ibaraki.ac.jp/~shinnou/papers/gengonenji12-D2-1.pdf)
+[:memo](memo/google-similarity.html)
