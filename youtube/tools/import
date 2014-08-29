@@ -13,3 +13,4 @@ curl -s https://www.youtube.com/watch?v=${ID} \
         -e 's/&amp;/\&/g' -e 's/&gt;/>/g' -e 's/&lt;/</g' -e "s/&apos;/apos/g"`
 
 echo $ID $TITLE >> $PS
+echo "imported" $ID $TITLE
