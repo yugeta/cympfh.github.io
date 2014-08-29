@@ -1,0 +1,16 @@
+#!/bin/sh
+
+[ $# -ne 1 ] && echo "usage: $0 [url]" && exit 0
+
+URL=$1
+ID=`echo $URL | sed -e 's/^.*\///' -e 's/&.*$//' -e 's/^.*=//'`
+
+kwd='第三者通報が複数寄せられたため削除'
+
+flg=`curl -s https://www.youtube.com/watch?v=${ID} | grep $kwd | wc -l`
+
+if [ $flg = 0 ]; then
+  echo 0 # the movie is living
+else
+  echo 1 # that is removed
+fi
