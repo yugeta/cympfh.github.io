@@ -15,17 +15,22 @@ window.onload = function () {
   D.style.paddingRight = '8px';
   D.style.opacity = '0.8';
 
-  keywords.forEach(function(kw) {
+  var ks = [];
+  keywords.forEach(function(kw, i) {
     var K = document.createElement('div');
     K.innerHTML = ':' + kw;
     K.style.cursor = 'pointer';
-    K.onmouseover = function() { this.style.color = 'red' };
-    K.onmouseout = function() { this.style.color = 'black' };
+    K.className = 'inactive';
     K.addEventListener('click', function(e) {
       search(kw);
+      ks.forEach(function(k) {
+        k.className = 'inactive';
+      });
+      K.className = 'active';
     });
     K.style.fontSize = '12px';
     D.appendChild(K);
+    ks[i] = K;
   });
 
   function search(kw) {
@@ -33,11 +38,18 @@ window.onload = function () {
     ps.forEach(function(p) {
       if (p.innerHTML.indexOf(kw) >= 0) {
         p.className = 'active';
-        console.log(p.innerHTML);
+        itsTitle(p).className = 'active';
       } else {
         p.className = 'inactive';
+        itsTitle(p).className = 'inactive';
       }
     });
+  }
+
+  function itsTitle(node) {
+    var tn = node.tagName;
+    if (tn === 'h2' || tn === 'H2') return node;
+    return itsTitle(node.previousSibling);
   }
 
   document.body.appendChild(D);

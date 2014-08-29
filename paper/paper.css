@@ -4,18 +4,34 @@ h2 {
   width: 80%;
   border-bottom: 1px black solid;
 }
+h2.active {
+  color: #400;
+}
+h2.inactive {
+  color: #a99;
+}
+
 p {
   width: 80%;
   margin: 0 0 1em 0;
   padding-left: 10px;
+  transition-duration: 1s;
 }
 p.active {
-  color: #800;
-  font-weight: bold;
+  color: #700;
 }
 p.inactive {
-  color: #999;
+  color: #edd;
 }
 a {
   color: black;
+}
+
+div.active {
+  color: #f33;
+}
+div.inactive {
+}
+div.inactive:hover{ 
+  color: #900;
 }
