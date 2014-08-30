@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="sun-aug-31-055602-jst-2014">Sun Aug 31 05:56:02 JST 2014</h1>
+<p>自分に起きた問題と、 解決までの道筋を丁寧に文字にすることは大変で、 だから、 いざ自分が困ってぐぐっても有益な情報がなかなかなかなかなか みつからないけど 要点だけ箇条書きで。</p>
+<p><code>debian 7.6</code> をいれた。 apt のレポジトリ、パッケージという言い方がしてあったけど、 Ubuntuなんかと比べると極端に少ない。 本当に自由なソフトウェアに制限してるというのは知ってたけども。</p>
+<p>デフォルトの <code>/etc/apt/source.list</code> を再現してのせる。</p>
+<pre class="conf"><code># 
+
+# deb cdrom:[Debian GNU/Linux 7.6.0 _Wheezy_ - Official amd64 xfce-CD Binary-1 20140712-14:09]/ wheezy main
+
+# deb cdrom:[Debian GNU/Linux 7.6.0 _Wheezy_ - Official amd64 xfce-CD Binary-1 20140712-14:09]/ wheezy main
+
+deb http://ftp.jp.debian.org/debian/ wheezy main
+deb-src http://ftp.jp.debian.org/debian/ wheezy main
+
+deb http://security.debian.org/ wheezy/updates main
+deb-src http://security.debian.org/ wheezy/updates main
+
+# wheezy-updates, previously known as &#39;volatile&#39;
+deb http://ftp.jp.debian.org/debian/ wheezy-updates main
+deb-src http://ftp.jp.debian.org/debian/ wheezy-updates main</code></pre>
+<p>実質３つ。 私は次の2つを追加した。（ふたつ目は追加しないほうがよかった）</p>
+<pre><code># for i3
+deb http://http.debian.net/debian wheezy-backports main
+
+# i want youtube-dl
+deb http://ftp.jp.debian.org/debian sid main </code></pre>
+<p>このふたつ目の <code>sid</code> が 「不安定版ディストリビューション」とも呼ばれるもので、 こっからインストールされるソフトウェアが何が起きるかわかったものじゃなかった。</p>
+<h1 id="日本語入力問題">日本語入力問題</h1>
+<pre><code>ibus ibus-mozc</code></pre>
+<p>この２つだけを、<code>apt-get install</code> すればいいだけである。</p>
+<pre><code>$ ibus-daemon --version
+ibus-daemon - Version 1.4.1</code></pre>
+<p>これは問題ない。解決した今、使ってるんだから。 そしてこれは <code>wheezy</code> パッケージから入れた。</p>
+<p><code>sid</code> パッケージを追加してると、 デフォルトで <code>ibus 1.5.8</code> が現時点で入るようだ。 これはまだ使えない。</p>
+<p>私は結局、<code>sid</code>パッケージと、ついでに<code>wheezy-backports</code>を無効にして、 （つまり <code>/etc/apt/source.list</code> から行を消して <code>apt-get update</code> して） <code>ibus</code> を入れなおすことで解決したけど、</p>
+<pre><code>apt-get install -t wheezy ibus ibus-mozc</code></pre>
+<p>でもよかったかもしれない。 これは試してない。</p>
+</body>
+</html>
