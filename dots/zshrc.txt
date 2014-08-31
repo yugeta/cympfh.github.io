@@ -1,3 +1,5 @@
+## misc
+#
 PROMPT="%F{red}%*%f %~ %F{yellow}%#%f "
 
 setopt histignorealldups sharehistory
@@ -8,13 +10,15 @@ HISTFILE=~/.zsh_history
 autoload -Uz compinit
 compinit
 
-# aliases
+## aliases
+#
 alias ls='ls --color'
 alias l='clear; ls --color'
 alias ll='clear; ls -l --color'
 alias g='git'
 
-# gnu screen title
+## gnu screen title
+#
 case $TERM in
   screen-256color-bce)
     preexec() {
@@ -26,3 +30,10 @@ case $TERM in
     ;;
 esac
 
+## history
+#
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
