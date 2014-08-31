@@ -17,9 +17,12 @@ defscrollback 30000
 mousetrack off
 
 # colors
-sorendition '=b bw'
-hardstatus ignore
-caption always '%n. %t'
+sorendition '=b dd'
+# hardstatus ignore
+# hardstatus alwayslastline '%-w%{=b dw}%n %t%{-}%+w %= %m/%d %c:%s'
+hardstatus alwayslastline '%-w%{=b dw}%n %t%{-}%+w %= %1`'
+backtick 1 30 30 $HOME/bin/backtick
+caption always '%{ub dd}%n %t'
 
 # resize
 bind < resize -1

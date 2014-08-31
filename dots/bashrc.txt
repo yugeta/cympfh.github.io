@@ -10,15 +10,19 @@ else
 fi
 
 export EDITOR=/usr/bin/vim
+export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/.cabal/bin
 export NODE_PATH='/usr/local/lib/node_modules'
 export GOPATH=~/.go
 
 alias l='clear;ls --color'
+alias ls='ls --color'
 alias ll='clear;ls -lh'
 alias screen-x='screen -x'
 alias g='git'
 alias mk='make'
+alias chmox='chmod +x'
+
 alias jp2a='jp2a  --colors --background=light'
 alias calendar='calendar -f ~/Dropbox/calendar -A20'
 alias google='w3m http://www.google.co.jp/'

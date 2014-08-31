@@ -22,6 +22,6 @@ pres: study.pre template.pre memo.pre dots.pre
 
 git:
 	git add --all
-	git commit -a -m "`kasitime`"
+	git commit -a -m "`date`"
 	git push
 
