@@ -1,4 +1,4 @@
-var selected = [];
+var PDF_PATH;
 
 window.onload = function () {
   var _ps = document.getElementsByTagName('p');
@@ -55,36 +55,39 @@ window.onload = function () {
   document.body.appendChild(D);
 
   (function db_link() {
+
+    load_path();
+    if (!PDF_PATH) return;
+
     var as = document.links;
     for (var i=0; i<as.length; ++i) {
       if (as[i].text === ':db') {
-        make_db_link(as[i]);
+        as[i].href =
+          'file://' + PDF_PATH +
+            as[i].href
+              .replace(/^file:/, '')
+              .replace(/^\/*/, '')
+              ;
       }
     }
   }());
 };
 
-var PDF_PATH;
-function load_pref() {
+function load_path() {
 
+  var msg;
   PDF_PATH = localStorage.getItem('pdf_path');
-  if (!PDF_PATH) {
-    PDF_PATH = prompt('the path to pdf files', '/home/cympfh/Dropbox/pdf/');
-    localStorage.setItem('pdf_path', PDF_PATH);
+
+  if (PDF_PATH) {
+    msg = "The path was found: `localStorage.getItem('pdf_path') === '" + PDF_PATH + "')`";
+  } else {
+    msg = "The path not set: `localStorage.setItem('pdf_path', '/to/path/')`";
   }
 
   var V = document.createElement('div');
   V.className = 'notify';
-  V.innerHTML = "The path to pdf files is set. `localStorage.setItem('pdf_path', " + PDF_PATH + "')`";
+  V.innerHTML = msg;
   document.body.appendChild(V);
-
-  var CL = document.createElement('a');
-  CL.className = 'button';
-  CL.innerHTML = 'do localStorage.clear';
-  CL.addEventListener('click', function () {
-    localStorage.clear();
-  });
-  V.appendChild(CL);
 
   V.style.opacity = '1.0';
   var idx = 1;
@@ -93,14 +96,4 @@ function load_pref() {
     ++idx;
   },200);
 
-}
-
-function make_db_link(a) {
-  var href = a.href;
-  href = href.replace(/^file:/, '');
-  href = href.replace(/^\/*/, '')
-  a.addEventListener('click', function() {
-    if (!PDF_PATH) load_pref();
-    a.href = 'file://' + PDF_PATH + href;
-  });
 }
