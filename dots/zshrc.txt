@@ -1,14 +1,15 @@
 ## misc
 #
-PROMPT="%F{red}%*%f %~ %F{yellow}%#%f "
+PROMPT="%F{red}%*%f %~%F{yellow}%#%f "
+SPROMPT="Correct %R to %r? (Yes, No, Abort, Edit) "
 
 setopt histignorealldups sharehistory
 bindkey -v
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
-autoload -Uz compinit
-compinit
+autoload -Uz compinit && compinit
+setopt correct
 
 ## aliases
 #
