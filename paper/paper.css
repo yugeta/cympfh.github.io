@@ -5,10 +5,13 @@ h2 {
   border-bottom: 1px black solid;
 }
 h2.active {
-  color: #400;
+  color: #811;
+}
+h2.active:before {
+  content: "! ";
 }
 h2.inactive {
-  color: #a99;
+  color: #baa;
 }
 
 p {
@@ -18,10 +21,10 @@ p {
   transition-duration: 1s;
 }
 p.active {
-  color: #700;
+  color: #511;
 }
 p.inactive {
-  color: #edd;
+  color: #f0eaea;
 }
 a {
   color: black;
@@ -32,6 +35,6 @@ div.active {
 }
 div.inactive {
 }
-div.inactive:hover{ 
+div.inactive:hover {
   color: #900;
 }
