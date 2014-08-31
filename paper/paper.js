@@ -53,4 +53,54 @@ window.onload = function () {
   }
 
   document.body.appendChild(D);
+
+  (function db_link() {
+    var as = document.links;
+    for (var i=0; i<as.length; ++i) {
+      if (as[i].text === ':db') {
+        as[i].onclick = make_db_link(as[i].href);
+      }
+    }
+  }());
 };
+
+var PDF_PATH;
+function load_pref() {
+
+  PDF_PATH = localStorage.getItem('pdf_path');
+  if (!PDF_PATH) {
+    PDF_PATH = prompt('the path to pdf files', '/home/cympfh/Dropbox/pdf/');
+    localStorage.setItem('pdf_path', PDF_PATH);
+  }
+
+  var V = document.createElement('div');
+  V.className = 'notify';
+  V.innerHTML = "The path to pdf files is set. `localStorage.setItem('pdf_path', " + PDF_PATH + "')`";
+  document.body.appendChild(V);
+
+  var CL = document.createElement('a');
+  CL.className = 'button';
+  CL.innerHTML = 'do localStorage.clear';
+  CL.addEventListener('click', function () {
+    localStorage.clear();
+  });
+  V.appendChild(CL);
+
+  V.style.opacity = '1.0';
+  var idx = 1;
+  setInterval(function() {
+    V.style.opacity = Math.pow(0.99, idx);
+    ++idx;
+  },200);
+
+}
+
+function make_db_link(href) {
+  href = href.replace(/^file:/, '');
+  href = href.replace(/^\/*/, '')
+  return function() {
+    if (!PDF_PATH) load_pref();
+    open(PDF_PATH + href, '_blank');
+    return false;
+  };
+}
