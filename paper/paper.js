@@ -100,7 +100,7 @@ function make_db_link(href) {
   href = href.replace(/^\/*/, '')
   return function() {
     if (!PDF_PATH) load_pref();
-    open(PDF_PATH + href, '_blank');
+    open('file://' + PDF_PATH + href, '_blank');
     return false;
   };
 }
