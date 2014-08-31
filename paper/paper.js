@@ -58,7 +58,7 @@ window.onload = function () {
     var as = document.links;
     for (var i=0; i<as.length; ++i) {
       if (as[i].text === ':db') {
-        as[i].onclick = make_db_link(as[i].href);
+        make_db_link(as[i]);
       }
     }
   }());
@@ -95,12 +95,12 @@ function load_pref() {
 
 }
 
-function make_db_link(href) {
+function make_db_link(a) {
+  var href = a.href;
   href = href.replace(/^file:/, '');
   href = href.replace(/^\/*/, '')
-  return function() {
+  a.addEventListener('click', function() {
     if (!PDF_PATH) load_pref();
-    open('file://' + PDF_PATH + href, '_blank');
-    return false;
-  };
+    a.href = 'file://' + PDF_PATH + href;
+  });
 }
