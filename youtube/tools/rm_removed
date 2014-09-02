@@ -1,11 +1,20 @@
 #!/bin/bash
 
+# remove the id of removed movies
+# from a playlist file
+
 [ $# -ne 1 ] && echo "./% [playlist]" && exit 0
+
+> $1.tmp
 
 while read ln; do
   id=${ln%% *}
   if [ "_$(./tools/removed $id)" = "_1" ]; then
     echo $ln
+    echo "# $ln" >> $1.tmp
+  else
+    echo $ln >> $1.tmp
   fi
 done < $1
 
+mv $1.tmp $1
