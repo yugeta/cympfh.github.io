@@ -1,0 +1,11 @@
+#!/bin/bash
+
+[ $# -ne 1 ] && echo "./% [playlist]" && exit 0
+
+while read ln; do
+  id=${ln%% *}
+  if [ "_$(./tools/removed $id)" = "_1" ]; then
+    echo $ln
+  fi
+done < $1
+

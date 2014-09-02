@@ -1,6 +1,7 @@
-- import
-- list2ids
-- removed
+- `import`
+- `list2ids`
+- `removed`
+- `rm_chk_pls`
 
 ---
 
@@ -74,3 +75,12 @@ This check the movie is removed or not.
 1
 # we cannot watch this forever
 ```
+
+## `rm_chk_pls`
+
+apply the previous `removed` to a playlist file
+
+```bash
+./rm_chk_pls [playlist]
+```
+
