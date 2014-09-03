@@ -7,14 +7,23 @@
 
 > $1.tmp
 
+cx=0
+
 while read ln; do
   id=${ln%% *}
-  if [ "_$(./tools/removed $id)" = "_1" ]; then
+  if [ "_${id}" = "_#" ]
+  then
+    echo $ln >> $1.tmp
+  elif [ "_$(./tools/removed $id)" = "_1" ]
+  then
     echo $ln
     echo "# $ln" >> $1.tmp
+    cx = `expr $cx + 1`
   else
     echo $ln >> $1.tmp
   fi
 done < $1
 
 mv $1.tmp $1
+
+echo "$cx lines are commented out"
