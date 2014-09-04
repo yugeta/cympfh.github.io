@@ -208,3 +208,4 @@ wyU_0kDWWN8 クドわふたーOP『one's future』 Fullバージョン
 SEPzCqiF5EM To Loveる -とらぶる- ダークネス ED ファールプレーにくら
 ymwVqYl67Gk forever we can make it! -Full- 歌詞付き
 6RNrpBK3JXQ もっとTo LOVEる　Loop-the-Loop　(FULLHD)
+7hhXbgFnqB8 魔法少女シンドローム [歌詞]
