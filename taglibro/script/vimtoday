@@ -1,5 +1,8 @@
 #!/bin/bash
 
+dir=`date +"%Y/%m"`
+[ -d $dir ] || mkdir -p $dir
+
 file=`date +"%Y/%m/%d.md"`
 
 if [ -e $file ]; then
