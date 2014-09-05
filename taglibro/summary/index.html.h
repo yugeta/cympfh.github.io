@@ -19,7 +19,7 @@ a {
 }
 .minititle {
   width: 170px;
-  height: 210px;
+  height: 200px;
   border: 3px solid #a0ff00;
   text-align: center;
   margin: 5px;
