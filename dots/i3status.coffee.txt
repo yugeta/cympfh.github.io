@@ -1,0 +1,88 @@
+#!/usr/bin/env coffee
+
+{log} = console
+{exec} = require 'child_process'
+
+red = '#ff0000'
+pink = '#a03030'
+yellow = '#ffff00'
+orange = '#ff9020'
+white = '#ffffff'
+gray = '#404040'
+
+text = (str, col = white) ->
+  { full_text: "#{str}", color: col }
+
+date = ->
+
+  futa = (x) ->
+    if x < 10 then "0#{x}" else x
+
+  yobi = (w) ->
+    ['Sun','Mon','Tue', 'Wed', 'Thu', 'Fri', 'Sat'][w]
+
+  now = new Date()
+  y = do now.getFullYear
+  m = 1 + do now.getMonth
+  d = do now.getDate
+  w = do now.getDay
+  hr  = do now.getHours
+  min = do now.getMinutes
+  sec = do now.getSeconds
+
+  m = futa m
+  d = futa d
+  w = yobi w
+  hr = futa hr
+  min = futa min
+  sec = futa sec
+
+  "#{[y,m,d].join '/'}(#{w}) #{[hr,min,sec].join ':'}"
+
+coretemp = do ->
+  result = null
+  cx = 0
+  return ->
+    return result if result and (++cx % 30)
+    exec 'sensors | grep "Core 0" | cut -d "+" -f 2 | cut -c 1-4', (err, data) ->
+      result = "#{data.split('\n')[0]}°C"
+  result
+
+tenki = do ->
+  result = null
+  icons = {}
+  url = "http://api.openweathermap.org/data/2.5/weather?q=Tokyo,jp"
+
+  return ->
+    return result if result and ((do Math.random) < .99)
+  
+    exec "curl \"#{url}\" > /tmp/w.json", (err) ->
+      return if err
+
+      w = require '/tmp/w.json'
+      result = w.weather[0].main
+
+    result
+
+main = ->
+
+  log '{"version":1}'
+  log '['
+  log '[],'
+
+  rec = (interval) ->
+    ls =
+      []
+        .concat text do tenki, gray
+        .concat text do coretemp, red
+        .concat text do date, white
+
+    log '%j,', ls
+
+    setTimeout rec, interval, interval
+
+  rec 1000
+
+do main
+
+# vim: ft=coffee:
