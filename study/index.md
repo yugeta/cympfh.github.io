@@ -18,6 +18,7 @@
 ## 調査発表
 
 - [word2vec.md](word2vec.html)
+- [automatic-summarization.md](automatic-summarization.html) 自動要約
 
 - [BFS in Haskell](BFSinHaskell.hs.txt)
 - [coding rule](coding_rules.txt)

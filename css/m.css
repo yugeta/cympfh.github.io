@@ -42,3 +42,9 @@ table {
 th {
   border-bottom: 4px #ccc solid;
 }
+
+blockquote {
+  border-left: double black 8px;
+  padding-left: 10px;
+  background-color: #fff8f8;
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="自動要約の導入">自動要約の導入</h1>
+<p>元ネタ: http://www.slideshare.net/hitoshin/automatic-summarization</p>
+<h2 id="目的">目的</h2>
+<p>長い文章から短い文章を生成すること</p>
+<h2 id="要約の種類">要約の種類</h2>
+<ul class="incremental">
+<li>指示的要約: もとの文章を読むべきか(要約結果に加えるかどうか)判断する要約</li>
+<li><p>報知的要約: もとの文章の代替となる文章を作る要約</p></li>
+<li>単一文要約: 一つの文章から一つの文を選んで要約とする</li>
+<li><p>複数文要約: 一つの文章から複数の分を選んで要約とする</p></li>
+<li>抽出的要約: 元の文章の断片を繋ぎ合わせる要約</li>
+<li><p>生成的要約: そうじゃなくて新しく生成する</p></li>
+</ul>
+<h2 id="必要な技術">必要な技術</h2>
+<ul class="incremental">
+<li>文の分割
+<ul class="incremental">
+<li>逐次予測</li>
+</ul></li>
+<li>文の短縮: 修飾節は削除するとか
+<ul class="incremental">
+<li>構文木枝刈</li>
+</ul></li>
+<li>最重要抽出: 要約に相応する文を選択する
+<ul class="incremental">
+<li>最大被覆、ナップサック</li>
+</ul></li>
+<li>順序: 複数文章が入力の時、並び替えがあるといい
+<ul class="incremental">
+<li>セールスマン</li>
+</ul></li>
+</ul>
+<h2 id="評価">評価</h2>
+<ul class="incremental">
+<li>要約の質</li>
+<li>文章の質: 文の自然さ</li>
+</ul>
+<h3 id="rouge">ROUGE</h3>
+<p>元と要約文について、N-gram 類似度をみる</p>
+<h3 id="他">他</h3>
+<ol class="incremental" style="list-style-type: decimal">
+<li>文法の適切さ</li>
+<li>内容の繰り返しがないこと</li>
+<li>先行しない指示語がないこと</li>
+<li>無関係な情報がないこと</li>
+<li>接続関係が正しい</li>
+</ol>
+<p>今のところ、評価を自動で行うような手法はとくにない</p>
+<h2 id="文選択">文選択</h2>
+<h3 id="ナップサック">ナップサック</h3>
+<p>単一文章に適用できる． 文章の長さを限定して、スコアを最大化する</p>
+<h3 id="最大被覆">最大被覆</h3>
+<p>複数文章に適用する． できるだけ多くの単語を文章に含ませたい</p>
+<p>話題を漏れ無くカバーする． 重複もできるだけ減らしたい．</p>
+<h3 id="施設配置">施設配置</h3>
+<p>大橋さん解説だと、</p>
+<p>N個、文を持ってくる． ここからできるだけ少ないm個選んで、全ての話題を網羅したい． 話題の含意関係（交差関係？）で枝を張って、施設配置する．</p>
+<h2 id="並び替え">並び替え</h2>
+<h3 id="セールスマン">セールスマン</h3>
+<p>文のつながりにコストを考えてそれを最小化する． コストは学習する？</p>
+<h1 id="subtree-extractive-summarization-via-submodular">Subtree extractive summarization via submodular</h1>
+<p><a href="http://www.newdesign.aclweb.org/anthology-new/P/P13/P13-1101.pdf">Subtree Extractive Summarization via Submodular Maximization - P13-1101.pdf</a></p>
+<h2 id="劣モジュラーとは">劣モジュラーとは</h2>
+<p>次を満たす <code>f</code></p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">f <span class="dt">A</span> <span class="fu">+</span> f <span class="dt">B</span> <span class="fu">&gt;=</span> f (<span class="dt">A</span> and <span class="dt">B</span>) <span class="fu">+</span> f (<span class="dt">A</span> or <span class="dt">B</span>)</code></pre>
+<p>貪欲法の性能保証に使われる。 今回は文選択のその貪欲に使われている。</p>
+<h2 id="手法">手法</h2>
+<p>JUMAN のような、dependency parser で出来た構文木の、 根から始る全ての部分木は一つの文を表している。</p>
+<p>つまり、普通、要約において文の選択といえば、 選択された文は元の文章における文と変わっていないけど、 今回は構文の正しさは保証されたレベルで、文をさらに小さくする。</p>
+<p>部分木の集合から、適当な評価関数を用いて選択してく。 元々同じ文(木)からできた部分木が重複して選ばれた場合、 自然にマージする。</p>
+<h2 id="評価関数">評価関数</h2>
+<ul class="incremental">
+<li>クエリとの関連性</li>
+<li>長さ (短すぎては困る)</li>
+</ul>
+<p>の線形結合</p>
+<h1 id="baysean-with-background-knowledge">Baysean with background knowledge</h1>
+<h2 id="関連">関連</h2>
+<p>誰でも知ってる知識の要約なんていらない。 新規性のある文だけを、スコア <code>surprise</code> を附けて抽出する。</p>
+<p>そのために、誰でも知ってる知識であるところの 「仮説の事前分布」 を構築する。 それは、単語の出現分布であるとする。</p>
+<p>ただし、どんな単語についてでも考えてたらしょうがないので、 <code>topic word</code> を考える</p>
+<h2 id="topic-word">topic word</h2>
+<p>帰無仮説</p>
+<blockquote>
+<p>H<sub>0</sub>: word <code>t</code> が、<code>I</code> でも <code>B</code> でも同じ確率で出現する</p>
+</blockquote>
+<p>ここで</p>
+<ul class="incremental">
+<li><code>I</code> とは Input corpus (新しい文章)</li>
+<li><code>B</code> とは Background corpus (事前知識の文章)</li>
+</ul>
+<p>この仮説が棄却されたら、word <code>t</code> は <code>topic word</code> だとする。</p>
+<h3 id="単語出現の分布をディレクレ分布だとする">単語出現の分布をディレクレ分布だとする</h3>
+<p>語彙 <code>w1 .. wV</code> を考えるとき、 それぞれの出現回数 <code>a1 .. aV</code> の出現回数は</p>
+<p><code>Dir(a1 .. aV)</code></p>
+<p>に従うとする。</p>
+<p>これが事前知識だとすると、 <code>c1 .. cV</code> が新しい知識として取り込むとき</p>
+<p><code>Dir(a1 + c1 .. aV + cV)</code></p>
+<p>として簡単に取り込めるので都合が良い。</p>
+<p>それぞれを、事前確率分布、事後確率分布だと考える。</p>
+<h2 id="surprise">surprise</h2>
+<p><code>surprise</code> は 事前、事後の確率分布の距離を見ればよい。 確率分布の距離は普通 KL-divergence とかを使うだろう。</p>
+<p>さて実際には、 一文に対して、含まれる単語ずつ、単語の<code>surprise</code> を計算する。 文の<code>surprise</code> を、単語の <code>surprise</code> の平均とする</p>
+<p>んで、文を選択していく</p>
+</body>
+</html>
