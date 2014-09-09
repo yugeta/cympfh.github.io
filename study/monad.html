@@ -53,7 +53,7 @@ join <span class="fu">=</span> concat</code></pre>
 <ul class="incremental">
 <li>(M-1) <code>map id == id</code></li>
 <li>(M-2) <code>map (f . g)     == map f . map g</code></li>
-<li>(M-3) <code>map f . unit    == unit f</code></li>
+<li>(M-3) <code>map f . unit    == unit . f</code></li>
 <li>(M-4) <code>map f . join    == join . map (map f)</code></li>
 <li>(M-5) <code>join . unit     == id</code></li>
 <li>(M-6) <code>join . map unit == id</code></li>

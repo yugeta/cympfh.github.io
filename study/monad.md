@@ -38,7 +38,7 @@ join :: M (M a) -> M a
 
 - (M-1) `map id == id`
 - (M-2) `map (f . g)     == map f . map g`
-- (M-3) `map f . unit    == unit f`
+- (M-3) `map f . unit    == unit . f`
 - (M-4) `map f . join    == join . map (map f)`
 - (M-5) `join . unit     == id`
 - (M-6) `join . map unit == id`
