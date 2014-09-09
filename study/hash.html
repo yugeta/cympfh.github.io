@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="再近傍探索">再近傍探索</h1>
+<h2 id="title">title</h2>
+<p>Near-Optimal Hashing Algorithms for Approximate Nearest Neighbor in High Dimensions</p>
+<p>内容: LSH (Locality Sensitive Hashing) を用いた、最近傍探索の解法</p>
+<p>:url http://people.csail.mit.edu/indyk/p117-andoni.pdf</p>
+<h2 id="最近傍探索に対する一つの解法kd木">最近傍探索に対する一つの解法、kd木</h2>
+<p>空間を(2)分割してって木構造にするやつ。 空間軸に垂直なので分割してる。 空間上に与えられた点の数だけ、空間を分割する。 分枝限定法っていう枝刈ができる。 <code>log(N)</code> でできるんだって。すごいね。</p>
+<ul class="incremental">
+<li><p>Cons: 空間の次元が大きいとやばい。</p></li>
+<li><p>Idea: ハッシュは次元を自由に潰せる。</p></li>
+</ul>
+<h2 id="lshの提案">LSHの提案</h2>
+<p>ハッシュ関数の衝突する確率を利用する。</p>
+<p>何か期待する距離 <code>||</code> に対して、</p>
+<ul class="incremental">
+<li><code>|x - y| &lt; R</code> =&gt; 高い確率で、x,yのハッシュは衝突</li>
+<li><code>|x - y| &gt; c * R</code> =&gt; 低い確率で、衝突</li>
+</ul>
+<p>という性質を locality sensitive と呼ぶ。 そしてこの性質を持つ hash を LSH という。</p>
+<p>複数のハッシュから選んで並べて出力すれば、 「合体ハッシュ関数」は容易に作れる。 複数使うことで衝突の確率をの差を顕著にすることも、 また容易である。</p>
+<p>合体ハッシュ関数を<code>L</code>個、用意して、どれか一つでも衝突すれば、 近傍であると考える。</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">L</span> <span class="fu">=</span> n <span class="fu">^</span> rho
+  <span class="kw">where</span>
+    rho <span class="fu">=</span> log <span class="dt">P</span> <span class="fu">/</span> log <span class="dt">Q</span></code></pre>
+<p>とすると、失敗確率が近似で、計算量もsublinearになってよい。</p>
+<h2 id="lsh-の例">LSH の例。</h2>
+<h3 id="データがバイナリ列のとき正射影-d次元から1次元を見る">データがバイナリ列のとき、正射影 (d次元から1次元を見る)</h3>
+<p>d次元中、ハミング距離 <code>h</code> の二つが衝突する確率は <code>(d - h) / d</code></p>
+<h3 id="l1-距離">L1 距離</h3>
+<p>ランダムに直線を選択し、その直線を区間に分割する。 クエリとなる点をその直線に下ろした垂線の足がどの区間にあるかをハッシュとする。</p>
+<h3 id="min-hash">min-hash</h3>
+<p>一つのクエリであるところの点が集合のとき。</p>
+<p>集合の類似度として Jaccard係数がある</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sim u v <span class="fu">=</span> (size u and v) <span class="fu">/</span> (size u or v)</code></pre>
+<p>MinHashのアイディアは非常に単純です． はじめに，適当なハッシュ関数 <code>h</code>を用意します． （ハッシュ関数の値域は十分に大きく，衝突しないとします）． 次に <code>v = {a1 .. aN}</code> 中の各値をハッシュ関数を利用し， ハッシュ値 <code>{h a1 .. h aN}</code> を求めます。 最後に，これらのハッシュ値の最小値 <code>min {h a1 .. h aN}</code> を記録します。</p>
+<p>さて，ランダムにハッシュ関数をとってきた時，二つの集合v, wのハッシュ関数による最小値が一致する確率 はどのようになるでしょうか．これが実はJaccard係数に一致します．</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sim v w <span class="fu">=</span> <span class="dt">Pr</span> min {h a for a <span class="ot">&lt;-</span> v} <span class="fu">=</span> min {h b for b <span class="ot">&lt;-</span> w}</code></pre>
+<h3 id="超平面">超平面</h3>
+<p>原点を通る超平面をランダムに選ぶ。 クエリとなる点がその平面からどちら側にあるか。</p>
+<h3 id="ユークリッド距離">ユークリッド距離</h3>
+<p>空間を適当な区間に分割して、どれにあるか。 グリッドよりは、例えば超球に分割するのが、計算上も都合がよい。</p>
+<h1 id="コサイン類似度の話">コサイン類似度の話</h1>
+<p>n名詞がそれぞれk次元ベクトルで表現されてるとき、 2名詞の類似度の計算はコサイン類似度を使えば O(k) かかって、 n名詞全ての2つの類似度の計算は O(n<sup>2</sup>k) かかる。</p>
+<p>乱択を使ってそれを <code>O(nk)</code> にする話。</p>
+<h2 id="lsh関数">LSH関数</h2>
+<p>2名詞 <code>r</code>, <code>u</code> についてのハッシュ関数 <code>h</code> を次のように定める。</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">h u v <span class="fu">=</span> <span class="kw">if</span> inner<span class="fu">-</span>dot u v <span class="fu">&gt;=</span> <span class="dv">0</span> <span class="kw">then</span> <span class="dv">1</span> <span class="kw">else</span> <span class="dv">0</span></code></pre>
+<p>衝突する確率 <code>Pr-coll</code> は、その偏角の絶対値が 90度 以下だか未満だかになる確率だから</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Pr</span><span class="fu">-</span>coll u v <span class="fu">=</span> <span class="dv">1</span> <span class="fu">-</span> (arg u v) <span class="fu">/</span> pi</code></pre>
+<p>逆に、この確率を使って、コサイン類似度が次のように表現できる</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">cos (arg u v) <span class="fu">=</span> cos (pi <span class="fu">*</span> (<span class="dv">1</span> <span class="fu">-</span> <span class="dt">Pr</span><span class="fu">-</span>coll)) <span class="co">-- (*)</span></code></pre>
+<h2 id="アルゴリズム">アルゴリズム</h2>
+<p>n単語の集合を<code>N</code> とする。</p>
+<ul class="incremental">
+<li><code>u &lt;- N</code></li>
+<li><code>r = [n | n &lt;- N, random]; length r == d</code></li>
+</ul>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">bits u <span class="fu">=</span> map (h u) r</code></pre>
+<p>これを、<code>u</code> を表現するビット列だとする。 n単語すべてについてこれをやる。 近い物を見ればいい。 近いもの、は、ビット列だからハミング距離を見るのがいい。</p>
+<p>ハミング距離が <code>c</code> となる確率は、 (d-c) 回衝突して、c 回衝突する確率である。</p>
+<p>ここで、ハミング距離が近いことが、 コサイン類似度も高くなることを意味する、と、 <code>(*)</code> によって示せる。</p>
+<h2 id="ハミング距離の計算">ハミング距離の計算</h2>
+<p>ハミング距離を見るだけでも O(n<sup>2</sup>d) かかるんだけど、 なんか乱択する。 ほんとかよ。</p>
+</body>
+</html>

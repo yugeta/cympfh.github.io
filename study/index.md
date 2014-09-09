@@ -4,6 +4,7 @@
 
 - [tweet に出現する感情表現](emotion-seq-in-a-tweet.html)
 - [tw-hashtag-sim.md](tw-hashtag-sim.html) ツイートのハッシュタグ毎の類似度
+- [卒業研究のメモ](sotu.txt)
 
 ## 講義
 
@@ -18,8 +19,9 @@
 ## 調査発表
 
 - [word2vec.md](word2vec.html)
-- [automatic-summarization.md](automatic-summarization.html) 自動要約
-
+- [automatic-summarization.md](automatic-summarization.html) 自動要約: 劣モジュラー、新規性(surprise)
+- [hash.md](hash.html)
+- [language-model.md](language-model.html) 言語モデルとは何か
 - [BFS in Haskell](BFSinHaskell.hs.txt)
 - [coding rule](coding_rules.txt)
 - [monad](monad.html)
@@ -27,13 +29,11 @@
 - [NLP のメモ](NLPmemo.txt)
 - [数](numbers.txt)
 - [並列処理のHaskell実装](parallel_in_hs.txt)
-
 - [量子計算1](quantum1.pdf)
 - [量子計算2](quantum2.pdf)
 - [量子計算3](quantum3.pdf)
 - [量子計算 in Scheme](quantum-comp.scm)
 - [量子計算メモ](quantum-memo.txt)
-
 - [レジスタ予約](register_alloc.txt)
 - [JavaScriptにおける並列スコープ](scope_js.html)
 - [SKI計算](SKI.txt)

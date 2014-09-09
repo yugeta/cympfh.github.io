@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="言語モデルとはなにか">言語モデルとはなにか。</h1>
+<p>人間が用いる言葉らしさを確率とするモデル。 そのために世の中にあるコーパスを用いる</p>
+<ul class="incremental">
+<li>日本語書き言葉均衡コーパス</li>
+<li>/roo にある</li>
+</ul>
+<h2 id="目的">目的</h2>
+<ul class="incremental">
+<li>基本
+<ul class="incremental">
+<li>機械翻訳: 翻訳結果が自然か？</li>
+<li>かな漢字変換: 変換候補、送り仮名</li>
+</ul></li>
+<li>変化球
+<ul class="incremental">
+<li>翻字検出:
+<ul class="incremental">
+<li>マイケルとMichaelが同じである！と検出する.</li>
+<li>(マイ, Mi), (ケル, chael) みたいなペアを沢山持っておいて、コーパスから作る</li>
+</ul></li>
+<li>Topic tracking</li>
+<li>オンラインコミュニティの退会予測</li>
+</ul></li>
+</ul>
+<h1 id="シャノンゲーム">シャノンゲーム</h1>
+<blockquote>
+<p>I want to go to <code>w</code>.</p>
+</blockquote>
+<p><code>w</code> には何が入るか？</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Pr</span>(<span class="ot">`w`</span> <span class="fu">|</span> <span class="dt">I</span> want to go to)</code></pre>
+<p>を計算しろと同じ。</p>
+<h2 id="n-gram">N-gram</h2>
+<ul class="incremental">
+<li>一つの回答がこれ</li>
+<li>(n-1)の語、品詞、クラスを文脈に次を予測する。</li>
+<li>文頭(BOS)を考慮するパターンとしないパターンがある。</li>
+</ul>
+<h2 id="smoothing">smoothing</h2>
+<p>ゼロ頻度問題の解決法</p>
+<ul class="incremental">
+<li>加算smoothing
+<ul class="incremental">
+<li>使えない</li>
+</ul></li>
+<li>低次 n-gram
+<ul class="incremental">
+<li>補完型
+<ul class="incremental">
+<li>常に低次を考慮する</li>
+<li>Interpolated Kneser-ney smoothing</li>
+</ul></li>
+<li>back-off型
+<ul class="incremental">
+<li>高次が存在しない時にだけ、低次を考慮する</li>
+<li>Good Turing</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="good-turing">Good Turing</h3>
+<p>頻度の頻度を用いる。</p>
+<p>頻度 c が例えば次のようにあるとき</p>
+<ul class="incremental">
+<li>tuna = 2</li>
+<li>salmon = 3</li>
+<li>kohada = 1</li>
+<li>egg = 1</li>
+<li>squid = 1</li>
+</ul>
+<p>頻度の頻度 N_c は次のようになる</p>
+<ul class="incremental">
+<li>N_1 = 3</li>
+<li>N_2 = 1</li>
+<li>N_3 = 1</li>
+</ul>
+<p>頻度 c を次のように discount</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">c<span class="fu">*</span> <span class="fu">=</span> (c <span class="fu">+</span> <span class="dv">1</span>) <span class="fu">*</span> <span class="dt">N_</span>{c<span class="fu">+</span><span class="dv">1</span>} <span class="fu">/</span> <span class="dt">N_c</span></code></pre>
+<p><code>c = 0</code> についても、<code>c* &gt; 0</code> (???)</p>
+<h2 id="言語モデルの評価">言語モデルの評価</h2>
+<p><em>Perplexity</em>, 情報理論的距離。低いほどモデルに近い。</p>
+<p>Document <code>D = N words</code></p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">PP</span>(<span class="dt">D</span>) <span class="fu">=</span> <span class="dt">P</span>(<span class="dt">D</span>) <span class="fu">^</span> (<span class="dv">1</span> <span class="fu">/</span> <span class="dt">N</span>) <span class="fu">=</span> prod <span class="dt">P</span>(w)  <span class="fu">^</span> (<span class="dv">1</span> <span class="fu">/</span> <span class="dt">N</span>)</code></pre>
+<p><em>クロスエントロピー</em> とは</p>
+<p>両辺対数のマイナスとって</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">H</span>(<span class="dt">D</span>) <span class="fu">=</span> <span class="fu">-</span> <span class="dv">1</span> <span class="fu">/</span> <span class="dt">N</span> <span class="fu">*</span> log <span class="dt">P</span>(<span class="dt">D</span>) <span class="fu">=</span> <span class="fu">-</span> <span class="dv">1</span> <span class="fu">/</span> <span class="dt">N</span> <span class="fu">*</span> sum (log <span class="dt">P</span>(w))</code></pre>
+<h2 id="応用">応用</h2>
+<ul class="incremental">
+<li>ニューラル言語モデル (Bengio 2003): 分散表現</li>
+<li>大規模データ (Brants EMNLP 2007): stupid back off (大規模の力)</li>
+</ul>
+<h2 id="toolkit">toolkit</h2>
+<ul class="incremental">
+<li>SRI language model toolkit: Knesey-ney が使える</li>
+</ul>
+</body>
+</html>
