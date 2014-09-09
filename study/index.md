@@ -18,7 +18,7 @@
 
 - [BFS in Haskell](BFSinHaskell.hs.txt)
 - [coding rule](coding_rules.txt)
-- [monad](monad.txt)
+- [monad](monad.html)
 - [Neural network](neuralNetwork.txt)
 - [NLP のメモ](NLPmemo.txt)
 - [数](numbers.txt)

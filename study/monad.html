@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="モナド">モナド</h1>
+<h2 id="参考文献">参考文献</h2>
+<ol class="incremental" style="list-style-type: decimal">
+<li>King, David J., and Philip Wadler. &quot;Combining monads.&quot; Functional Programming, Glasgow 1992. Springer London, 1993. 134-143. <a href="homepages.inf.ed.ac.uk/wadler/papers/monadscomb/monadscomb.ps">Combining Monads</a></li>
+</ol>
+<h2 id="monad">Monad</h2>
+<p>リストモナドを想像して、それの一般形がモナドだと思うことにする</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">map<span class="ot"> ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [b]
+map f [x, <span class="fu">...</span>] <span class="fu">=</span> [f x, <span class="fu">...</span>]
+
+<span class="ot">unit ::</span> a <span class="ot">-&gt;</span> [a]
+unit x <span class="fu">=</span> [x]
+
+<span class="ot">join ::</span> [[a]] <span class="ot">-&gt;</span> [a]
+join <span class="fu">=</span> concat</code></pre>
+<p><code>unit</code>は<code>return</code>という名前であることもある． 数学的には単位元になってるからunit. Haskellとかプログラミング言語では一旦外の世界に返すものだから<code>return</code>.</p>
+<p>これの一般、とは <code>[a]</code> を <code>M a</code> という型で書いたものに過ぎない</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">map<span class="ot"> ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> <span class="dt">M</span> a <span class="ot">-&gt;</span> <span class="dt">M</span> b
+<span class="ot">unit ::</span> a <span class="ot">-&gt;</span> <span class="dt">M</span> a
+<span class="ot">join ::</span> <span class="dt">M</span> (<span class="dt">M</span> a) <span class="ot">-&gt;</span> <span class="dt">M</span> a</code></pre>
+<p>リストモナドなら 次の7つ が成立することはよく見れば分かる． 逆に、次の7つが成り立つことがモナドであることの条件としよう</p>
+<p>ただしドットは関数結合</p>
+<ul class="incremental">
+<li>(M-1) <code>map id == id</code></li>
+<li>(M-2) <code>map (f . g)     == map f . map g</code></li>
+<li>(M-3) <code>map f . unit    == unit f</code></li>
+<li>(M-4) <code>map f . join    == join . map (map f)</code></li>
+<li>(M-5) <code>join . unit     == id</code></li>
+<li>(M-6) <code>join . map unit == id</code></li>
+<li>(M-7) <code>join . map join == join . join</code></li>
+</ul>
+<p><code>M-1</code>, <code>M-2</code> は <code>map</code> が <code>functor</code> であることを言う <code>M-3</code> は <code>unit</code> が、<code>M-4</code> では <code>join</code> が自然変換であることを言う <code>M-5</code>, <code>M-6</code> は よくわからない． 別に <code>unit</code> や <code>(map unit)</code> が <code>join</code> の逆関数というわけではない まあ、<code>join</code>に右からかけると逆数になってるものが2つあるということ <code>M-7</code> は <code>join</code> の結合法則</p>
+<h2 id="comprehension">Comprehension</h2>
+<p>さて、リストの内包表記があるように一般のモナドについて内包というものを考えられる． Wadler の表記を借りる. (mc-1)にだけ目を瞑ればHaskellのリスト内包表記と実際同じである.</p>
+<p>Lambda は空を表すシンボル. 次の3つを定義する</p>
+<ul class="incremental">
+<li>(mc-1) <code>[t | Lambda] = unit t</code></li>
+<li>(mc-2) <code>[t | x &lt;- u] = map (\x -&gt; t) u</code></li>
+<li>(mc-3) <code>[t | p1 .. pn, q]   = join [[t | q] | p1 .. pn]</code></li>
+</ul>
+<p>具体例としてやはりリストモナドを用いれば</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">[ f x <span class="fu">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]] <span class="fu">=</span> map (\x <span class="ot">-&gt;</span> f x) [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] <span class="fu">=</span> [f <span class="dv">1</span>, f <span class="dv">2</span>, f <span class="dv">3</span>]
+
+[(x,y)<span class="fu">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>], y <span class="ot">&lt;-</span> [<span class="dv">3</span>,<span class="dv">4</span>]] <span class="fu">=</span> join [[(x,y) <span class="fu">|</span> y <span class="ot">&lt;-</span> [<span class="dv">3</span>,<span class="dv">4</span>]] <span class="fu">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>]]
+                                <span class="fu">=</span> join [ map (\y <span class="ot">-&gt;</span> (x,y)) [<span class="dv">3</span>,<span class="dv">4</span>] <span class="fu">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>]]
+                                <span class="fu">=</span> join (map (\x <span class="ot">-&gt;</span> map (\y <span class="ot">-&gt;</span> (x,y)) [<span class="dv">3</span>,<span class="dv">4</span>]) [<span class="dv">1</span>,<span class="dv">2</span>])
+                                <span class="fu">=</span> <span class="fu">...</span>
+                                <span class="fu">=</span> [(<span class="dv">1</span>,<span class="dv">3</span>), (<span class="dv">1</span>,<span class="dv">4</span>), (<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">2</span>,<span class="dv">4</span>)]</code></pre>
+<p><code>(mc-3)</code> の <code>p</code>, <code>q</code> の展開順序によって次のような記述が可能なわけである</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">[x <span class="fu">|</span> xs <span class="ot">&lt;-</span> ls, x <span class="ot">&lt;-</span> xs]
+
+<span class="ot">=&gt;</span> join [[x <span class="fu">|</span> x <span class="ot">&lt;-</span> xs] <span class="fu">|</span> xs <span class="ot">&lt;-</span> ls] <span class="co">-- (mc-3)</span>
+<span class="ot">=&gt;</span> join [(map (\x <span class="ot">-&gt;</span> x) xs) <span class="fu">|</span> xs <span class="ot">&lt;-</span> ls] <span class="co">-- (mc-2)</span>
+<span class="ot">=&gt;</span> join [xs <span class="fu">|</span> xs <span class="ot">&lt;-</span> ls] <span class="co">-- 評価</span>
+<span class="ot">=&gt;</span> join (map (\xs <span class="ot">-&gt;</span> xs) ls) <span class="co">-- (mc-2)</span>
+<span class="ot">=&gt;</span> join ls <span class="co">-- 評価</span></code></pre>
+<p><code>ls</code> として <code>[[1,2], [3,4]]</code> を与えれば</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">join [[<span class="dv">1</span>,<span class="dv">2</span>], [<span class="dv">3</span>,<span class="dv">4</span>]]
+<span class="fu">=</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>]</code></pre>
+<p>つまるところ join とは concat である，ってどっかに書いたかな？</p>
+<h3 id="内包表記について当然成り立って欲しい性質">内包表記について当然成り立って欲しい性質</h3>
+<p>以下が成り立つことが確かめられる．</p>
+<ul class="incremental">
+<li>(mc-4) [f t | p] == map f [t | p]</li>
+<li>(mc-5) [x | x &lt;- u] == u</li>
+<li>(mc-6) [t | p, x &lt;- [u|q], r] == [t' | p, q, r'] (t', r' は t, r におけるxという文字をu という文字に書き換えたもの)</li>
+</ul>
+<h3 id="リストに対する補助関数">リストに対する補助関数</h3>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- append</span>
+<span class="ot">(++) ::</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]
+[x, <span class="fu">...</span>] <span class="fu">++</span> [y, <span class="fu">...</span>] <span class="fu">=</span> [x, <span class="fu">...</span>, y, <span class="fu">...</span>]
+
+<span class="co">-- 畳み込み</span>
+
+<span class="ot">fold ::</span> (a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> a
+fold f e []  <span class="fu">=</span> e
+fold f e [x] <span class="fu">=</span> x
+fold f e (a<span class="fu">++</span>b) <span class="fu">=</span> f (fold f e a) (fold f e b)</code></pre>
+<p>such that</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">fold f e xs <span class="fu">=</span> fold f e (xs <span class="fu">++</span> [])
+            <span class="fu">=</span> fold f e xs  <span class="ot">`f`</span> e</code></pre>
+<p>e は f の単位元であること．つまり</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">  f e x <span class="fu">=</span> f x e <span class="fu">=</span> x</code></pre>
+<p>を要請する.</p>
+<p>また、</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">fold f e [x,y,z] <span class="fu">=</span> fold f e [x,y] <span class="ot">`f`</span> z
+                 <span class="fu">=</span> f (f x y) z
+fold f e [x,y,z] <span class="fu">=</span> x <span class="ot">`f`</span> fold f e [y,z]
+                 <span class="fu">=</span> f x (f y z)</code></pre>
+<p>従って、fの結合則</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">  f (f x y) z <span class="fu">=</span> f x (f y z)</code></pre>
+<p>これもまた要請される</p>
+<p>この (++), fold で map と join が再定義できる</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">map f []  <span class="fu">=</span> []
+map f [x] <span class="fu">=</span> [f x]
+map f (a<span class="fu">++</span>b) <span class="fu">=</span> (map f a) <span class="fu">++</span> (map f b)</code></pre>
+<p>まあ、引数パターンに(++)使っていいのかしらんけど</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">join <span class="fu">=</span> fold (<span class="fu">++</span>) []</code></pre>
+<p>コレは簡潔でいいな</p>
+<p>ええと、リストに対する関数 <code>h</code> が次のように3つの引数パターンで書けたとする</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">h ::</span> [a] <span class="ot">-&gt;</span> b
+h [] <span class="fu">=</span> e
+h [x] <span class="fu">=</span> g x
+h (xs <span class="fu">++</span> ys) <span class="fu">=</span> (h xs) <span class="fu">&lt;*&gt;</span> (h ys)
+  <span class="kw">where</span>
+<span class="ot">  e ::</span> b
+  g<span class="ot"> x ::</span> a <span class="ot">-&gt;</span> b
+  <span class="fu">&lt;*&gt;</span><span class="ot"> ::</span> b <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> b</code></pre>
+<p><code>h = fold &lt;*&gt; e . map g</code> と書ける時、 h はhomomorphism (準同型) である、という．(何と準同型?)</p>
+<h2 id="m-というモノイド">M [] というモノイド</h2>
+<p>リストモナド [] に、モナド <code>M</code> を組み合わせる</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(@) ::</span> <span class="dt">M</span> [a] <span class="ot">-&gt;</span> <span class="dt">M</span> [a] <span class="ot">-&gt;</span> <span class="dt">M</span> [a]
+a <span class="fu">@</span> b <span class="fu">=</span> [x <span class="fu">++</span> y <span class="fu">|</span> x <span class="ot">&lt;-</span> a, y <span class="ot">&lt;-</span> b]</code></pre>
+<p>a, b から取り出す x, y というのがリスト [a] で、その append を <code>M</code> に包んで返す 右辺全体の [] はリストじゃなくて、<code>M</code>についての内包表記であることに注意</p>
+<p>この演算子 <code>(@)</code> について次の3つが成り立ちます． <code>unit</code> とか <code>map</code> とか <code>join</code> が リストではなくて、<code>M</code>についての演算であることに注意</p>
+<ul class="incremental">
+<li><ol class="incremental" style="list-style-type: example">
+<li><code>unit a @ unit b == unit (a ++ b)</code></li>
+</ol></li>
+<li><ol class="incremental" start="2" style="list-style-type: example">
+<li><code>map f a @ map f b == map f (a @ b)</code></li>
+</ol></li>
+<li><ol class="incremental" start="3" style="list-style-type: example">
+<li><code>join (f a) @ join (f b) == join (f (a @ b))</code></li>
+</ol></li>
+</ul>
+<p><code>fold</code> はリスト <code>[a]</code> の中身 <code>a</code> を取り出す</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">prod ::</span> [<span class="dt">M</span> [a]] <span class="ot">-&gt;</span> <span class="dt">M</span> [a]
+prod <span class="fu">=</span> fold <span class="fu">@</span> e</code></pre>
+<p>これによって <code>M[]</code> というモナドの <code>unit</code>, <code>map</code>, <code>join</code> が定義できる. どのモナドにおけるそれらか、ちゃんと書くことにしよう</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">unit<span class="fu">^</span>(<span class="dt">M</span>[]) <span class="fu">=</span> unit<span class="fu">^</span><span class="dt">M</span> <span class="fu">.</span> unit<span class="fu">^</span>[]
+map<span class="fu">^</span>(<span class="dt">M</span>[])  <span class="fu">=</span> map<span class="fu">^</span><span class="dt">M</span> <span class="fu">.</span> map<span class="fu">^</span>[]
+join<span class="fu">^</span>(<span class="dt">M</span>[]) <span class="fu">=</span> join<span class="fu">^</span><span class="dt">M</span> <span class="fu">.</span> map<span class="fu">^</span><span class="dt">M</span> prod</code></pre>
+</body>
+</html>
