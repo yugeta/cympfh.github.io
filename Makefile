@@ -6,12 +6,8 @@ index:
 	./fortune >> index.html
 	echo "</pre>" >> index.html
 
-today:
-	cd taglibro/; make today
-	cd taglibro/; make
-
 # lsしてindexにするだけ
-pres: study.pre template.pre memo.pre dots.pre
+pres: study.pre template.pre dots.pre
 
 %.pre: % 
 	> $^/index.html
