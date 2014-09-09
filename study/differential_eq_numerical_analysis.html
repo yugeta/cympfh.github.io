@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="枚方ノート" />
+  <title>微分方程式の数値計算</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../css/m.css" type="text/css" />
+</head>
+<body>
+<div id="header">
+<h1 class="title">微分方程式の数値計算</h1>
+<h2 class="author">枚方ノート</h2>
+<h3 class="date">2013/5/10 (Fri.) 10:32:46</h3>
+</div>
+<p> </p>
+<h1 id="拡散方程式">拡散方程式</h1>
+<h2 id="前進euler">前進Euler</h2>
+<p><br /><span class="math"><em>u</em><sub><em>t</em></sub> = <em>κ</em><em>u</em><sub><em>x</em><em>x</em></sub></span><br /></p>
+<p>これの 前進Euler は,</p>
+
+<p>これを解くことを考える.</p>
+<p><br /><span class="math"><em>u</em><sub><em>i</em>, <em>k</em> + 1</sub>:  = <em>r</em><em>u</em><sub><em>i</em> + 1, <em>k</em></sub> + (1 − 2<em>r</em>)<em>u</em><sub><em>i</em>, <em>k</em></sub> + <em>r</em><em>u</em><sub><em>i</em> − 1, <em>k</em></sub></span><br /> where <br /><span class="math">$ r := \kappa \dt \dfrac{1}{\dx^2} $</span><br /></p>
+<h1 id="von-neumann-の安定性解析">von Neumann の安定性解析</h1>
+<p>二次元配列<span class="math"><em>u</em></span>を次のように置く.</p>
+<p><br /><span class="math">$ h := \dx $</span><br /> <br /><span class="math"><em>u</em><sub><em>j</em>, <em>k</em></sub>:  = <em>α</em><sup><em>k</em></sup><em>e</em><sup><em>i</em><em>β</em><em>j</em><em>h</em></sup></span><br /></p>
+<pre><code>% imagin number i
+% これは、フーリエ展開した時の一成分である.</code></pre>
+先の <br /><span class="math"><em>u</em><sub><em>i</em>, <em>k</em> + 1</sub>:  = <em>r</em><em>u</em><sub><em>i</em> + 1, <em>k</em></sub> + (1 − 2<em>r</em>)<em>u</em><sub><em>i</em>, <em>k</em></sub> + <em>r</em><em>u</em><sub><em>i</em> − 1, <em>k</em></sub></span><br /> に入れると,
+
+<p><span class="math">∣<em>α</em>∣ &lt; 1</span> のとき, <span class="math"><em>u</em><sub><em>j</em>, <em>k</em></sub>(<em>k</em> → ∞) → 0</span>(安定).</p>
+<p><span class="math">∣<em>α</em>∣ &gt; 1</span> のとき, <span class="math"><em>u</em><sub><em>j</em>, <em>k</em></sub>(<em>k</em> → ∞)</span> は収束しない(不安定).</p>
+<p>ということは, <span class="math">cos</span> が<span class="math">[ − 1, 1]</span>を取りうるとして、 安定の条件は、<span class="math"><em>r</em> ≤ 1 / 2</span>と書き改められる.</p>
+<p><span class="math"><em>r</em></span>の定義は再述すると、 <br /><span class="math">$ r := \kappa \dt \dfrac{1}{\dx^2} $</span><br /></p>
+<p>空間刻みを半分にして, 時間刻みを1/4にするとrは同じ. 時間刻みも空間刻みも半分だとrは二倍に増える.</p>
+<h2 id="後退euler">後退Euler</h2>
+<p><br /><span class="math">$ \dfrac{ u_{i,k} - u_{i,k-1} }{\dt} = \kappa ( u_{i+1,k} - 2 u_{i, k} + u_{i-1, k} ) \dfrac{1}{\dx^2} $</span><br /></p>
+<p>を解くと,</p>
+<p><br /><span class="math"><em>u</em><sub><em>i</em>, <em>k</em> − 1</sub> =  − <em>r</em><em>u</em><sub><em>i</em> + 1, <em>k</em></sub> + 2<em>r</em><em>u</em><sub><em>i</em>, <em>k</em></sub> − <em>r</em><em>u</em><sub><em>i</em> − 1, <em>k</em></sub></span><br /></p>
+<p>同様に, <br /><span class="math"><em>u</em>:  = <em>α</em><sup><em>k</em></sup><em>e</em><sup><em>i</em><em>β</em><em>j</em><em>h</em></sup></span><br /> と書けば、</p>
+<p><br /><span class="math">1 / <em>α</em> =  − <em>r</em><em>e</em><sup><em>i</em><em>β</em><em>h</em></sup> + 2<em>r</em> − <em>r</em><em>e</em><sup> − <em>i</em><em>β</em><em>h</em></sup></span><br /> <br /><span class="math">$ \therefore \alpha = \dfrac{1}{ 1 + 2r ( 1 - \cos(\beta h) ) } $</span><br /></p>
+<p>同様に, <span class="math">cos</span> の取る範囲を過程すれば, <span class="math"><em>α</em></span> の取りうる値の範囲は$[<span class="math">1 / (1 + 4<em>r</em>)</span>, 1]$ となって, 常に 1 以下で安定となる (無条件安定).</p>
+<h1 id="移流方程式">移流方程式</h1>
+<p><br /><span class="math"><em>u</em><sub><em>t</em></sub> =  − <em>c</em><em>u</em><sub><em>x</em></sub>  (<em>C</em><em>o</em><em>n</em><em>s</em><em>t</em>. <em>c</em> &gt; 0)</span><br /></p>
+<h2 id="中心差分">中心差分</h2>
+<p>中心差分でこれを表すと,</p>
+<p><br /><span class="math">$ \dfrac{ u_{i,k+1} - u_{i,k} }{ \dt } = - c ( u_{i+1,k} - u_{i-1,k} ) \dfrac{2}{\dx} $</span><br /></p>
+<p>やはり同様に,</p>
+<p><br /><span class="math">$ h := \dx $</span><br /> <br /><span class="math"><em>u</em><sub><em>j</em>, <em>k</em></sub>:  = <em>α</em><sup><em>k</em></sup><em>e</em><sup><em>i</em><em>β</em><em>j</em><em>h</em></sup></span><br /></p>
+<p>と置けば,</p>
+
+
+<p>複素平面上にあるんだけど，絶対値は 1 以上あるため、無条件不安定となる. すなわち, これは使い物にならない.</p>
+<p>移流方程式というのは, <span class="math"><em>x</em></span>に沿って移動する何かを表してる. すなわち、点<span class="math">(<em>x</em>, <em>t</em>)</span> の<span class="math"><em>u</em></span>は, 点<span class="math">(<em>x</em><sub><em>p</em><em>r</em><em>e</em><em>v</em></sub>, <em>t</em>)</span> の <span class="math"><em>u</em></span> で決まるのに、 中心差分は、点<span class="math">(<em>x</em><sub><em>n</em><em>e</em><em>x</em><em>t</em></sub>, <em>t</em>)</span>を利用している. だからダメだったのだ.</p>
+<h2 id="風上差分">風上差分</h2>
+<p><br /><span class="math">$ \dfrac{ u_{i, k+1} - u_{i, k} }{\dt} = -c ( u_{i, k} - u_{i-1, k} ) \dfrac{1}{\dx} $</span><br /></p>
+<p>このとき,</p>
+<p><br /><span class="math"><em>α</em> = 1 − <em>γ</em>(1 − <em>e</em><sup> − <em>i</em><em>β</em><em>h</em></sup>)</span><br /></p>
+<h3 id="cfl条件-courant-friedrichs-lewy-condition">CFL条件 (Courant-Friedrichs-Lewy Condition)</h3>
+<p>流れが最も早いところでもCFLを満たすなら安定なのだ</p>
+</body>
+</html>
