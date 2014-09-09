@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="section">2014/07/16</h1>
+<h2 id="進捗レポジトリ">進捗レポジトリ</h2>
+<p>https://github.com/cympfh/cor-between-tag-and-em</p>
+<h2 id="ツイートの類似度はかりかた">ツイートの類似度はかりかた。</h2>
+<p>ツイートの類似度っていうか、 二つのハッシュタグ <code>#A</code> と <code>#B</code> との類似度を考える。</p>
+<p><code>doc A</code> を <code>A</code> というハッシュタグを含むツイート群とする。 今迄やってたのは、 <code>doc A</code> と <code>doc B</code> とのテキスト類似度を、tri-gram で計算していた。</p>
+<h2 id="知見">知見</h2>
+<p>tri-gramで似てればキーワードも似てる。 つまり、 キーワードベースであるML-Askで同じ感情が抽出されれば、 tri-gramで類似と見做される。</p>
+<h2 id="想定するストーリー">想定するストーリー</h2>
+<p>初期のハッシュタグを、ML-Askで拾う。 ML-Askでは拾えないようなのを、共起を見て、また本手法を用いて 辿って行く。</p>
+<p>あの絵で右上にあるようなやつが、 ML-Askだけで拾った物を同じ傾向を示す。 本手法で拾って価値のあるのは右下のやつ。</p>
+<h1 id="section-1">2014/08/19</h1>
+<h2 id="進捗レポジトリ-1">進捗レポジトリ</h2>
+<p>https://github.com/cympfh/2014-08-19</p>
+<h2 id="試すべきアイデア">試すべきアイデア</h2>
+<ul class="incremental">
+<li>共通のツイートをまず除くこと</li>
+</ul>
+<p><code>doc (A and B) = doc A and doc B</code> として、 <code>doc A - doc (A and B)</code> と <code>doc B - doc (A and B)</code> とを比べないと公平じゃない</p>
+<ul class="incremental">
+<li><p>単純にデータの量ふやすこと。</p></li>
+<li><p>URL を置換しなくていい</p></li>
+</ul>
+<h2 id="技巧">技巧</h2>
+<h3 id="最も良い類似尺度の試し方">最も良い類似尺度の試し方。</h3>
+<p>自己のデータ群は全て類似してるはずである。 それを二分割して、いくつかの尺度で試してみる。</p>
+<h3 id="安定性">安定性</h3>
+<p>ツイートを少しずつ加えていって安定性を見る。 スケールがどうこうとか言ってた。</p>
+</body>
+</html>

@@ -3,6 +3,7 @@
 ## 研究
 
 - [tweet に出現する感情表現](emotion-seq-in-a-tweet.html)
+- [tw-hashtag-sim.md](tw-hashtag-sim.html) ツイートのハッシュタグ毎の類似度
 
 ## 講義
 
@@ -15,6 +16,8 @@
 - [平行並列処理](parallel_processing.txt)
 
 ## 調査発表
+
+- [word2vec.md](word2vec.html)
 
 - [BFS in Haskell](BFSinHaskell.hs.txt)
 - [coding rule](coding_rules.txt)
@@ -34,4 +37,3 @@
 - [JavaScriptにおける並列スコープ](scope_js.html)
 - [SKI計算](SKI.txt)
 - [テキスト分類](text_categorization.pdf)
-
