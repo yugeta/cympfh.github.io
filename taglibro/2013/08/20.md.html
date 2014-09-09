@@ -3,19 +3,71 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <p>2013年 8月 20日 火曜日 21:53:07 JST</p>
-<p>C++練習してる<br />&gt; STEPHEN C. DEWHURST. KATHY T. STARK &quot;C++言語入門&quot;, アスキー出版社 1991 大変古い本だけど，class定義から懇切丁寧で，今まで漁った本の中でも良い感じである</p>
-<p>```c++ #include <iostream> #define var auto using namespace std;</p>
-<p>class Hoge { int x; public: Hoge(int x_=0){ x = x_; } Hoge * print() { cout &lt;&lt; x &lt;&lt; endl; return this; } Hoge * inc(int d = 1) { x += d; return this; } Hoge * sq () { x = x*x; return this; } };</p>
-<p>main () { Hoge * a = new Hoge; a -&gt; print() -&gt; inc(2) -&gt; print() -&gt; sq() -&gt; print() ; } ```</p>
+<p>C++練習してる</p>
+<blockquote>
+<p>STEPHEN C. DEWHURST. KATHY T. STARK &quot;C++言語入門&quot;, アスキー出版社 1991</p>
+</blockquote>
+<p>大変古い本だけど，class定義から懇切丁寧で，今まで漁った本の中でも良い感じである</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+<span class="ot">#define var auto</span>
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="kw">class</span> Hoge {
+  <span class="dt">int</span> x;
+  <span class="kw">public</span>:
+    Hoge(<span class="dt">int</span> x_=<span class="dv">0</span>){ x = x_; }
+    Hoge * print() {
+      cout &lt;&lt; x &lt;&lt; endl;
+      <span class="kw">return</span> <span class="kw">this</span>;
+    }
+    Hoge * inc(<span class="dt">int</span> d = <span class="dv">1</span>) {
+      x += d;
+      <span class="kw">return</span> <span class="kw">this</span>;
+    }
+    Hoge * sq () {
+      x = x*x;
+      <span class="kw">return</span> <span class="kw">this</span>;
+    }
+};
+
+main () {
+  Hoge * a = <span class="kw">new</span> Hoge;
+  a -&gt; print()
+    -&gt; inc(<span class="dv">2</span>)
+    -&gt; print()
+    -&gt; sq()
+    -&gt; print()
+  ;
+}</code></pre>
 <p>class, this, default argument, new p.87 まで読んだ</p>
 </body>
 </html>
