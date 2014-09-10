@@ -161,3 +161,10 @@
 [:url](http://nlp.dse.ibaraki.ac.jp/~shinnou/papers/gengonenji12-D2-1.pdf)
 [:memo](memo/google-similarity.html)
 
+## EmpaTweet: Annotating and Detecting Emotions on Twitter
+:unread  
+[:url](http://lrec.elra.info/proceedings/lrec2012/pdf/201_Paper.pdf)
+
+## Twitter Sentiment Analysis: The Good the Bad and the OMG
+:unread  
+[:url](http://classes.ischool.syr.edu/ist600smd/spring2014/Papers/Wilson.TwitterSentiment.OMG.ICWSM2011.pdf)
