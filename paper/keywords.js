@@ -19,6 +19,7 @@ keywords = [
 "information-extraction",
 "opinion-mining",
 "sentiment",
+"word-similarity",
 
 "twitter",
 "hashtag",
