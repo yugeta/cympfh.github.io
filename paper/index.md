@@ -184,3 +184,7 @@
 :unread
 :NLP :information-retrieval
 [:url](http://www.sciencedirect.com/science/article/pii/S0306457396000684)
+[:memo](memo/S0306457396000684.md)
+
+
+
