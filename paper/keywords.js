@@ -3,6 +3,9 @@ keywords = [
 "memo",
 "url",
 
+"quantum",
+"computation",
+
 "audio",
 
 "crf",

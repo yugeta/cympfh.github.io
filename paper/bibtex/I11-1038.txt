@@ -1,0 +1,33 @@
+@inproceedings{zirn2011fine,
+  title={Fine-Grained Sentiment Analysis with Structural Features.},
+  author={Zirn, C{\"a}cilia and Niepert, Mathias and Stuckenschmidt, Heiner and Strube, Michael},
+  booktitle={IJCNLP},
+  pages={336--344},
+  year={2011},
+  file={file://<a href="uploads/I11-1038.pdf">I11-1038.pdf</a>:pdf},
+  md5sum={357ce4331ad4ace5a45ffaed12f71a68},
+  url={http://www.aclweb.org/anthology/I/I11/I11-1038.pdf},
+  citations={30},
+  citedbyid={13756255334101223144},
+  abstract={in the same sentence. Consider, for instance, the sentence "Despite
+the pretty design I would never recommend it, because the sound
+quality is unacceptable" which expresses both positive and negative
+opinions about a product. Thus, to determine both negative and
+positive utterances in product reviews, classification on the
+subsentence level is needed.  Sentiment analysis is the problem of
+determining the polarity of a text with respect to a particular topic.
+For most applications, however, it is not only necessary to derive the
+polarity of a text as a whole but also to extract negative and
+positive utterances on a more finegrained level. Sentiment analysis
+systems working on the (sub-)sentence level, however, are difficult to
+develop since shorter textual segments rarely carry enough information
+to determine their polarity out of context. In this paper, therefore,
+we present a fully automatic framework for fine-grained sentiment
+analysis on the subsentence level combining multiple sentiment
+lexicons and neighborhood as well as discourse relations to overcome
+this problem. [abriged]},
+  mailhosts={h-its.org; informatik.uni-mannheim.de},
+  pdfmeat={timestamp: 2014-08-31 08:33:46; queries: 3; inode: 172398}
+}
+
+

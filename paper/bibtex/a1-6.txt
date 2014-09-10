@@ -1,0 +1,16 @@
+@inproceedings{西田京介2011データ圧縮による,
+  title={データ圧縮による twitter のツイート話題分類},
+  author={西田京介 and 坂野遼平 and 藤村考 and 星出高秀},
+  booktitle={DEIM Forum 2011},
+  pages={A1--6},
+  year={2011},
+  file={file://<a href="uploads/a1-6.pdf">a1-6.pdf</a>:pdf},
+  md5sum={38f76dd2b132ca885a2fbe7336ea1cb4},
+  url={http://db-event.jpn.org/deim2011/proceedings/pdf/a1-6.pdf},
+  citations={1},
+  citedbyid={10072881243176318899},
+  mailhosts={complex.eng.hokudai.ac.jp; lab.ntt.co.jp},
+  pdfmeat={timestamp: 2014-08-31 08:32:06; queries: 1; inode: 172388}
+}
+
+

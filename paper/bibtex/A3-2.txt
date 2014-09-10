@@ -1,0 +1,14 @@
+@article{鳥倉広大2012twitter,
+  title={Twitter を利用した評価極性辞書の自動拡張},
+  author={鳥倉広大 and 小町守 and 松本裕治},
+  journal={言語処理学会第 18 回年次大会論文集},
+  pages={551--554},
+  year={2012},
+  file={file://<a href="uploads/A3-2.pdf">A3-2.pdf</a>:pdf},
+  md5sum={22cb6b52cafba12be1cb63ce96812c42},
+  url={http://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf},
+  mailhosts={is.naist.jp},
+  pdfmeat={timestamp: 2014-08-31 08:32:14; queries: 1; inode: 172389}
+}
+
+

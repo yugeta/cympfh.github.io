@@ -1,0 +1,23 @@
+@article{ambainis2013exact,
+  title={Exact quantum query complexity of EXACT and THRESHOLD},
+  author={Ambainis, Andris and Iraids, J{\=a}nis and Smotrovs, Juris},
+  journal={arXiv preprint arXiv:1302.1235},
+  year={2013},
+  file={file://<a href="uploads/exact-quantum-query.pdf">exact-quantum-query.pdf</a>:pdf},
+  md5sum={77425199b1695131ba4158b38985ebab},
+  url={http://arxiv.org/abs/1302.1235},
+  citations={4},
+  citedbyid={5701572591456628076},
+  abstract={A quantum algorithm is exact if it always produces the correct answer,
+on any input. Coming up with exact quantum algorithms that
+substantially outperform the best classical algorithm has been a quite
+challenging task. In this paper, we present two new exact quantum
+algorithms for natural problems: o for the problem EXACTn in which we
+have to determine whether the k sequence of input bits x1 , . . . , xn
+contains exactly k values xi = 1; o for the problem THRESHOLDn in
+which we have to determine if at k least k of n input bits are equal
+to 1.  1},
+  pdfmeat={timestamp: 2014-08-31 08:33:10; queries: 5; inode: 172393}
+}
+
+

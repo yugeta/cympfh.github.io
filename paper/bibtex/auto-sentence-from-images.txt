@@ -1,0 +1,17 @@
+@inproceedings{ushiku2011automatic,
+  title={Automatic sentence generation from images},
+  author={Ushiku, Yoshitaka and Harada, Tatsuya and Kuniyoshi, Yasuo},
+  booktitle={Proceedings of the 19th ACM international conference on Multimedia},
+  pages={1533--1536},
+  year={2011},
+  organization={ACM},
+  file={file://<a href="uploads/auto-sentence-from-images.pdf">auto-sentence-from-images.pdf</a>:pdf},
+  md5sum={4d47ccf1f2d4d5f41313392211c745a0},
+  url={http://dl.acm.org/citation.cfm?id=2072058},
+  citations={4},
+  citedbyid={2627753919827584703},
+  mailhosts={isi.imi.i.utokyo.ac.jp},
+  pdfmeat={timestamp: 2014-08-31 08:32:33; queries: 3; inode: 172390}
+}
+
+

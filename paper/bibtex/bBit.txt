@@ -1,0 +1,36 @@
+@inproceedings{li2010b,
+  title={b-Bit minwise hashing},
+  author={Li, Ping and K{\"o}nig, Christian},
+  booktitle={Proceedings of the 19th international conference on World wide web},
+  pages={671--680},
+  year={2010},
+  organization={ACM},
+  file={file://<a href="uploads/bBit.pdf">bBit.pdf</a>:pdf},
+  md5sum={fc42098e6f96d1a9deeef4bc42afa5fd},
+  url={http://dl.acm.org/citation.cfm?id=1772759},
+  citations={13},
+  citedbyid={5692444673386017074},
+  abstract={Web page removal [4, 6]. Since then, there have been considerable
+theoretical and methodological developments [5, 8, 19, 21-23, 26]. As
+a general technique for estimating set similarity, minwise hashing has
+been applied to a wide range of applications, for example, content
+matching for online advertising [30], detection of large-scale
+redundancy in enterprise file systems [14], syntactic similarity
+algorithms for enterprise information management [27], compressing
+social networks [9], advertising diversification [17], community
+extraction and classification in the Web graph [11], graph sampling
+[29], wireless sensor networks [25], Web spam [24, 33], Web graph
+compression [7], and text reuse in the Web [2]. Here, we give a brief
+introduction to this algorithm. Suppose a random permutation π is
+performed on Ω, i.e.,  This paper establishes the theoretical
+framework of b-bit minwise hashing. The original minwise hashing
+method has become a standard technique for estimating set similarity
+(e.g., resemblance) with applications in information retrieval, data
+management, computational advertising, etc. By only storing b bits of
+each hashed value (e.g., b = 1 or 2), we gain substantial advantages
+in terms of storage space.},
+  mailhosts={microsoft.com; cornell.edu},
+  pdfmeat={timestamp: 2014-08-31 08:32:41; queries: 1; inode: 172391}
+}
+
+

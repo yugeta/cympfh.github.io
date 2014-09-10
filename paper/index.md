@@ -1,5 +1,10 @@
 # Papers
 
+## Exact quantum query complexity of EXACT and THRESHOLD
+
+:quantum :computation
+[:bibtex](bibtex/exact-quantum-query.txt)
+
 ## Structured models for fine-to-coarse sentiment analysis.
 
 :nlp :sentiment :crf  
@@ -10,6 +15,7 @@
 :sentiment :markov-logic-networks  
 [:url](http://aclweb.org/anthology/I/I11/I11-1038.pdf)
 [:memo](memo/fine-grained-sentiment-analysis-with-structural-features.md)
+[:bibtex](bibtex/I11-1038.txt)
 
 ## Analysis of different approaches to Sentence-Level Sentiment Classification
 
@@ -20,17 +26,21 @@
 
 :unread :hash :audio  
 [:db](file:///10.1.1.16.2893.pdf)
+[:bibtex](bibtex/10.1.1.16.2893.txt)
 
 ## Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank
 
 :unread :nlp :sentiment  
 [:url](http://nlp.stanford.edu/sentiment)
 [:db](file:///EMNLP2013_RNTN.pdf)
+[:bibtex](bibtex/EMNLP2013_RNTN.txt)
 
 ## Fractal Hash Sequence Representation and Traversal
 
 :unread :hash  
+[:url](http://markus-jakobsson.com/papers/jakobsson-isit02.pdf)
 [:db](file:///fractal-hash-seq.pdf)
+[:bibtex](bibtex/fractal-hash-seq.txt)
 
 ## Perceptual Image Hashing Via Feature Points: Performance Evaluation and Tradeoffs 
 
@@ -68,16 +78,19 @@
 :unread  
 [:url](http://db-event.jpn.org/deim2011/proceedings/pdf/a1-6.pdf)
 [:db](file:///a1-6.pdf)
+[:bibtex](bibtex/a1-6.txt)
 
 ## Automatic Sentence Generation from Images
 
-[:db](file:///auto-sentence-from-images.pdf)
+[:url](http://dl.acm.org/citation.cfm?id=2072058)
+[:bibtex](bibtex/auto-sentence-from-images.txt)
 [:memo](memo/auto-sentence-from-images.md)
 
 ## b-Bit minwise hashing
 
 :hash  
 [:db](file:///bBit.pdf)
+[:bibtex](bibtex/bBit.txt)
 [:memo](memo/bBit.md)
 
 ## Finding Thoughtful Comments from Social Media
@@ -118,7 +131,8 @@
 ## Exploring Twitter Hashtags
 :twitter :hashtag  
 [:url](http://arxiv.org/pdf/1111.6553.pdf)
-[:db](file:///1111.6553.pdf)  
+[:db](file:///1111.6553.pdf)
+[:bibtex](bibtex/1111.6553.txt)  
 [:memo](memo/exploring-hashtags.md)
 
 ## 共起と潜在トピックを考慮したハッシュタグの構造化手法
@@ -130,6 +144,7 @@
 :twitter :hashtag  
 [:url](http://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf) 
 [:db](file:///A3-2.pdf)
+[:bibtex](bibtex/A3-2.txt)
 
 ## スピンモデルによる単語の感情極性抽出
 :sentiment  

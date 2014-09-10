@@ -1,0 +1,29 @@
+@article{jakobsson2002fractal,
+  title={Fractal Hash Sequence Representation and Traversal.},
+  author={Jakobsson, Markus},
+  journal={IACR Cryptology ePrint Archive},
+  volume={2002},
+  pages={1},
+  year={2002},
+  publisher={Citeseer},
+  file={file://<a href="uploads/fractal-hash-seq.pdf">fractal-hash-seq.pdf</a>:pdf},
+  md5sum={d0c41c6f635cc063b80e7ac96c934069},
+  citations={109},
+  citedbyid={10368964668529032387},
+  abstract={We introduce a novel amortization technique for computation of
+consecutive preimages of hash chains, given knowledge of the seed.
+While all previously known techniques have a memory-times-
+computational complexity of O(n) per chain element, the complexity of
+our technique can be upper bounded at O(log 2 n), making it a useful
+primitive for low-cost applications such as authentication, signatures
+and micro-payments. Our technique uses a logarithmic number of pebbles
+associated with points on the hash chain. The locations of these
+pebbles are modified over time. Like fractals, where images can be
+found within images, the pebbles move within intervals and sub-
+intervals according to a highly symmetric pattern. Keywords:
+amortization, authentication, hash chain, smart dust.  1},
+  mailhosts={rsasecurity.com},
+  pdfmeat={timestamp: 2014-08-31 08:33:16; queries: 1; inode: 172394}
+}
+
+

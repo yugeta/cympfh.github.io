@@ -1,0 +1,15 @@
+@article{poschko2011exploring,
+  title={Exploring twitter hashtags},
+  author={P{\"o}schko, Jan},
+  journal={arXiv preprint arXiv:1111.6553},
+  year={2011},
+  file={file://<a href="uploads/1111.6553.pdf">1111.6553.pdf</a>:pdf},
+  md5sum={49182d9c67203afef1e2fd1e26a73f30},
+  url={http://arxiv.org/abs/1111.6553},
+  citations={4},
+  citedbyid={12861692812677977357},
+  mailhosts={kth.se},
+  pdfmeat={timestamp: 2014-08-31 08:31:38; queries: 1; inode: 172385}
+}
+
+
