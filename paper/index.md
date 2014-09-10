@@ -115,8 +115,8 @@
 [:memo](memo/fuku-gen.md)
 
 ## Webマイニングを用いた文章中の行為者及び被行為者の感情推定
-:author Ptaszynski  
-:NLP :sentiment
+:author Ptaszynski
+:NLP :sentiment  
 [:url](http://arakilab.media.eng.hokudai.ac.jp/~ptaszynski/data/info2011_dokoshi.pdf)
 [:db](file:///info2011_dokoshi.pdf)
 
