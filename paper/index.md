@@ -88,45 +88,45 @@
 
 ## 顔文字に着目した映画に対する tweet の感情抽出
 [:url](http://www.nadasemi.ii.konan-u.ac.jp/publication/research/2012/final/tanaka.pdf)
-[:db](file:///tanaka.pdf)  
+[:db](file:///tanaka.pdf)
 [:memo](memo/tanaka-sent.md)
 
 ## 新聞記事を対象とするテキスト印象マイニング手法の設計と評価
 [:url](http://ci.nii.ac.jp/naid/110008460413)
-[:db](file:///110008460413.pdf)  
+[:db](file:///110008460413.pdf)
 [:memo](memo/sinbun-inshou.md)
 
 ## NMFによる重み付きハイパーグラフを用いたアンサンブル文書クラスタリング
 :unread  
-[:url](http://nlp.dse.ibaraki.ac.jp/~shinnou/papers/gengosyori-2007.pdf)  
+[:url](http://nlp.dse.ibaraki.ac.jp/~shinnou/papers/gengosyori-2007.pdf)
 [:db](file:///gengosyori-2007.pdf)
 
 ## 情報処理北海道シンポジウム 2013 SNSからの1次情報自動抽出に向けた表層的言語情報の分
 :author Ptaszynski  
 [:url](http://arakilab.media.eng.hokudai.ac.jp/~ptaszynski/data/fuku-gen.pdf)
-[:db](file:///fuku-gen.pdf)  
+[:db](file:///fuku-gen.pdf)
 [:memo](memo/fuku-gen.md)
 
 ## Webマイニングを用いた文章中の行為者及び被行為者の感情推定
 :author Ptaszynski  
-[:url](http://arakilab.media.eng.hokudai.ac.jp/~ptaszynski/data/info2011_dokoshi.pdf)  
+[:url](http://arakilab.media.eng.hokudai.ac.jp/~ptaszynski/data/info2011_dokoshi.pdf)
 [:db](file:///info2011_dokoshi.pdf)
 
 ## Exploring Twitter Hashtags
 :twitter :hashtag  
 [:url](http://arxiv.org/pdf/1111.6553.pdf)
 [:db](file:///1111.6553.pdf)
-[:bibtex](bibtex/1111.6553.txt)  
+[:bibtex](bibtex/1111.6553.txt)
 [:memo](memo/exploring-hashtags.md)
 
 ## 共起と潜在トピックを考慮したハッシュタグの構造化手法
 :twitter :hashtag  
-[:url](http://db-event.jpn.org/deim2014/final/proceedings/B8-1.pdf) 
+[:url](http://db-event.jpn.org/deim2014/final/proceedings/B8-1.pdf)
 [:db](file:///2014-B8-1.pdf)
 
 ## Twitter を利用した評価極性辞書の自動拡張
 :twitter :hashtag  
-[:url](http://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf) 
+[:url](http://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf)
 [:db](file:///A3-2.pdf)
 [:bibtex](bibtex/A3-2.txt)
 
@@ -137,7 +137,7 @@
 [:memo](memo/spin-sent.md)
 
 ## The Rate Adapting Poisson Model for Information Retrieval and Object Recognition
-[:url](http://www.kyb.mpg.de/fileadmin/user_upload/files/publications/attachments/rap_icml06_final_3929[0].pdf) 
+[:url](http://www.kyb.mpg.de/fileadmin/user_upload/files/publications/attachments/rap_icml06_final_3929[0].pdf)
 [:db](file:///rap_icml06_final.pdf)
 
 ## Coarse to Fine Grained Sense Disambiguation in Wikipedia 
@@ -147,10 +147,11 @@
 ## Unsupervised Word Usage Similarity in Social Media Texts 
 [:url](http://www.aclweb.org/anthology/S/S13/S13-1036.pdf)
 [:db](file:///S13-1036.pdf)
+[:memo](memo/S13-1036.md)
 
 ## Weakly Supervised User Profile Extraction from Twitter 
 [:url](http://www.aclweb.org/anthology/P/P14/P14-1016.pdf)
-[:db](file:///P14-1016.pdf)  
+[:db](file:///P14-1016.pdf)
 [:memo](memo/twitter-profile.md)
 
 ## Distant supervision for relation extraction without labeled data
