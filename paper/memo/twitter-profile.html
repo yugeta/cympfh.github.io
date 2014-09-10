@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="weakly-supervised-user-profile-extraction-from-twitter">Weakly Supervised User Profile Extraction from Twitter</h1>
+<h1 id="intro">Intro</h1>
+<p>Tweets of one user -&gt; Facebook-style profile</p>
+<p>Facebook-style profile is a list of entities e.g.</p>
+<ul class="incremental">
+<li>Spout Education Job Interest Religion Hometown Living location Family member</li>
+</ul>
+<p>この論文では</p>
+<ul class="incremental">
+<li>Spout Education Job</li>
+</ul>
+<p>のみについて実験を行うが、おそらく他の項目についても 今回の手法をそのまま適応できるであろう．</p>
+<h2 id="weak-supervise">weak supervise</h2>
+<ul class="incremental">
+<li>Facebook Google+ LinkedIn</li>
+</ul>
+<p>を用いてなんか「弱い」教師を作る</p>
+<h1 id="relation">Relation</h1>
+<p>過去の似たようなタスクとして</p>
+<ul class="incremental">
+<li>gender -- Ciot+ 2013, Liu&amp;Ruth 2013, Liu+2012 age -- Rao+ 2010 political polarity -- Pennacchiotti&amp;Popescu 2011, Conovt+ 2011</li>
+</ul>
+<p>さて問題は教師データをどう用意するかである． 例えば、性別当てを行った Ciot+ 2013 では、プロフィール画像から 手でちまちま答えを作ったという．</p>
+<p>今回はそのようなことは行わない． すなわち、</p>
+<h2 id="distant-supervision-a.k.a.-weak-supervision">Distant Supervision a.k.a. Weak Supervision</h2>
+</body>
+</html>

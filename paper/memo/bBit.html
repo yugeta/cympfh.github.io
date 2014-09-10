@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<pre><code>resemble s t = length (intersection s t) / length (union s t)</code></pre>
+<p>これの利用例として、重複した web page の発見とか．</p>
+<p>しかしながら、intersectionなんかに時間がかかりすぎる．</p>
+<p>そのためのよくある手法が、Minwise hashing</p>
+<pre><code>D = { 1 .. m }
+S \subset D
+T \subset D
+pi :: D -&gt; D -- 置換, bijection</code></pre>
+<p>Pr [ min(pi(S)) == min(pi(T)) ] = resemble S T</p>
+<p>その時に、イコールを見るのに、下bビットだけしかcheckしない．</p>
+<p><code>b=1</code>で十分いい．</p>
+<p><code>b &lt; 1</code> の場合も考えられる． 例えば、2bitをxorなどで1bitに圧縮して、その1bitを見る？？？？？ いみふ</p>
+</body>
+</html>

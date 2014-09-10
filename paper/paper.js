@@ -79,6 +79,8 @@ window.onload = function () {
       }
     }
   }());
+
+  md2html();
 };
 
 function load_path() {
@@ -104,4 +106,13 @@ function load_path() {
     ++idx;
   },200);
 
+}
+
+function md2html() {
+  var ls = document.links;
+  for (var i=0; i<ls.length; ++i) {
+    if (ls[i].href.slice(-3) === '.md') {
+      ls[i].href = ls[i].href.slice(0, -3) + ".html"
+    }
+  }
 }

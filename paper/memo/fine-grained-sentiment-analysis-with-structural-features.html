@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="fine-grained-sentiment-analysis-with-structural-features">Fine-Grained Sentiment Analysis with Structural Features</h1>
+<p>:url http://aclweb.org/anthology/I/I11/I11-1038.pdf)</p>
+<h1 id="authors">Authors</h1>
+<p>†KR &amp; KM Research Group University of Mannheim Mannheim, Germany</p>
+<p>‡Heidelberg Institute for Theoretical Studies Heidelberg, Germany</p>
+<h1 id="abst">Abst</h1>
+<p>文よりも下のレベルでの極性分析は、 carryする要素が少ないがために難しい。</p>
+<p>提案するframeworkでは、 マルコフロジックを用いて 隣との関係を見ることで、 これを解決する。 附けるのは極性スコアである。</p>
+<p>69%の精度を示した。</p>
+<h1 id="intro">Intro</h1>
+<p>商品に対するレビュー。 良い商品についてユーザーは悪い面を、 逆に悪い商品について良い部分を書こうとする 傾向がある。(ほんとか？) でも、欲しいのは商品がいいか悪いかだよね。</p>
+<p>さらにさらに、 一つの文章で 良いことも悪いこともイってたりするから問題は難しい。</p>
+<blockquote>
+<p>“Despite the pretty design I would never recommend it, because the sound quality is unac- ceptable”</p>
+</blockquote>
+<p>だから sub-sentence レベルでの解析が必要なのである。</p>
+<h2 id="basic-classification-on-subsentence-level">basic classification on subsentence level</h2>
+<p>discourse segments (会話単位?) で実験する。</p>
+<p>関連研究として</p>
+<ul class="incremental">
+<li>Rhetorical Structure Theory (RST) introduced by Mann and Thompson (1988)</li>
+</ul>
+<p>これによると、セグメントは他のセグメントと関係を持っていて、さっきの例で言うとセグメントは3つ</p>
+<pre><code>s1 = &quot;Despite the pretty design&quot;
+s2 = &quot;I would never recommend it&quot;
+s3 = &quot;because the sound quality is unacceptable&quot;</code></pre>
+<p>そしてこれらはこのような接続関係を持つ</p>
+<pre><code>CONCESSION s1 s2
+CAUSE-EXPLATINATION-EVIDENCE s2 s3</code></pre>
+<p>この単位で極性分析するのが適切であると主張する。</p>
+<h2 id="integrating-neighborhood-relations">integrating neighborhood relations</h2>
+<p>さて、そのセグメントには極性を判定する情報が 十分にあることはめったにない。 それはトークンが単純に少ないからである。</p>
+<p>しかし, 隣のセグメントとの関係はある。 例えば、 多くの2つの連続したセグメントは同じ極性を持つ。</p>
+<h2 id="leveraging-contrast-relations">leveraging contrast relations</h2>
+<p>例えば but という語で接続されたセグメントの 40% は反対の極性を 60% は同じ極性を 持っていた。</p>
+<p>全体で言うと極性が反対になるのは10% だけであった。</p>
+<p>逆接でつながっていても 高い確率で同じ極性であると結論付けた。</p>
+<p>真に極性が反転するかどうか</p>
+<pre><code>CONTRACT | NO_CONTRACT</code></pre>
+<p>を判定するのが大事。</p>
+<h2 id="collective-classification">collective classification</h2>
+<p>様々なアプローチに一つ共通するのは、 センチメント・レキシコンからタームをルックアップ すること。 前にも行った通りセグメントが小さいために難しいけど 隣接するセグメントとの関係からマルコフロジックによって 見るのである。</p>
+<h2 id="markov-logic-formulation">Markov Logic Formulation</h2>
+<p>セグメント c1, c2, ... について 論理式を作る。 論理式の重さを学習する。</p>
+<p>まず、次の２つの論理式を立てる。</p>
+<pre><code>not positive(x) =&gt; negative(x)
+not negative(x) =&gt; positive(x)</code></pre>
+<p>a-priori features。例えば、外部の辞書を用いた それぞれのセグメントに対する極性スコア</p>
+<pre><code>positive_source
+negative_source
+
+positive_source &lt;=&gt; positive
+n_s &lt;=&gt; n</code></pre>
+<h3 id="statistical-relational-representation">Statistical-Relational Representation</h3>
+<p>使うのは、Markov theBeast [2] です。 これはMarkov Logic Network のツール。</p>
+<p>本論文の目新しいこととしては、 structural features を含めたこと。</p>
+<p>ここで structural features とは neghborhood relations と discourse relations のこと</p>
+<h3 id="neighborhood-relations">neighborhood relations</h3>
+<p>隣接するセグメントは同じ極性でありやすい。(直感)</p>
+<p>２つのセグメント x, y について</p>
+<pre><code>pre(x, y) -- x の次が y である</code></pre>
+<p>という関係を用いて次</p>
+<pre><code>pre(x, y) and positive(x) =&gt; positive(y)
+pre(x, y) and negative(x) =&gt; negative(y)</code></pre>
+<h3 id="discourse-relations">Discourse Relations</h3>
+<pre><code>contrast(x,y)
+ncontrast(x,y)</code></pre>
+<p>を用いて</p>
+<pre><code>contrast(x,y) and positive(x) =&gt; negative(y)
+                  n           =&gt; p
+ncontrast(x,y) and positive(y) =&gt; positive(y)
+                   n           =&gt; n</code></pre>
+<h1 id="実験">実験</h1>
+<p>Amazon review of 3 categories, ”Cell Phones &amp; Service”, ”Gourmet Food” and ”Kitchen &amp; Housewares”.</p>
+<p>1 category について、 100ずつとってきて、 バランスを取るために、 長いものから20のposと20のneg</p>
+<p>3人のあのテータで pos/neg/neu のラベル付け。 文章または節の単位で。 negについては kappa = 0.40 to 0.45、 posについては kappa = 0.60 to 0.84 (Fleiss)。</p>
+<p>構成したモデルは pos/neg を附けるので、 アノテータで pos/neg について多数決を取って答えとする。 neuが一番多いか皆違ったらdata-set全体でのpos/negでの 多数決とする。これは、そもそもその特定の商品の pos/negを知りたかったのだから、これでいい。</p>
+<p>比較には、token 単位で行う。 segmentに属するtokenの極性をsegmentで決定する。</p>
+<p>単純に sentiment term を既に在る辞書を用いて計算する。 ただし否定語を見つけた場合 &gt; no, cannot, not, none, nothing, nowhere, neither, nor, nobody, hardly, scarcely, barely, -n't positiveをnegativeに切り替える。(どうやって)</p>
+<ul class="incremental">
+<li>SentiWordNet (SWN)</li>
+<li>Taboada and Grieve’s Turney Adjective List (TGL)</li>
+<li>Unigram Lexicon (UL)</li>
+</ul>
+<p>segmentへの分解は the discourse parser HILDA developed by duVerle and Prendinger (2009) contrast, ncontrast 付きのデータをこれで得る。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">pos</th>
+<th align="right">P</th>
+<th align="right">R</th>
+<th align="right">F</th>
+<th align="left">neg</th>
+<th align="right">P</th>
+<th align="right">R</th>
+<th align="right">F</th>
+<th align="left"></th>
+<th align="right">A</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">majority baseline</td>
+<td align="left"></td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left"></td>
+<td align="right">51.60</td>
+<td align="right">100.00</td>
+<td align="right">68.07</td>
+<td align="left"></td>
+<td align="right">51.60</td>
+</tr>
+<tr class="even">
+<td align="left">SVM</td>
+<td align="left"></td>
+<td align="right">57.05</td>
+<td align="right">43.06</td>
+<td align="right">49.08</td>
+<td align="left"></td>
+<td align="right">56.44</td>
+<td align="right">69.47</td>
+<td align="right">62.28</td>
+<td align="left"></td>
+<td align="right">56.66</td>
+</tr>
+<tr class="odd">
+<td align="left">MLN polarity</td>
+<td align="left"></td>
+<td align="right">53.21</td>
+<td align="right">69.58</td>
+<td align="right">60.31</td>
+<td align="left"></td>
+<td align="right">59.90</td>
+<td align="right">42.62</td>
+<td align="right">49.80</td>
+<td align="left"></td>
+<td align="right">55.67</td>
+</tr>
+<tr class="even">
+<td align="left">MLN neighborhood</td>
+<td align="left"></td>
+<td align="right">66.38</td>
+<td align="right">72.94</td>
+<td align="right">69.50</td>
+<td align="left"></td>
+<td align="right">72.02</td>
+<td align="right">65.34</td>
+<td align="right">68.52</td>
+<td align="left"></td>
+<td align="right">69.02</td>
+</tr>
+<tr class="odd">
+<td align="left">MLN contrast</td>
+<td align="left"></td>
+<td align="right">61.39</td>
+<td align="right">73.47</td>
+<td align="right">66.89</td>
+<td align="left"></td>
+<td align="right">69.48</td>
+<td align="right">56.65</td>
+<td align="right">62.41</td>
+<td align="left"></td>
+<td align="right">64.79</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

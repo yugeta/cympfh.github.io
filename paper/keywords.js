@@ -1,8 +1,9 @@
 keywords = [
 "Meta",
 "unread",
-"memo",
 "url",
+"memo",
+"slide",
 
 "Computation",
 "quantum",

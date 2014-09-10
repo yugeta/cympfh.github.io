@@ -163,6 +163,7 @@
 [:url](http://www.aclweb.org/anthology/P/P14/P14-1016.pdf)
 [:db](file:///P14-1016.pdf)
 [:memo](memo/twitter-profile.md)
+[:slide](memo/twitter-profile.pdf)
 
 ## Distant supervision for relation extraction without labeled data
 [:url](http://web.stanford.edu/~jurafsky/mintz.pdf)

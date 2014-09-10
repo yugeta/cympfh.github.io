@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="読む論文">読む論文</h1>
+<ul class="incremental">
+<li>title: Analysis of different approaches to Sentence-Level Sentiment Classification</li>
+<li>author: V. S. Jagtap, Karishma Pawar</li>
+<li>file: paper11.pdf</li>
+<li>date: 1 April 2013</li>
+</ul>
+<h1 id="abst">Abst</h1>
+<p>sentiment classification at a fine-grained level つまり 文章のレベルで pos/neg/neu を附ける手法の紹介</p>
+<h1 id="intro">Intro</h1>
+<p>NLPで極性分析はわりと新しく、word, phrase, sentence, doc レベルなどでなされる。 あと、学習方法も、ナイーブなり、最大エントロピーなり、SVMなりある。</p>
+<p>main task は、ドキュメントレベルの極性分析。</p>
+<p>sentence-level の極性分析は、 1 sentence には 1 opnion だけ含まれると仮定して、 subjectivity classification と sentiment classification の2つを行う。</p>
+<h1 id="approaches">Approaches</h1>
+<h2 id="machine-learning-approach">machine learning approach</h2>
+<ul class="incremental">
+<li>naive Bayes, SVM, ME</li>
+</ul>
+<p>一番良いのは SVM with accuracy 82.9 % (700 pos reviews and 700 neg reviews and 3-fold cross validation)</p>
+<p>具体的にどう学習したか。bag-of-featuresです。</p>
+<pre><code>features = [f1 .. fn]
+d &lt;- document
+return $ map (\f -&gt; n f d) features
+    where n = \f d -&gt; count f in d</code></pre>
+<p>この素性ベクタでなんか学習すんだって。</p>
+<h2 id="semantic-orientation-approach">Semantic Orientation Approach</h2>
+<p>pos and neg sentiment words and phrases (Liu, 2007)</p>
+<h3 id="corpus-based">corpus-based</h3>
+<h3 id="dictionary-based">dictionary-based</h3>
+<ul class="incremental">
+<li>synonyms</li>
+<li>antonyms</li>
+<li>hierarchies</li>
+</ul>
+<p>in WordNet</p>
+</body>
+</html>

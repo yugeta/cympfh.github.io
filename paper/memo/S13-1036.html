@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="unsupervised-word-usage-similarity-in-social-media-texts">Unsupervised Word Usage Similarity in Social Media Texts</h1>
+<h2 id="intro">Intro</h2>
+<p>あるツイートに出現した単語 (paper) が 別のツイートに出現した場合に、 それらが同じような使われ方をしてるかどうかを、 1 から 5 の整数で表す。</p>
+<p>これは WSD (paper = 紙、論文) にも繋がるタスクである。</p>
+<h2 id="data">Data</h2>
+<p>データの作り方を説明する。 ツールの話は役立つはずだ。</p>
+<p><code>langid.py</code> はツイートが英語かどうかを判別するのに用いた。</p>
+<p><code>the dictionary of Han et al. (2012)</code> で、俗的略語 (tmrw) を正規化 (-&gt; tomorrow) した。</p>
+<p>あと、単語として <code>Erk et al. (2009)</code> に倣った <code>bar, charge, execution, field, figure, function, investigator, match, paper, post</code> の10の名詞を用いる。</p>
+<p>形態素解析として <code>CMU Twitter POS tagger (Owoputi et al., 2012)</code> を用いた。 Twitterで学習したような何からしい。 これ<a href="http://www.ark.cs.cmu.edu/TweetNLP/">Twitter NLP and Part-of-Speech Tagging - CMU ARK Lab</a>かな？</p>
+<h3 id="background-corpus">Background corpus</h3>
+<p>目的の単語を必ずどれか含むツイート 1 million 程度</p>
+<h2 id="method">Method</h2>
+<p>まず、単語の二次の共起頻度ベクトルをとる。 二次のそれが何であるかは <a href="http://www.sciencedirect.com/science/article/pii/S0306457396000684">A cooccurrence-based thesaurus and two applications to information retrieval</a> を参考するべき。 ただの共起頻度ベクトルよりも良いものであるらしい。</p>
+<p>Background corpus 中の人気トップ 10k 単語との共起を見る。</p>
+<p>で、LDAしただけ？</p>
+<h2 id="result">Result</h2>
+<p>別にそんなによくない。 0.3 とかだ</p>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="understanding-users-query-intent-with-wikipedia">Understanding Users Query Intent with Wikipedia</h1>
+<p>ユーザに投げられるクエリについて「テーマ」を もってして，検索したい</p>
+<p>テーマというのは，「乗り換え案内」とか「人名」</p>
+<p>既存のクエリ学習は，クエリ→テーマ の学習にわける</p>
+<p>問題は「データのスパースネス」 要するに学習データが大量に必要で， 学習データに含まれてないことについては無力である</p>
+<p>提案として， Wikipediaの「項目」を利用すること 項目というのはページのタイトルのこと 曖昧ページは無視</p>
+<p>クエリとそのテーマを与えて， クエリについてWikipediaで何かを学習する</p>
+<h2 id="wikipediaの性質">Wikipediaの性質</h2>
+<p>記事の中のハイパーリンクは記事動詞の関連度を示す</p>
+<p>カテゴリ（テーマの存在確率）を相互のハイパーリンクによる 無向グラフの上を伝播させる (random walk)</p>
+<h2 id="sentence-snippet">Sentence Snippet</h2>
+<p>クエリを補強する</p>
+<h2 id="intent予想">intent予想</h2>
+<p>クエリ→補強，各snippetについて記事を計算して， それぞれについてスコアを出して，総和</p>
+<h2 id="random-walk-の素晴らしさ">random walk の素晴らしさ</h2>
+</body>
+</html>

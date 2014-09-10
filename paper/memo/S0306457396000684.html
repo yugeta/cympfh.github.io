@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<h1 id="シソーラスの構築">シソーラスの構築</h1>
+<p>たぶん、類語辞典を作る。 文章中の単語を教師なしでクラスタリングするタスクっぽい。</p>
+<p>second-order cooccurrence なるものを提案する</p>
+<h2 id="関連">関連</h2>
+<h3 id="latent-semantic-indexing-lsi">Latent Semantic Indexing; LSI</h3>
+<p><code>document-by-word</code> 行列 の特異値分解(SVD)</p>
+<p>今回は、 <code>term-by-document</code> 行列をSVDする。</p>
+<p><code>A</code> を <code>word-by-document</code> matrix とする。 これのSVDは</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">A</span> <span class="fu">=</span> <span class="dt">U</span> <span class="fu">*</span> <span class="dt">S</span> <span class="fu">*</span> <span class="dt">V&#39;</span></code></pre>
+<p>ここで</p>
+<ul class="incremental">
+<li><code>U</code> and <code>V</code> は直交行列 (<code>U * U' = I</code>)</li>
+<li><code>S</code>があの固有値の対格行列</li>
+</ul>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">C</span> <span class="fu">=</span> <span class="dt">A</span> <span class="fu">*</span> <span class="dt">A&#39;</span></code></pre>
+<p>を考えると、これは <code>word-by-word</code> matrix である。 すなわち、</p>
+<p><code>C_{i,j}</code> は word <code>i</code> と <code>j</code> のdocument単位での共起頻度になる。</p>
+<p>ちょっと簡約してみると、</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">C</span> <span class="fu">=</span> <span class="dt">A</span> <span class="fu">*</span> <span class="dt">A&#39;</span> <span class="fu">=</span> (<span class="dt">USV&#39;</span>) <span class="fu">*</span> (<span class="dt">USV&#39;</span>)<span class="ch">&#39; = U * S^2 &amp; U&#39;</span></code></pre>
+<p>これは、いままで document を単位で共起を見ていた。 すなわち context を document としていた。 提案手法では <code>k</code> words を context とする。</p>
+<h2 id="共起頻度シソーラス">共起頻度シソーラス</h2>
+<p><code>term-by-term matrix</code> <code>C</code> をまず計算することから始める。 すなわち、 <code>C_{i, j}</code> は <code>k</code> words ウィンドウサイズ中の word <code>i</code> と <code>j</code> の共起頻度である。</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> k <span class="fu">=</span> <span class="dv">40</span></code></pre>
+</body>
+</html>

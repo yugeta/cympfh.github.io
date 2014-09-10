@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="文章顔文字のツイートについて感情値を分類する">文章+顔文字のツイートについて感情値を分類する</h1>
+<h2 id="steps">steps</h2>
+<ol class="incremental" style="list-style-type: decimal">
+<li>文章中の単語が感情語辞書とマッチしたら、それが単語の感情値</li>
+<li>文中に顔文字がなかったら、これ(平均か？)をツイートの感情値とする</li>
+<li>顔文字が在る時はそれの感情を算出して、組み合わせて全体の感情値をなんか決定する</li>
+</ol>
+<h2 id="感情語の辞書の構築">感情語の辞書の構築</h2>
+<p>ツイートと同様に口語で、 ただし、 表記揺れ、文法の乱れの少なそうなものとして、 映画のレビューをコーパスにした</p>
+<p>3万くらいの、語と感情値とのペアを作った．</p>
+<h3 id="感情値ってのは">感情値ってのは、</h3>
+<p>いくつかの感情軸（感情の種類、喜び、好き、とか） に対しての、実数値 (&lt;- [0,1])</p>
+<h3 id="語のマッチングには">語のマッチングには、</h3>
+<p>形態素解析して、「代表語」によって一致を見る．</p>
+<p>Juman を使うと、 「今日は楽しもう」の「楽しも」については、 「楽しい」 が代表語として教えてくれるらしい．</p>
+<p>手元のMeCabは、</p>
+<pre><code>今日    名詞,副詞可能,*,*,*,*,今日,キョウ,キョー
+は      助詞,係助詞,*,*,*,*,は,ハ,ワ
+楽しも  動詞,自立,*,*,五段・マ行,未然ウ接続,楽しむ,タノシモ,タノシモ
+う      助動詞,*,*,*,不変化型,基本形,う,ウ,ウ
+EOS</code></pre>
+<p>たぶん、「楽しむ」が代表語かな． Juman の方が、表記揺れを緩和する目的に即してるように書いてある</p>
+<h3 id="否定語">否定語</h3>
+<p>否定語があったら、それを含む感情語を打ち消す (ニュートラルにするのか反転するのか) 大体英語ならともかく、日本語で否定語を含むって難しくないですか</p>
+<h2 id="顔文字の感情値">顔文字の感情値</h2>
+<p>ユーザー実験、とある． 出現頻度の高い 100 件の顔文字について、10名で実験． 実際この100件で、全体の92%を占めていた.</p>
+<h3 id="実験の手順">実験の手順</h3>
+<ol class="incremental" style="list-style-type: decimal">
+<li>適切な感情軸を最大3つ選択する．</li>
+<li>1番目に選んだ軸、2番目に… に、3点、2点... を与える</li>
+<li>選ばれなかった軸は0点</li>
+</ol>
+<h2 id="感情の役割">感情の役割</h2>
+<ol class="incremental" style="list-style-type: decimal">
+<li>強調</li>
+<li>自嘲</li>
+<li>弛緩</li>
+</ol>
+<h2 id="感情値の組み合わせ方">感情値の組み合わせ方</h2>
+<p>なんか計算式あったけどよくわかんない． 文章のみでの平均と、 文章＋顔文字での平均との、 の間をとるカンジがした</p>
+</body>
+</html>

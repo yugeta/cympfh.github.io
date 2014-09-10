@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="exploring-twitter-hashtags">Exploring Twitter Hashtags</h1>
+<p>2011年の論文なので古い部類だろうなあ</p>
+<h2 id="intro">Intro</h2>
+<p>SMS language</p>
+<ul class="incremental">
+<li>abbreviation (e.g. &quot;4 u&quot;)</li>
+<li>emoticons (e.g. &quot;:)&quot; )</li>
+</ul>
+<p>Twitter-specific forms</p>
+<ul class="incremental">
+<li>@-replies</li>
+<li>hashtags</li>
+</ul>
+<blockquote>
+<p><span class="citation">@merazindagi</span> Thanks! Will make more 4 U. Live performances in #boulder area will be on http://saxy.us :) #jazz #rock #funk #dance #livemusic</p>
+</blockquote>
+<p>ハッシュタグはそのツイートが何の目的であるかを教えてくれる けど 複数のツイートが沢山含まれるようなものは一体何なのかわからなくなる． そこで， co-occurrences に基づく辞書の構築， 分類器の構成 を考え，最終的にアプリケーションを作成する</p>
+<h2 id="dataset">Dataset</h2>
+<p>29,000,000 tweets ノイズの少ない310,000種類のハッシュタグは取り除いて， 85,503種類を使った</p>
+<h2 id="hashtag-co-occurrences">Hashtag co-occurrences</h2>
+<h3 id="dictionary">Dictionary</h3>
+<p>共起 where ハッシュタグ hi, hj C(hi, hj) = # { t | t &lt;- tweets, t has hi and t hash hj }</p>
+<p>辞書 D(h) = {(h', C(h, h')) | h /= h'}</p>
+<h3 id="similarity-of-two-hashtags">Similarity of two hashtags</h3>
+<p>hashtag, h -&gt; synset, s</p>
+<p>similarity, S(h1, h2) = max [ S'(s1, s2) | s1 &lt;- synset h1, s2 &lt;- synset h2 ]</p>
+<p>S' として、</p>
+<p>PythonのnltkのWordNet module には、 次の2種類が組み込まれている</p>
+<ol class="incremental" style="list-style-type: decimal">
+<li>path distance similarity</li>
+<li>Wu-Palmer distance</li>
+</ol>
+<p>それぞれ、Spath, Swp と呼ぼう．</p>
+<p>どちらも数字が大きいほうが近いことを意味する</p>
+<p>実際の値を見てみると、</p>
+<p>                          | Spath | Swp |<br />共起ハッシュタグ | 0.12 | 0.37 |<br />Twitter (ランダムな2単語) | 0.07 | 0.26 |</p>
+<p>って感じ．</p>
+<h2 id="clustered-graph">Clustered graph</h2>
+<p>共起してたら枝をつなぐ，でグラフがかけた． 連結成分というクラスらリングもできる．</p>
+<h1 id="classification">Classification</h1>
+<h2 id="hashtag-classes">hashtag classes</h2>
+<p>まあハッシュタグは何かそのものを表しているわけだけど，</p>
+<ul class="incremental">
+<li><code>organization</code></li>
+<li><code>geolocation</code></li>
+<li><code>person</code></li>
+<li><code>event</code>: particular interest on Twitter</li>
+<li><code>category</code>: all other hashtags</li>
+</ul>
+<p>に分類するのを第一目標とする</p>
+<p>例として，</p>
+<p>organization | #google, #nokia |<br />geolocation | #europe, #uk, #graz |<br />person | #obama, #madonna |<br />event | #christmas, #election |<br />category | #fun, #math, #ipod |</p>
+<h2 id="machine-learning">Machine-learning</h2>
+<p>最大エントロピー (MaxEnt) が SciPy とかいう中で実装されてるので それを使う．</p>
+<h3 id="features">features</h3>
+<ul class="incremental">
+<li>ハッシュタグ周りの window size 5 の words</li>
+<li>その words の shape</li>
+<li>その words の POS tag</li>
+<li>その words の geographical background knowledge</li>
+<li>ハッシュタグの shape</li>
+<li>ハッシュタグがツイートの最初であるか</li>
+</ul>
+</body>
+</html>
