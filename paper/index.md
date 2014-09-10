@@ -1,93 +1,77 @@
 % paper/
 
 ## Exact quantum query complexity of EXACT and THRESHOLD
-
 :quantum :computation
 [:bibtex](bibtex/exact-quantum-query.txt)
 
 ## Structured models for fine-to-coarse sentiment analysis.
-
 :nlp :sentiment :crf  
 [:memo](memo/mcdonald-ryan-fine-to-coarse.html)
 
 ## Fine-Grained Sentiment Analysis with Structural Features
-
 :sentiment :markov-logic-networks  
 [:url](http://aclweb.org/anthology/I/I11/I11-1038.pdf)
 [:memo](memo/fine-grained-sentiment-analysis-with-structural-features.md)
 [:bibtex](bibtex/I11-1038.txt)
 
 ## Analysis of different approaches to Sentence-Level Sentiment Classification
-
 :sentiment :nlp  
 [:memo](memo/analysis-of-difference-approaches-to-sentence-level-sentiment.md)
 
 ## Robust Audio Hashing for Content Identification
-
 :unread :hash :audio  
 [:db](file:///10.1.1.16.2893.pdf)
 [:bibtex](bibtex/10.1.1.16.2893.txt)
 
 ## Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank
-
 :unread :nlp :sentiment  
 [:url](http://nlp.stanford.edu/sentiment)
 [:db](file:///EMNLP2013_RNTN.pdf)
 [:bibtex](bibtex/EMNLP2013_RNTN.txt)
 
 ## Fractal Hash Sequence Representation and Traversal
-
 :unread :hash  
 [:url](http://markus-jakobsson.com/papers/jakobsson-isit02.pdf)
 [:db](file:///fractal-hash-seq.pdf)
 [:bibtex](bibtex/fractal-hash-seq.txt)
 
 ## Perceptual Image Hashing Via Feature Points: Performance Evaluation and Tradeoffs 
-
 :unread  
 [:db](file:///perceptual-image-hashing.pdf)
 
 ## Robust perceptual image hashing using feature points
-
 :unread  
 [:db](file:///robust-image-hashing.pdf)
 
 ## Robust image hashing
-
 :unread  
 [:db](file:///robust-image-hashing.pdf)
 
 ## Robust Hash for Detecting and Localizing Image Tampering
-
 [:db](file:///robust-hash-for-detect-and-localize.pdf)
 [:memo](memo/robust-hash-for-detect-and-local-tamper.md)
 
 ## Robust hash functions for digital watermarking
-
 :unread  
 [:db](file:///robust-hash-fun-for-digital-warermarking.pdf)
 
 ## Understanding Users Query Intent with Wikipedia
-
 :nlp :search :text-classification  
 [:url](http://www2009.eprints.org/48/1/p471.pdf)
 [:memo](memo/understanding-user-query-intent.md)
 
 ## データ圧縮による Twitter のツイート話題分類
-
 :unread  
 [:url](http://db-event.jpn.org/deim2011/proceedings/pdf/a1-6.pdf)
 [:db](file:///a1-6.pdf)
 [:bibtex](bibtex/a1-6.txt)
 
 ## Automatic Sentence Generation from Images
-
 [:url](http://dl.acm.org/citation.cfm?id=2072058)
 [:bibtex](bibtex/auto-sentence-from-images.txt)
 [:memo](memo/auto-sentence-from-images.md)
 
 ## b-Bit minwise hashing
-
 :hash  
 [:db](file:///bBit.pdf)
 [:bibtex](bibtex/bBit.txt)
@@ -183,3 +167,5 @@
 ## Twitter Sentiment Analysis: The Good the Bad and the OMG
 :unread  
 [:url](http://classes.ischool.syr.edu/ist600smd/spring2014/Papers/Wilson.TwitterSentiment.OMG.ICWSM2011.pdf)
+
+
