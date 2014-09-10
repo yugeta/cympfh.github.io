@@ -180,4 +180,7 @@
 :unread  
 [:url](http://classes.ischool.syr.edu/ist600smd/spring2014/Papers/Wilson.TwitterSentiment.OMG.ICWSM2011.pdf)
 
-
+## A cooccurrence-based thesaurus and two applications to information retrieval
+:unread
+:NLP :information-retrieval
+[:url](http://www.sciencedirect.com/science/article/pii/S0306457396000684)
