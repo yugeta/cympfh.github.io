@@ -5,10 +5,7 @@ h2 {
   border-bottom: 1px black solid;
 }
 h2.active {
-  color: #811;
-}
-h2.active:before {
-  content: "! ";
+  color: black;
 }
 h2.inactive {
   color: #baa;
