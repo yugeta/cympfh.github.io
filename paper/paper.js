@@ -1,5 +1,9 @@
 var PDF_PATH;
 
+function capital(c) {
+  return c.toUpperCase() === c
+}
+
 window.onload = function () {
   var _ps = document.getElementsByTagName('p');
   var ps = [];
@@ -18,7 +22,11 @@ window.onload = function () {
   var ks = [];
   keywords.forEach(function(kw, i) {
     var K = document.createElement('div');
-    K.innerHTML = ':' + kw;
+    if (capital(kw[0])) {
+      K.innerHTML = "<b>:" + kw + "</b>";
+    } else {
+      K.innerHTML = '&nbsp;&nbsp;:' + kw;
+    }
     K.style.cursor = 'pointer';
     K.className = 'inactive';
     K.addEventListener('click', function(e) {

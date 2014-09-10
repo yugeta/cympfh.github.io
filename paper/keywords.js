@@ -1,26 +1,30 @@
 keywords = [
+"Meta",
 "unread",
 "memo",
 "url",
 
+"Computation",
 "quantum",
-"computation",
 
-"audio",
-
+"Model",
 "crf",
 "markov-logic-networks",
 
+"Hoge",
 "hash",
 "search",
+"audio",
 
-"nlp",
+"NLP",
 "text-classification",
 "information-extraction",
+"information-retrieval",
 "opinion-mining",
 "sentiment",
 "word-similarity",
+"wsd",
 
-"twitter",
+"Twitter",
 "hashtag",
 ]
