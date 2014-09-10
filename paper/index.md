@@ -1,4 +1,6 @@
-# Papers
+% paper/
+
+# paper/
 
 ## Exact quantum query complexity of EXACT and THRESHOLD
 
