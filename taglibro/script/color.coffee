@@ -6,18 +6,23 @@ ls = fs.readFileSync '/dev/stdin', 'utf8'
   .slice 0, -1
   .map (l) -> l.replace /\..*$/g, ''
 
-year = (date) ->
-  (date.split '/')[0] | 0
-
-parity = (x) -> x % 2 is 0
-
-state = "red"
-prev = not parity year ls[0]
+month = (date) ->
+  a = (date .split '/')[1] | 0
+  switch a
+    when 1 then "jan"
+    when 2 then "feb"
+    when 3 then "mar"
+    when 4 then "apr"
+    when 5 then "may"
+    when 6 then "jun"
+    when 7 then "jul"
+    when 8 then "aug"
+    when 9 then "sep"
+    when 10 then "oct"
+    when 11 then "nov"
+    when 12 then "dec"
+    else ""
 
 ls.forEach (date) ->
-  p = parity year date
-  if p isnt prev
-    prev = p
-    state = if state is "black" then "red" else "black"
-  log "<a class=#{state} href=#{date}.md.html>#{date}</a>"
+  log "<a class=\"#{month date}\" href=#{date}.md.html>#{date}</a>"
 

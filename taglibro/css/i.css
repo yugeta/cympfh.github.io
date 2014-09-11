@@ -1,0 +1,89 @@
+a {
+  display: block;
+  padding: 0;
+  margin: 0;
+  color: black;
+  text-decoration: none;
+
+  width: 25%;
+  float: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px #808080 dashed;
+}
+
+/* menu for each articles */
+div.dates {
+  font-size: 0.8em;
+  width: 30%;
+  float: left;
+}
+
+a.black:visited { color: #ffd0d0; }
+a.red:visited { color: #773030; }
+
+/* preview window */
+div#article {
+  float: right;
+  display: none;
+  width: 66%;
+}
+iframe {
+  padding: 0;
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  width: 62%;
+  height: 96%; /* for scroll bar */
+  border: 0;
+  border-left: 1px black solid;
+}
+
+.jan {
+  color: #f0f0f0;
+  background-color: #303030;
+}
+.feb {
+  color: #f0f0f0;
+  background-color: #505050;
+}
+.mar {
+  color: #f0f0f0;
+  background-color: #606060;
+}
+.apr {
+  color: #f0b0b0;
+  background-color: #707070;
+}
+.may {
+  color: #704040;
+  background-color: #808080;
+}
+.jun {
+  color: #504040;
+  background-color: #808080;
+}
+.jul {
+  color: #302020;
+  background-color: #909090;
+}
+.aug {
+  color: #404040;
+  background-color: #a0a0a0;
+}
+.sep {
+  color: #404040;
+  background-color: #b0b0b0;
+}
+.oct {
+  color: #404040;
+  background-color: #c0c0c0;
+}
+.nov {
+  color: #404040;
+  background-color: #d0d0d8;
+}
+.dec {
+  color: #404040;
+  background-color: #f0f0f0;
+}
