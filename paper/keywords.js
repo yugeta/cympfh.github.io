@@ -25,6 +25,7 @@ keywords = [
 "sentiment",
 "word-similarity",
 "wsd",
+"thesaurus",
 
 "Twitter",
 "hashtag",

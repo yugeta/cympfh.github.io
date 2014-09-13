@@ -185,7 +185,7 @@
 
 ## A cooccurrence-based thesaurus and two applications to information retrieval
 :unread
-:NLP :information-retrieval
+:NLP :information-retrieval :thesaurus
 [:url](http://www.sciencedirect.com/science/article/pii/S0306457396000684)
 [:memo](memo/S0306457396000684.md)
 

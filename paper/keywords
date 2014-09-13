@@ -24,6 +24,7 @@
 :sentiment
 :word-similarity
 :wsd
+:thesaurus
 
 :Twitter
 :hashtag

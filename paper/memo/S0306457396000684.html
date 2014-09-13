@@ -29,10 +29,24 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </head>
 <body>
 <h1 id="シソーラスの構築">シソーラスの構築</h1>
-<p>たぶん、類語辞典を作る。 文章中の単語を教師なしでクラスタリングするタスクっぽい。</p>
-<p>second-order cooccurrence なるものを提案する</p>
+<p>1995年の論文。 共起ベクトルで単語を表現する手法は既にあったけど、 それをシソーラスの構築に役立てたのは、これが初めてっぽい。</p>
+<p>ここでいうシソーラスの構築ってのは、 類語辞典のことを指してる。</p>
+<p><code>second-order cooccurrence</code> なるものを提案する</p>
 <h2 id="関連">関連</h2>
+<h3 id="歴史">歴史</h3>
+<p>一番古くて、単純で、しかし確実なのは手で作る方法 (<code>sentiment mapping</code>)だろう。 しかし、その道のプロでないとこれはできない。 つまり、専門用語の意味が分からないとできない。</p>
+<p>既にあるオンライン辞書データベース (WordNet, Longman's subject codes) を利用する方法。 しかし、これは特定の分野に特化することができなかった。 たとえば法律用語について調べたくてもなんか一般的なのばっかりが出てくる？みたいな？</p>
+<p>それに対する方法はもちろん、コーパスを利用する方法である。 階層的シソーラス [Evans+, 1991] は、ある語が他のある語を包摂 (subsumption) してるという関係を表現したもの。 (e.g. <code>intelligence</code> subsume <code>artificial intelligence</code>)</p>
+<p>頭で修飾する語 (head-modifier) の関係で意味的な近さを決定する手法 [Grefenstette, 1992; Ruge, 1992; Strzalkowski, 1995] だんだん、共起に近づいて来た。 この手法だと、<code>doctor</code> と <code>disease</code> の近さが取れる。 でも <code>Japanese/Chilean government</code> という文から <code>Japanese</code> と <code>Chilean</code> が近いとされるけど、 それは微妙だという指摘。</p>
+<p><code>Tokyo</code>, <code>Andes</code>, <code>Samurai</code> などという語との共起から 日本の話なのかチリの話なのかが指摘できる、ということが、 その著者の内の Grefenstette, Strzalkowski が言ってた。 じゃあ共起でいいよな。</p>
+<p>Crouch (1990) が共起ベクトルを考えるようになったらしいぞ。 これによって、documents をクラスタリングすることなどをした。 ただ、本当の同義語は共起しないだろいう、という直感がある。</p>
+<p>Peat and Willet (1991) は word <code>x</code> と word <code>y</code> の近さに、 それらが出現する document の数 <code>f-x</code>, <code>f-y</code> と、同時に出現する document の数 <code>f-xy</code> を用いて</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">/</span> f-xy (<span class="kw">sqrt</span> (* f-x f-y)))</code></pre>
+<p>とした。</p>
+<p>これらが見る共起を first-order と言ってる。 つまり、 <code>words sharing the same neightbords</code> である、から先ほどの直感が正しく当たっていて、 本人らが言うに、 <code>accident</code> (freq. 2590) と <code>mishaps</code> (freq. 129) の意味の近さが取れない。</p>
+<p>そこで、この論文では二次 (second-order) の共起を見る。 言ってしまうと、 直で周辺に同じような語があるか？が一次であり、 周辺の同じような語の周辺に同じような語があるか？が二次である。 二次だと、同義語も得やすそうだろう。</p>
 <h3 id="latent-semantic-indexing-lsi">Latent Semantic Indexing; LSI</h3>
+<p>歴史的な経緯とはまた別に、形式的なこと。</p>
 <p><code>document-by-word</code> 行列 の特異値分解(SVD)</p>
 <p>今回は、 <code>term-by-document</code> 行列をSVDする。</p>
 <p><code>A</code> を <code>word-by-document</code> matrix とする。 これのSVDは</p>
@@ -48,9 +62,26 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>ちょっと簡約してみると、</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">C</span> <span class="fu">=</span> <span class="dt">A</span> <span class="fu">*</span> <span class="dt">A&#39;</span> <span class="fu">=</span> (<span class="dt">USV&#39;</span>) <span class="fu">*</span> (<span class="dt">USV&#39;</span>)’ <span class="fu">=</span> <span class="dt">U</span> <span class="fu">*</span> <span class="dt">S</span><span class="fu">^</span><span class="dv">2</span> <span class="fu">&amp;</span> <span class="dt">U&#39;</span></code></pre>
 <p>これは、いままで document を単位で共起を見ていた。 すなわち context を document としていた。 提案手法では <code>k</code> words を context とする。</p>
-<h2 id="共起頻度シソーラス">共起頻度シソーラス</h2>
+<h3 id="共起頻度シソーラス">共起頻度シソーラス</h3>
 <p><code>term-by-term matrix</code> <code>C</code> をまず計算することから始める。 すなわち、 <code>C_{i, j}</code> は <code>k</code> words ウィンドウサイズ中の word <code>i</code> と <code>j</code> の共起頻度である。</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> k <span class="fu">=</span> <span class="dv">40</span></code></pre>
-<p>語彙数が <code>v</code> なら <code>C</code> は <code>v^2</code> 行列であって、要素の半分が異なるものを意味する。 この <code>v</code> は大きくなることが予想される。</p>
+<p>語彙数が v なら C は v<sup>2</sup> 行列であって、要素の半分が異なるものを意味する。 この v は大きくなることが予想される。</p>
+<p>なんか、SVDの計算コストは O(v<sup>2</sup>) らしい。</p>
+<p>というわけで、 SVDを使う以上、それに入れる行列はある程度小さくしたい、 という要望がある。</p>
+<h2 id="method">Method</h2>
+<h3 id="word-base">Word-base</h3>
+<ol class="incremental" style="list-style-type: decimal">
+<li>stop word は適宜抜く。</li>
+<li>そこそこの頻度の 3000 A-words を得る</li>
+<li>3000 * 3000 の共起頻度行列 (Matrix A) (k=40 words a window)</li>
+<li>cos距離で 200 A-class にクラスタリング</li>
+<li>A-class ごとに A-word の周辺に出現した B-word を集めることで 20000 B-words * A-class の行列 (Matrix B) を得る</li>
+<li>200 B-classes にクラスタリングをするが、数が多いので Buckshot fast clustering algorithm (Cutting+, 1992) を適用する</li>
+<li>コーパスにある全部の単語に対して B-word (in B-classes) の近くに出現 (within a window) した頻度で、 words * B-classes の行列 (Matrix C') を得る</li>
+<li>C' に対して SVM して C を得る (20 C-lasses)</li>
+<li>exit</li>
+</ol>
+<h3 id="context-vectors">Context vectors</h3>
+<p>途中</p>
 </body>
 </html>
