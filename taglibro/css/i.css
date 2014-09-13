@@ -1,21 +1,29 @@
+body {
+  width: 960px;
+  margin: 0;
+  padding: 0;
+}
+
 a {
   display: block;
-  padding: 0;
-  margin: 0;
-  color: black;
   text-decoration: none;
 
-  width: 25%;
+  /* default color */
+  color: black;
+  background-color: white;
+
+  font-size: 12px;
+  width: 80px;
   float: left;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-bottom: 1px #808080 dashed;
+
+  margin: 0;
+  padding: 2px;
 }
 
 /* menu for each articles */
 div.dates {
   font-size: 0.8em;
-  width: 30%;
+  width: 340px;
   float: left;
 }
 
@@ -27,7 +35,7 @@ a:visited {
 div#article {
   float: right;
   display: none;
-  width: 69%;
+  width: 620px;
 }
 iframe {
   padding: 0;
@@ -40,51 +48,15 @@ iframe {
   border-left: 1px black solid;
 }
 
-.jan {
-  color: #f0f0f0;
-  background-color: #303030;
-}
-.feb {
-  color: #f0f0f0;
-  background-color: #505050;
-}
-.mar {
-  color: #f0f0f0;
-  background-color: #606060;
-}
-.apr {
-  color: #f0b0b0;
-  background-color: #707070;
-}
-.may {
-  color: #704040;
-  background-color: #808080;
-}
-.jun {
-  color: #504040;
-  background-color: #808080;
-}
-.jul {
-  color: #302020;
-  background-color: #909090;
-}
-.aug {
-  color: #404040;
-  background-color: #a0a0a0;
-}
-.sep {
-  color: #404040;
-  background-color: #b0b0b0;
-}
-.oct {
-  color: #404040;
-  background-color: #c0c0c0;
-}
-.nov {
-  color: #404040;
-  background-color: #d0d0d8;
-}
-.dec {
-  color: #404040;
-  background-color: #f0f0f0;
-}
+.jan { color: #f0f0f0; background-color: #001010; }
+.feb { color: #f0f0f0; background-color: #103030; }
+.mar { color: #f0f0f0; background-color: #204040; }
+.apr { color: #401010; background-color: #708080; }
+.may { color: #702020; background-color: #809090; }
+.jun { color: #101010; background-color: #bad0d0; }
+.jul { color: #101010; background-color: #c7c7c7; }
+.aug { color: #101010; background-color: #c7cfcf; }
+.sep { color: #101010; background-color: #d0d0d0; }
+.oct { color: #101010; background-color: #dadada; }
+.nov { color: #101010; background-color: #dfdfdf; }
+.dec { color: #101010; background-color: #fafafa; }
