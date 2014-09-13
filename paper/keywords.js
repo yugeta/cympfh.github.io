@@ -28,4 +28,5 @@ keywords = [
 
 "Twitter",
 "hashtag",
+"emoticon",
 ]

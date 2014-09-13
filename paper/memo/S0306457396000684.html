@@ -25,6 +25,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
+  <link rel="stylesheet" href="../../css/m.css" type="text/css" />
 </head>
 <body>
 <h1 id="シソーラスの構築">シソーラスの構築</h1>
@@ -45,10 +46,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>を考えると、これは <code>word-by-word</code> matrix である。 すなわち、</p>
 <p><code>C_{i,j}</code> は word <code>i</code> と <code>j</code> のdocument単位での共起頻度になる。</p>
 <p>ちょっと簡約してみると、</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">C</span> <span class="fu">=</span> <span class="dt">A</span> <span class="fu">*</span> <span class="dt">A&#39;</span> <span class="fu">=</span> (<span class="dt">USV&#39;</span>) <span class="fu">*</span> (<span class="dt">USV&#39;</span>)<span class="ch">&#39; = U * S^2 &amp; U&#39;</span></code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">C</span> <span class="fu">=</span> <span class="dt">A</span> <span class="fu">*</span> <span class="dt">A&#39;</span> <span class="fu">=</span> (<span class="dt">USV&#39;</span>) <span class="fu">*</span> (<span class="dt">USV&#39;</span>)’ <span class="fu">=</span> <span class="dt">U</span> <span class="fu">*</span> <span class="dt">S</span><span class="fu">^</span><span class="dv">2</span> <span class="fu">&amp;</span> <span class="dt">U&#39;</span></code></pre>
 <p>これは、いままで document を単位で共起を見ていた。 すなわち context を document としていた。 提案手法では <code>k</code> words を context とする。</p>
 <h2 id="共起頻度シソーラス">共起頻度シソーラス</h2>
 <p><code>term-by-term matrix</code> <code>C</code> をまず計算することから始める。 すなわち、 <code>C_{i, j}</code> は <code>k</code> words ウィンドウサイズ中の word <code>i</code> と <code>j</code> の共起頻度である。</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> k <span class="fu">=</span> <span class="dv">40</span></code></pre>
+<p>語彙数が <code>v</code> なら <code>C</code> は <code>v^2</code> 行列であって、要素の半分が異なるものを意味する。 この <code>v</code> は大きくなることが予想される。</p>
 </body>
 </html>

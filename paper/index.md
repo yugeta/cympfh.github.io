@@ -153,13 +153,13 @@
 [:db](file:///S13-1003.pdf)
 
 ## Unsupervised Word Usage Similarity in Social Media Texts 
-:NLP :Twitter :wsd
+:NLP :Twitter :wsd  
 [:url](http://www.aclweb.org/anthology/S/S13/S13-1036.pdf)
 [:db](file:///S13-1036.pdf)
 [:memo](memo/S13-1036.md)
 
 ## Weakly Supervised User Profile Extraction from Twitter 
-:NLP :Twitter :information-retrieval
+:NLP :Twitter :information-retrieval  
 [:url](http://www.aclweb.org/anthology/P/P14/P14-1016.pdf)
 [:db](file:///P14-1016.pdf)
 [:memo](memo/twitter-profile.md)
@@ -178,8 +178,10 @@
 [:url](http://lrec.elra.info/proceedings/lrec2012/pdf/201_Paper.pdf)
 
 ## Twitter Sentiment Analysis: The Good the Bad and the OMG
-:unread  
+:Twitter :emoticon
+:NLP :sentiment  
 [:url](http://classes.ischool.syr.edu/ist600smd/spring2014/Papers/Wilson.TwitterSentiment.OMG.ICWSM2011.pdf)
+[:memo](memo/Wilson.TwitterSentiment.OMG.ICWSM2011.md)
 
 ## A cooccurrence-based thesaurus and two applications to information retrieval
 :unread

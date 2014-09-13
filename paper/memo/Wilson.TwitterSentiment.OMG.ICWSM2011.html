@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="twitter-sentiment-analysis-the-good-the-bad-and-the-omg">Twitter Sentiment Analysis: The Good the Bad and the OMG</h1>
+<p>twitter ツイートの pos/neg 判定</p>
+<p>予め言っておくとゴミ。</p>
+<h2 id="データセット">データセット</h2>
+<ul class="incremental">
+<li>明らかに pos/neg が分かるようなハッシュタグが附いてるデータセット</li>
+<li>明らかに pos/neg が分かるような顔文字が附いてるデータセット</li>
+</ul>
+<p>を用いることで、 テストデータを作成する。</p>
+<h2 id="素性">素性</h2>
+<p>分類器に何を用いたかが実は書いてないんだけど、 気にしないことにして、 素性は</p>
+<ul class="incremental">
+<li>n-gram</li>
+<li>lexicon (感情語辞書)</li>
+<li>POS</li>
+<li>twitter特有表現 (とくに顔文字)</li>
+</ul>
+<p>順に、</p>
+<ul class="incremental">
+<li>6割</li>
+<li>ちょっと役立った</li>
+<li>ほーーんのすこしだけ役立った</li>
+<li>めっちゃ役立った</li>
+</ul>
+<p>終わり。</p>
+</body>
+</html>
