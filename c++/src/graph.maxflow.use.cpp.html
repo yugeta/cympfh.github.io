@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;bits/stdc++.h&gt;</span>
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="ot">#define INF (1e9)</span>
+
+<span class="kw">struct</span> edge {
+  <span class="dt">int</span> from, to, cost;
+  edge(<span class="dt">int</span> f,<span class="dt">int</span> t,<span class="dt">int</span> c) { from=f; to=t; cost=c; }
+};
+
+<span class="dt">const</span> <span class="dt">int</span> MAXV = <span class="dv">900</span>;
+vector&lt;edge&gt; G[MAXV];
+<span class="dt">int</span> level[MAXV];
+<span class="dt">int</span> iter[MAXV];
+
+<span class="dt">void</span> add_edge(<span class="dt">int</span> from, <span class="dt">int</span> to, <span class="dt">int</span> cost = <span class="dv">1</span>) {
+  G[from].push_back(edge(G[to].size(), to, cost));
+  G[to].push_back(edge(G[from].size()-<span class="dv">1</span>, from, <span class="dv">0</span>)); <span class="co">// 註意。非対称</span>
+}
+
+<span class="dt">void</span> bfs(<span class="dt">int</span> s) {
+  memset(level, -<span class="dv">1</span>, <span class="kw">sizeof</span>(level));
+  queue&lt;<span class="dt">int</span>&gt; q;
+  level[s] = <span class="dv">0</span>;
+  q.push(s);
+  <span class="kw">while</span> (!q.empty()) {
+    <span class="dt">int</span> v = q.front(); q.pop();
+    <span class="kw">for</span> (<span class="dt">auto</span> &amp;e : G[v]) {
+      <span class="kw">if</span> (e.cost &gt; <span class="dv">0</span> &amp;&amp; level[e.to] &lt; <span class="dv">0</span>) {
+        level[e.to] = level[v] + <span class="dv">1</span>;
+        q.push(e.to);
+      }
+    }
+  }
+}
+
+<span class="dt">int</span> dfs(<span class="dt">int</span> v, <span class="dt">int</span> t, <span class="dt">int</span> f) {
+  <span class="kw">if</span> (v == t) <span class="kw">return</span> f;
+  <span class="kw">for</span> (<span class="dt">int</span> &amp;i=iter[v]; i &lt; G[v].size(); ++i) {
+    edge &amp;e = G[v][i];
+    <span class="kw">if</span> (e.cost &gt; <span class="dv">0</span> &amp;&amp; level[v] &lt; level[e.to]) {
+      <span class="dt">int</span> d = dfs(e.to, t, min(f, e.cost));
+      <span class="kw">if</span> (d &gt; <span class="dv">0</span>) {
+        e.cost -= d;
+        G[e.to][e.from].cost += d;
+        <span class="kw">return</span> d;
+      }
+    }
+  }
+  <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+<span class="dt">int</span> max_flow(<span class="dt">int</span> s, <span class="dt">int</span> t) {
+  <span class="dt">int</span> flow = <span class="dv">0</span>;
+  <span class="kw">for</span> (;;) {
+    bfs(s);
+    <span class="kw">if</span> (level[t] &lt; <span class="dv">0</span>) <span class="kw">return</span> flow;
+    memset(iter, <span class="dv">0</span>, <span class="kw">sizeof</span>(iter));
+    <span class="kw">for</span> (<span class="dt">int</span> f = <span class="dv">0</span>; (f = dfs(s, t, INF)) &gt; <span class="dv">0</span>; flow += f);
+  }
+  <span class="kw">return</span> flow;
+}
+
+<span class="dt">int</span> main() {
+  <span class="co">//</span>
+  <span class="co">// example. max matching of the bi-graph</span>
+  <span class="co">//</span>
+  add_edge(<span class="dv">1</span>, <span class="dv">2</span>);
+  add_edge(<span class="dv">1</span>, <span class="dv">4</span>);
+  add_edge(<span class="dv">3</span>, <span class="dv">2</span>);
+  add_edge(<span class="dv">5</span>, <span class="dv">2</span>);
+  add_edge(<span class="dv">5</span>, <span class="dv">4</span>);
+
+  add_edge(<span class="dv">0</span>, <span class="dv">1</span>);
+  add_edge(<span class="dv">0</span>, <span class="dv">3</span>);
+  add_edge(<span class="dv">0</span>, <span class="dv">5</span>);
+  add_edge(<span class="dv">2</span>, <span class="dv">6</span>);
+  add_edge(<span class="dv">4</span>, <span class="dv">6</span>);
+
+  <span class="dt">int</span> f = max_flow(<span class="dv">0</span>, <span class="dv">6</span>);
+
+  cout &lt;&lt; f &lt;&lt; endl;
+  assert (f == <span class="dv">2</span>);
+
+  <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+</body>
+</html>
