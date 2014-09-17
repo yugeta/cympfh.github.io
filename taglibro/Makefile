@@ -2,7 +2,7 @@ all: md2html index sum
 
 index:
 	cp index.html.h index.html
-	echo "<a class=red href=summary/index.html?$$(./script/rand)>summary</a>" >> index.html
+	echo "<a class=else href=summary/index.html?$$(./script/rand)>summary</a>" >> index.html
 	ls */*/*.md | sort -r | coffee script/color.coffee >> index.html
 
 md2html:
