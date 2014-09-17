@@ -9,9 +9,11 @@ ls = fs.readFileSync '/dev/stdin', 'utf8'
 month = (date) ->
   a = (date .split '/')[1] | 0
   p = a % 2
-  switch p
-    when 0 then "even"
-    when 1 then "odd"
+  switch
+    when a is 1 then "article odd one"
+    when a is 12 then "article even twelve"
+    when p is 0 then "article even"
+    when p is 1 then "article odd"
     else "else"
 
 ls.forEach (date) ->

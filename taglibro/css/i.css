@@ -5,19 +5,9 @@ body {
 }
 
 a {
-  display: block;
-  text-decoration: none;
-
-  /* default color */
   color: black;
   background-color: white;
-
   font-size: 12px;
-  width: 80px;
-  float: left;
-
-  margin: 0;
-  padding: 4px 2px;
 }
 
 /* menu for each articles */
@@ -48,9 +38,29 @@ iframe {
   border-left: 1px black solid;
 }
 
+/* article link */
+a.article {
+  display: block;
+  text-decoration: none;
+
+  width: 80px;
+  float: left;
+
+  margin: 0;
+  padding: 4px 2px;
+}
+
+a.one {
+  font-weight: bold;
+  color: red !important;
+}
+a.twelve {
+  font-weight: bold;
+  color: #fff !important;
+}
 a.even {
-  color: #fff;
-  background-color: #a0a0a0;
+  color: #f0f0f0;
+  background-color: #707070;
 }
 a.odd {
   color: #203030;
