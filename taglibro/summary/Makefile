@@ -4,6 +4,10 @@ index: newest random images
 	cp index.html.h index.html
 	coffee gen.coffee images.txt newest.txt random.txt >> index.html
 
+light:
+	cp index.html.h index.html
+	coffee gen.coffee images.txt newest.txt random.txt >> index.html
+
 newest:
 	ls -1t ../*/*/*.md | sort -r > newest.txt
 
