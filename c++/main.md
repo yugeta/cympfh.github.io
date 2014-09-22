@@ -31,3 +31,7 @@ ref STL
 
 - [Max Flow](src/graph.maxflow.cpp.html)
     - [Max Flow - use](src/graph.maxflow.use.cpp.html)
+
+### misc
+
+- [bit_count](src/bit.count.cpp.html)
