@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="文字列パターンと-mathml-による構造を利用した数学問題文の検索-a-method-for-searching-question-sentences-in-mathematics-by-string-patterns-and-the-structure-of-mathml">文字列パターンと MathML による構造を利用した数学問題文の検索 (A Method for Searching Question Sentences in Mathematics by String Patterns and the Structure of MathML)</h1>
+<p>JSAI2013 https://kaigi.org/jsai/webprogram/2013/session-227.html</p>
+<p>よくみたら、京都大学生徒の卒論だった。 諸君はもっといいの読むべき。</p>
+<h2 id="小問集合の抽出">3. 小問集合の抽出</h2>
+<p>一つの問題は、</p>
+<ul class="incremental">
+<li>前提記述 (P)</li>
+<li>質問記述がいくつか (Q)</li>
+</ul>
+<p>に分解できる.</p>
+<blockquote>
+<p>分解したら、 P = {P} Q = {Q1, Q2} に対して、</p>
+<p>(P + Q1) (P + Q2)</p>
+<p>を考えるのが自然。</p>
+</blockquote>
+<p>訓練データ TP, TQ を用いて、 未知の問題データ U に含まれる UP, UQ を抽出したい。</p>
+<p>そこで次に説明するパターン言語をもちいる</p>
+<h3 id="パターン言語">パターン言語</h3>
+<p>Sigma: Alphabet X: Vars</p>
+<p>を用いて</p>
+<p><code>(Sigma + X)+</code></p>
+<p>と定義されるもの。 さらにここでは、同じ変数は一度しか使われないと限定する (正規パターン言語)</p>
+<p>-- 正規言語の繰り返しとかグループ化が無いバージョン?</p>
+<p>パターン p, q</p>
+<p>パターン q にある代入をして、パターン p になったとき、</p>
+<pre><code>q -&gt; p</code></pre>
+<p>と書く。</p>
+<p>本当は、</p>
+<pre><code>q \succeq p</code></pre>
+<p>と書く。</p>
+<p>はpの汎化 (generalization) という。あるいは q は p を包摂 (subsume) するという。</p>
+<p>パターンの集合 <code>p1, p2 .. pn</code> に対して、 あるパターン q が、</p>
+<pre><code>q -&gt; p1 and q -&gt; p2 and ... and q -&gt; pn</code></pre>
+<p>を満たすとき、 q を <code>p1 .. pn</code> の共通汎化という。</p>
+<p>共通汎化であるようなパターンの集合 <code>Pi = {q, q1, q2, ... }</code> について、</p>
+<pre><code>q &lt;- Pi
+forall q&#39; &lt;- Pi (q /= q&#39;)
+q&#39; -&gt; q
+q -/&gt; q&#39;</code></pre>
+<p>のとき、qを極小の共通汎化だという。</p>
+<p>さて、パターン p が作る言語を L(p) と書く。 これは、p に、空文字列を含む任意の代入を行うことで得る文字列の無限集合</p>
+<p>さらに、パターンの集合 Pi = {p1, .. pn} に対して <code>L(Pi) = L(p1) or .. or L(pn)</code> とする。</p>
+<h3 id="話戻す">話戻す</h3>
+<p>TPとかTQは、パターン集合PiP, PiQ が生成する L(PiP), L(PiQ) の部分集合だと仮定する。</p>
+<p>訓練データ TP, TQ から、次のような PiP, PiQ を作ればよい。</p>
+<p>U を受け取って UP, UQ に、</p>
+<p><code>size $ UP</code>simDif<code>(U and L(PiP))</code> <code>size $ UQ</code>simDif<code>(U and L(PiQ))</code></p>
+<p>を共に小さくする。</p>
+<p>simDif は、対称差</p>
+<h3 id="具体的なアルゴリズム">具体的なアルゴリズム</h3>
+<p>TP, TQ から、まずは PiP を作る。 全く同様の手順から PiQ は作られる。</p>
+<p>繰り返し回数 const k 閾値 const m を用意して、</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">loop k, (<span class="dt">TP</span> <span class="fu">=</span> <span class="dt">TP</span>, <span class="dt">PiP</span> <span class="fu">=</span> emptyset)
+  e1 <span class="ot">&lt;-</span> <span class="dt">TP</span>
+  e2 <span class="ot">&lt;-</span> <span class="dt">TP</span>
+  <span class="kw">let</span> p <span class="fu">=</span> minimum common pattern <span class="kw">of</span> e1, e2
+  <span class="kw">let</span> lang <span class="fu">=</span> <span class="dt">L</span> p
+  <span class="kw">let</span> goodness <span class="fu">=</span> size <span class="fu">$</span> lang and <span class="dt">TP</span>
+      badness <span class="fu">=</span> size <span class="fu">$</span> lang and <span class="dt">TQ</span>
+      m&#39; <span class="fu">=</span> goodness <span class="fu">/</span> (goodness <span class="fu">+</span> badness)
+
+  <span class="kw">if</span> m&#39; <span class="fu">&gt;=</span> m
+    <span class="kw">then</span>
+      <span class="kw">let</span> <span class="dt">PiP&#39;</span> <span class="fu">=</span> <span class="dt">PiP</span> and {<span class="dt">P</span>}
+          <span class="dt">TP&#39;</span> <span class="fu">=</span> <span class="dt">TP&#39;</span> \\ lang
+      <span class="kw">in</span> recur <span class="dt">TP&#39;</span>, <span class="dt">PiP&#39;</span>
+    <span class="kw">else</span>
+      recur <span class="dt">TP</span>, <span class="dt">PiP</span>
+
+  return <span class="dt">TP</span></code></pre>
+<p>構成した TP, TQ から、文字列 d が P, Q どちらかに属するかを、</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">scoreP <span class="fu">=</span> sum [(abs <span class="fu">$</span> (<span class="dt">L</span> p) and <span class="dt">TP</span>) <span class="fu">-</span> (abs <span class="fu">$</span> (<span class="dt">L</span> p) and <span class="dt">TQ</span>) <span class="fu">|</span> p <span class="ot">&lt;-</span> <span class="dt">PiP</span>, p <span class="fu">&gt;=</span> d]
+scoreQ <span class="fu">=</span> sum [(abs <span class="fu">$</span> (<span class="dt">L</span> p) and <span class="dt">TQ</span>) <span class="fu">-</span> (abs <span class="fu">$</span> (<span class="dt">L</span> p) and <span class="dt">TP</span>) <span class="fu">|</span> p <span class="ot">&lt;-</span> <span class="dt">PiP</span>, p <span class="fu">&gt;=</span> d]</code></pre>
+<p>scoreP と scoreQ との大小比較で判断する。</p>
+<h2 id="問題文間の類似度">問題文間の類似度</h2>
+<h3 id="自然言語文間の類似度">自然言語文間の類似度</h3>
+<p>索引語 D = (w1, .. wn) にtf-idfで重み附けて cos similarity <code>SIM-N</code> を定める</p>
+<h3 id="数式集合間の類似度">数式集合間の類似度</h3>
+<p>一つの数式と一つの数式の間の類似度には、 Yokoi+ の手法 <code>T-sim</code> を使う。</p>
+<p>数式集合一つと一つの間の類似度には Earth Mover's Distance (EMD) を用いる。</p>
+<p>Pi1 = {e1, e2 .. en} Pi2 = {f1, f2 .. fm}</p>
+<p>s -&gt; ei ei -&gt; fj fj -&gt; t</p>
+<p>の max-flow を考える</p>
+<pre><code>maximize sum_(i, j) T-sim(ei, fj) * F[i, j]</code></pre>
+<p>枝の容量は、 <code>s -&gt; _</code>, <code>_ -&gt; t</code> は無限とでもしといて、 <code>ei -&gt; fj</code> は min(w(ei), w(fj)) とする。 ここで w(e) は数式 e に対する重み。 書いてないけどな。</p>
+<pre><code>SIM-E = (sum T-sim * F) / (sum F)</code></pre>
+<h3 id="全体の類似度">全体の類似度</h3>
+<p>自然言語部分と、数式部分とを合わせて、</p>
+<pre><code>SIM-Q = sqrt $ SIM-N * SIM-E</code></pre>
+<p>とする。おわり。</p>
+<h2 id="実験">実験</h2>
+<p>できたパターン言語は 基本的にはhuman-readbleじゃなさそう。</p>
+<p>まず、P,Qの分類は、</p>
+<pre><code>class: F1
+P: 0.659
+Q: 0.821</code></pre>
+<p>うーん。</p>
+<h3 id="pip">PiP</h3>
+<p>x1 と x2 する x3 x1 点 x2 と x3 を x4。 x1 い x2 と x3 (x1(adj) x2 and x3) x1 とき x2 (when x1, x2)</p>
+<h3 id="piq">PiQ</h3>
+<p>x1 が x2 り x3 (x1 do x2 and x3) x1 である。 (it is x1) x1 となる。 (it becomes x1) であり、 (It is .... and)</p>
+<p>で、えっと、 最終的には、問題を、11のクラスに分類してたらしい。 自然言語部分だけのVSMと、 数式をそれに加えたバージョンであるVSM-MATHとの比較。</p>
+<p>「統計」なんかはどちらでも100%. 大体は、上手くいっていて、 「ベクトル」は、85.2 -&gt; 96.4%. よくみたら、落ちてるのもある。 「三角比」70.2 -&gt; 56.0%.</p>
+</body>
+</html>
