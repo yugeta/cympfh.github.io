@@ -189,5 +189,7 @@
 [:url](http://www.sciencedirect.com/science/article/pii/S0306457396000684)
 [:memo](memo/S0306457396000684.md)
 
-
+## 文字列パターンと MathML による構造を利用した数学問題文の検索 (A Method for Searching Question Sentences in Mathematics by String Patterns and the Structure of MathML)
+[:url](https://kaigi.org/jsai/webprogram/2013/pdf/643.pdf)
+[:memo](memo/643.md)
 
