@@ -204,3 +204,8 @@
 :text-classification  
 [:url](http://www.aclweb.org/anthology/N10-1108)
 
+## Ranking Retrieval Systems without Relevance Judgments
+:information-retrieval
+[:url](http://comminfo.rutgers.edu/~muresan/IR/Docs/Articles/sigirSoboroff2001.pdf)
+[:memo](memo/sigirSoboro.md)
+
