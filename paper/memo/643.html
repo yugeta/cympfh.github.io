@@ -38,17 +38,21 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <li>質問記述がいくつか (Q)</li>
 </ul>
 <p>に分解できる.</p>
-<blockquote>
-<p>分解したら、 P = {P} Q = {Q1, Q2} に対して、</p>
-<p>(P + Q1) (P + Q2)</p>
+<p>分解したら、 - P = {P} - Q = {Q1, Q2} に対して、</p>
+<ul class="incremental">
+<li>(P + Q1)</li>
+<li>(P + Q2)</li>
+</ul>
 <p>を考えるのが自然。</p>
-</blockquote>
-<p>訓練データ TP, TQ を用いて、 未知の問題データ U に含まれる UP, UQ を抽出したい。</p>
+<p>訓練データ <code>TP</code>, <code>TQ</code> を用いて、 未知の問題データ <code>U</code> に含まれる <code>UP</code>, <code>UQ</code> を抽出したい。</p>
 <p>そこで次に説明するパターン言語をもちいる</p>
 <h3 id="パターン言語">パターン言語</h3>
-<p>Sigma: Alphabet X: Vars</p>
+<ul class="incremental">
+<li>Sigma: Alphabet</li>
+<li>X: Vars</li>
+</ul>
 <p>を用いて</p>
-<p><code>(Sigma + X)+</code></p>
+<pre><code>(Sigma | X)+</code></pre>
 <p>と定義されるもの。 さらにここでは、同じ変数は一度しか使われないと限定する (正規パターン言語)</p>
 <p>-- 正規言語の繰り返しとかグループ化が無いバージョン?</p>
 <p>パターン p, q</p>
@@ -64,22 +68,26 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>を満たすとき、 q を <code>p1 .. pn</code> の共通汎化という。</p>
 <p>共通汎化であるようなパターンの集合 <code>Pi = {q, q1, q2, ... }</code> について、</p>
 <pre><code>q &lt;- Pi
-forall q&#39; &lt;- Pi (q /= q&#39;)
-q&#39; -&gt; q
-q -/&gt; q&#39;</code></pre>
-<p>のとき、qを極小の共通汎化だという。</p>
-<p>さて、パターン p が作る言語を L(p) と書く。 これは、p に、空文字列を含む任意の代入を行うことで得る文字列の無限集合</p>
-<p>さらに、パターンの集合 Pi = {p1, .. pn} に対して <code>L(Pi) = L(p1) or .. or L(pn)</code> とする。</p>
+forall q&#39; &lt;- Pi (q /= q&#39;).
+  q&#39; -&gt; q and q -/&gt; q&#39;</code></pre>
+<p>のとき、<code>q</code> を極小の共通汎化だという。</p>
+<p>さて、パターン <code>p</code> が作る言語を <code>L(p)</code> と書く。 これは、p に、空文字列を含む任意の代入を行うことで得る文字列の無限集合</p>
+<p>さらに、パターンの集合 <code>Pi = {p1, p2, .. pn}</code> に対して</p>
+<pre><code>L(Pi) = L(p1) | L(p2) | .. | L(pn)</code></pre>
+<p>とする。</p>
 <h3 id="話戻す">話戻す</h3>
 <p>TPとかTQは、パターン集合PiP, PiQ が生成する L(PiP), L(PiQ) の部分集合だと仮定する。</p>
 <p>訓練データ TP, TQ から、次のような PiP, PiQ を作ればよい。</p>
 <p>U を受け取って UP, UQ に、</p>
-<p><code>size $ UP</code>simDif<code>(U and L(PiP))</code> <code>size $ UQ</code>simDif<code>(U and L(PiQ))</code></p>
+<ul class="incremental">
+<li><code>size $ UP Δ (U and L(PiP))</code></li>
+<li><code>size $ UQ Δ (U and L(PiQ))</code></li>
+</ul>
 <p>を共に小さくする。</p>
-<p>simDif は、対称差</p>
+<p><code>Δ</code> は、対称差</p>
 <h3 id="具体的なアルゴリズム">具体的なアルゴリズム</h3>
 <p>TP, TQ から、まずは PiP を作る。 全く同様の手順から PiQ は作られる。</p>
-<p>繰り返し回数 const k 閾値 const m を用意して、</p>
+<p>繰り返し回数 <code>const k</code> 閾値 <code>const m</code> を用意して、</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">loop k, (<span class="dt">TP</span> <span class="fu">=</span> <span class="dt">TP</span>, <span class="dt">PiP</span> <span class="fu">=</span> emptyset)
   e1 <span class="ot">&lt;-</span> <span class="dt">TP</span>
   e2 <span class="ot">&lt;-</span> <span class="dt">TP</span>
@@ -108,8 +116,12 @@ scoreQ <span class="fu">=</span> sum [(abs <span class="fu">$</span> (<span clas
 <h3 id="数式集合間の類似度">数式集合間の類似度</h3>
 <p>一つの数式と一つの数式の間の類似度には、 Yokoi+ の手法 <code>T-sim</code> を使う。</p>
 <p>数式集合一つと一つの間の類似度には Earth Mover's Distance (EMD) を用いる。</p>
-<p>Pi1 = {e1, e2 .. en} Pi2 = {f1, f2 .. fm}</p>
-<p>s -&gt; ei ei -&gt; fj fj -&gt; t</p>
+<pre><code>Pi1 = {e1, e2 .. en}
+Pi2 = {f1, f2 .. fm}
+
+s -&gt; ei
+ei -&gt; fj
+fj -&gt; t</code></pre>
 <p>の max-flow を考える</p>
 <pre><code>maximize sum_(i, j) T-sim(ei, fj) * F[i, j]</code></pre>
 <p>枝の容量は、 <code>s -&gt; _</code>, <code>_ -&gt; t</code> は無限とでもしといて、 <code>ei -&gt; fj</code> は min(w(ei), w(fj)) とする。 ここで w(e) は数式 e に対する重み。 書いてないけどな。</p>
@@ -126,9 +138,19 @@ P: 0.659
 Q: 0.821</code></pre>
 <p>うーん。</p>
 <h3 id="pip">PiP</h3>
-<p>x1 と x2 する x3 x1 点 x2 と x3 を x4。 x1 い x2 と x3 (x1(adj) x2 and x3) x1 とき x2 (when x1, x2)</p>
+<ul class="incremental">
+<li>x1 と x2 する x3</li>
+<li>x1 点 x2 と x3 を x4。</li>
+<li>x1 い x2 と x3 (x1(adj) x2 and x3)</li>
+<li>x1 とき x2 (when x1, x2)</li>
+</ul>
 <h3 id="piq">PiQ</h3>
-<p>x1 が x2 り x3 (x1 do x2 and x3) x1 である。 (it is x1) x1 となる。 (it becomes x1) であり、 (It is .... and)</p>
+<ul class="incremental">
+<li>x1 が x2 り x3 (x1 do x2 and x3)</li>
+<li>x1 である。 (it is x1)</li>
+<li>x1 となる。 (it becomes x1)</li>
+<li>であり、 (It is .... and)</li>
+</ul>
 <p>で、えっと、 最終的には、問題を、11のクラスに分類してたらしい。 自然言語部分だけのVSMと、 数式をそれに加えたバージョンであるVSM-MATHとの比較。</p>
 <p>「統計」なんかはどちらでも100%. 大体は、上手くいっていて、 「ベクトル」は、85.2 -&gt; 96.4%. よくみたら、落ちてるのもある。 「三角比」70.2 -&gt; 56.0%.</p>
 </body>

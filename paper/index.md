@@ -190,7 +190,9 @@
 [:memo](memo/S0306457396000684.md)
 
 ## 文字列パターンと MathML による構造を利用した数学問題文の検索 (A Method for Searching Question Sentences in Mathematics by String Patterns and the Structure of MathML)
+:NLP
 :text-classification  
+:pattern-language
 [:url](https://kaigi.org/jsai/webprogram/2013/pdf/643.pdf)
 [:memo](memo/643.md)
 
@@ -201,3 +203,4 @@
 ## Extracting Phrase Patterns with Minimum Redundancy for Unsupervised Speaker Role Classification
 :text-classification  
 [:url](http://www.aclweb.org/anthology/N10-1108)
+

@@ -11,6 +11,7 @@ keywords = [
 "Model",
 "crf",
 "markov-logic-networks",
+"pattern-language",
 
 "Hoge",
 "hash",
