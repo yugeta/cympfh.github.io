@@ -10,7 +10,6 @@ anime/2011
 anime/2012
 anime/2013
 anime/2014
-anime/2014-summer
 anime/amagami
 anime/djibril
 anime/do-asa

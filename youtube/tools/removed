@@ -1,16 +1,29 @@
-#!/bin/sh
+#!/usr/bin/env coffee
 
-[ $# -ne 1 ] && echo "usage: $0 [url]" && exit 0
+url = process.argv[2]
 
-URL=$1
-ID=`echo $URL | sed -e 's/^.*\///' -e 's/&.*$//' -e 's/^.*=//'`
+if not url
+  console.warn "usage: ./% url"
+  process.exit 0
 
-kwd='第三者通報が複数寄せられたため削除'
+id =
+  url.replace /^.*\//, ''
+    .replace /^.*=/, ''
+    .replace /&.*$/, ''
 
-flg=`curl -s https://www.youtube.com/watch?v=${ID} | grep $kwd | wc -l`
+kwds = [
+  '第三者通報が複数寄せられたため削除'
+  'This video is unavailable'
+]
 
-if [ $flg = 0 ]; then
-  echo 0 # the movie is living
-else
-  echo 1 # that is removed
-fi
+{exec} = require 'child_process'
+fs = require 'fs'
+
+exec "curl -s https://www.youtube.com/watch?v=#{id} > /tmp/html", (er, out) ->
+  throw er if er
+  fs.readFile '/tmp/html', 'utf8', (er, out) ->
+    throw er if er
+    bl = kwds.some (kwd) -> (out.indexOf kwd) isnt -1
+    console.log if bl then 1 else 0
+
+# vim: set ft=coffee:
