@@ -205,7 +205,13 @@
 [:url](http://www.aclweb.org/anthology/N10-1108)
 
 ## Ranking Retrieval Systems without Relevance Judgments
-:information-retrieval
+:information-retrieval :relevance-absence
 [:url](http://comminfo.rutgers.edu/~muresan/IR/Docs/Articles/sigirSoboroff2001.pdf)
 [:memo](memo/sigirSoboro.md)
+
+## On the Effectiveness of Evaluating Retrieval Systems in the Absence of Relevance Judgments
+:information-retrieval :relevance-absence
+:unread
+[:url](http://dl.acm.org/citation.cfm?id=860501)
+[:memo](memo/aslam-and-savell.md)
 
