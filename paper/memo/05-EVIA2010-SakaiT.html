@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="ranking-retrieval-systems-without-relevance-assessments---revisited">Ranking Retrieval Systems without Relevance Assessments - Revisited</h1>
+<p>決して人手を使ってはならない。</p>
+<p>トピック <code>t &lt;- [1 .. T]</code> について、 run <code>i &lt;- [1 .. n]</code> は、結果として set of documents <code>Ret[i][t]</code> を返す。</p>
+<p>基本コンセプトは、 多くの run が返した document は結果として正しいものである。 document 全てにランク付けし、runごとに、上位30のdocument を用いる。</p>
+<h2 id="soboroff">Soboroff+</h2>
+<p>重複を保ったpool から 10% をランダムに選択する</p>
+<h2 id="aslamsavell">Aslam/Savell</h2>
+<p>runの、全体との類似度 (Jaccard) でランク付けする</p>
+</body>
+</html>

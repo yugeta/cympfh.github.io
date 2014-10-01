@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="on-the-effectiveness-of-evaluating-retrieval-systems-in-the-absence-of-relevance-judgments">On the Effectiveness of Evaluating Retrieval Systems in the Absence of Relevance Judgments</h1>
+<p>./memo/05-EVIA2010-SakaiT.md からの参照。</p>
+<p>Soboroffのやつ (たしかランダムに選ぶやつ) では 実際のデータと彼らの出した結果に相関関係があることを見た。 何故そうであるかの理由付けをする。 そのために、<code>system similarity</code> という指標を導入する。</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- i番目のsystemの全体との類似度</span>
+<span class="ot">avgSysSim ::</span> <span class="dt">RunIndex</span> <span class="ot">-&gt;</span> <span class="dt">TopicIndex</span> <span class="ot">-&gt;</span> <span class="dt">Double</span>
+avgSysSim i t <span class="fu">=</span>
+  total <span class="fu">/</span> (n <span class="fu">-</span> <span class="dv">1</span>)
+    <span class="kw">where</span>
+      total <span class="fu">=</span> sum [ sysSimilarity <span class="dt">Ret</span>[i][t] <span class="dt">Ret</span>[j][t]
+                  <span class="fu">|</span> j <span class="ot">&lt;-</span> [<span class="dv">1</span> <span class="fu">..</span> n]
+                  , j <span class="fu">/=</span> i ]
+
+<span class="ot">sysSimilarity ::</span> <span class="dt">Document</span> <span class="ot">-&gt;</span> <span class="dt">Document</span> <span class="ot">-&gt;</span> <span class="dt">Double</span>
+sysSimilarity s1 s2 <span class="fu">=</span> a <span class="fu">/</span> b
+  <span class="kw">where</span>
+    a <span class="fu">=</span> size <span class="fu">$</span> a and b
+    b <span class="fu">=</span> size <span class="fu">$</span> a or b</code></pre>
+</body>
+</html>

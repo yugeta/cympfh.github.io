@@ -209,6 +209,9 @@
 [:url](http://comminfo.rutgers.edu/~muresan/IR/Docs/Articles/sigirSoboroff2001.pdf)
 [:memo](memo/sigirSoboro.md)
 
+## Ranking Retrieval Systems without Relevance Assessments - Revisited
+[:memo](memo/05-EVIA2010-SakaiT.md)
+
 ## On the Effectiveness of Evaluating Retrieval Systems in the Absence of Relevance Judgments
 :information-retrieval :relevance-absence
 :unread
