@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="extracting-phrase-patterns-with-minimum-redundancy-for-unsupervised-speaker-role-classification">Extracting Phrase Patterns with Minimum Redundancy for Unsupervised Speaker Role Classification</h1>
+<p><a href="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=817454">IEEE Xplore Abstract - Variable n-grams and extensions for conversational speech language modeling</a> これ先に読まないとダメ。</p>
+<hr />
+<p>タスクは、 文字に起こしたニュースの台本から、その話者が</p>
+<ul class="incremental">
+<li>anchor (総合司会)</li>
+<li>journalist</li>
+<li>guest</li>
+</ul>
+<p>のいずれであるかを、分類する。</p>
+<ul class="incremental">
+<li>BN = broadcast news</li>
+<li>BC = broadcast conversation</li>
+</ul>
+<h2 id="先行">先行</h2>
+<h3 id="barzilay-2000">Barzilay+, 2000</h3>
+<p>Supervised, 英語のニュースから、n-gramとか、duration?から80%</p>
+<h3 id="liu-2006">Liu+, 2006</h3>
+<p>Supervised, 北京語のニュースについて、 これは先ほどと違って、 話者の列、 例えば <code>anchor -&gt; journalist -&gt; anchor -&gt; guest</code> みたいな列を、HMMとEM法で推定しつつ n-gram もつかって、80%</p>
+<h3 id="hutchinson-2010">Hutchinson+, 2010</h3>
+<p>Unsupervised, 任意の言語について、structual features and N-gramで。 structual ってのは具体的には 一文の中の語数とか、会話に参加した回数とか。 で、分類する。 教師なしだから、自然とLSIとかになる。 82 - 86%</p>
+<h1 id="提案手法">提案手法</h1>
+<p>N-gramも使うけど、パターンのが絶対強いでしょ。</p>
+<ul class="incremental">
+<li>We'll be back with John Smith in a minute</li>
+<li>We'll be back with * in a minute</li>
+</ul>
+<p>上はいわばN-gramで、下がパターン</p>
+<h2 id="phrase-pattern">Phrase pattern</h2>
+<p>語の列 <code>(w1, w2 .. wn)</code> を phrase pattern といい、 長さn以上で、 w1, w2 .. wn が順に出現する sequence にマッチする。</p>
+<p>つまり、変数を<code>*</code>と書くと、 <code>w1 * w2 * .. * wn</code> ってかける。</p>
+<p>正規表現で書けば <code>/w1.*w2.* ... .*wn/</code> だ。</p>
+<p>パターンで近くにある語どうし、(例えば w[i]とw[i+1]が、) マッチするsequenceで近くにある必要は無い。 「言い回しや topic word 」に対して鋭敏ではない。</p>
+<h2 id="prefixspan-pei-2001">PrefixSpan (Pei+, 2001)</h2>
+<p>なぞの効率的な、アルゴリズム</p>
+<h2 id="枝狩り">枝狩り</h2>
+<p>パターンの親子関係を次のように。</p>
+<p>q = w1 w2 .. wn p = a b c .. d w1 .. wn x y .. z</p>
+<p>のとき、p は q を包括していると言える。 pが長さ(n+1)で、qが長さnのとき、 <code>p is parent of q</code> とする。</p>
+<p>仮想的な、長さ0のパターンTを根として、 木を作る。</p>
+<p>枝(ノード)を1 and (2 or 3) and 4 によって刈る</p>
+<h3 id="section">1</h3>
+<p>親 p に対して、 C(q) / C(p) が閾値より小さいとき、その枝を刈る。 単純に、p でマッチするものは、q でもマッチする。C(q) &lt; C(p) 0 &lt; C(q) / C(p) &lt; 1 この比が大きいというのは、親がマッチする大部分で子でもマッチするということ。 関係があるということだから、枝を保存する。 小さい場合、関係ないから枝を刈る。</p>
+<h3 id="section-1">2</h3>
+<p>子供が一つしかないノードを消す</p>
+<h3 id="section-2">3</h3>
+<p>あるいは、上に加えて 根Tから辿れないノードは消す。</p>
+<h3 id="section-3">4</h3>
+<p>長さ1 のパターンを消す。 どうせ使えないの分かってるから。</p>
+<h2 id="feature">Feature</h2>
+<p><code>lexical features</code> を構成する。 加えて <code>structural features</code> (Hutchinson+, 2010) も本当はある。</p>
+<p>パターン p について、</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> <span class="dt">DF</span> <span class="fu">=</span> number <span class="kw">of</span> document that matches p
+    <span class="dt">SF</span> <span class="fu">=</span> number <span class="kw">of</span> speakers that matches p (pにマッチする発言をした)
+    fBC <span class="fu">=</span> occurences <span class="kw">of</span> p <span class="kw">in</span> <span class="dt">BC</span> (<span class="dt">BN</span>とB<span class="dt">C</span>があったことに註意)
+    fBN <span class="fu">=</span> occurences <span class="kw">of</span> p <span class="kw">in</span> <span class="dt">BN</span>
+
+<span class="kw">let</span> alpha <span class="fu">=</span> 1e<span class="fu">-</span><span class="dv">3</span> or 1e<span class="fu">-</span><span class="dv">4</span>
+    beta <span class="fu">=</span> <span class="dv">500</span> or <span class="dv">1000</span>
+
+theta1 <span class="fu">=</span> <span class="dt">DF</span> <span class="fu">/</span> <span class="dt">SF</span> <span class="fu">+</span> alpha <span class="fu">*</span> log fBC
+theta2 <span class="fu">=</span> <span class="kw">if</span> <span class="dt">SF</span> <span class="fu">&gt;</span> beta <span class="kw">then</span> fBC <span class="fu">/</span> (fBN <span class="fu">+</span> <span class="dv">1</span>) <span class="kw">else</span> <span class="dv">0</span></code></pre>
+<p>あかん。 なんで木を作ったのかわからん。 ここまで。</p>
+</body>
+</html>

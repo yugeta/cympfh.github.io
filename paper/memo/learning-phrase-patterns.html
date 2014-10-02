@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="learning-phrase-patterns-for-text-classification">Learning Phrase Patterns for Text Classification</h1>
+<h2 id="intro">Intro</h2>
+<p>テキスト分類。 N-gramなんかで十分な精度はある。 けれどもドメインに特化してしまうこと、applicationに依存してしまうことから 一般性がない。 n-gramに補充する素性の一つとして、phrase patternを使いたい。</p>
+<h2 id="先行">先行</h2>
+<h3 id="jaillet-2006">Jaillet+, 2006</h3>
+<p>topic categorization</p>
+<h3 id="wiebe-2005">Wiebe+, 2005</h3>
+<p>文章の一人称を教師ナシで これは目的語を含んだフレーズパターンで分類した。 先行研究よりも高い精度。</p>
+<h3 id="sun-2007">Sun+, 2007</h3>
+<p>第二外国語学習者の書いた誤文法を検出。</p>
+<h3 id="thur-2010-and-davidov-2010">Thur+, 2010 and Davidov+, 2010</h3>
+<p>TwitterやAmazonレビューから「皮肉」な文を検出</p>
+<h3 id="zhang-2010">Zhang+, 2010</h3>
+<p>memo/N10-1108.md</p>
+<p>で紹介したとおり、 N-gram よりも高精度であった！（まだ読んでない）</p>
+<h2 id="提案手法">提案手法</h2>
+<p>word class に分類してから、それのパターンフレーズを探す。 word class を何にするかは目的によるけど、 例えばPOSだろう。 word class は適切な粒度を与えてくれる。 また、word and/or word-class を使うかは指定する必要は無い。</p>
+<p>パターンとは、語の列 <code>[a,b, .. c]</code> 一方、文も語の列 <code>[x,y, .. z]</code></p>
+<p>マッチするとは、パターンが文の部分sequence になってること</p>
+</body>
+</html>

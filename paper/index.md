@@ -199,10 +199,13 @@
 ## Learning Phrase Patterns for Text Classification
 :text-classification  
 [:url](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6457440)
+[:memo](memo/learning-phrase-patterns.md)
 
 ## Extracting Phrase Patterns with Minimum Redundancy for Unsupervised Speaker Role Classification
 :text-classification  
+:unread
 [:url](http://www.aclweb.org/anthology/N10-1108)
+[:memo](memo/N10-1108.md)
 
 ## Ranking Retrieval Systems without Relevance Judgments
 :information-retrieval :relevance-absence
@@ -217,4 +220,12 @@
 :unread
 [:url](http://dl.acm.org/citation.cfm?id=860501)
 [:memo](memo/aslam-and-savell.md)
+
+## Sentiment classification using phrase patterns
+:NLP
+:text-classification
+:sentiment  
+:unread  
+[:url](http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=1357349&tag=1)
+[:memo](memo/sentiment-phrase-patterns.md)
 

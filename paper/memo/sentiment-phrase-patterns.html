@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../../css/m.css" type="text/css" />
+</head>
+<body>
+<h1 id="sentiment-classification-using-phrase-patterns">Sentiment classification using phrase patterns</h1>
+<p>Tetsuya Nasukawa 曰く、極性判定とは</p>
+<ol class="incremental" style="list-style-type: decimal">
+<li>sentiment expression を見つけて</li>
+<li>極性とその強さを調べて</li>
+<li>そのexpressionの主語との関係を見つける。</li>
+</ol>
+<ul class="incremental">
+<li>The AC Milan frustrated the Rome. ......(1)</li>
+<li>The Rome frustrated the AC Milan. ......(2)</li>
+</ul>
+<p>(当然だけど) bag-of-words では両者の違いがない。</p>
+<p>(1)ではRome が negative、 (2)ではAC Milan が negative</p>
+<p>サンプルとして、サッカーのレビューを使う。</p>
+<h2 id="method">Method</h2>
+<p>Part1: Sentiment evaluation</p>
+<ol class="incremental" style="list-style-type: decimal">
+<li>サンプルから語を選ぶ</li>
+<li>フレーズパターンを構成する</li>
+<li>フレーズパターンの極性を評価する</li>
+</ol>
+<p>Part 2: Sentiment classification</p>
+<ol class="incremental" style="list-style-type: decimal">
+<li>テキスト中の語にタグをつける</li>
+<li>フレーズパターンにマッチさせる</li>
+<li>極性を合計する</li>
+</ol>
+</body>
+</html>
