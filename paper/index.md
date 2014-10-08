@@ -229,3 +229,6 @@
 [:url](http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=1357349&tag=1)
 [:memo](memo/sentiment-phrase-patterns.md)
 
+## A Great Catchy Name: Semi-Supervised Recognition of Sarcastic Sentences in Online Product Reviews
+[:url](http://www.aaai.org/ocs/index.php/ICWSM/ICWSM10/paper/viewFile/1495/1851/)
+[:memo](memo/sarcastic.md)
