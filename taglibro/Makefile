@@ -21,8 +21,5 @@ open: md2html index
 	firefox ./index.html
 
 git:
-	git add --all
-	git commit -a -m "`date`"
-	git push
-
+	cd ..; make git
 
