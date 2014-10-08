@@ -18,6 +18,7 @@ pres: template.pre dots.pre
 
 git:
 	git add --all
-	git commit -a -m "`date`"
+	tw-cd cympfh
+	git commit -a | tw
 	git push
 
