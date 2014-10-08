@@ -20,5 +20,4 @@ git:
 	git add --all
 	tw-cd cympfh
 	git commit -a -m "`date`"
-	git push | tw
-
+	git push 2>&1 | tw
