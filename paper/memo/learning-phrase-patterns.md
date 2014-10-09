@@ -277,7 +277,133 @@ type=weaksubj len=1 word1=dominate pos1=verb stemmed1=y priorpolarity=negative
 
 ## manual
 
+> we use various word listsc onstructed by linguists who have looked at data related to some of our tasks. 
+
+つまり手作業で、
+あるクラスに属する単語のリストを作る．
+これは、タスクごとに、そのトピックに詳しい人間がやる．
+
+例えば、後の実験で使った例では、
+
+```haskell
+AGREEMENT = [right, agree, true]
+DISAGREEMENT = [doubt, inappropriate]
+ALIGNMENT = AGREEMENT ++ DISAGREEMENT
+MODAL = [could, should]
+NEGATIVE_DISCOURSE_ORDER = [however, but, nevertheless]
+```
+
 ## automatic
 
+1次マルコフモデルを使って、
+wordをクラスタリングする．
+クラスた数は 10, 100, 1000 ってする．
 
+Brown+, 1992
+"Class-based n-gram models of natural language"
 
+# 実験
+
+n-gramと他の素性を使えば十分に分類可能なタスクは
+してもしょうがないので、
+それなりに難しいタスクを３つやる．
+
+- speaker role
+- alignment move
+- authority claim
+
+初めに訓練データでパターンを学習して、
+n-gramの場合と、パターンの場合を比較する．
+公平のために、n-gramは3-gramまで、
+パターンも長さ3までにする．
+
+- Maximum entropy classification
+    + `P(c|d) = 1/(Z d) * exp (sum_i [ lambda_i * f_i ])`
+- 5-fold cross validation
+
+## Speaker role
+
+ニュースショーにおける、(人, その人が発した言葉) から、
+その人のショーにおける役割をあてる．
+役割とは、Host, Guest, Voice bite
+
+Liu+ 80%
+
+48 English talks and 90 Mandarin talks の録音に対して、
+REF (Reference human transcripts) と
+ASR (automatic speech recognition) output
+(using SRI Decipher ASR system)
+を対象にする．
+
+ASR は、結構間違えることに註意．
+英語については22.8%
+北京語については38.6%
+くらい、単語/文字を誤る．
+
+kappa = 0.67 / 0.78
+
+## Alignment move
+
+ネット上の議論において、
+参加者の同意(positive)、異論(negative)
+を見る．
+文に対して、 pos/neg をつける．
+あるアノテータがposをつけて、あるアノテータがnegを
+つけたら pos+neg というラベルにする．
+
+実験で使うのは
+Wikipedia talk page
+
+211 English pages and 
+225 Chinese pages
+
+kappa = 0.50 / 0.53
+
+で、たまに pos/neg 両方を含むような面倒な文がある．
+そこで、
+pos/none, neg/none の２つの分類器を作って
+
+## Authority claim
+
+> showing her knowledge or experience with respect to a
+topic, or using some external evidence to support herself
+
+Marin+, 2010:
+Unigramで実際けっこういい．
+(外のページヘの引用とかがある)
+
+339 English pages and
+225 Chinese pages
+
+発言ごとに、authority claimであるかどうか．
+
+kappa = 0.59 / 0.73
+
+全体の20%がauthority claim であった．
+
+## Result
+
+表は適宜参照のこと．
+ここには書くことはしない．
+
+Table I は、PrefixSpan と、ExtendedPrefixSpan との差を見る．
+-0.2%から+4.1%とか．
+
+Table IIからVIIは、baseline (with only n-gram) と、pattern (with each class) との比較．
+
+Speech role は、REFでもASRでも十分な結果が得られている．
+つまり、頑強である．
+
+manualは利用ならば、それが最強
+
+Wikipedia English pages alignmentについてのパターンとして、
+```
+i ALIGNMENT MODAL
+a POSITIVE #idea
+```
+とか．
+
+あ、そうそう．英語のパターンの場合は、
+２つのトークンが連続で出現してなくてもマッチするわけだけど、
+上のように`#`というのは、連続であることを意味するらしい．
+初めからそうすればいいのにね．

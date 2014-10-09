@@ -238,3 +238,6 @@
 [:url](http://www.aaai.org/ocs/index.php/ICWSM/ICWSM10/paper/viewFile/1495/1851/)
 [:memo](memo/sarcastic.md)
 
+## Using Maximum Entropy for Text Classification
+:unread  
+[:url](http://www.kamalnigam.com/papers/maxent-ijcaiws99.pdf)
