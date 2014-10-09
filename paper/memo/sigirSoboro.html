@@ -6,25 +6,6 @@
   <meta name="generator" content="pandoc" />
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
-  <style type="text/css">
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; }
-code > span.dt { color: #902000; }
-code > span.dv { color: #40a070; }
-code > span.bn { color: #40a070; }
-code > span.fl { color: #40a070; }
-code > span.ch { color: #4070a0; }
-code > span.st { color: #4070a0; }
-code > span.co { color: #60a0b0; font-style: italic; }
-code > span.ot { color: #007020; }
-code > span.al { color: #ff0000; font-weight: bold; }
-code > span.fu { color: #06287e; }
-code > span.er { color: #ff0000; font-weight: bold; }
-  </style>
   <link rel="stylesheet" href="../../css/m.css" type="text/css" />
 </head>
 <body>
@@ -41,9 +22,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <blockquote>
 <p>MAP, P-5, P-10, infAP, bpref</p>
 </blockquote>
-<p><code>trec_eval</code> は公式から公式のツールとして、手に入れることができる。 どのOSでも使うことができる。</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">trec_eval</span> -m trec_all qrel that</code></pre>
-<p>などと使う。</p>
+<p><code>trec_eval</code> は公式から公式のツールとして、手に入れることができる。 どのOSでも使うことができる。 <code>bash $ trec_eval -m trec_all qrel that</code> などと使う。</p>
 <h2 id="本論文の提案">本論文の提案</h2>
 <p>なんと人間の判定は使わない。 official pool を作るところ迄は同じ。 そのあと、 official pool から、ランダムにdoc を選択して、 <code>pseudo-qrels</code> を作る。</p>
 <p>これを、<code>qrels</code>と見做して<code>trec_eval</code> することで結果を選ぶ。</p>

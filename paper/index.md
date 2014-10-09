@@ -1,4 +1,8 @@
 % paper/
+	git add --all
+	git commit -a -m "`date`"
+	git push
+
 
 ## Exact quantum query complexity of EXACT and THRESHOLD
 :Computation :quantum
@@ -199,6 +203,7 @@
 ## Learning Phrase Patterns for Text Classification
 :text-classification  
 [:url](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6457440)
+[:db](file:///pattern-phrase.pdf)
 [:memo](memo/learning-phrase-patterns.md)
 
 ## Extracting Phrase Patterns with Minimum Redundancy for Unsupervised Speaker Role Classification
