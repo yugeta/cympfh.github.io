@@ -27,6 +27,7 @@ keywords = [
 "word-similarity",
 "wsd",
 "thesaurus",
+"pattern",
 
 "Twitter",
 "hashtag",

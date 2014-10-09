@@ -197,17 +197,22 @@
 :NLP
 :text-classification  
 :pattern-language
+:pattern
 [:url](https://kaigi.org/jsai/webprogram/2013/pdf/643.pdf)
 [:memo](memo/643.md)
 
 ## Learning Phrase Patterns for Text Classification
+:NLP
 :text-classification  
+:pattern
 [:url](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6457440)
 [:db](file:///pattern-phrase.pdf)
 [:memo](memo/learning-phrase-patterns.md)
 
 ## Extracting Phrase Patterns with Minimum Redundancy for Unsupervised Speaker Role Classification
+:NLP
 :text-classification  
+:pattern
 :unread
 [:url](http://www.aclweb.org/anthology/N10-1108)
 [:memo](memo/N10-1108.md)
@@ -235,6 +240,9 @@
 [:memo](memo/sentiment-phrase-patterns.md)
 
 ## A Great Catchy Name: Semi-Supervised Recognition of Sarcastic Sentences in Online Product Reviews
+:NLP
+:text-classification
+:pattern  
 [:url](http://www.aaai.org/ocs/index.php/ICWSM/ICWSM10/paper/viewFile/1495/1851/)
 [:memo](memo/sarcastic.md)
 

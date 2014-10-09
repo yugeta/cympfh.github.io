@@ -14,9 +14,7 @@ keywords.js: keywords
 	echo "]" >> $@
 
 git:
-	git add --all .
-	git commit -m "`date`"
-	git push
+	cd ..; make git
 
 clean:
 	rm index.html keywords.js
