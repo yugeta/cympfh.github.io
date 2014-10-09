@@ -232,3 +232,4 @@
 ## A Great Catchy Name: Semi-Supervised Recognition of Sarcastic Sentences in Online Product Reviews
 [:url](http://www.aaai.org/ocs/index.php/ICWSM/ICWSM10/paper/viewFile/1495/1851/)
 [:memo](memo/sarcastic.md)
+

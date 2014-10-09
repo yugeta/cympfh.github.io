@@ -6,6 +6,25 @@
   <meta name="generator" content="pandoc" />
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
   <link rel="stylesheet" href="../../css/m.css" type="text/css" />
 </head>
 <body>
@@ -24,9 +43,131 @@
 <h3 id="zhang-2010">Zhang+, 2010</h3>
 <p>memo/N10-1108.md</p>
 <p>で紹介したとおり、 N-gram よりも高精度であった！（まだ読んでない）</p>
-<h2 id="提案手法">提案手法</h2>
-<p>word class に分類してから、それのパターンフレーズを探す。 word class を何にするかは目的によるけど、 例えばPOSだろう。 word class は適切な粒度を与えてくれる。 また、word and/or word-class を使うかは指定する必要は無い。</p>
-<p>パターンとは、語の列 <code>[a,b, .. c]</code> 一方、文も語の列 <code>[x,y, .. z]</code></p>
-<p>マッチするとは、パターンが文の部分sequence になってること</p>
+<h1 id="手法">手法</h1>
+<h2 id="phrase-pattern">phrase pattern</h2>
+<p>普通パターンと言う場合の素のやつと、拡張バージョンのパターンの定義と、 パターンが文にマッチする、の定義を述べる。</p>
+<h3 id="素-phrase-pattern">素 phrase pattern</h3>
+<p>文をwordの列 <code>[u1, u2 .. u[n]]</code> とみなすのと全く同様に、 phrase pattern もまた、word の列 <code>[w1, w2 .. w[m]]</code> とする。 これが、先の文にマッチするとは、sub sequence になっていること。</p>
+<p>i.e.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sentence <span class="fu">=</span> [u1, u2 <span class="fu">..</span> u[n]]
+pattern <span class="fu">=</span> [w1, w2 <span class="fu">..</span> w[m]]
+n <span class="fu">&gt;=</span> m
+exist j <span class="fu">=</span> [j1, j2 <span class="fu">..</span> j[m]]
+i1 <span class="fu">&lt;</span> i2 <span class="ot">=&gt;</span> j[i1] <span class="fu">&lt;</span> j[i2]
+forall i<span class="fu">.</span> w[i] <span class="fu">==</span> u[j[i]]</code></pre>
+<h3 id="extend">extend</h3>
+<p>語の列でなく、word class も利用したい。 word class としては、POSとかpolarity とかを使い制限しない。 word <code>w</code> の class として(文脈に依存して) <code>{c1 .. cn}</code> があるとき、</p>
+<pre><code>w -&gt; {w, c1 .. cn}</code></pre>
+<p>という拡張を考える。 文と、phrase pattern ともに、この拡張を適用できる。 また、マッチすることの定義は、 最後の <code>==</code> を、 <code>subset</code> にする。</p>
+<p>i.e.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sentence <span class="fu">=</span> [u1, u2 <span class="fu">..</span> u[n]]
+pattern <span class="fu">=</span> [w1, w2 <span class="fu">..</span> w[m]]
+n <span class="fu">&gt;=</span> m
+exist j <span class="fu">=</span> [j1, j2 <span class="fu">..</span> j[m]]
+i1 <span class="fu">&lt;</span> i2 <span class="ot">=&gt;</span> j[i1] <span class="fu">&lt;</span> j[i2]
+forall i<span class="fu">.</span> w[i] <span class="ot">`subset`</span> u[j[i]]</code></pre>
+<h2 id="learning">learning</h2>
+<p>拡張バージョンの phrase pattern を学習するアルゴリズムを一つ挙げる。 他には CloSpan っていうのもある。</p>
+<h3 id="prefixspan-pei-han-2001">PrefixSpan (Pei, Han+, 2001)</h3>
+<p>コーパス <code>D</code> (文の集合) から、閾値 <code>f</code> 以上の頻度のあるような 素 phrase pattern を得る.</p>
+<p>python-like コードで以下に示すが、これは、 prefix <code>rho</code> について、 先頭から再帰的に付け足すような再帰でパターンを得る。 <code>rho = []</code> からスタートする。</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> PrefixSpan(D, rho, f):
+  P = [] <span class="co"># pattern set as return value</span>
+  A = [] <span class="co"># new patterns</span>
+
+  for_each a in D: <span class="co"># a is a token</span>
+    rho<span class="st">&#39; = append(rho, a)</span>
+<span class="st">    A.append(rho&#39;</span>) <span class="kw">if</span> match_freq(D, p) &gt;= f
+  for_each a in D: <span class="co"># a is a token</span>
+    rho<span class="st">&#39; = assemble(rho, a)</span>
+<span class="st">    A.append(rho&#39;</span>) <span class="kw">if</span> match_freq(D, p) &gt;= f
+
+  P = P.extend(A)
+
+  for_each rho<span class="st">&#39; in A:</span>
+<span class="st">    D&#39;</span> = project(D, rho<span class="st">&#39;)</span>
+<span class="st">    B = PrefixSpan(D&#39;</span>, rho<span class="st">&#39;, f)</span>
+<span class="st">    P = P.extend(B)</span>
+
+<span class="st">  return P</span></code></pre>
+<p><code>match_freq</code> はマッチする回数。</p>
+<p><code>append</code> および <code>assemble</code> はパターンとトークンから新しいパターンを作る。</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> append(rho, a):
+  <span class="kw">return</span> rho.append({a})
+
+<span class="kw">def</span> assemble(rho, a):
+  init = rho[<span class="dv">0</span>:-<span class="dv">1</span>]
+  last = rho[-<span class="dv">1</span>]
+  <span class="kw">return</span> init.append(last.union({a}))</code></pre>
+<p>言い直すと、</p>
+<p>パターン <code>[{w1,c1..c1} .. {wn,cn..cn}]</code> に <code>s</code> をつけたす方法として、</p>
+<ul class="incremental">
+<li><code>[{w1,c1..c1} .. {wn,cn..cn}, {s}]</code> # append</li>
+<li><code>[{w1,c1..c1} .. {wn,cn..cn, s}]</code> # assemble</li>
+</ul>
+<p>がある、って言ってる。</p>
+<p>あと、コーパスDについてのパターンrhoによるproject とは、 マッチする文だけフィルタリングしたもの。</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> Project(D, rho):
+  D<span class="st">&#39; = []</span>
+<span class="st">  for_each s in D:</span>
+<span class="st">    D&#39;</span> = D<span class="st">&#39;.append(s) if match(rho, s)</span>
+
+<span class="st">  return D&#39;</span></code></pre>
+<p>論文に載ってるのはもうちょっと複雑で、 効率よく動くようになってる。 上の場合、 パターン <code>[w1]</code> を採択したら、 <code>project</code> で それにマッチする文だけを集めて、 次は <code>[w1, w2]</code> を見る。</p>
+<p>しかし、 先頭から作って行くのだから、 <code>project</code> の定義を、マッチした文、じゃなくて、マッチした文のマッチより後ろ部分だけ、にすることで、 <code>[w2]</code>を見ればよくなる。</p>
+<h2 id="尺度">尺度</h2>
+<p>先のアルゴリズムでは、頻度という尺度で、 パターンを採択するか決めていたが、 相互情報量のほうがいいだろう。</p>
+<p>コーパスD に、クラス <code>Y = 1, 2 .. K</code> があって、 変数<code>X</code>はあるパターンがマッチするかどうか(<code>X=0,1</code>) とすると、</p>
+<p>定義通りには、</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">I</span> <span class="dt">X</span> <span class="dt">Y</span> <span class="fu">=</span> sum [ sum [ (p x y) <span class="fu">*</span> log ((p x y) <span class="fu">/</span> (p x) <span class="fu">/</span> (p y))  <span class="fu">|</span> y <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="fu">..</span><span class="dt">K</span>] ] <span class="fu">|</span> x <span class="ot">&lt;-</span> [<span class="dv">0</span>,<span class="dv">1</span>] ]</code></pre>
+<p>次のように書き換えると、計算しよい。 (計算効率をおとさない)</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">p_given x y <span class="co">-- probability of x given y</span>
+<span class="dt">I</span> <span class="dt">X</span> <span class="dt">Y</span> <span class="fu">=</span> sum [ sum [ (p_given x y) <span class="fu">*</span> (p y) <span class="fu">*</span> log ((p_given x y) <span class="fu">/</span> p_x) <span class="fu">|</span> y <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="fu">..</span><span class="dt">K</span>] ] <span class="fu">|</span> x <span class="ot">&lt;-</span> [<span class="dv">0</span>,<span class="dv">1</span>] ]
+  <span class="kw">where</span>
+    p_x <span class="fu">=</span> sum [ p_given x y&#39; <span class="fu">*</span> p y&#39; <span class="fu">|</span> y&#39; <span class="ot">&lt;-</span> [<span class="dv">1</span> <span class="fu">..</span> <span class="dt">K</span>] ]</code></pre>
+<p>で、えっと、あるパターン <code>p</code> について の、<code>X</code>に対して そのパターンを拡張した時のそれを <code>XE</code>と書くと、</p>
+<pre><code>p(XE=1|y) &lt;= p(X=1|y)</code></pre>
+<p>が当然なりたつ。 したがって、相互情報量の上限</p>
+<pre><code>sup_E I(XE;Y)</code></pre>
+<p>が存在する。 (まじで？？？)</p>
+<p>改訂版のアルゴリズム <code>ExtendedPrefixSpan</code></p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> ExtendedPrefixSpan(D, rho, Theta):
+  P = []
+
+  for_each t in D:
+    rho<span class="st">&#39; = rho.append(t)</span>
+<span class="st">    rho&#39;</span> の相互情報量 が閾値以上なら、
+      P = P.append(rho<span class="st">&#39;)</span>
+
+<span class="st">    else 上限が閾値を超えるなら</span>
+<span class="st">      D&#39;</span> = project(D, rho<span class="st">&#39;)</span>
+<span class="st">      P&#39;</span> = ExtendedPrefixSpan(D<span class="st">&#39;, rho&#39;</span>, Theta)
+      P = P.extend(P<span class="st">&#39;)</span>
+
+<span class="st">  return P</span></code></pre>
+<h1 id="word-classes">Word Classes</h1>
+<h2 id="lemma">Lemma</h2>
+<p>canonical form of a word のこと。</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">{go, goes, going, went gone} <span class="ot">-&gt;</span> go</code></pre>
+<p>NLTK WordNet lemmatizer を使う</p>
+<h2 id="word-shape">Word shape</h2>
+<p>大文字の使われ方。 全部大文字になってるか、最初だけか、ドットで連結した大文字（つまり省略形）か。</p>
+<h2 id="pos">POS</h2>
+<p>いわずもがな。 Stanford log-lenear POS tagger ってのがあって、 英語と中国語に対して使える？らしいよ。</p>
+<h2 id="named-entity-ne">Named entity (NE)</h2>
+<p>テキスト分類についてはこれはすごい大事な素性。</p>
+<pre><code>(sentence, word) -&gt; class ({Location, Person, Organization, Time, Date})</code></pre>
+<p>Stanford conditional random field-based NE recognizer (NER) なるものが良いって。</p>
+<h2 id="liwc-dictionary-89.95">LIWC dictionary ($89.95)</h2>
+<p>Linguistic Inquiry and Word Count (LIWC) は、単語を64の(感情の?)クラスに分類する。 Facebookが使った奴。 文脈に依存せず、一つの単語について分析する。</p>
+<p><a href="http://www.liwc.net/tryonline.php">LIWC: Linguistic Inquiry and Word Count</a></p>
+<h2 id="mpqa-subjectivity-lexicon">MPQA subjectivity lexicon</h2>
+<p>under GNU GPL</p>
+<p>自己申告で個人情報送ると即座にダウンロードできる。 <a href="http://mpqa.cs.pitt.edu/lexicons/subj_lexicon/">Subjectivity Lexicon | MPQA</a></p>
+<pre><code>(word, POS) -&gt; class</code></pre>
+<p>8222 (word,POS) 登録されてる。</p>
+<pre><code>type=weaksubj len=1 word1=dominate pos1=verb stemmed1=y priorpolarity=negative</code></pre>
+<h2 id="manual">manual</h2>
+<h2 id="automatic">automatic</h2>
 </body>
 </html>
