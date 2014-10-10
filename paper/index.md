@@ -1,8 +1,4 @@
 % paper/
-	git add --all
-	git commit -a -m "`date`"
-	git push
-
 
 ## Exact quantum query complexity of EXACT and THRESHOLD
 :Computation :quantum
