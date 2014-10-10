@@ -21,4 +21,4 @@ git:
 	tw-cd cympfh
 	git commit -a -m "`date`"
 	git push 2>&1 | tee /tmp/result
-	tail -1 /tmp/result | tw
+	tail -1 /tmp/result | $$HOME/bin/tw
