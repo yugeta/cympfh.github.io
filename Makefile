@@ -20,4 +20,5 @@ git:
 	git add --all
 	tw-cd cympfh
 	git commit -a -m "`date`"
-	git push 2>&1 | tail -1 | tw
+	git push 2>&1 | tee /tmp/result
+	tail -1 /tmp/result | tw
