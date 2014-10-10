@@ -3,15 +3,18 @@
 dir=`date +"%Y/%m"`
 [ -d $dir ] || mkdir -p $dir
 
-file=`date +"%Y/%m/%d.md"`
+#file=`date +"%Y/%m/%d.md"`
+file=`date +"%d.md"`
 
 if [ -e $file ]; then
-  vim $file
+  #vim $file
+  cd $dir; vim $file
 else
   echo ok $file non exists
   > $file
   date >> $file
   echo '===' >> $file
   echo >> $file
-  vim $file
+  #vim $file
+  cd $dir; vim $file
 fi
