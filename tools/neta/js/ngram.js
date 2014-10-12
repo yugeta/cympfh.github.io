@@ -43,7 +43,7 @@ function filter(qs) {
     var score = 0;
 
     for (var i=0; i<qs.length; ++i) {
-      for (var k=2; k <= 3; ++k) {
+      for (var k=2; k <= 4; ++k) {
         var grams = make_ngram(qs[i], k);
         var I = grams.length;
         for (var j=0; j < I; ++j) {

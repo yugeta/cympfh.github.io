@@ -69,6 +69,7 @@ get_ngram = (file) ->
 
   gram 2
   gram 3
+  gram 4
 
   table
 

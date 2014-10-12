@@ -56,16 +56,3 @@ img.imgwin {
 .urltext {
   width: 100%;
 }
-
-div.help {
-  opacity: 0.0;
-  position: absolute;
-  z-index: 88;
-  left: 50%;
-  width: 40%;
-  top: 20%;
-  height: 60%;
-  background-color: #fcf7f7;
-  transition-duration: 1s;
-  border: white 10px solid;
-}
