@@ -37,3 +37,16 @@ IW1.appendChild(img_window.main);
 IW2.appendChild(img_window.prev);
 IW3.appendChild(img_window.next);
 
+IW1.onclick = function () {
+  open(img_window.main.src, '_blank');
+};
+
+IW2.onclick = function() {
+  freezing = false;
+  image_select(viewing.prev);
+}
+
+IW3.onclick = function() {
+  freezing = false;
+  image_select(viewing.next);
+}
