@@ -231,7 +231,6 @@ list = [
   "tumblr_n4o499lVDF1risnoxo1_400.jpg",
   "tumblr_n4tqmddmwc1qz5ft4o1_400.jpg",
   "tumblr_n8g9kjrSjU1qjteclo1_1280.jpg",
-  "tumblr_n8g9kjrSjU1qjteclo1_1280_and_code.jpg",
   "tumblr_nbvtcveZ0h1tan0too1_500.jpg",
   "twsWfUj.jpg",
   "uTzOBcW.jpg",

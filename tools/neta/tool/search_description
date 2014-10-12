@@ -1,0 +1,15 @@
+#!/bin/sh
+
+URL=$1
+html=`curl -s http://www.ascii2d.net/imagesearch/search --form uri=${URL}`
+URL=`echo $html | cut -d'"' -f2`
+
+html=`curl -s $URL`
+urls=`echo $html | grep 'のログ' | cut -d '"' -f2`
+
+echo $html | grep nofollow | sed 's/<[^>]*>//g'
+
+for url in $urls; do
+  url=http://www.ascii2d.net${url}
+  curl -s $url | grep -A 20 -e 'div class=.\(ch2\|moeren\)' | sed 's/<[^>]*>//g'
+done

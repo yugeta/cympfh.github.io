@@ -15,6 +15,32 @@ var OL = document.createElement('ul');
   OL.appendChild(LI);
 }());
 
+(function NGRAM_THIS() {
+  var LI = document.createElement('li');
+  var IN = document.createElement('input');
+  IN.type = 'text';
+  IN.onkeyup = function() {
+    var text = IN.value;
+    if (text.length > 1) {
+      text = text.replace(/　/g, ' ');
+      text = text.replace(/  /g, ' ');
+      text = text.replace(/  /g, ' ');
+      ngram_filter(text.split(' '));
+    } else {
+      clear_filter();
+    }
+  }
+  random_select = function() {
+    var idx = Math.random() * images.length | 0;
+    image_select(idx);
+    freeze();
+  };
+  LI.innerHTML = '<b>FILTER</b>';
+  LI.appendChild(IN);
+  OL.appendChild(LI);
+
+}());
+
 (function HELP_THIS() {
   var LI = document.createElement('li');
   LI.innerHTML = '<b>HELP</b>';
@@ -40,7 +66,7 @@ list.forEach(function(filename, idx) {
     freeze();
   });
   OL.appendChild(LI);
-  images[idx].elem = OL;
+  images[idx].elem = LI;
 });
 
 L.appendChild(OL);

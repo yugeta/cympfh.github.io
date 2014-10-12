@@ -17,6 +17,12 @@ function image_select(idx) {
     img_window.text.value =
     resolve(images[idx].src);
 
+  img_window.main.onclick = function() {
+    if (console && console.log)
+      console.log(img_window.main.src, '_blank');
+    open(img_window.main.src, '_blank');
+  };
+
   // previous
   var jdx = idx - 1;
   while (true) {
@@ -27,6 +33,7 @@ function image_select(idx) {
   img_window.prev.src = resolve(images[jdx].src);
 
   img_window.prev.onclick = function() {
+    freezing = false;
     image_select(jdx);
   }
 
@@ -40,6 +47,7 @@ function image_select(idx) {
   img_window.next.src = resolve(images[kdx].src);
 
   img_window.next.onclick = function() {
+    freezing = false;
     image_select(kdx);
   }
 

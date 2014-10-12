@@ -1,0 +1,87 @@
+#!/usr/bin/env coffee
+
+fs = require 'fs'
+desc_list = process.argv[2]
+out = process.argv[3]
+
+if not desc_list
+  console.warn './% [desc_list]'
+  process.exit 1
+
+if not out
+  out = '/tmp/datum.js'
+  console.warn 'not specified output (default: /tmp/datum.js)'
+
+ng_keywords = [
+  'に画像のするためのものなので'
+  '差分やコラージュを検出するためのものなので、過度な期待はしないでください'
+  '似ているかもしれない画像'
+  'したらば掲示板'
+  'お願いします'
+  '似ている画像'
+  '詳細を登録'
+  '二次元画像'
+  'キャッシュ'
+  'ランキング'
+  '右クリック'
+  '画像のパス'
+  'お知らせ'
+  'スレッド'
+  '上に戻る'
+  '過去ログ'
+  '実験検索'
+  '名無し'
+  '最近の'
+  '萌え連'
+  '保存'
+  '広告'
+  '説明'
+  '詳細'
+  '検索'
+  '拡張'
+  '総合'
+]
+
+get_ngram = (file) ->
+
+  table = {}
+  count = (gram) ->
+    if table[gram]?
+      ++table[gram]
+    else
+      table[gram] = 1
+
+  ls = fs.readFileSync file, 'utf8'
+  text =
+    ls.split(/\r\n/).join ''
+      .replace(/\s/g, '')
+      .replace(/[0-9a-zA-Z\:\/\.\\\-\&\^\(\)]+/g, '')
+      .replace(/[■□（）【】]+/g, '')
+
+
+  for kw in ng_keywords
+    text = text.replace(new RegExp(kw, 'g'), '')
+
+  gram = (n) ->
+    I = [0 ... text.length - n]
+    for i in I
+      count text[i ... i+n]
+
+  gram 2
+  gram 3
+
+  table
+
+fs.writeFileSync out, "ngram = [\n"
+
+fs.readFileSync(desc_list, 'utf8')
+  .split '\n'
+  .slice 0, -1
+  .forEach (desc) ->
+    console.warn desc
+    table = get_ngram "desc/#{desc}"
+    fs.appendFileSync out, "#{JSON.stringify table},\n"
+
+fs.appendFileSync out, '];'
+
+# vim: set ft=coffee:
