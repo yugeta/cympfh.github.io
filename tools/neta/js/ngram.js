@@ -33,10 +33,12 @@ function filter(qs) {
 
   var ret = [];
 
-  var thresh = qs.length * 2;
+  var thresh = 10;
+  //qs.map(function(t){return t.length}).reduce(function(x,y){return x+y});
+
   var N = ngram.length;
   var weight = function (k) {
-    return k*k;
+    return 1;
   };
 
   for (var l=0; l<N; ++l) { // l-th image
@@ -46,19 +48,22 @@ function filter(qs) {
     for (var i=0; i<qs.length; ++i) {
 
       // k-gram
-      for (var k=2; k <= 4; ++k) {
+      for (var k=1; k <= 4; ++k) {
         var grams = make_ngram(qs[i], k);
         var I = grams.length;
         for (var j=0; j < I; ++j) {
           if (img[grams[j]]) {
-            score += img[grams[j]] * weight(k);
+            d_score = img[grams[j]];
+            score += d_score;
+            debug(images[l].src, grams[j], '+=', d_score, ' // threshold = ', thresh);
           }
         }
       }
 
     }
 
-    if (score > thresh) {
+    if (score >= thresh) {
+      debug(images[l].src, 'thresh,score =', thresh, score);
       ret.push(l);
     }
   }

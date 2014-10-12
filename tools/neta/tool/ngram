@@ -55,7 +55,7 @@ get_ngram = (file) ->
   text =
     ls.split(/\r\n/).join ''
       .replace(/\s/g, '')
-      .replace(/[0-9a-zA-Z\:\/\.\\\-\&\^\(\)]+/g, '')
+      .replace(/[．、。\:\/\.\\\-\&\^\(\)]+/g, '')
       .replace(/[■□（）【】]+/g, '')
 
 
@@ -63,26 +63,29 @@ get_ngram = (file) ->
     text = text.replace(new RegExp(kw, 'g'), '')
 
   gram = (n) ->
-    I = [0 ... text.length - n]
+    I = [0 .. text.length - n]
     for i in I
       count text[i ... i+n]
 
+  gram 1
   gram 2
   gram 3
   gram 4
 
   table
 
-fs.writeFileSync out, "ngram = [\n"
+fs.writeFileSync out, "[\n"
 
-fs.readFileSync(desc_list, 'utf8')
-  .split '\n'
-  .slice 0, -1
-  .forEach (desc) ->
-    console.warn desc
+descs =
+  fs.readFileSync(desc_list, 'utf8')
+    .split '\n'
+    .slice 0, -1
+
+descs
+  .forEach (desc, idx) ->
     table = get_ngram "desc/#{desc}"
-    fs.appendFileSync out, "#{JSON.stringify table},\n"
+    fs.appendFileSync out, "#{JSON.stringify table}#{if idx is (descs.length-1) then '' else ',' }\n"
 
-fs.appendFileSync out, '];'
+fs.appendFileSync out, ']'
 
 # vim: set ft=coffee:

@@ -8,5 +8,6 @@ imagelist:
 
 ngram_:
 	ls -1 desc > /tmp/desc_list
-	./tool/ngram /tmp/desc_list ./ngram/datum.js
+	./tool/ngram /tmp/desc_list ./ngram/ngram.json
+	./tool/tfidf ../ngram/ngram.json ./ngram/datum.js
 

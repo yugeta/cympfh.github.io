@@ -21,7 +21,7 @@ var OL = document.createElement('ul');
   IN.type = 'text';
   IN.onkeyup = function() {
     var text = IN.value;
-    if (text.length > 1) {
+    if (text.length > 0) {
       text = text.replace(/　/g, ' ');
       text = text.replace(/  /g, ' ');
       text = text.replace(/  /g, ' ');

@@ -1,0 +1,46 @@
+#!/usr/bin/env coffee
+
+fs = require 'fs'
+
+docs = require process.argv[2]
+output = process.argv[3]
+
+D = docs.length
+
+# memorize this when slow
+count_document = (w) ->
+  c = 0
+  for doc in docs
+    ++c if doc[w]?
+  
+  switch
+    when c < 5 then c
+    when c < 30 then 30
+    when c < 200 then 200
+
+fs.writeFileSync output, 'ngram = [\n'
+
+for i in [0 ... docs.length]
+  obj = {}
+  
+  # sum = 0
+  # for w of docs[i]
+  #   sum += docs[i][w]
+  # for w of docs[i]
+  #   docs[i][w] /= sum
+
+  for w of docs[i]
+    #tf = docs[i][w]
+    tf = 1
+    c = count_document w
+    idf = Math.log (D / c)
+    #console.warn w, c, idf
+    obj[w] = tf * idf
+
+    #delete obj[w] if obj[w] < 5
+
+  fs.appendFileSync output, "  #{JSON.stringify obj}#{if i is docs.length - 1 then '' else ','}\n"
+
+fs.appendFileSync output, "]"
+
+# vim: set ft=coffee:
