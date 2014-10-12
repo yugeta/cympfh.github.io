@@ -23,7 +23,7 @@ function clear_filter() {
 function make_ngram(text, n) {
   I = text.length;
   var ret = [];
-  for (var i=0; i<I-n; ++i) {
+  for (var i=0; i<=I-n; ++i) {
     ret.push(text.slice(i, i+n));
   }
   return ret;

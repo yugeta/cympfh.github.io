@@ -41,15 +41,6 @@ var OL = document.createElement('ul');
 
 }());
 
-(function HELP_THIS() {
-  var LI = document.createElement('li');
-  LI.innerHTML = '<b>HELP</b>';
-  LI.addEventListener('mousedown', function() {
-    HELP.style.opacity = 0.9;
-  });
-  OL.appendChild(LI);
-}());
-
 list.forEach(function(filename, idx) {
   var LI = document.createElement('li');
   LI.innerHTML = filename;
