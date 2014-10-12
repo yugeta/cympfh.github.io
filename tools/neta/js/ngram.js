@@ -31,32 +31,38 @@ function make_ngram(text, n) {
 
 function filter(qs) {
 
-  var weight = {
-    '2': 2,
-    '3': 3
-  };
   var ret = [];
 
+  var thresh = qs.length * 9;
   var N = ngram.length;
+  var weight = function (k) {
+    return k*k;
+  };
+
   for (var l=0; l<N; ++l) { // l-th image
     var img = ngram[l];
     var score = 0;
 
     for (var i=0; i<qs.length; ++i) {
-      for (var k=2; k <= 4; ++k) {
+      for (var k=1; k <= 4; ++k) {
         var grams = make_ngram(qs[i], k);
         var I = grams.length;
         for (var j=0; j < I; ++j) {
-          if (img[grams[j]]) score += img[grams[j]] * weight[k];
+          if (img[grams[j]]) {
+            score += img[grams[j]] * weight(k);
+          }
         }
       }
     }
-    if (score > 1) {
+
+    if (score >= thresh) {
       ret.push(l);
     }
   }
+
   if (console && console.log) {
     console.log("filter of ", qs, "=>", ret);
   }
+
   return ret;
 }

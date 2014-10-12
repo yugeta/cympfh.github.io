@@ -67,9 +67,10 @@ get_ngram = (file) ->
     for i in I
       count text[i ... i+n]
 
+  gram 1
   gram 2
   gram 3
-  gram 4
+  #gram 4
 
   table
 
