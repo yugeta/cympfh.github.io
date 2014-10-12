@@ -33,7 +33,7 @@ function filter(qs) {
 
   var ret = [];
 
-  var thresh = qs.length * 9;
+  var thresh = qs.length * 2;
   var N = ngram.length;
   var weight = function (k) {
     return k*k;
@@ -44,7 +44,9 @@ function filter(qs) {
     var score = 0;
 
     for (var i=0; i<qs.length; ++i) {
-      for (var k=1; k <= 4; ++k) {
+
+      // k-gram
+      for (var k=2; k <= 4; ++k) {
         var grams = make_ngram(qs[i], k);
         var I = grams.length;
         for (var j=0; j < I; ++j) {
@@ -53,9 +55,10 @@ function filter(qs) {
           }
         }
       }
+
     }
 
-    if (score >= thresh) {
+    if (score > thresh) {
       ret.push(l);
     }
   }
