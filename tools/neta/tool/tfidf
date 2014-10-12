@@ -14,7 +14,7 @@ count_document = (w) ->
     ++c if doc[w]?
   
   switch
-    when c < 5 then c
+    when c < 20 then (c/2)
     when c < 30 then 30
     when c < 200 then 200
 
@@ -30,7 +30,6 @@ for i in [0 ... docs.length]
   #   docs[i][w] /= sum
 
   for w of docs[i]
-    #tf = docs[i][w]
     tf = 1
     c = count_document w
     idf = Math.log (D / c)
