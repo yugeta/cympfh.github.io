@@ -11,3 +11,7 @@ ngram_:
 	./tool/ngram /tmp/desc_list ./ngram/ngram.json
 	./tool/tfidf ../ngram/ngram.json ./ngram/datum.js
 
+git:
+	git add -A
+	git commit -m "`date`"
+	git push

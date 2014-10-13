@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[ $# -ne 1] && echo "./% [url]" && exit 1
+[ $# -ne 1 ] && echo "./% [url]" && exit 1
 
 URL=$1
 FN=${URL##*/}
