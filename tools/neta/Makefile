@@ -1,4 +1,7 @@
-all: imagelist ngram_
+all: index imagelist ngram_
+
+index:
+	sed "s/MD5/$$(git log | head -1 | cut -d' ' -f2)/" index.html.template > index.html
 
 imagelist:
 	ls -1 img/ > js/list
