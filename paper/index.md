@@ -246,6 +246,9 @@
 :unread  
 [:url](http://www.kamalnigam.com/papers/maxent-ijcaiws99.pdf)
 
-
-
+## Class-based n-gram models of natural language
+:NLP
+:clustering
+[:url](http://dl.acm.org/citation.cfm?id=176316)
+[:memo](memo/brown-class-model.md)
 

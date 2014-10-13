@@ -34,7 +34,7 @@ function filter(qs) {
   var ret = [];
 
   var thresh = 10;
-  //qs.map(function(t){return t.length}).reduce(function(x,y){return x+y});
+  thresh *= Math.pow(qs.length, 1.48);
 
   var N = ngram.length;
   var weight = function (k) {

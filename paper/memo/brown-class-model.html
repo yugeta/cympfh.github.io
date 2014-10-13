@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/m.css">
+</head>
+<body>
+<h1 id="class-based-n-gram-models-of-natural-language">Class-based n-gram models of natural language</h1>
+<p>Brown+ら．</p>
+<p><a href="memo/learning-phrase-patterns.md">Learning phrase patterns for Text Classification</a> 中で、</p>
+<blockquote>
+<p>単語のクラスを1次マルコフモデル尤度を最大化することによって自動分類した</p>
+</blockquote>
+<p>とあって引用されていた．</p>
+<h1 id="introduction">Introduction</h1>
+<p>noisy channel 経由で来た、歪んだ英語の文章を元に戻したい．これが第一の議論である． それに関与することとして、単語にクラスを当てはめることを統計的にしたい．これが第二の議論である．</p>
+<h1 id="言語モデル">言語モデル</h1>
+<p>次のような言語モデルを考える．</p>
+<p>English text は語の列．</p>
+<pre class="sourceCode python"><code class="sourceCode python">w[<span class="dv">1</span>:k]</code></pre>
+<p>これを、条件付き確率</p>
+<pre class="sourceCode python"><code class="sourceCode python">Pr(w[k] | w[<span class="dv">1</span>:k<span class="dv">-1</span>])</code></pre>
+<p>で特徴づける． 文章全体が出来上がる確率はこうだ．</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">[</mo><mn>1</mn><mo>:</mo><mi>k</mi><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo>=</mo><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo>⋅</mo><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo><mo stretchy="false">∣</mo><mi>w</mi><mo stretchy="false">[</mo><mn>1</mn><mo>:</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo>⋅</mo><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">[</mo><mn>3</mn><mo stretchy="false">]</mo><mo stretchy="false">∣</mo><mi>w</mi><mo stretchy="false">[</mo><mn>1</mn><mo>:</mo><mn>2</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo>⋯</mo><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo><mo stretchy="false">∣</mo><mi>w</mi><mo stretchy="false">[</mo><mn>1</mn><mo>:</mo><mi>k</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo></mrow></math></p>
+<blockquote>
+<p>python-like なつもりで書いたけど、</p>
+<pre class="sourceCode python"><code class="sourceCode python">w[i:j]</code></pre>
+<p>は、列</p>
+<pre class="tex"><code>{w_i, w_{i+1}, ..., w_j}</code></pre>
+を表す． ここで <code>i &lt;= j</code> を暗黙的に前提する．
+</blockquote>
+
+<p>意味を言えば、<code>w[1:k-1]</code>がhistoryであり、<code>w[k]</code>がpredictionである．</p>
+<h2 id="n-gram">n-gram</h2>
+<p>n-gram language model では、 history の内の最後の <code>(n-1)</code> words だけを見る． それが同じなら同じ history だと見做す．</p>
+<p>すなわち</p>
+<pre class="sourceCode python"><code class="sourceCode python">Pr(w[k] | w[<span class="dv">1</span>:k<span class="dv">-1</span>]) = Pr(w[k] | w[k-n<span class="dv">+1</span> : k<span class="dv">-1</span>])</code></pre>
+<p>とする．ただし <code>k &gt;= n</code> と仮定してる．</p>
+<p>そうでない場合の確率は特別に扱わなければ． 例えば 2-gram model では、 history には <code>V (V-1)</code> 通りある (V = size of vocabulary)． それと別に <code>Pr(w[2] | w[1])</code> が <code>V - 1</code> 通りある．</p>
+<p>ではそれらの確率をどっからもってくるか． training text における最尤推定、すなわち、 数えて割合を出すことをする．</p>
+<p><code>C(w)</code> は training text における <code>w</code> の頻度数．</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo><mo stretchy="false">∣</mo><mi>w</mi><mo stretchy="false">[</mo><mn>1</mn><mo>:</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo>=</mo><mstyle displaystyle="true"><mfrac><mrow><mi>C</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">[</mo><mn>1</mn><mo>:</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mi>w</mi><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo><mo stretchy="false">)</mo></mrow><mrow><msub><mo>∑</mo><mi>w</mi></msub><mi>C</mi><mo stretchy="false">(</mo><mo stretchy="false">[</mo><mn>1</mn><mo>:</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mi>w</mi><mo stretchy="false">)</mo></mrow></mfrac></mstyle></mrow></math></p>
+<p>ここで、<code>w[1:n-1] w</code> は、列の末尾にword を一つ追加した新しい列を意味する．</p>
+<h2 id="interpolated-estimation-jelinek-and-mercer-1980">interpolated estimation (Jelinek and Mercer, 1980)</h2>
+<p>vocabulary は大きければ良い． しかしながら、n-gram の <code>n</code> が増えるにしたがって、指数的に、頻度は減っていく． 単純に、<code>n</code>は大きいほうがモデルの精度としては上がるけれど、 固定された語彙に対しては、信頼性が減っていく．</p>
+<p>interpolated estimation と呼ばれるものは、 いくつかの言語モデル <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><msup><mi>r</mi><mrow><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo></mrow></msup></mrow></math> を構築して、それらをcombineすることで、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo>ʹ</mo></mrow></math> を得る．</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo>ʹ</mo><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">∣</mo><mi>w</mi><mo stretchy="false">[</mo><mn>1</mn><mo>:</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mi>j</mi></munder><msub><mi>λ</mi><mi>j</mi></msub><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">[</mo><mn>1</mn><mo>:</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mi>P</mi><msup><mi>r</mi><mrow><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo></mrow></msup><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">∣</mo><mi>w</mi><mo stretchy="false">[</mo><mn>1</mn><mo>:</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo></mrow></math></p>
+<p>重み <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>λ</mi><mi>j</mi></msub></mrow></math> は EMアルゴリズムで作る．</p>
+<h1 id="word-classes">Word Classes</h1>
+<p>意味的にか、構造的にか、ある語とある語が似ているということがある． <code>(Thursday, Friday)</code> とかね．</p>
+<p>vocabulary <code>V</code>, classes <code>C</code> があって、語 <code>w</code> をclass <code>c</code> に写す写像を <code>pi</code> とする．</p>
+<pre class="sourceCode python"><code class="sourceCode python">pi(w) = c</code></pre>
+<h2 id="n-gram-class-model">n-gram class model</h2>
+<p>写像 <code>pi</code> が既に与えられた上で、クラスを用いた n-gram model を次のように定める．</p>
+<pre class="sourceCode python"><code class="sourceCode python">Pr(w[k] | w[<span class="dv">1</span>:k<span class="dv">-1</span>]) = Pr(w[k] | c[k]) Pr(c[k] | c[<span class="dv">1</span>:k<span class="dv">-1</span>])</code></pre>
+<p>ここで、n-gram とする以上、</p>
+<pre class="sourceCode python"><code class="sourceCode python">Pr(c[k] | c[<span class="dv">1</span>:k<span class="dv">-1</span>]) = Pr(c[k] | c[k-n<span class="dv">+1</span> : k<span class="dv">-1</span>])</code></pre>
+<p>とする．</p>
+<p>training text から、右辺の2つの確率を最尤推定する．</p>
+<p>まず、簡単な 1-gram の場合は、</p>
+<pre class="sourceCode python"><code class="sourceCode python">Pr(w | c) = C(w) / C(c)
+Pr(c) = C(c) / T</code></pre>
+<p>ここで、<code>T</code> は、training text 中の word 数である． training text は、 <code>t[1:T]</code> と書けて、 <code>C(c)</code>は、<code>length(map(pi, t))</code> である．</p>
+<p>2-gramなら、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo><mo stretchy="false">∣</mo><mi>c</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo>=</mo><mstyle displaystyle="true"><mfrac><mrow><mi>C</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mi>c</mi><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo></mrow><mrow><msub><mo>∑</mo><mi>c</mi></msub><mi>C</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mi>c</mi><mo stretchy="false">)</mo></mrow></mfrac></mstyle></mrow></math> となる．</p>
+<h2 id="尤度">尤度</h2>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mi>i</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>T</mi><mo>−</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mi>log</mi><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">[</mo><mn>2</mn><mo>:</mo><mi>T</mi><mo stretchy="false">]</mo><mo stretchy="false">∣</mo><mi>t</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo></mrow></math></p>
+<p>これを尤度とする．1-gram model の下でこれを式変形すると、</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mi>i</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mo>∑</mo><mrow><mi>w</mi><mn>1</mn><mo>,</mo><mi>w</mi><mn>2</mn></mrow></msub><mstyle displaystyle="true"><mfrac><mrow><mi>C</mi><mo stretchy="false">(</mo><mi>w</mi><mn>1</mn><mi>w</mi><mn>2</mn><mo stretchy="false">)</mo></mrow><mrow><mi>T</mi><mo>−</mo><mn>1</mn></mrow></mfrac></mstyle><mi>log</mi><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>c</mi><mn>2</mn><mo stretchy="false">∣</mo><mi>c</mi><mn>1</mn><mo stretchy="false">)</mo><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>w</mi><mn>2</mn><mo stretchy="false">∣</mo><mi>c</mi><mn>2</mn><mo stretchy="false">)</mo></mrow></math></p>
+<p>さらにうわぁーってやると、</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mi>i</mi><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mi>H</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">)</mo><mo>+</mo><mi>I</mi><mo stretchy="false">(</mo><mi>c</mi><mn>1</mn><mo>,</mo><mi>c</mi><mn>2</mn><mo stretchy="false">)</mo></mrow></math> ここで、<code>H</code>はエントロピー、<code>I</code>は相互情報量． <code>w</code> は training text から降ってくるから、</p>
+<p><code>L(pi)</code>を最大化するような<code>pi</code>を選択する、というのは、 相互情報量を最大化するようなクラス分類を選択することになる．</p>
+</body>
+</html>

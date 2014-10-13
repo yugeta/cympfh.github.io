@@ -1,7 +1,6 @@
+DEBUG = true;
 function debug() {
-  /*
-  if (console && console.log) {
+  if (DEBUG && console && console.log) {
     console.log.apply(null, arguments);
   }
-  */
 }

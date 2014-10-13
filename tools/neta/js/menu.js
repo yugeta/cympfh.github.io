@@ -7,6 +7,7 @@ var OL = document.createElement('ul');
   var LI = document.createElement('li');
   LI.innerHTML = '<b>RANDOM</b>';
   random_select = function() {
+    clear_filter();
     var idx = Math.random() * images.length | 0;
     image_select(idx);
     freeze();
@@ -15,11 +16,13 @@ var OL = document.createElement('ul');
   OL.appendChild(LI);
 }());
 
+var filter_by;
+
 (function NGRAM_THIS() {
   var LI = document.createElement('li');
   var IN = document.createElement('input');
   IN.type = 'text';
-  IN.onkeyup = function() {
+  var filter = function () {
     var text = IN.value;
     if (text.length > 0) {
       text = text.replace(/　/g, ' ');
@@ -32,12 +35,13 @@ var OL = document.createElement('ul');
       image_select(idx);
     } else {
       clear_filter();
+      image_select(0);
     }
-  }
-  random_select = function() {
-    var idx = Math.random() * images.length | 0;
-    image_select(idx);
-    freeze();
+  };
+  IN.onkeyup = filter;
+  filter_by = function (w) {
+    IN.value = w;
+    filter();
   };
   LI.innerHTML = '<b>FILTER</b>';
   LI.appendChild(IN);

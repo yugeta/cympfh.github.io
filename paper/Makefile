@@ -5,7 +5,7 @@ memos:
 
 index.html: keywords.js index.md
 	cat index.md footer > /tmp/out.md
-	pandoc -s --css paper.css -i /tmp/out.md -o index.html
+	pandoc -t html5 -s --css paper.css -i /tmp/out.md -o index.html
 
 keywords.js: keywords
 	> $@

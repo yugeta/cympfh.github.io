@@ -14,22 +14,23 @@ keywords = [
 "pattern-language",
 
 "Hoge",
+"audio",
 "hash",
 "search",
-"audio",
 
 "NLP",
-"text-classification",
+"clustering",
 "information-extraction",
 "information-retrieval",
 "opinion-mining",
+"pattern",
 "sentiment",
+"text-classification",
+"thesaurus",
 "word-similarity",
 "wsd",
-"thesaurus",
-"pattern",
 
 "Twitter",
-"hashtag",
 "emoticon",
+"hashtag",
 ]

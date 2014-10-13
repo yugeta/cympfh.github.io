@@ -9,15 +9,24 @@ a {
 }
 
 code {
-  background-color: #fffafa;
+  background-color: #fafaf0;
   padding-left: 2px;
   padding-right: 2px;
 }
 
 pre > code {
-  border-left: double red 5px;
+  border-left: double #dadad0 5px;
   padding-left: 10px;
   display: block;
+}
+
+math {
+  background-color: #fafaf0;
+  border-left: double #dadad0 5px;
+  padding-right: 2px;
+  padding-left: 10px;
+  display: block;
+  text-align: left;
 }
 
 h1:before {
@@ -25,7 +34,7 @@ h1:before {
 }
 h1 {
   font-size: 21px;
-  color: #a00000;
+  color: #111;
   text-decoration: underline;
 }
 h2:before {
@@ -46,5 +55,5 @@ th {
 blockquote {
   border-left: double black 8px;
   padding-left: 10px;
-  background-color: #fff8f8;
+  background-color: #f8f8f8;
 }
