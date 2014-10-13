@@ -68,9 +68,7 @@ function filter(qs) {
     }
   }
 
-  if (console && console.log) {
-    console.log("filter of ", qs, "=>", ret);
-  }
+  debug("filter of ", qs, "=>", ret);
 
   return ret;
 }
