@@ -26,6 +26,10 @@ var OL = document.createElement('ul');
       text = text.replace(/  /g, ' ');
       text = text.replace(/  /g, ' ');
       ngram_filter(text.split(' '));
+
+      var idx = 0;
+      while (images[idx].filtered === false) ++idx;
+      image_select(idx);
     } else {
       clear_filter();
     }
