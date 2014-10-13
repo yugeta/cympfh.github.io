@@ -5,6 +5,8 @@ fs = require 'fs'
 docs = require process.argv[2]
 output = process.argv[3]
 
+save_flg = true
+
 D = docs.length
 
 # memorize this when slow
@@ -33,10 +35,13 @@ for i in [0 ... docs.length]
     tf = 1
     c = count_document w
     idf = Math.log (D / c)
+
     #console.warn w, c, idf
     obj[w] = tf * idf
 
-    #delete obj[w] if obj[w] < 5
+    if save_flg
+      obj[w] = (obj[w] * 100 | 0) / 100
+      delete obj[w] if obj[w] < 1
 
   fs.appendFileSync output, "  #{JSON.stringify obj}#{if i is docs.length - 1 then '' else ','}\n"
 
