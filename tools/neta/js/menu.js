@@ -43,7 +43,6 @@ var OL = document.createElement('ul');
 (function HELP_THIS() {
   var LI = document.createElement('li');
   LI.innerHTML = '<a href="./help.html">HELP</a>';
-  LI.appendChild(IN);
   OL.appendChild(LI);
 }());
 
