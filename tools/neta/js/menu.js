@@ -38,7 +38,13 @@ var OL = document.createElement('ul');
   LI.innerHTML = '<b>FILTER</b>';
   LI.appendChild(IN);
   OL.appendChild(LI);
+}());
 
+(function HELP_THIS() {
+  var LI = document.createElement('li');
+  LI.innerHTML = '<a href="./help.html">HELP</a>';
+  LI.appendChild(IN);
+  OL.appendChild(LI);
 }());
 
 list.forEach(function(filename, idx) {
