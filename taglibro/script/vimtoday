@@ -6,7 +6,7 @@ dir=`date +"%Y/%m"`
 file=`date +"%d.md"`
 path="$dir/$file"
 
-if [ -e $file ]; then
+if [ -e $path ]; then
   cd $dir; vim $file
 else
   > $path
