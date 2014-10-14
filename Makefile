@@ -7,7 +7,7 @@ index:
 	echo "</pre>" >> index.html
 
 # lsしてindexにするだけ
-pres: template.pre dots.pre
+pres: template.pre
 
 %.pre: % 
 	> $^/index.html

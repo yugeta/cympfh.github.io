@@ -1,4 +1,3 @@
-dots/
 tools/
 template/
 c++/
