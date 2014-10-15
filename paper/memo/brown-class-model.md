@@ -143,7 +143,7 @@ $L(pi) = (T - 1)^{-1} \log Pr(t[2:T] | t[1])$
 
 これを尤度とする．2-gram model の下でこれを式変形すると、
 
-$L(pi) = \sum_{w1, w2} \dfrac{C(w1 w2)}{T-1} \log Pr(c2 | c1) Pr(w2 | c2)$
+$L(pi) = \sum_{w_1, w_2} \dfrac{C(w_1 w_2)}{T-1} \log Pr(c_2 | c_1) Pr(w_2 | c_2)$
 
 さらにうわぁーってやると、
 
@@ -154,9 +154,73 @@ $L(pi) = -H(w) + I(c1, c2)$
 `L(pi)`を最大化するような`pi`を選択する、というのは、
 相互情報量を最大化するようなクラス分類を選択することになる．
 
+## Prictical
 
+We know of no practical method to find max `I`, or the `I` is the maximum or not.
 
+### greedy algorithm
 
+- goal:
+classifying `V` words into `C` classes (`V > C`)
 
+- initially, distincts words to each classes, that is there are `V` classes
+- do class merge `V-C` times (in a step, one merge be done)
+- Then, we get `C` classes remained
 
+The step is described recursively as follows.
+After `V-k` merges, we got `k` classes
+
+```
+C_k(1), C_k(2), ..., C_k(k)
+```
+
+we think of the merge of `C_k(i)` with `C_k(j)`
+where `1 <= i < j <= k`.
+
+```python
+p_k(l, m) = Pr(C_k(l), C_k(m))
+```
+
+This is the probability of that
+the class `C_k(m)` follows after the class `C_k(l)`
+in the text.
+
+let
+$pl_k(l) = \sum_m p_k(l, m)$
+
+let
+$pr_k(m) = \sum_l p_k(l, m)$
+
+let
+$q_k(l, m) = p_k(l, m) \log \dfrac{p_k(l, m)}{pl_k(l) pr_k(m)}$
+
+The mutual information of the `k` classes is denoted by
+
+$I_k = \sum_{l,m} q_k(l, m)$
+
+The new class merged `C_k(i)` and `C_k(j)` is denoted by `i + j`.
+
+$p_k(i+j, m) = p_k(i, m) + p_k(j, m)$
+$q_k(i+j, m) = p_k(i+j,m) \log \dfrac{p_k(i+j,m)}{pl_k(i+j) pr_k(m)}$
+
+and the mutual information after the merge is
+
+$I_k(i,j) = I_k - s_k(i) - s_k(j) + q_k(i,j) + q_k(j,i) + q_k(i+j,i+j) + \sum_{l \ne i,j} q_k(l, i+j) + \sum_{m \ne i,j} q_k(i+j,m)$
+
+where
+$s_k(i) = \sum_l q_k(l, i) + \sum_m q_k(i, m) - q_k(i,i)$
+
+So, we will find the pair `(i,j)`
+such that the mutual information loss
+$L_k(i,j) = I_k - I_k(i,j)$
+is least.
+
+### Classes gotten with this alogrithm
+
+- Friday, Monday, ... Sunday, weekends
+- June, March, July ...
+- people guys folks fellows ...
+- down, backwards, ashore, sideways ...
+- water, gas, coal, liquid ...
+- had, hadn't hath would've could've ...
 
