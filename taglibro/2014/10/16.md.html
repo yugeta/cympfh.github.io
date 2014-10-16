@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="thu-oct-16-233425-jst-2014">Thu Oct 16 23:34:25 JST 2014</h1>
+<p>Arch linux を入れた。</p>
+<ul class="incremental">
+<li>:how install arch linux</li>
+<li>:deskctop ware, i3 aka i3wm</li>
+<li>:swapfile to hibernate</li>
+<li>:introduce Japanese IM</li>
+</ul>
+<blockquote>
+<p>しつこいくらい言ってるけど、なにか成功した人間は普通、面倒だとか忠実に再現できないといった理由から、 成功に至るまでの道を正確に書き残さない。 それでもあとからその道をなぞりたい人は、そういった書き残しが助けになる。 だからできるだけ書こう。 これは、あまり強くない私からのお願いです。</p>
+</blockquote>
+<p>ネットに転がっている情報を随分と利用した。 それでも、それらは断片的であったり、 自分の場合に当てはめていくつかの語を置き換える作業が必要だったりする。 これはもちろん当然だ。 ここには、自分の場合だけを書くことにする。</p>
+<h2 id="install-arch-linux">install Arch linux</h2>
+<p>あーち・りなっくすを入れることにした。 Debianが良かったのだけれど、インストールの最初で、無線LANを認識できないと宣ったから。</p>
+<ul class="incremental">
+<li>参考; <a href="http://qiita.com/macchaberrycream/items/1dfabe8b710dc638e3f9">Arch Linux インストール から Xfce 快適環境を構築するまで - Qiita</a></li>
+</ul>
+<h3 id="disk-の作成">disk の作成</h3>
+<p>ディストリビューションのisoファイルは <a href="https://www.archlinux.org/download/">Arch Linux - Downloads</a> にある。私はいつもOSはUSBメモリから入れている。</p>
+<p>ダウンロードしたisoファイルが <code>~/Downloads/archlinux.iso</code> とする。 USBメモリを、たとえば、 <code>/dev/sdc</code> とする。</p>
+<p>私はいつも、挿したUSBメモリが <code>/dev/sd何</code> であるかを見つけるのに、 USBメモリを挿してない状態の <code>ls /dev/sd*</code> と、挿した後のそれとの diff を見ることで確認している。</p>
+<p>このとき、</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># dd if=~/Downloads/archlinux.iso of=/dev/sdc</span></code></pre>
+<p>によって、USBメモリがインストールディスクとして使える。<code>dd</code>コマンドはブロックサイズを指定することで、書き込みが高速になる。 <code>man dd</code> によれば、</p>
+<blockquote>
+<pre><code>  ibs=BYTES
+          read up to BYTES bytes at a time (default: 512)</code></pre>
+</blockquote>
+<p>とある。めいっぱい、大きな数字を指定すればよい。</p>
+<h3 id="isoの起動">isoの起動</h3>
+<p>インストールさしたいPCにUSBメモリを挿して起動すれば、Arch linux が起動する。 せずに、すでに入っているOSが起動するならば、 もう一度、USBメモリを挿した状態で、起動して、F2とかF11とかF12とかCtrl+I とかで、さっとBIOS 設定画面に入って、 bootの優先順位を、USB を最高位にする。</p>
+<ul class="incremental">
+<li>参考; <a href="http://www.pc-master.jp/sousa/k-jyuni.html">BIOS起動順位の変更　パソコン初心者講座</a></li>
+</ul>
+<h3 id="インストール作業">インストール作業</h3>
+<p>インストールは、他のディストリビューションのように、次へを無闇にクリックしてれば完了するものではない。 大変に残念だ。 <code>archiso</code>というhostnameの、rootとしてログインした端末が表示される。 すべてCUIの作業で、インストールを行う。</p>
+<p>まず、キーボードはUS配列 (ASCII配列?) としてあるので、日本語配列を使ってる人間は、 操作が困るようなら、(ほんというと困らないはずだけど)</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># loadkeys jp106 </span></code></pre>
+<p>とする。あと、大量のソフトウェアをダウンロードすることを行うので、ネットの接続が必要。 有線は勝手に認識されるらしい。 私は無線LANしかないので、次のように、</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># wifi-menu # 無線をつなぐ。グラフィカルな画面で接続設定が行われる</span></code></pre>
+<p>次にパーティション分け。 私の場合を、説明する。 必要なのは、３つか、あるいは４つのパーティション。 今回は３つにした。</p>
+<ol class="incremental" type="1">
+<li>BIOS boot (1007KB)</li>
+<li>boot (100MB + alpha)</li>
+<li>/home (remain)</li>
+</ol>
+<p>4つめとして、 swap (3GB) があってもよかった。 メモリが足りないと、swapは必要になるし、 これは、考えが足りてなかったけれど、hibernateさせるのにもswapは当然使われる。 そのためのswapのサイズは、RAMの中をそのまま書き込むのだから、RAMの同じサイズとも思われそうだけど、 実際は、2/5だとか、半分だとか。</p>
+<p>swapパーティションがなくて、hibernateさせる場合は、swapfile を使うことになる。後述する。</p>
+<p>上の、1-3のパーティションを作成したいのだった。 パーティションを書くツールはいくつかあって、 <code>fdisk</code> とか <code>cgdisk</code> とか <code>gdisk</code> とかで、今回は <code>gdisk</code>.</p>
+<ul class="incremental">
+<li>参考; <a href="http://luna2-linux.blogspot.jp/2011/10/gdisk-fedora-16-gpt.html">ALL about Linux: gdisk コマンド （Fedora 16 からは GPT がデフォルト）</a></li>
+</ul>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># gdisk /dev/sda</span>
+<span class="kw">p</span></code></pre>
+<pre><code>1. うんたら
+2. うんたら
+3. うんたら</code></pre>
+<p>すでに3つのパーティションが存在してたけど、綺麗にやりたいので、一旦全部消す</p>
+<pre><code>d
+1
+d
+2
+d
+3</code></pre>
+<p>そんで作成</p>
+<pre><code>n
+1
+
+1007K
+ef02 # BIOS boot だけ、正しくタイプを指定
+
+n
+2
+
+101M
+
+n
+3
+
++0 # 残り全部
+
+w # 以上の設定で実際に書く
+q # quit</code></pre>
+<p>以上で、パーティション、/dev/sda1, /dev/sda2, /dev/sda3 ができた。 これらを ext4 で初期化する。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># mkfs.ext4 /dev/sda1</span>
+<span class="co"># mkfs.ext4 /dev/sda2</span>
+<span class="co"># mkfs.ext4 /dev/sda3</span></code></pre>
+<p>これらのうち、/home用パーティションを <code>/mnt</code> に、BIOS boot用パーティションを <code>/mnt/boot</code> にマウントして、これからようやくインストール作業を行う。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># mkdir /mnt/boot</span>
+<span class="co"># mount /dev/sda3 /mnt      # 今の場合、Number 3 が/home用</span>
+<span class="co"># mount /dev/sda2 /mnt/boot # 今の場合、Number 2 がBIOS boot</span>
+<span class="co"># pacstrap /mnt base base-devel</span></code></pre>
+<p>最後行で、大量の基本コマンドのダウンロードが行われる。</p>
+<h3 id="起動設定">起動設定</h3>
+<p>BIOSから、/dev/sda2, /dev/sda3 がちゃんとマウントされるように fstabの設定を次のようにする。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab</span></code></pre>
+<p>すでに、<code>/mnt</code>にはArch linux がインストールされている。 その中に次のようにしてログインする。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># arch-chroot /mnt</span>
+<span class="kw">%</span></code></pre>
+<p>プロンプトが小さくなる。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> sed -i -e <span class="st">&#39;s/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/&#39;</span> -e <span class="st">&#39;s/^#ja_JP.UTF-8 UTF-8/ja_JP.UTF-8 UTF-8/&#39;</span> /etc/locale.gen
+<span class="kw">%</span> locale-gen</code></pre>
+<p>sedで書いたけど、nanoなりviなりのエディタで、コメントアウトすればいい。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> echo LANG=en_US.UTF-8 <span class="kw">&gt;</span> /etc/locale.conf
+<span class="kw">%</span> export LANG=en_US.UTF-8
+<span class="kw">%</span> echo KEYMAP=us <span class="kw">&gt;</span> /etc/vconsole.conf
+<span class="kw">%</span> ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+<span class="kw">%</span> hwclock --systohc --utc
+<span class="kw">%</span> echo <span class="st">&quot;host name&quot;</span> <span class="kw">&gt;</span> /etc/hostname
+<span class="kw">%</span> passwd
+<span class="kw">(root</span> password<span class="kw">)</span>
+<span class="kw">(root</span> password again<span class="kw">)</span></code></pre>
+<h3 id="introduce-grub2">introduce GRUB2</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> pacman -S os-prober
+<span class="kw">%</span> pacman -S grub
+<span class="kw">%</span> grub-install --recheck /dev/sda
+<span class="kw">%</span> grub-mkconfig -o /boot/grub/grub.cfg <span class="co"># !important</span>
+<span class="kw">%</span> acman -S wireless_tools wpa_supplicant wpa_actiond dialog
+<span class="kw">%</span> systemctl enable netctl-auto@wlp2s0
+<span class="kw">%</span> systemctl enable dhcpcd.service</code></pre>
+<h3 id="後片付け">後片付け</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> exit
+<span class="co"># umount -R /mnt</span>
+<span class="co"># reboot</span></code></pre>
+<p>適当な、Intelとか画面に表示されてるタイミングでUSBメモリを外す。 GRUB2画面が出、Archlinuxが起動する。 <code>root/(password)</code> でログインできる。</p>
+<h3 id="個人設定">個人設定</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># wifi-menu</span>
+<span class="co"># useradd -m -g wheel cympfh</span>
+<span class="co"># passwd user</span>
+<span class="kw">(user</span> password<span class="kw">)</span>
+<span class="kw">(user</span> password again<span class="kw">)</span>
+<span class="co"># visudo</span>
+<span class="kw">s</span>/^<span class="kw">%wheel</span> ALL=(ALL) <span class="kw">ALL/wheel</span> ALL=(ALL) <span class="kw">ALL/</span>
+<span class="co"># pacman -S xorg-server xorg-server-utils xorg-xinit xorg-xclock xterm</span>
+<span class="co"># pacman -S xorg-drivers</span>
+<span class="co"># pacman -S xf86-video-intel</span>
+<span class="co"># # 参考; lspci | grep VGA</span>
+<span class="co"># # 参考; https://wiki.archlinux.org/index.php/Xorg#Driver_installation</span>
+<span class="co"># pacman -S slim arhlinux-themes-slim slim-themes</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># nano /etc/slim.conf</span></code></pre>
+<pre><code>login_cmd exec /bin/zsh -l ~/.xinitrc %session
+daemon yes
+current_theme archlinux-simplyblack</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># systemctl enable slim.service</span>
+<span class="co"># reboot</span></code></pre>
+<p>そろそろ、userでログインする。</p>
+<h2 id="i3-dropbox-feh-fcitx-の導入">i3, dropbox, feh, fcitx の導入</h2>
+<ul class="incremental">
+<li>i3: デスクトップ環境 (デスクトップとは言わないかも)</li>
+<li>dropbox: 私にとっては必要</li>
+<li>feh: i3における壁紙の設定</li>
+<li>fctix: iBusの代替品として。</li>
+</ul>
+<pre><code>% pacman -S i3-wm dropbox feh
+% pacman -S fcitx fcitx-mozc fcitx-configtool
+% cat &lt;&lt; EOM &gt; ~/.xinitrc
+setxkbmap us -option ctrl:nocaps
+sh .fehbg
+dropboxd &amp;
+
+export GTK_IM_MODULE=fcitx
+export XMODIFIERS=&quot;@im=fcitx&quot;
+export QT_IM_MODULE=fcitx
+export DefaultIMModule=fcitx
+
+exec i3</code></pre>
+<p>また、ログオフしてログインしなおす。 slimのためにログイン画面はグラフィカルになっていて、 i3としてログインできる。 i3は初回起動時、設定ファイル <code>.i3/config</code> を作成するかと聞いてくるので、 作ってもらう。</p>
+<h3 id="im">IM</h3>
+<ul class="incremental">
+<li>参考; <a href="http://arch2013.hatenablog.com/entry/2013/05/16/221654">fcitx-mozc - arch linux(はてな)</a></li>
+</ul>
+<p>IMであるところの、<code>fcitx</code> は、先の .xinitrc から呼んでいないので起動していない。 そこから呼んだところで、うまく動かなかった。.i3/cofigから呼ぶことにする。</p>
+<p>一番最後くらいの行にでも</p>
+<pre><code>echo exec --no-startup-id fcitx &gt;&gt; ~/.i3/config</code></pre>
+<p>とする。また次回ログインすると、fcitxが動いて働く。</p>
+<h3 id="壁紙の設定">壁紙の設定</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">feh</span> --bg-fill /path/wallpaper.jpg</code></pre>
+<p>とすると、壁紙になる。あと、~/.fehbg というファイルが自動で生成される。 これは .xinitrc から、shスクリプトとして実行することで、 起動時に壁紙として設定される。 <code>feh</code>へのオプションとして、 <code>--bg-fill</code> のかわりに、 <code>--bg-max</code> とか、あといくつかある。 (参考; <code>man feh</code>)</p>
+<h2 id="flashplayer-on-the-browser">Flashplayer on the browser</h2>
+<p>browser は <code>firefox</code> が入ってる。 Adobe近世のFlash Player は次のように入れて、不自由に動画を再生できる。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pacman</span> -S extra/flashplugin</code></pre>
+<h2 id="swapfile-to-hibernate">swapfile to hibernate</h2>
+<p>hibernate (suspend into disk) や、suspend (suspend into RAM) をするのに、 今まで、 <code>pm-hibernate</code>, <code>pm-suspend</code> コマンドを使っていた。 これは次のパッケージに含まれる。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pacman</span> -S pm-utils</code></pre>
+<p>さて、おそらく <code>sudo pm-hibernate</code> としても、うまくハイバーネートしない。</p>
+<ul class="incremental">
+<li>参考;
+<ul class="incremental">
+<li><a href="https://wiki.debian.org/Hibernation/Hibernate_Without_Swap_Partition">Hibernation/Hibernate_Without_Swap_Partition - Debian Wiki</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Suspend_and_hibernate#About_swap_partition.2Ffile_size">Suspend and hibernate - ArchWiki</a></li>
+</ul></li>
+</ul>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> fallocate -l <span class="kw">`/sys/power/image_size`</span> /swap
+<span class="kw">sudo</span> echo <span class="st">&#39;/swap   swap    swap    defaults        0       0 &#39;</span> <span class="kw">&gt;</span> /etc/fstab
+<span class="kw">sudo</span> mkswap /swap
+<span class="kw">sudo</span> swapon /swap</code></pre>
+<p>これで、<code>/swap</code>が、スワップ領域として使われるようになる。 次に、GRUB2に、<code>/swap</code>を再開位置とさせる設定を行う。</p>
+<p>次のコマンド出力の、ext 0 の、physical_offsetを読んでメモしておく。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> filefrag -v /swap</code></pre>
+<p>私の場合は、</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> filefrag -v /swap <span class="kw">|</span> <span class="kw">head</span> -4 <span class="kw">|</span> <span class="kw">tail</span> -1 <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;{print $4}&#39;</span>
+<span class="kw">276480..</span></code></pre>
+<p>というわけで、 <code>276480</code> がオフセット位置になる。 数字のオーダーは人によって結構違う。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudoedit</span> /etc/default/grub</code></pre>
+<pre><code>GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet&quot;</code></pre>
+<p>っていう行が割と頭にあるので、</p>
+<pre><code>GRUB_CMDLINE_LINUX_DEFAULT=&quot;resume=/dev/sda3 resume_offset=276480 acpi_sleep=nonvs&quot;</code></pre>
+<p>とする。 <code>/dev/sda3</code> は、私の、ホームディレクトリのあるパーティション。 GRUBの設定を書き直したので、最後に必ず</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> grub-mkconfig -o /boot/grub/grub.cfg </code></pre>
+<p>として完了する。</p>
+<p>書き残したことあるかな。 あったら追記しよう。</p>
+</body>
+</html>
