@@ -15,6 +15,4 @@ ngram_:
 	./tool/tfidf ../ngram/ngram.json ./ngram/datum.js
 
 git:
-	git add -A .
-	git commit -m "`date`"
-	git push
+	cd ../..; make git
