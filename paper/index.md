@@ -252,3 +252,6 @@
 [:url](http://dl.acm.org/citation.cfm?id=176316)
 [:memo](memo/brown-class-model.md)
 
+## Using Maximum Entropy for Text Classification
+[:url](http://www.kamalnigam.com/papers/maxent-ijcaiws99.pdf)
+[:memo](memo/maxent-ijcaiws99.md)

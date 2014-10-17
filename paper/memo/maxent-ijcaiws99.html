@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/m.css">
+</head>
+<body>
+<h1 id="using-maximum-entropy-for-text-classification">Using Maximum Entropy for Text Classification</h1>
+<p>1999年の論文。 なんか線形SVMっぽい??</p>
+<h2 id="最大エントロピーによるテキスト分類の直感的な知見">最大エントロピーによるテキスト分類の直感的な知見。</h2>
+<p>class A,B,C,D という4つに、文書が振り分けられているときに、 次の命題があるとする。</p>
+<blockquote>
+<p>&quot;professor&quot; という単語を含む文書の40% が class A であった</p>
+</blockquote>
+<p>ここから次のように確率を推定するのは自然。</p>
+<ul class="incremental">
+<li>professor を含む文書は、40%の確率で class A. 各々20%の確率で、class B,C,D.</li>
+</ul>
+<p>加えて、</p>
+<ul class="incremental">
+<li>professor を含まない文書は、25%ずつの確率で、class A..D</li>
+</ul>
+<h2 id="model">model</h2>
+<h3 id="maximum-entropy">Maximum entropy</h3>
+<ul class="incremental">
+<li>d: document</li>
+<li>c: class</li>
+</ul>
+<p>について、素性 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo></mrow></math> を考える。 これは、実関数ならなんでもよい。 具体的な<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mi>i</mi></msub></mrow></math>としては、 例えば、ある単語 <code>w</code> を含むカウントとか。</p>
+<p>コーパス <code>D</code> が与えられているとする。 コーパス <code>D</code> は、文章 <code>d</code> の集合であり、 既に、<code>d</code> の class <code>c = c(d)</code> も与えられている。</p>
+<p>さて、これについて、 素性 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mi>i</mi></msub></mrow></math> の平均はいかになるか。</p>
+<p>1. <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mstyle displaystyle="true"><mfrac><mn>1</mn><mrow><mo stretchy="false">∣</mo><mi>D</mi><mo stretchy="false">∣</mo></mrow></mfrac></mstyle><munder><mo>∑</mo><mrow><mi>d</mi><mo>∈</mo><mi>D</mi></mrow></munder><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow></math></p>
+<p>仮に分布 <code>P(d)</code>, <code>P(c|d)</code> が与えられてれば、</p>
+<p>ある <code>d</code> についての <code>f_i</code> の期待値は、 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><munder><mo>∑</mo><mi>c</mi></munder><mi>P</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">∣</mo><mi>d</mi><mo stretchy="false">)</mo><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo></mrow></math> と書けて、 コーパス <code>D</code> についての期待値は、</p>
+<p>2. <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><munder><mo>∑</mo><mrow><mi>d</mi><mo>∈</mo><mi>D</mi></mrow></munder><mi>P</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo><munder><mo>∑</mo><mi>c</mi></munder><mi>P</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">∣</mo><mi>d</mi><mo stretchy="false">)</mo><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo></mrow></math> と表せる。</p>
+<p>(1.)と(2.)が等しいことを、最大エントロピー法は仮定する。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mo>/</mo><mo stretchy="false">∣</mo><mi>D</mi><mo stretchy="false">∣</mo></mrow></math> としてしまえば、</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><munder><mo>∑</mo><mrow><mi>d</mi><mo>∈</mo><mi>D</mi></mrow></munder><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>d</mi><mo>∈</mo><mi>D</mi></mrow></munder><munder><mo>∑</mo><mi>c</mi></munder><mi>P</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">∣</mo><mi>d</mi><mo stretchy="false">)</mo><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo></mrow></math></p>
+<p>さて、Della Pietra+, 1997 によれば、最大エントロピーに従う確率分布は、exp の形に書ける。 今の場合、 素性を列 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">[</mo><msub><mi>f</mi><mn>1</mn></msub><mo>,</mo><msub><mi>f</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>f</mi><mi>n</mi></msub><mo stretchy="false">]</mo></mrow></math> として、 これらに対応する重み <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>Λ</mo><mo>=</mo><mo stretchy="false">[</mo><msub><mi>λ</mi><mn>1</mn></msub><mo>,</mo><msub><mi>λ</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>λ</mi><mi>n</mi></msub><mo stretchy="false">]</mo></mrow></math> が存在して、次のように、</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">∣</mo><mi>d</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mi>Z</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo></mrow></mfrac><mi>exp</mi><mrow><mo stretchy="true">[</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>λ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo><mo stretchy="true">]</mo></mrow></mrow></math></p>
+<p>これを使えば、対数尤度は、</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>ℓ</mo><mo stretchy="false">(</mo><mo>Λ</mo><mo>,</mo><mi>D</mi><mo stretchy="false">)</mo><mo>=</mo><mi>log</mi><munder><mo>∏</mo><mrow><mi>d</mi><mo>∈</mo><mi>D</mi></mrow></munder><msub><mi>P</mi><mo>Λ</mo></msub><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo><mo stretchy="false">∣</mo><mi>d</mi><mo stretchy="false">)</mo></mrow></math></p>
+<h3 id="improved-iterative-scaling-iis">Improved Iterative Scaling (IIS)</h3>
+<p>先ほどの、 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>ℓ</mo><mo stretchy="false">(</mo><mo>Λ</mo><mo>,</mo><mi>D</mi><mo stretchy="false">)</mo><mo>=</mo><mi>log</mi><munder><mo>∏</mo><mrow><mi>d</mi><mo>∈</mo><mi>D</mi></mrow></munder><msub><mi>P</mi><mo>Λ</mo></msub><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo><mo stretchy="false">∣</mo><mi>d</mi><mo stretchy="false">)</mo></mrow></math> を大きくするように、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>Λ</mo></mrow></math>を調整する。 山登り法でこれを行う。</p>
+<p>まず、<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mo>∂</mo><mn>2</mn></msup><mrow><mo>∂</mo><msubsup><mi>λ</mi><mi>i</mi><mn>2</mn></msubsup></mrow></mfrac><mo>ℓ</mo></mrow></math> をやってみると、 上に凸になる。 よって、山登りでOK.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>Λ</mo><mo>→</mo><mo>Λ</mo><mo>+</mo><mo>Δ</mo><mi>w</mi><mi>h</mi><mi>e</mi><mi>r</mi><mi>e</mi><mo>Δ</mo><mo>=</mo><mo stretchy="false">[</mo><msub><mi>δ</mi><mn>1</mn></msub><mo>.</mo><mo>.</mo><mo>.</mo><msub><mi>δ</mi><mi>n</mi></msub><mo stretchy="false">]</mo></mrow></math> という山登りを考える。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>ℓ</mo><mo stretchy="false">(</mo><mo>Λ</mo><mo>+</mo><mo>Δ</mo><mo stretchy="false">∣</mo><mi>D</mi><mo stretchy="false">)</mo><mo>−</mo><mo>ℓ</mo><mo stretchy="false">(</mo><mo>Λ</mo><mo stretchy="false">∣</mo><mi>D</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mi>d</mi></munder><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>δ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo>−</mo><munder><mo>∑</mo><mi>d</mi></munder><mrow><mo stretchy="true">[</mo><mi>log</mi><munder><mo>∑</mo><mi>c</mi></munder><mi>exp</mi><munder><mo>∑</mo><mi>i</mi></munder><mrow><mo stretchy="true">[</mo><mo stretchy="false">(</mo><msub><mi>λ</mi><mi>i</mi></msub><mo>+</mo><msub><mi>δ</mi><mi>i</mi></msub><mo stretchy="false">)</mo><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="true">]</mo></mrow><mo>−</mo><mi>log</mi><munder><mo>∑</mo><mi>c</mi></munder><mi>exp</mi><mrow><mo stretchy="true">[</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>λ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="true">]</mo></mrow><mo stretchy="true">]</mo></mrow></mrow></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>i</mi><mi>t</mi><mo>=</mo><munder><mo>∑</mo><mi>d</mi></munder><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>δ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo>−</mo><munder><mo>∑</mo><mi>d</mi></munder><mi>log</mi><mstyle displaystyle="true"><mfrac><mrow><munder><mo>∑</mo><mi>c</mi></munder><mi>exp</mi><mo>∑</mo><mo stretchy="false">(</mo><mi>λ</mi><mo>+</mo><mi>δ</mi><mo stretchy="false">)</mo><mi>f</mi></mrow><mrow><munder><mo>∑</mo><mi>c</mi></munder><mi>exp</mi><munder><mo>∑</mo><mi>i</mi></munder><mi>λ</mi><mi>f</mi></mrow></mfrac></mstyle></mrow></math></p>
+<p>This derived as follows because Jensen's ineq.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>i</mi><mi>t</mi><mo>≥</mo><munder><mo>∑</mo><mi>d</mi></munder><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>δ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo>−</mo><mi>log</mi><munder><mo>∑</mo><mi>d</mi></munder><mstyle displaystyle="true"><mfrac><mrow><munder><mo>∑</mo><mi>c</mi></munder><mi>exp</mi><mo>∑</mo><mo stretchy="false">(</mo><mi>λ</mi><mo>+</mo><mi>δ</mi><mo stretchy="false">)</mo><mi>f</mi></mrow><mrow><munder><mo>∑</mo><mi>c</mi></munder><mi>exp</mi><munder><mo>∑</mo><mi>i</mi></munder><mi>λ</mi><mi>f</mi></mrow></mfrac></mstyle></mrow></math></p>
+<p>And, note that <code>- log x &gt;= 1 - x</code></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>i</mi><mi>t</mi><mo>≥</mo><mn>1</mn><mo>+</mo><munder><mo>∑</mo><mi>d</mi></munder><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>δ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo>−</mo><munder><mo>∑</mo><mi>d</mi></munder><mstyle displaystyle="true"><mfrac><mrow><munder><mo>∑</mo><mi>c</mi></munder><mi>exp</mi><mo>∑</mo><mo stretchy="false">(</mo><mi>λ</mi><mo>+</mo><mi>δ</mi><mo stretchy="false">)</mo><mi>f</mi></mrow><mrow><munder><mo>∑</mo><mi>c</mi></munder><mi>exp</mi><munder><mo>∑</mo><mi>i</mi></munder><mi>λ</mi><mi>f</mi></mrow></mfrac></mstyle><mo>=</mo><mi>B</mi></mrow></math></p>
+<p>This <code>B</code> is a function of <code>Lambda</code>.</p>
+<p>もうちょっと式を綺麗にすると、</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>B</mi><mo>=</mo><mn>1</mn><mo>+</mo><munder><mo>∑</mo><mi>d</mi></munder><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>δ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo>−</mo><munder><mo>∑</mo><mi>d</mi></munder><mstyle displaystyle="true"><mfrac><mrow><munder><mo>∑</mo><mi>c</mi></munder><mi>exp</mi><mo>∑</mo><mo stretchy="false">(</mo><mi>λ</mi><mo>+</mo><mi>δ</mi><mo stretchy="false">)</mo><mi>f</mi></mrow><mrow><mi>Z</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo></mrow></mfrac></mstyle></mrow></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>f</mi><mo>#</mo></msup><mo>=</mo><msup><mi>f</mi><mo>#</mo></msup><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo></mrow></math> を使えば、</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>B</mi><mo>=</mo><mn>1</mn><mo>+</mo><munder><mo>∑</mo><mi>d</mi></munder><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>δ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo>−</mo><munder><mo>∑</mo><mi>d</mi></munder><mstyle displaystyle="true"><mfrac><mrow><munder><mo>∑</mo><mi>c</mi></munder><mi>exp</mi><mrow><mo stretchy="true">[</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>λ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="true">]</mo></mrow><mo>⋅</mo><mi>exp</mi><mrow><mo stretchy="true">[</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>δ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="true">]</mo></mrow></mrow><mrow><mi>Z</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo></mrow></mfrac></mstyle></mrow></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>B</mi><mo>=</mo><mn>1</mn><mo>+</mo><munder><mo>∑</mo><mi>d</mi></munder><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>δ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo>−</mo><munder><mo>∑</mo><mi>d</mi></munder><munder><mo>∑</mo><mi>c</mi></munder><msub><mi>P</mi><mo>Λ</mo></msub><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">∣</mo><mi>d</mi><mo stretchy="false">)</mo><mi>exp</mi><mrow><mo stretchy="true">[</mo><msup><mi>f</mi><mo>#</mo></msup><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo><munder><mo>∑</mo><mi>i</mi></munder><mfrac><mrow><msub><mi>δ</mi><mi>i</mi></msub><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo></mrow><mrow><msup><mi>f</mi><mo>#</mo></msup><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo></mrow></mfrac><mo stretchy="true">]</mo></mrow></mrow></math></p>
+<blockquote>
+<p>ここ、論文の式は誤りと思われる。</p>
+</blockquote>
+<p>これを大きくしたい。 次の偏微分を考える。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mrow><mo>∂</mo><mi>B</mi></mrow><mrow><mo>∂</mo><msub><mi>δ</mi><mi>i</mi></msub></mrow></mfrac><mo>=</mo><munder><mo>∑</mo><mi>d</mi></munder><mrow><mo stretchy="true">[</mo><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>−</mo><munder><mo>∑</mo><mi>c</mi></munder><msub><mi>P</mi><mo>Λ</mo></msub><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">∣</mo><mi>d</mi><mo stretchy="false">)</mo><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo><mi>exp</mi><mrow><mo stretchy="true">[</mo><msub><mi>δ</mi><mi>i</mi></msub><msup><mi>f</mi><mo>#</mo></msup><mo stretchy="false">(</mo><mi>d</mi><mo>,</mo><mi>c</mi><mo stretchy="false">)</mo><mo stretchy="true">]</mo></mrow><mo stretchy="true">]</mo></mrow></mrow></math></p>
+<p>これが 0 となるような、<code>delta</code> を Newton's なんかで解く。 凸性から、解があることは分かっている。</p>
+<pre class="sourceCode coffee"><code class="sourceCode coffee"><span class="kw">for</span> i <span class="kw">in</span> I
+  lambda<span class="kw">[</span>i<span class="kw">]</span> <span class="kw">=</span> <span class="dv">0</span>
+
+<span class="kw">until</span> converge <span class="co"># or step</span>
+  <span class="kw">for</span> i <span class="kw">in</span> I
+    solve the partial equation <span class="kw">of</span> delta<span class="kw">[</span>i<span class="kw">]</span>
+    lambda<span class="kw">[</span>i<span class="kw">]</span> <span class="kw">+=</span> delta<span class="kw">[</span>i<span class="kw">]</span></code></pre>
+<h3 id="gaussian-prior-事前分布">Gaussian Prior (事前分布?)</h3>
+<p>訓練データが少ないとき、 先の <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>λ</mi><mi>i</mi></msub></mrow></math> なんかは、実際のものよりも、かけ離れるものと思われる。 ある程度の誤差を許すようにする。 そこでガウス分布を用いる。 列 Lambda 自体の確率を次のように。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mo stretchy="false">(</mo><mo>Λ</mo><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∏</mo><mi>i</mi></munder><mfrac><mn>1</mn><msqrt><mrow><mn>2</mn><mi>π</mi><msubsup><mi>σ</mi><mi>i</mi><mn>2</mn></msubsup></mrow></msqrt></mfrac><mi>exp</mi><mrow><mo stretchy="true">[</mo><mfrac><mrow><mo>−</mo><msubsup><mi>λ</mi><mi>i</mi><mn>2</mn></msubsup></mrow><mrow><mn>2</mn><msubsup><mi>σ</mi><mi>i</mi><mn>2</mn></msubsup></mrow></mfrac><mo stretchy="true">]</mo></mrow></mrow></math></p>
+<p>尤度には、これをかけ算すれば良い。 対数とって、偏微分すると、結局、次の1項を足し算すればいい。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mrow><msub><mi>λ</mi><mi>i</mi></msub><mo>+</mo><msub><mi>δ</mi><mi>i</mi></msub></mrow><mrow><mo>−</mo><msubsup><mi>σ</mi><mi>i</mi><mn>2</mn></msubsup></mrow></mfrac></mrow></math></p>
+<h2 id="features-for-text-classification">features for Text Classification</h2>
+<p>for a word <code>w</code> and class <code>k</code></p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">f_i d c
+  <span class="fu">|</span> c <span class="fu">==</span> k    <span class="fu">=</span> <span class="dt">N</span> (d, w) <span class="fu">/</span> <span class="dt">N</span> d
+  <span class="fu">|</span> otherwise <span class="fu">=</span> <span class="dv">0</span>
+  <span class="kw">where</span>
+    <span class="dt">N</span> (d, w) <span class="fu">=</span> count the words w <span class="kw">in</span> document d
+    <span class="dt">N</span> d <span class="fu">=</span> count any words <span class="kw">in</span> document d</code></pre>
+<h2 id="experiment">Experiment</h2>
+<ul class="incremental">
+<li>Naiive Bayse (comparison)</li>
+<li>Maximum Entropy (w/o Gaussian Prior)</li>
+<li>Maximum Entropy (w/ Gaussian Prior)</li>
+</ul>
+<p>場合にもよるけど、良いときは良い。 悪くはない。</p>
+</body>
+</html>
