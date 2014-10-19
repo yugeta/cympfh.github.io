@@ -1,0 +1,5 @@
+@MISC{Davidov06efficientunsupervised,
+  author = {Dmitry Davidov and Ari Rappoport},
+  title = {Efficient unsupervised discovery of word categories using symmetric patterns and high frequency words },
+  year = {2006}
+}
