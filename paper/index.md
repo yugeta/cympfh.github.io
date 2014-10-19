@@ -256,3 +256,9 @@
 [:url](http://www.kamalnigam.com/papers/maxent-ijcaiws99.pdf)
 [:memo](memo/maxent-ijcaiws99.md)
 
+## Efficient unsupervised discovery of word categories using symmetric patterns and high frequency words (2006)
+:NLP :pattern
+[:url](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.138.8157)
+[:bibtex](bibtex/davidov06.txt)
+[:memo](memo/davidov06.md)
+

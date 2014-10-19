@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="sun-oct-19-172645-jst-2014">Sun Oct 19 17:26:45 JST 2014</h1>
+<p>Land of Lisp を読んではいたけど実際にコードを写経することはしてなかったので、 始めた。 <a href="https://github.com/cympfh/land-of-lisp" class="uri">https://github.com/cympfh/land-of-lisp</a></p>
+<p>Common Lispはやっぱり好きくない。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">rlwrap</span> -a -pred clisp</code></pre>
+<p>Gaucheのinfo関数に相当するような説明が、 組み込みの関数に対して無いけど、 形だけ見ることはできる。</p>
+<pre class="lisp"><code>[1]&gt; (describe #&#39;mapcar)
+
+#&lt;SYSTEM-FUNCTION MAPCAR&gt; is a built-in system function.
+Argument list: (#:ARG0 #:ARG1 &amp;REST SYSTEM::OTHER-ARGS)
+For more information, evaluate (DISASSEMBLE #&#39;MAPCAR).</code></pre>
+<p>コンパイルされてるらしく、もっと知りたかったらdisassembleしてね、と言われる。 してみようとしたけどなんかエラーでる。</p>
+<p>自分でその場で作った関数は中身が見えるし、 定義の時に、引数リストのすぐ次に文字列として、 ヒアドキュメントも書ける。</p>
+<p><code>describe</code>はこれらを表示する。</p>
+<pre class="lisp"><code>[2]&gt; (defun mine (x) &quot;This is a awesome function&quot; x)
+MINE
+[3]&gt; (describe #&#39;mine)
+
+#&lt;FUNCTION MINE (X) &quot;This is a awesome function&quot; (DECLARE (SYSTEM::IN-DEFUN MINE)) (BLOCK MINE X)&gt; is an interpreted function.
+Argument list: (X)
+Documentation: This is a awesome function</code></pre>
+<h2 id="rlwrap">rlwrap</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cat</span> .inputrc
+<span class="kw">set</span> <span class="kw">editing-mode</span> vi
+<span class="st">&quot;\C-p&quot;</span>: <span class="kw">history-search-backward</span>
+<span class="st">&quot;\C-n&quot;</span>: <span class="kw">history-search-forward</span>
+<span class="st">&quot;\C-j&quot;</span>: <span class="kw">vi-movement-mode</span>
+<span class="st">&quot;\C-l&quot;</span>: <span class="kw">clear-screen</span></code></pre>
+<p>どこでもvimっぽくカーソルを動かしたいのと、 プロンプトに色をつけたいので、rlwrapを使ったんだけど、 これは良くなかったかも。</p>
+<p>素のclispのreadlineがすでに優秀で、 組み込みの関数と、ユーザーが定義したもろもろ識別子がTab補完入力できるようになってる。 これをreadlineで再現するのどうするんだっけ。</p>
+</body>
+</html>
