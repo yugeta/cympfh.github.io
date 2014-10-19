@@ -1,4 +1,4 @@
-# A Great Catchy Name: Semi-Supervised Recognition of Sarcastic Sentences in Online Product Reviews
+# ICWSM - A Great Catchy Name: Semi-Supervised Recognition of Sarcastic Sentences in Online Product Reviews
 
 66000 Amazon reviewから77%の精度と、83.1%の再現率で、
 文に対して皮肉かどうか判定した。
@@ -14,10 +14,9 @@ reviewのタイトル。
 2. Where am I? (GPS device)
 3. Trees died for this book? (book)
 4. Be sure to save your purchase receipt (smart phone)
-5. AretheseiPodsdesignedtodieaftertwoyears?(music player)
+5. Are these iPods designed to die after two years? (music player)
 6. Great for insomniacs (book)
-7. All the features you want. Too bad they don't work!
-(smart phone)
+7. All the features you want. Too bad they don't work!  (smart phone)
 8. Great idea, now try again with a real product development team (e-reader)
 9. Defective by design (music player)
 
@@ -130,11 +129,12 @@ positive (sarcasm) 80 reviews and negative 80 reviews.
 ## 分類
 
 kNNっぽいことをする。
+連続的な値についてのクラスタリングなので、
+もうちっと、
+平均を取るようなことをする。
 
 ## baseline
 
 star が低くて positive sentimen のやつ。
-
-
 
 
