@@ -50,18 +50,18 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode cpp"><code class="sourceCode cpp">v8::Value::IsString()
 
 <span class="co">// Arguments&amp; args</span>
-args[<span class="dv">0</span>]-&gt;IsString()</code></pre>
-<h1 id="v8string-へのキャスト-.tostring">v8::String へのキャスト (.toString)</h1>
+args[<span class="dv">0</span>]-&gt;IsString();</code></pre>
+<h1 id="v8string-へのキャスト-objecttostring">v8::String へのキャスト (Object#toString)</h1>
 <pre class="sourceCode cpp"><code class="sourceCode cpp">v8::Value::ToString()
 
 <span class="co">// Arguments&amp; args</span>
-Local&lt;String&gt; str = args[<span class="dv">0</span>]-&gt;ToString()</code></pre>
-<h1 id="文字列長さの取得-.length">文字列長さの取得 .length</h1>
+Local&lt;String&gt; str = args[<span class="dv">0</span>]-&gt;ToString();</code></pre>
+<h1 id="文字列長さの取得-stringlength">文字列長さの取得 (String#length)</h1>
 <pre class="sourceCode cpp"><code class="sourceCode cpp">v8::Value::Length()
 
 <span class="co">// Arguments&amp; args</span>
-<span class="dt">int</span> n = args[<span class="dv">0</span>]-&gt;Length()</code></pre>
-<p>これはまだ javascript 上の .length である。 例えばユニコード文字列を渡した時、(ある程度の範囲で) 見た目通りの長さになる。</p>
+<span class="dt">int</span> n = args[<span class="dv">0</span>]-&gt;Length();</code></pre>
+<p>変換をする前に、 <code>String#length</code> で長さを取得する必要がある。</p>
 <h1 id="c-プリミティブ型へのキャスト">c++ プリミティブ型へのキャスト</h1>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">// Local&lt;String&gt; str</span>
 <span class="dt">int</span> n = str-&gt;Length();
