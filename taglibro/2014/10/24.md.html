@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="fri-oct-24-020751-jst-2014">Fri Oct 24 02:07:51 JST 2014</h1>
+<h2 id="in-c-addon-アドオン-on-node.js-processing-the-utf8-or-unicode-string">In c++ addon (アドオン) on node.js, processing the utf8 (or unicode?) string</h2>
+<ul class="incremental">
+<li><a href="https://github.com/cympfh/pattern-language">cympfh/pattern-language</a></li>
+<li>問題のcode
+<ul class="incremental">
+<li><a href="https://github.com/cympfh/pattern-language/blob/master/mcp.coffee">coffee版</a></li>
+<li><a href="https://github.com/cympfh/pattern-language/blob/master/mcp/mcp.cc">c++版</a></li>
+</ul></li>
+</ul>
+<p>極小共通汎化を解く必要があって, 最長共通部分文字列のあの, O(mn)でやるDPと全く同様に解けた. これがめっちゃ遅くって, C++で書き直してた.</p>
+<p>で, nodeが扱う文字列は無条件でutf-8 である. c++の内部でも, それをそのように扱う必要がある.</p>
+<ul class="incremental">
+<li>ref; <a href="http://izs.me/v8-docs/classv8_1_1String.html">v8: v8::String Class Reference</a></li>
+</ul>
+<p>まったく、APIの名前が紛らわしい。 <code>Write</code> という名前も、<code>WriteUtf8</code> という名前も。</p>
+<p>今回、私が新しく学んだAPIについてのみ書く。</p>
+<h1 id="型チェック">型チェック</h1>
+<pre class="sourceCode cpp"><code class="sourceCode cpp">v8::Value::IsString()
+
+<span class="co">// Arguments&amp; args</span>
+args[<span class="dv">0</span>]-&gt;IsString()</code></pre>
+<h1 id="v8string-へのキャスト-.tostring">v8::String へのキャスト (.toString)</h1>
+<pre class="sourceCode cpp"><code class="sourceCode cpp">v8::Value::ToString()
+
+<span class="co">// Arguments&amp; args</span>
+Local&lt;String&gt; str = args[<span class="dv">0</span>]-&gt;ToString()</code></pre>
+<h1 id="文字列長さの取得-.length">文字列長さの取得 .length</h1>
+<pre class="sourceCode cpp"><code class="sourceCode cpp">v8::Value::Length()
+
+<span class="co">// Arguments&amp; args</span>
+<span class="dt">int</span> n = args[<span class="dv">0</span>]-&gt;Length()</code></pre>
+<p>これはまだ javascript 上の .length である。 例えばユニコード文字列を渡した時、(ある程度の範囲で) 見た目通りの長さになる。</p>
+<h1 id="c-プリミティブ型へのキャスト">c++ プリミティブ型へのキャスト</h1>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">// Local&lt;String&gt; str</span>
+<span class="dt">int</span> n = str-&gt;Length();
+<span class="dt">uint16_t</span> s[n];
+str-&gt;Write(s);</code></pre>
+<p><code>Write</code> はいわゆる <code>sprinf</code> である。 また、<code>WriteAscii</code> と、 <code>WriteUtf8</code> もあるが、 今は使いどきではない。</p>
+<h1 id="c-プリミティブ型から-javascript-文字列へのキャスト">c++ プリミティブ型から javascript 文字列へのキャスト</h1>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">uint16_t</span> s[<span class="dv">14</span>];
+<span class="co">// assign into s[0] to s[12]</span>
+s[<span class="dv">13</span>] = <span class="dv">0</span>; <span class="co">// last must be &#39;\n&#39;</span>
+Local&lt;String&gt; str = String::New(us));</code></pre>
+</body>
+</html>
