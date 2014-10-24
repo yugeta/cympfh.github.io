@@ -18,7 +18,5 @@ pres: template.pre
 
 git:
 	git add --all
-	tw-cd cympfh
 	git commit -a -m "`date`"
-	git push 2>&1 | tee /tmp/result
-	tail -1 /tmp/result | $$HOME/bin/tw
+	git push
