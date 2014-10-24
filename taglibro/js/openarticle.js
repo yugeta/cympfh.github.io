@@ -37,4 +37,10 @@ function main () {
       };
     }(lk.href));
   }
+
+  document.getElementById("check_wrap").onclick = function () {
+    check_if_iframe.checked =! check_if_iframe.checked
+    save();
+  };
+
 }
