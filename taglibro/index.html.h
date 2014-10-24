@@ -1,4 +1,4 @@
-<title>taglibro</title>
+<title>taglibro - MD5</title>
 <script src='./js/openarticle.js'></script>
 <link rel='stylesheet' type='text/css' href='css/i.css'>
 <body onload='main()'>
