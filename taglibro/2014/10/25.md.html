@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="sat-oct-25-020422-jst-2014">Sat Oct 25 02:04:22 JST 2014</h1>
+<p><a href="https://github.com/twitter/twurl">twitter/twurl</a> を使って一括スパム報告</p>
+<p>よくわかんないんだけど、 アニメ公式アカウント関連ばっかりフォローすると、 胡散臭いアカウントに大量にフォローされる。</p>
+<p>&quot;@{anime title}fan&quot; というIDで何かの宣伝しつつ、 特定の作品の画像を貼るみたいな、 明らかに同じ人たちが作っていて、 &quot;@sarbantfan&quot; なんかを見ると、 怪しいurlを貼るわけでもなく、 怪しい商品の宣伝をするわけもないし。</p>
+<p>それはともかく、 はじめは一人ひとりスパム報告してたんだけど、 ちょっと忘れてたらもうweb上でそれをやるには面倒すぎる量になってた。 目方で量ると、フォロワ160人のほとんど半分がスパムだった。</p>
+<pre class="sh"><code>$ twurl accounts
+ampeloss
+  qnLRwkeo8zFjhIDfgG0F8Q
+cympfh
+  qnLRwkeo8zFjhIDfgG0F8Q (default)
+unddich
+  qnLRwkeo8zFjhIDfgG0F8Q</code></pre>
+<p>jsonなので, <a href="http://stedolan.github.io/jq/">jq</a> も使う。</p>
+<p>フォロワの取得 (max 200 at a time)</p>
+<pre class="sh"><code>$ twurl -X GET /1.1/followers/list.json?count=200 | jq -r &#39;.users[].screen_name&#39; &gt; /tmp/ids</code></pre>
+<p>スパムしたい方がそうでないより少ないとして、</p>
+<pre class="sh"><code>$ cp /tmp/ids /tmp/ids0
+$ vim /tmp/ids
+(スパムしたいアカウントの行を消す)
+$ diff /tmp/ids0 /tmp/ids | grep &#39;^&lt;&#39; | sed &#39;s/^..//g&#39; &gt; /tmp/list</code></pre>
+<p><code>/tmp/list</code> が最終的に消したい人たち.<br>漏れがあると嫌なので、スパムの数を数えておいて、 予め、頭の中で引き算しておく。</p>
+<pre class="sh"><code>$ wc -l /tmp/list
+81 /tmp/list</code></pre>
+<p>これに対して /users/report_spam を叩きたいんだけど、 他同様、使用制限があるらしい。 でも、 https://dev.twitter.com/rest/public/rate-limits には載っていない。 素敵だ。</p>
+<p>素敵なことは無視しよう。</p>
+<pre class="sh"><code>$ cat /tmp/list | xargs -i twurl -X POST -d screen_name={} /1.1/users/report_spam.json</code></pre>
+<p>すぐに、 <code>javascript {&quot;errors&quot;:[{&quot;code&quot;:205,&quot;message&quot;:&quot;You are over the limit for spam reports.&quot;}]}</code> を返してきた。 ほとんど一度に、このAPIを叩けるのは 65 回らしい。</p>
+<p>1 window は 15分らしいので、</p>
+<pre class="sh"><code>$ tail -n `expr 81 - 65` /tmp/list &gt; /tmp/list_rest
+$ sleep 15m &amp;&amp; cat /tmp/list_rest | xargs -i twurl -X POST -d screen_name={} /1.1/users/report_spam.json</code></pre>
+<p>として寝ます。<br>おやすみなさい。</p>
+</body>
+</html>
