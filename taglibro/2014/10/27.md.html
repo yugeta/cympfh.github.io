@@ -41,9 +41,16 @@ clean:
     -rm -f out *.exe cases/* /tmp/out</code></pre>
 <ol class="incremental" type="1">
 <li>main.cc を書く</li>
-<li>入力を一つ、コピペした状態で <code>make</code></li>
+<li>入力を一つ、コピペした状態で <code>make</code>
+<ul class="incremental">
+<li>xselを使って、クリップボードの中身を<code>./input</code>とする</li>
+<li>出力は <code>out</code> に tee する</li>
+</ul></li>
 <li>ひとつずつ、<code>cases/xxx.in</code> と <code>cases/xxx.out</code> を用意して <code>make test</code></li>
-<li><code>make clean</code> は、<code>cases/</code> の中身を吹き飛ばす</li>
+<li><code>make clean</code> は、cases/ の中身を吹き飛ばす
+<ul class="incremental">
+<li>cases/ が無かったらここで作るよう、初期化も兼ねてる</li>
+</ul></li>
 </ol>
 <hr>
 <p>シェルスクリプトをMakefileの中に書くのがすごい苦手で、 行頭に <code>@</code> を置く方法と、 echo を絶対パスで指定するのを知った。 素でechoするとmakeの組み込みか何かが働く？かでオプションを理解してくれない。</p>
