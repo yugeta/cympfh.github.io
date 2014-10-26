@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="mon-oct-27-070347-jst-2014">Mon Oct 27 07:03:47 JST 2014</h1>
+<h2 id="プロコンに向けた-makefile">プロコンに向けた Makefile</h2>
+<p>10分程で今書いたものなので使い勝手は分からない。</p>
+<pre class="make"><code>all: main.exe input_
+    ./main.exe &lt; input | tee out
+
+main.exe: main.cc
+    g++ -o $@ -std=c++11 $^
+
+input_:
+    xsel -bo | sed -e &#39;s/^\s*//g&#39; | sed -e &#39;s/\s*$$//g&#39; &gt; input
+
+test: main.exe
+    @for i in cases/*.in; do \
+        ./main.exe &lt; $$i &gt; /tmp/out; \
+        cmp -s /tmp/out $${i%in}out; \
+        RETVAL=$$?; \
+        if [  $$RETVAL -eq 1 ]; then \
+        /bin/echo -e &#39;\e[31m&#39;$$i&#39;\e[m&#39;; \
+        diff /tmp/out $${i%in}out; \
+        exit 1; \
+        fi; \
+        done; \
+        /bin/echo -e &#39;\e[34mpassed!\e[m&#39;
+
+
+clean:
+    -mkdir cases
+    -rm -f out *.exe cases/* /tmp/out</code></pre>
+<ol class="incremental" type="1">
+<li>main.cc を書く</li>
+<li>入力を一つ、コピペした状態で <code>make</code></li>
+<li>ひとつずつ、<code>cases/xxx.in</code> と <code>cases/xxx.out</code> を用意して <code>make test</code></li>
+<li><code>make clean</code> は、<code>cases/</code> の中身を吹き飛ばす</li>
+</ol>
+<hr>
+<p>シェルスクリプトをMakefileの中に書くのがすごい苦手で、 行頭に <code>@</code> を置く方法と、 echo を絶対パスで指定するのを知った。 素でechoするとmakeの組み込みか何かが働く？かでオプションを理解してくれない。</p>
+</body>
+</html>
