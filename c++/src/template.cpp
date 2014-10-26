@@ -15,6 +15,7 @@ using namespace std;
 #define trace(var) cout<<">>> "<<#var<<" = "<<var<<endl;
 
 typedef pair<int,int> P;
+typedef vector<int> vi;
  
 int dx[4] = {-1,0,1,0};
 int dy[4] = {0,1,0,-1};
@@ -33,5 +34,7 @@ ostream& operator<<(ostream& os, vector<T> v) {
 }
 
 int main() {
+  int n;
+
   return 0;
 }
