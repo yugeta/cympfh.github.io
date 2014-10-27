@@ -204,6 +204,7 @@
 [:url](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6457440)
 [:db](file:///pattern-phrase.pdf)
 [:memo](memo/learning-phrase-patterns.md)
+[:pdf](http://cympfh.github.io/study/nlp/phrase_pattern.pdf)
 
 ## Extracting Phrase Patterns with Minimum Redundancy for Unsupervised Speaker Role Classification
 :NLP
@@ -235,12 +236,13 @@
 [:url](http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=1357349&tag=1)
 [:memo](memo/sentiment-phrase-patterns.md)
 
-## A Great Catchy Name: Semi-Supervised Recognition of Sarcastic Sentences in Online Product Reviews
+## ICWSM - A Great Catchy Name: Semi-Supervised Recognition of Sarcastic Sentences in Online Product Reviews
 :NLP
 :text-classification
 :pattern  
 [:url](http://www.aaai.org/ocs/index.php/ICWSM/ICWSM10/paper/viewFile/1495/1851/)
 [:memo](memo/sarcastic.md)
+[:pdf](http://cympfh.github.io/study/nlp/great_catchy_name.pdf)
 
 ## Using Maximum Entropy for Text Classification
 :unread  
