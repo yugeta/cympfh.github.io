@@ -1,0 +1,609 @@
+\documentclass[12pt, dvipdfmx, default, cjk]{beamer}
+\usetheme{Antibes}
+\usecolortheme{beaver}
+\usefonttheme{structurebold}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+%\useinnertheme{rectangles}
+%\useoutertheme{smoothbars}
+
+% \mathversion{bold}
+
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, cite, url}
+\usepackage{algorithm, algorithmic}
+
+%%%
+
+\title{Phrase Patterns for Text Classification}
+\author{speaker: Hirakata Kennai}
+\institute[CS]{Univ. of Tokyo, CS}
+\date{\today}
+
+\begin{document}
+
+\begin{frame} \titlepage \end{frame}
+\begin{frame} \tableofcontents \end{frame}
+
+\section{Introduction}
+
+\begin{frame}{読んだ論文}
+  ``Learning Phrase Patterns for Text Classification''
+
+  Author: Bin Zhang+
+
+  \url{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6457440}
+\end{frame}
+
+\begin{frame}{導入}
+
+テキスト分類
+のための素性として
+n-gram
+が通常使われる
+
+ある程度の精度は達成されてる
+
+ドメインに特化してしまい一般性がない
+
+n-gramとそのまま置き換える素性として、phrase pattern がある
+\end{frame}
+
+\begin{frame}{先行研究}
+  \begin{itemize}
+    \item Wiebe+, 2005
+
+      文章のsubjectを教師ナシで推定する．
+      これは目的語を含んだフレーズパターンで分類した。
+
+    \item Sun+, 2007
+
+      第二外国語学習者の書いた誤文法を検出。
+
+    \item Thur and Davidov, 2010
+
+      TwitterやAmazonレビューから「皮肉」な文を検出
+
+    \item Zhang+, 2010
+
+      Speaker role
+  \end{itemize}
+\end{frame}
+
+\section{Phrase pattern}
+
+\subsection{Phrase pattern}
+
+\begin{frame}{素 phrase pattern}
+  文を語の列 $[w_1 \cdots w_n]$ とみなす．
+  これに対して phrase pattern とは、
+  語の列
+  $[u_1 \cdots u_m]$
+  と定める．
+
+  phrase pattern が 文にマッチするとは、
+  subsequence の関係にあること
+
+  \begin{align*}
+    \forall i . ~ u_i = & w_{j_i} \\
+    i_1 < i_2 \implies & j_{i_1} < j_{i_2}
+  \end{align*}
+
+\end{frame}
+
+\subsection{拡張版 phrase pattern}
+
+\begin{frame}[fragile]{phrase pattern with word classes}
+  語の列でなく、word class も利用したい
+
+  word class としては、POSとかpolarity とか
+  (個数を制限しない)
+
+  word \texttt{w} の
+  class として(文脈に依存して) \texttt{\{c1 .. cn\}} があるとき、
+
+  \begin{verbatim}
+  w -> {w, c1 .. cn}
+  \end{verbatim}
+
+  という拡張を、文とphrase pattern に対して適用する．
+\end{frame}
+
+\begin{frame}
+  文 $[w_1 \cdots w_n]$ ($w_i$はトークンとクラスの集合)
+
+  phrase pattern $[u_1 \cdots u_n]$ (同様に集合の列)
+
+  マッチすることの定義は以下のように
+  \begin{align*}
+    \forall i . ~ u_i \subseteq & w_{j_i} \\
+    i_1 < i_2 \implies & j_{i_1} < j_{i_2}
+  \end{align*}
+\end{frame}
+
+\subsection{Learning patterns}
+\begin{frame}{パターンの学習}
+  コーパス $D$ から、意味のありそうなパターンの学習アルゴリズムとして
+  \begin{itemize}
+    \item PrefixSpan
+    \item CloSpan
+  \end{itemize}
+  などがある．
+  ここでは一つ目を紹介して、これを改良する．
+\end{frame}
+
+\subsection{PrefixSpan}
+
+\begin{frame}{PrefixSpan (Pei, Han+, 2001)}
+  コーパス \texttt{D} (文の集合) から、頻度が閾値 \texttt{f} を上回るようなパターンを、
+  頭から一つずつ word or class を追加していくことで得る
+
+  パターン $[a]$ が得られたら、
+  それを伸ばすような$[a,X]$ も試すことで、
+  パターンを学習していく．
+
+  \center
+  \includegraphics[width=0.5\textwidth,bb=0 0 328 184]{a.png}
+\end{frame}
+
+\begin{frame}[fragile]
+
+  コーパス $D$,
+  閾値 $f$
+  に対して
+  PrefixSpan($D, \rho=[~]$)
+
+  \begin{algorithm}[H]
+    \begin{algorithmic}[1]
+      \REQUIRE $D$ is a corpus and $\rho$ is a prefix pattern
+      \STATE $P \leftarrow \emptyset$
+      \FOR{word or class $a$ in $D$}
+        \STATE $\rho' \leftarrow $ append$(\rho, a)$
+        \IF{matchFreq$(D, \rho') >= f$}
+        \STATE $P = P \cup \{\rho'\}$
+        \STATE $D' \leftarrow $ $\rho'$-project($D$)
+        \STATE $P' = $ PrefixSpan$(D', \rho')$
+        \STATE $P = P \cup P'$
+        \ENDIF
+      \ENDFOR
+    \end{algorithmic}
+    \caption{PrefixSpan($D, \rho$)}
+    \label{alg:seq}
+  \end{algorithm}
+
+  $\rho$-project は、パターン$\rho$にマッチする文だけ抽出する射影
+
+\end{frame}
+
+\begin{frame}
+  長さ$n$のパターンを見て、長さ$n+1$のパターンを見て$\dots$とやると計算効率が悪いので実際は、後ろに追加した$1$つだけ見ればよい。
+
+\end{frame}
+
+\begin{frame}
+  \begin{algorithm}[H]
+    \begin{algorithmic}
+      \STATE $D' \leftarrow \{\}$
+      \STATE $[w_1 \dots w_m] = \rho$
+      \FOR{sentence $[b_1 \dots b_n] \in D$}
+      \IF{pattern $\rho$ matches this sentence}
+      \STATE find indecies $j$ such that
+      \STATE $w_1 = b_{j_1} \dots w_m = b_{j_m}$
+      \STATE $D' \leftarrow D' \cup \{[b_{j_m + 1} \dots b_m]\}$
+      \ENDIF
+      \ENDFOR
+    \end{algorithmic}
+    \caption{$\rho$-project($D$)}
+  \end{algorithm}
+  射影で、マッチより後ろ部分だけを抽出することで、
+  PrefixSpan で、パターンの頻度を確認するときに、
+  新たに追加した $a$ だけを、見ればいい．
+
+\end{frame}
+
+\def\given#1#2{p(#1\vert#2)}
+
+\begin{frame}{改良版PrefixSpan}
+  尺度として頻度を用いたが、
+  分類器において、相互情報量が良い尺度になりうる．
+
+  あるパターンについて,
+  マッチするかどうか $X = 0, 1$,
+  文書のクラス $Y = 0 \dots K$
+
+  \begin{align*}
+    I(X; Y) & = \sum_{x,y} p(x,y) \log \frac{p(x,y)}{p(x) p(y)} \\
+    & = \sum_{x,y}
+    \given x y
+    \log
+    \frac{\given x y}
+    {
+      \sum_{y'} \given{x}{y'} p(y')
+    }
+  \end{align*}
+
+\end{frame}
+
+\begin{frame}{相互情報量の上限}
+  パターン$\rho$がマッチするかどうか$X$,
+  $\rho$を伸ばして得たパターン$\rho'$がマッチするかどうかを$XE$と書くと
+
+  \[ \given{XE=1}{y} \le \given{X=1}{y} \]
+
+  とあるから、次のような上限が存在する
+  (前頁のIは$\given x y $について上に凸!?)
+
+  \[ \max I(XE; Y) \]
+
+  つまり、パターン$\rho$について、
+  パターンを伸ばすことで増価しうる相互情報量の上限は予め算出できる
+\end{frame}
+
+\subsection{改良版Prefix Span}
+\begin{frame}{改良版Prefix Span}
+  尺度を 頻度$\ge f$ から、
+  相互情報量を使うように書き換える
+
+  \begin{algorithm}[H]
+    \begin{algorithmic}
+      \STATE $P \leftarrow \emptyset$
+      \FOR{$a$ in $D$}
+      \STATE $\rho' \leftarrow $append($\rho, a$)
+        \IF{$\rho'$の相互情報量が閾値以上なら}
+          \STATE $P \leftarrow P \cup \{\rho'\}$
+          \ELSIF{$\rho'$の相互情報量の上限が閾値以上なら}
+          \STATE $D' \leftarrow \rho'$-project($D$)
+          \STATE $P' \leftarrow $ExtendedPrefixSpan($D', \rho'$)
+          \STATE $P \leftarrow P \cup P'$
+        \ENDIF
+      \ENDFOR
+    \end{algorithmic}
+    \caption{ExtendedPrefixSpan($D, \rho$)}
+  \end{algorithm}
+
+\end{frame}
+
+\section{Word Classes}
+
+\begin{frame}
+  実際に使う word class は以下の通り
+  \begin{itemize}
+    \item Lemma
+    \item Word shape
+    \item POS
+    \item NE
+    \item LIWC
+    \item subjectivity lexicon
+    \item manual
+    \item automatic
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Lemma}
+  語の標準系を取り出す
+
+  \texttt{\{go, goes, going, went gone\} $\rightarrow$ go}
+
+  tool: NLTK WordNet lemmatizer
+\end{frame}
+
+\begin{frame}{POS}
+  tool: \texttt{Stanford log-linear POS tagger}
+
+  English models and trained models for Arabic, Chinese, French, Spanish, and German
+\end{frame}
+
+\begin{frame}[fragile]{Named entity (NE)}
+
+  テキスト分類に於いてはこれが重要ということになっている
+
+\begin{verbatim}
+(sentence, word) ->
+class ({Location, Person, Organization, Time, Date})
+\end{verbatim}
+
+Stanford conditional random field-based NE recognizer (NER)
+なるものが良いって。
+\end{frame}
+
+\begin{frame}{LIWC dictionary}
+
+  Linguistic Inquiry and Word Count (LIWC)
+  は、単語を64の感情に関するクラスに分類する
+  
+  Facebookが使ってた
+
+  文脈に依存せず、一つの単語について分析する。
+
+  \url{http://www.liwc.net/tryonline.php}
+
+  完全版は \$89.95 で使える
+\end{frame}
+
+\begin{frame}[fragile]{MPQA subjectivity lexicon}
+
+  MPQAさんがGNU GPL の元で配布してる辞書
+
+  単語とその品詞から引く形になっている
+
+\begin{verbatim}
+(word, POS) -> class
+\end{verbatim}
+
+8222項目が登録されてる
+
+\begin{verbatim}
+e.g.
+type=weaksubj len=1 word1=dominate pos1=verb
+stemmed1=y priorpolarity=negative
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{manual}
+  そのトピックについて詳しい人間が手作業で、
+  そのクラスに属する単語をリストアップしていく．
+
+  あとの実験で使われたものでは
+
+  \begin{verbatim}
+AGREEMENT = [right, agree, true]
+DISAGREEMENT = [doubt, inappropriate]
+ALIGNMENT = AGREEMENT ++ DISAGREEMENT
+MODAL = [could, should]
+NEGATIVE_DISCOURSE_ORDER =
+  [however, but, nevertheless]
+  \end{verbatim}
+
+\end{frame}
+
+\begin{frame}{automatic}
+
+Brown+, 1992
+"Class-based n-gram models of natural language"
+の手法を用いる
+
+1次マルコフモデルを使った、
+word のクラスタリング
+
+クラスタ数 = 10, 100, 1000
+
+\end{frame}
+
+\section{実験}
+
+\begin{frame}{実験}
+
+  n-gram (と他の素性) ではそれなりに難しいタスク
+
+  \begin{itemize}
+    \item Speaker role
+    \item Alignment move
+    \item Authority claim
+  \end{itemize}
+
+  Baseline を n-gram (3-gramまでに制限) と他
+  とするとき、
+  pattern (長さ3に制限) と他
+  でやってみる
+
+  分類は 最大エントロピー法
+
+  5-fold cross validation で精度またはF値を出す
+\end{frame}
+
+\subsection{Speaker role}
+\begin{frame}{Speaker role}
+  ニュースショー(音源)から、一つのセリフを発した人間の役割 (Host, Guest, Voice bite) を推定する
+
+  Liu+ 80\%
+\end{frame}
+
+\begin{frame}{data}
+  \begin{itemize}
+    \item 48 English talks
+    \item 90 Mandarin talks
+  \end{itemize}
+  の録音に対して、
+
+  \alert{REF} (Reference human transcripts) と
+  \alert{ASR} (automatic speech recognition) output
+(using SRI Decipher ASR system)
+を対象にする．
+
+ASR は、結構間違える.
+英語については22.8\%
+北京語については38.6\%
+くらい、単語/文字を誤る．
+
+$\kappa = 0.67 / 0.78$
+\end{frame}
+
+\begin{frame}{Result - English}
+\begin{columns}
+ \begin{column}{0.63\textwidth}
+   \begin{table}[h]
+     \begin{tabular}{l|l|l} \hline
+       pattern + word class  & Ref.     & ASR \\ \hline
+       n-gram (no pattern)   & 85.8\%   & 85.0\% \\
+       pattern w/out class & 86.9     & 85.6 \\
+       w/ lemma     & 86.8               & 85.4 \\
+       w/ POS       & 86.2               & 85.8 \\
+       w/ NE        & 86.9               & 84.7 \\
+       w/ LIWC      & 86.0               & \alert{85.9} \\
+       w/ MPQA      & 86.5               & \alert{85.9} \\
+       w/ automatic & \alert{87.1}${^*}$ & 85.6 \\ \hline
+     \end{tabular}
+   \end{table}
+ \end{column}
+ \begin{column}{0.3\textwidth}
+   Ref に対して、ASR もそこまで悪くない
+
+   n-gram もそんな悪くないんだよね
+ \end{column}
+ \end{columns}
+\end{frame}
+
+\begin{frame}{Result - Chinese}
+  \begin{table}[h]
+    \begin{tabular}{l|l|l} \hline
+      pattern$+$word class & Ref. & ASR \\ \hline
+      n-gram               & 84.6 & 70.2 \\
+      pattern w/ no class  & \alert{85.8} & \alert{77.8} \\
+      w/ POS                  & 84.8 & 74.5 \\
+      w/ automatic            & 85.7 & 77.2 \\ \hline
+    \end{tabular}
+  \end{table}
+  中国語はいくつかの素性が使えないからしょうがない。
+
+  あとPOSが使い物になってないのが意外。
+\end{frame}
+
+\subsection{Alignment move}
+\begin{frame}{Alignment move}
+  ネット上の議論において
+  ある発言が趣旨に
+  同意してるのか(positive)
+  反対してるのか(negative)
+  を見る
+
+  neutralはない
+\end{frame}
+
+\begin{frame}{data}
+実験で使うのは
+Wikipedia talk page
+
+\begin{itemize}
+  \item 211 English pages and 
+  \item 225 Chinese pages
+\end{itemize}
+
+$\kappa = 0.50 / 0.53$
+
+いくつかの文は pos, neg 両方を含む
+
+あるアノテータがposをつけて、あるアノテータがnegをつけたようなものを、
+両方あるものとして、pos+neg というラベルにする
+
+分類は、
+\alert{pos/none},
+\alert{neg/none}
+の２つの分類器を作ってunionをとる
+\end{frame}
+
+\begin{frame}{Result - English (F-score)}
+  \begin{table}[h]
+    \begin{tabular}{l|l|l} \hline
+       pattern + word class & Ref.   & ASR \\ \hline
+       n-gram (no pattern)  & 38.1\% & 38.8\% \\
+       pattern w/out class  & 40.5   & 38.9 \\
+       w/ lemma      & 40.2 & 38.8 \\
+       w/ word shape & 40.0 & 39.3 \\
+       w/ POS        & 39.0 & 38.6 \\
+       w/ NE         & 40.5 & 38.9 \\
+       w/ LIWC       & 39.0 & 38.7 \\
+       w/ MPQA       & 39.2 & \alert{40.5} \\
+       w/ manual     & \alert{40.8} & 39.4 \\
+       w/ automatic  & 40.7 & \alert{40.5} \\ \hline
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Result - Chinese (F-score)}
+  \begin{table}[h]
+    \begin{tabular}{l|l|l} \hline
+       pattern + word class & Ref.   & ASR \\ \hline
+       n-gram (no pattern)  & 26.7\% & 29.7\% \\
+       pattern w/out class  & 31.2   & 31.2 \\
+       w/ POS       & 32.7         & 30.7 \\
+       w/ manual    & \alert{33.9} & \alert{31.5} \\
+       w/ automatic & 30.9         & 30.6 \\ \hline
+     \end{tabular}
+   \end{table}
+
+   基本的に manual が強い
+\end{frame}
+
+\subsection{Authority claim}
+\begin{frame}{Authority claim}
+  \begin{quote}
+    showing her knowledge or experience with respect to a topic, or using
+    some external evidence to support herself
+  \end{quote}
+
+  \begin{itemize}
+    \item \alert{forum} claim: フォーラム内のソース(発言)を引用する
+    \item \alert{external} claim: 外のソースを引用する
+  \end{itemize}
+
+  引用を見るだけだからUnigramで実際けっこう良い (Marin+, 2010)
+\end{frame}
+
+\begin{frame}{data}
+  \begin{itemize}
+    \item 339 English pages and
+    \item 225 Chinese pages
+  \end{itemize}
+
+  発言ごとに、\alert{forum} / \alert{external} authority claim であるかどうか．
+
+  $\kappa = 0.59 / 0.73$
+
+  データは疎である.
+  authority claim は全体の 20 \% だった
+\end{frame}
+
+\begin{frame}{Result - English (F-score)}
+  \begin{table}[h]
+    \begin{tabular}{l|l|l} \hline
+       pattern + word class & Ref.   & ASR \\ \hline
+       n-gram (no pattern)  & \alert{49.5}\% & 46.5\% \\
+       pattern w/out class  & 47.7   & 46.0 \\
+       w/ lemma      & 48.0 & 46.7 \\
+       w/ word shape & 48.2 & 45.8 \\
+       w/ POS        & 48.6 & 45.1 \\
+       w/ NE         & 47.7 & 46.0 \\
+       w/ LIWC       & 48.9 & 46.5 \\
+       w/ MPQA       & 47.8 & 45.5 \\
+       w/ manual     & 48.0 & \alert{46.8} \\
+       w/ automatic  & 48.9 & 46.1 \\ \hline
+     \end{tabular}
+   \end{table}
+ \end{frame}
+
+\begin{frame}{Result - Chinese (F-score)}
+  \begin{table}[h]
+    \begin{tabular}{l|l|l} \hline
+       pattern + word class & Ref.   & ASR \\ \hline
+       n-gram (no pattern)  & 32.2 & 32.3 \\
+       pattern w/out class  & 31.8 & 33.5 \\
+       w/ POS        & \alert{34.3} & \alert{40.3} \\
+       w/ manual     & 30.3 & 37.9 \\
+       w/ automatic  & 31.4 & 35.6 \\ \hline
+     \end{tabular}
+   \end{table}
+\end{frame}
+
+\section{まとめ}
+\begin{frame}{まとめ}
+  \begin{itemize}
+    \item
+      基本的には
+
+      n-gram
+      $\rightarrow$
+      素phrase pattern
+      $\rightarrow$
+      phrase pattern with word classes
+
+      で強くなる
+
+    \item word class は利用可能なら manual が強い
+    \item Speech role のASRで見たように、訓練データに頑強性がある
+      \pause
+    \item この実験は長さ3に制限していたが本気を出したバージョンを見たかった
+
+  \end{itemize}
+\end{frame}
+\end{document}
