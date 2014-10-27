@@ -18,6 +18,7 @@
 
 ## 調査発表
 
+- [皮肉文の検出](nlp/great_catchy_name.pdf)
 - [word2vec.md](word2vec.html)
 - [automatic-summarization.md](automatic-summarization.html) 自動要約: 劣モジュラー、新規性(surprise)
 - [hash.md](hash.html)
@@ -29,11 +30,11 @@
 - [NLP のメモ](NLPmemo.txt)
 - [数](numbers.txt)
 - [並列処理のHaskell実装](parallel_in_hs.txt)
-- [量子計算1](quantum1.pdf)
-- [量子計算2](quantum2.pdf)
-- [量子計算3](quantum3.pdf)
-- [量子計算 in Scheme](quantum-comp.scm)
-- [量子計算メモ](quantum-memo.txt)
+- [量子計算1](comp/quantum1.pdf)
+- [量子計算2](comp/quantum2.pdf)
+- [量子計算3](comp/quantum3.pdf)
+- [量子計算 in Scheme](comp/quantum-comp.scm)
+- [量子計算メモ](comp/quantum-memo.txt)
 - [レジスタ予約](register_alloc.txt)
 - [JavaScriptにおける並列スコープ](scope_js.html)
 - [SKI計算](SKI.txt)

@@ -1,7 +1,7 @@
-all: md2html
-
-md2html:
-	for i in *.md; do make $${i%md}html; done
+all: index.html
 
 %.html: %.md
-	pandoc -s --css ../css/m.css -i $^ -o $@
+	pandoc -s -t html5 --css ../css/m.css -i $^ -o $@
+
+git:
+	cd ..; make git
