@@ -33,7 +33,7 @@
 - [量子計算1](comp/quantum1.pdf)
 - [量子計算2](comp/quantum2.pdf)
 - [量子計算3](comp/quantum3.pdf)
-- [量子計算 in Scheme](comp/quantum-comp.scm)
+- [量子計算 in Scheme](comp/quantum-comp.scm.html)
 - [量子計算メモ](comp/quantum-memo.txt)
 - [レジスタ予約](register_alloc.txt)
 - [JavaScriptにおける並列スコープ](scope_js.html)

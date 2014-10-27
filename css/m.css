@@ -29,16 +29,12 @@ math {
   text-align: left;
 }
 
-h1:before {
-  content: "# ";
-}
 h1 {
-  font-size: 21px;
+  font-size: 22px;
   color: #111;
-  text-decoration: underline;
-}
-h2:before {
-  content: "## ";
+  background-color: #fafafa;
+  border-left: 10px black solid;
+  padding-left: 10px;
 }
 h2 {
   font-size: 20px;
