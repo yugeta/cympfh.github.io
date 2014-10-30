@@ -1,17 +1,19 @@
 <html>
   <head>
     <title>filter</title>
+    <script src='./js/filter.js'></script>
+    <script src='./js/datum.js'></script>
   </head>
   <body>
     <h1>filter</h1>
 
     <h2>日記検索の試験的実装。</h2>
 
-    <p>
-    GitHub そのものの検索として,
-    <a href="https://github.com/cympfh/cympfh.github.io/search?utf8=✓&q=LAN">cympfh.github.io/search</a>
-    もある
-    </p>
+    <form onsubmit='return filter()'><input type='text' value='hoge' value='' id='q'></form>
+
+    <div id='R'></div>
+
+    <hr />
 
     <p>
     クエリ文字列と,
@@ -22,4 +24,21 @@
     できるだけ緩やかにマッチさせるつもり.
     </p>
 
-</body></html>
+    <script>
+      var baby = true;
+      q.style.color = '#c0c0c0';
+      q.onfocus = function() {
+        if (baby) {
+          q.value = '';
+          baby = false;
+        }
+        q.style.color = 'black';
+      };
+      q.onblur = function() {
+        q.style.color = '#c0c0c0';
+      }
+
+    </script>
+
+  </body>
+</html>
