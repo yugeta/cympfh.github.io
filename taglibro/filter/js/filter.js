@@ -32,6 +32,9 @@ function display(lst) {
 }
 
 function filter() {
+
+  R.innerHTML = 'filtering';
+
   var t = q.value;
   var ls = tri(t);
   var a;
