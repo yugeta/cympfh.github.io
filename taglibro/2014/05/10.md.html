@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -43,26 +42,17 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>たまにはちゃんとエラーメッセージを読んで解決を試みよう。 <code>configure</code>のメッセージ</p>
 <pre><code>checking for makeinfo... no</code></pre>
 <p><code>gauche-refe.info.gz</code>を作るために<code>makeinfo</code>が必要。</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">sudo</span> apt-get install makeinfo</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">sudo</span> apt-get <span class="kw">install</span> makeinfo</code></pre>
 <pre><code>configure: WARNING: &quot;Can&#39;t find zlib.h so I turned off using zlib; you may want to use --with-zlib=PATH.&quot;</code></pre>
 <p>zlibっていうSchemeモジュールがないって言うので、Scheme側の問題かと思ってたのだけれど、 そもそも共有ヘッダファイルがないので、生成されてなかったらしい。</p>
 <pre><code>$ sudo apt-get install zlib1g-dev</code></pre>
 <p>このパッケージ名は自分で見つけられなかったので</p>
 <p><a href="http://d.hatena.ne.jp/embedded/20081101/p3">Ubuntuで足りないファイルがどのパッケージにあるか調べる方法Add Starmacchayoshihiro503</a> を参照した。</p>
-<pre><code>gosh&gt; info
-#&lt;closure info&gt;
-gosh&gt; (info &#39;display)
-6.22.8 Output
--------------
-
-    For the following procedures, the optional PORT argument must be an
-    output port, and when omitted, the current output port is assumed.
-
--- Function: write obj :optional port
--- Function: display obj :optional port
-           [R5RS] Produces a printable representation of an object OBJ to the</code></pre>
-<p>できた！</p>
-<hr />
+<p>``` gosh&gt; info #<closure info> gosh&gt; (info 'display) 6.22.8 Output -------------</p>
+<pre><code>For the following procedures, the optional PORT argument must be an
+output port, and when omitted, the current output port is assumed.</code></pre>
+<p>-- Function: write obj :optional port -- Function: display obj :optional port [R5RS] Produces a printable representation of an object OBJ to the ``` できた！</p>
+<hr>
 <pre><code>alias f=&#39;echo this is ef&#39;</code></pre>
 <p>aliasは''でくくるなりしないといけなくて、中に'を含めるのにエスケープがちょっと今の眠たい頭じゃ無理そうなので関数として</p>
 <pre><code>gauche() {
@@ -72,8 +62,7 @@ gosh&gt; (info &#39;display)
 <p>補完のためのファイルには、存在する手続きの名前を列挙するのだけど、</p>
 <p><a href="http://d.hatena.ne.jp/rui314/20070604/p1">http://d.hatena.ne.jp/rui314/20070604/p1</a> には、そのためのGauche用スクリプトがあった。</p>
 <p>でも、私は、gosh REPLから</p>
-<pre class="sourceCode scheme"><code class="sourceCode scheme">(apropos &#39;||)</code></pre>
-<p>として、出力結果をコピペして、ちょっとだけ整形してやる手間を加えた。</p>
+<p><code>scheme (apropos '||)</code> として、出力結果をコピペして、ちょっとだけ整形してやる手間を加えた。</p>
 <blockquote>
 <p>/dots/gosh_complements.txt</p>
 </blockquote>

@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -32,23 +31,23 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <body>
 <h1 id="年-7月-7日-月曜日-235102-jst">2014年 7月 7日 月曜日 23:51:02 JST</h1>
 <p>同じコード片を書いてると気づいててもどうして何度も書いてしまうんだ． 己は本当に．</p>
-<hr />
+<hr>
 <p>node.js</p>
 <p>標準入力、ファイルの読み取りは <code>readFile</code> もしくは <code>readFileSync</code> を使うが、 あんまりファイルの量が多いと死ぬ． ストリームを作って受け取るのが普通．</p>
 <script src="https://gist.github.com/cympfh/45b2c711c1bfe135626f.js"></script>
 
 <p>以下のように使う．</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> lineStream = <span class="fu">require</span>(<span class="st">&#39;./line-stream&#39;</span>);
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> lineStream = require(<span class="ch">&#39;./line-stream&#39;</span>);
 
 <span class="kw">var</span> cx = <span class="dv">0</span>;
-<span class="kw">function</span> <span class="fu">proc</span>(line) {
-  <span class="ot">console</span>.<span class="fu">log</span>(cx, line);
+<span class="kw">function</span> proc(line) {
+  <span class="kw">console</span>.<span class="fu">log</span>(cx, line);
   cx++;
 }
-<span class="kw">function</span> <span class="fu">defer</span>() {
-  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;~&quot;</span>);
+<span class="kw">function</span> defer() {
+  <span class="kw">console</span>.<span class="fu">log</span>(<span class="st">&quot;~&quot;</span>);
 }
 
-<span class="fu">lineStream</span>(<span class="st">&#39;/dev/stdin&#39;</span>, proc, defer);</code></pre>
+lineStream(<span class="ch">&#39;/dev/stdin&#39;</span>, proc, defer);</code></pre>
 </body>
 </html>

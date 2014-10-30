@@ -3,16 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -47,7 +45,7 @@ gosh&gt; (for (* i i) where i in (iota <span class="dv">10</span>))
 gosh&gt; (for (* i i) where i in (iota <span class="dv">10</span>) (<span class="kw">odd?</span> i))
 (<span class="dv">1</span> <span class="dv">9</span> <span class="dv">25</span> <span class="dv">49</span> <span class="dv">81</span>)</code></pre>
 <p>whereの代わりに適当な区切り文字として;はコメント記号だし、|は括り文字だしで:使おう と思ったけどたぶんキーワード引数の為に使えないし、結構使えない記号多い。'を変数名 に使えないのが、個人的には一番痛い。何も考えず x に対して x' をlet束縛するとか、 MLだとしょっちゅうやるから。</p>
-<hr />
+<hr>
 <p>自分はどこでも言ってるけど、F#のパイプライン演算子は本当にいいなあって思う。 手続きの順序を上からただ読めばいいから。行頭をちゃんと揃えて書けばとっても わかりやすい。S式は右から左に逆に読まないといけなくなるもんね。</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define-syntax</span><span class="fu"> pipe</span>
     (<span class="kw">syntax-rules</span> (&gt;&gt;)

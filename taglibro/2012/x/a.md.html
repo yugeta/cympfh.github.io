@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -38,10 +37,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h3 id="関数合成">関数合成</h3>
 <pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (&gt;&gt;) f g = <span class="kw">fun</span> x -&gt; g (f x)
 <span class="kw">let</span> (<span class="st">&lt;&lt;) f g = fun x -&gt; f (g x)</span></code></pre>
-<p>上の2つは順次パイプライン演算と呼ばれ<br />下の2つは順次合成演算という<br />入力のしやすさよりも見た目の良さを優先させている観がある．</p>
+<p>上の2つは順次パイプライン演算と呼ばれ<br>下の2つは順次合成演算という<br>入力のしやすさよりも見た目の良さを優先させている観がある．</p>
 <p>()で括った二項演算子は中間記法を前提としていて、つまり</p>
 <p><code>x |&gt; f</code> と書いて <code>f x</code> を表す．</p>
-<ul>
+<ul class="incremental">
 <li><code>(&lt;|)</code>, <code>(|&gt;)</code> は左結合</li>
 <li><code>(&lt;&lt;)</code> は右結合</li>
 <li><code>(&gt;&gt;)</code> は左結合</li>
@@ -68,7 +67,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>とすると、</p>
 <pre class="sourceCode fsharp"><code class="sourceCode fsharp">(<span class="kw">fun</span> x -&gt; sq (add1 x)) 2</code></pre>
 <p>と解釈される．</p>
-<hr />
+<hr>
 <p>右向きのパイプライン結合と左向きのパイプライン結合が キレイに左右対象になっていない．ちょっと嫌だ．</p>
 <p>f,g,hという3つの関数にxという数を通す</p>
 <pre class="sourceCode fsharp"><code class="sourceCode fsharp">f (g (h x))</code></pre>

@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -33,22 +32,22 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Fri Apr 26 17:05:49 JST 2013</p>
 <p>計算モデル論を聞きながら, S式からC++への翻訳機を書いてました 面倒になってやめました</p>
 <p>実装したトコだけを最大限見せつける実行例</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">gosh</span> test.scm &lt;&lt; EOS
-(progn
-    (include stdio.<span class="kw">h</span>)
-    &#39;(using name space std)
-    (define (int int) (f x)
-        (* (+ 1 2 3 4) (/ (- 10)))
-        (* x (f (- x 1)))))
-EOS
+<pre class="sourceCode bash"><code class="sourceCode bash">$ gosh test.scm <span class="kw">&lt;&lt;</span> EOS
+<span class="kw">(</span>progn
+    <span class="kw">(</span>include stdio.h<span class="kw">)</span>
+    <span class="st">&#39;(using name space std)</span>
+<span class="st">    (define (int int) (f x)</span>
+<span class="st">        (* (+ 1 2 3 4) (/ (- 10)))</span>
+<span class="st">        (* x (f (- x 1)))))</span>
+<span class="st">EOS</span>
 
-#include &lt;stdio.<span class="kw">h&gt;</span>
+<span class="st">#include &lt;stdio.h&gt;</span>
 
-using name space std;
-int f (int x) {
-    ((1+2+3+4)*(1/-10));
-    return (x*f((x-1)));
-}</code></pre>
+<span class="st">using name space std;</span>
+<span class="st">int f (int x) {</span>
+<span class="st">    ((1+2+3+4)*(1/-10));</span>
+<span class="st">    return (x*f((x-1)));</span>
+<span class="st">}</span></code></pre>
 <p>関数の型指定、なんかコレ気持ち悪いなあとか思ったり cout &lt;&lt; ... でも実装しようかなあとか思ってたら 授業が終ったのでお遊びもやめにしました</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(translate <span class="kw">exp</span>)
     (<span class="kw">if</span> (<span class="kw">symbol?</span> <span class="kw">exp</span>) (<span class="kw">symbol-&gt;string</span> <span class="kw">exp</span>)

@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -35,11 +34,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="co"># npm install picture-tube</span>
 <span class="co"># this is for png image</span>
 
-<span class="kw">convert</span> <span class="ot">$1</span> /tmp/un.png
-<span class="kw">if</span> <span class="kw">test</span> <span class="ot">$#</span> -eq 2 <span class="kw">;</span> <span class="kw">then</span>
-    <span class="kw">~/node_modules/picture-tube/bin/tube.js</span> --cols <span class="ot">$2</span> /tmp/un.png
+convert <span class="ot">$1</span> /tmp/un.png
+if <span class="kw">test</span> <span class="ot">$#</span> -eq 2 ; <span class="kw">then</span>
+    ~/node_modules/picture-tube/bin/tube.js --cols <span class="ot">$2</span> /tmp/un.png
 <span class="kw">else</span>
-    <span class="kw">~/node_modules/picture-tube/bin/tube.js</span> /tmp/un.png
+    ~/node_modules/picture-tube/bin/tube.js /tmp/un.png
 <span class="kw">fi</span>
 <span class="kw">rm</span> /tmp/un.png</code></pre>
 </body>

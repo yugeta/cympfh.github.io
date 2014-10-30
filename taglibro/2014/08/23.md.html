@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -36,20 +35,20 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p><code>~/test</code> を作業ディレクトリに、 <code>~/test/test.*</code> というスクリプトを実行するとき を考える</p>
 <h2 id="bash-の場合">bash の場合</h2>
 <p>まずは <code>bash</code></p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">~/test</span>$ <span class="kw">cd</span> ~/test
-<span class="kw">~/test</span>$ <span class="kw">mkdir</span> src
+<pre class="sourceCode bash"><code class="sourceCode bash">~/test$ <span class="kw">cd</span> ~/test
+~/test$ <span class="kw">mkdir</span> src
 
-<span class="kw">~/test</span>$ <span class="kw">echo</span> <span class="st">&#39;</span>
+~/test$ <span class="kw">echo</span> <span class="st">&#39;</span>
 <span class="st">echo $PWD</span>
 <span class="st">cat thefile</span>
 <span class="st">&#39;</span> <span class="kw">&gt;</span> src/test.sh
 
-<span class="kw">~/test</span>$ <span class="kw">echo</span> <span class="st">&quot;base&quot;</span> <span class="kw">&gt;</span> thefile
-<span class="kw">~/test</span>$ <span class="kw">echo</span> <span class="st">&quot;base/src&quot;</span> <span class="kw">&gt;</span> src/thefile
+~/test$ <span class="kw">echo</span> <span class="st">&quot;base&quot;</span> <span class="kw">&gt;</span> thefile
+~/test$ <span class="kw">echo</span> <span class="st">&quot;base/src&quot;</span> <span class="kw">&gt;</span> src/thefile
 
-<span class="kw">~/test</span>$ <span class="kw">bash</span> src/test.sh
-<span class="kw">/home/cympfh/test</span>
-<span class="kw">base</span></code></pre>
+~/test$ <span class="kw">bash</span> src/test.sh
+/home/cympfh/test
+base</code></pre>
 <p>これはつまり、スクリプトを作業ディレクトリにコピーしてから実行したと考えて同じ挙動である．</p>
 <pre><code>cp src/test.sh .
 bash test.sh</code></pre>
@@ -57,28 +56,28 @@ bash test.sh</code></pre>
 <h2 id="node-nodejs-の場合">node (nodejs) の場合</h2>
 <p><code>src/library.js</code> を読む (require) スクリプト <code>src/test.js</code> を、 作業ディレクトリから 呼ぶ．</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// src/test.js</span>
-fs = <span class="fu">require</span>(<span class="st">&#39;fs&#39;</span>)
-cat = <span class="fu">require</span>(<span class="st">&#39;./library.js&#39;</span>).<span class="fu">cat</span>
-<span class="fu">cat</span>(<span class="st">&#39;thefile&#39;</span>)
-<span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">fs</span>.<span class="fu">readFileSync</span>(<span class="st">&#39;thefile&#39;</span>, <span class="st">&#39;utf8&#39;</span>))
+fs = require(<span class="ch">&#39;fs&#39;</span>)
+cat = require(<span class="ch">&#39;./library.js&#39;</span>).<span class="fu">cat</span>
+<span class="fu">cat</span>(<span class="ch">&#39;thefile&#39;</span>)
+<span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">fs</span>.<span class="fu">readFileSync</span>(<span class="ch">&#39;thefile&#39;</span>, <span class="ch">&#39;utf8&#39;</span>))
 
-cat_the_file = <span class="fu">require</span>(<span class="st">&#39;./library.js&#39;</span>).<span class="fu">cat_the_file</span>
-<span class="fu">cat_the_file</span>();</code></pre>
+cat_the_file = require(<span class="ch">&#39;./library.js&#39;</span>).<span class="fu">cat</span>_<span class="fu">the</span>_<span class="fu">file</span>
+<span class="fu">cat</span>_<span class="fu">the</span>_<span class="fu">file</span>();</code></pre>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// src/library.js</span>
-<span class="ot">exports</span>.<span class="fu">cat</span> = <span class="kw">function</span> (path) {
-  <span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">fs</span>.<span class="fu">readFileSync</span>(path, <span class="st">&#39;utf8&#39;</span>))
+<span class="kw">exports</span>.<span class="fu">cat</span> = <span class="kw">function</span> (path) {
+  <span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">fs</span>.<span class="fu">readFileSync</span>(path, <span class="ch">&#39;utf8&#39;</span>))
 };
-<span class="ot">exports</span>.<span class="fu">cat_the_file</span> = <span class="kw">function</span> () {
-  <span class="kw">var</span> path = <span class="st">&#39;thefile&#39;</span>
-  <span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">fs</span>.<span class="fu">readFileSync</span>(path, <span class="st">&#39;utf8&#39;</span>))
+<span class="kw">exports</span>.<span class="fu">cat</span>_<span class="fu">the</span>_<span class="fu">file</span> = <span class="kw">function</span> () {
+  <span class="kw">var</span> path = <span class="ch">&#39;thefile&#39;</span>
+  <span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">fs</span>.<span class="fu">readFileSync</span>(path, <span class="ch">&#39;utf8&#39;</span>))
 }</code></pre>
 <h3 id="結果">結果</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">~/test</span>$ <span class="kw">node</span> src/test.js
-<span class="kw">base</span>
+<pre class="sourceCode bash"><code class="sourceCode bash">~/test$ node src/test.js
+base
 
-<span class="kw">base</span>
+base
 
-<span class="kw">base</span></code></pre>
+base</code></pre>
 <p>つまり、<code>require</code> の中に書いた相対パスだけ、 スクリプト基準に解釈し、 その他のパスは作業ディレクトリを基準にする．</p>
 <h2 id="終わり">終わり</h2>
 <p>基準点の違う相対パス を織り交ぜて書くのが気持ち悪い．</p>

@@ -3,16 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -37,7 +35,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Control.Arrowを昨日読解してた 実際、これもやることは大したことない でも大げさに行わない分、分かりやすい</p>
 <p>Arrowを使って、スタックを実装する (値、スタック) というタプルを &gt;&gt;&gt; で流すだけだけど</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- import Control.Monad.State</span>
-<span class="kw">import </span><span class="dt">Control.Arrow</span>
+<span class="kw">import</span> <span class="dt">Control.Arrow</span>
 
 (<span class="fu">|&gt;</span>) x f <span class="fu">=</span> f x
 <span class="kw">infixl</span> <span class="dv">0</span> <span class="fu">|&gt;</span>
@@ -46,7 +44,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 start <span class="fu">=</span> (<span class="dv">0</span>, [])
 
 <span class="ot">push ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> (a, [<span class="dt">Int</span>]) <span class="ot">-&gt;</span> (<span class="dt">Int</span>, [<span class="dt">Int</span>])
-push n <span class="fu">=</span> const n <span class="fu">***</span> (n<span class="fu">:</span>)
+push n <span class="fu">=</span> <span class="fu">const</span> n <span class="fu">***</span> (n<span class="fu">:</span>)
 
 <span class="ot">pop  ::</span> (a, [<span class="dt">Int</span>]) <span class="ot">-&gt;</span> (<span class="dt">Int</span>, [<span class="dt">Int</span>])
 pop (_, (x<span class="fu">:</span>xs)) <span class="fu">=</span> (x, xs)</code></pre>
@@ -71,14 +69,14 @@ f <span class="dv">3</span></code></pre>
 <p>足し算なら、二度ポップして出てきたのを足してプッシュする 一度ポップしたものは <code>(a, state)</code> のaとして保持されるけど、そのまま二度目のポップをしたらaは破棄されるので なんとかして別のものとして持っとく必要があるけれど、これはまさしくArrowで 言う、パイプラインの分岐だ</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">1</span> <span class="fu">|&gt;</span> push <span class="dv">2</span> <span class="fu">|&gt;</span> pop
 (<span class="dv">2</span>,[<span class="dv">1</span>])
-<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">1</span> <span class="fu">|&gt;</span> push <span class="dv">2</span> <span class="fu">|&gt;</span> pop <span class="fu">|&gt;</span> fst <span class="fu">&amp;&amp;&amp;</span> pop
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">1</span> <span class="fu">|&gt;</span> push <span class="dv">2</span> <span class="fu">|&gt;</span> pop <span class="fu">|&gt;</span> <span class="fu">fst</span> <span class="fu">&amp;&amp;&amp;</span> pop
 (<span class="dv">2</span>,(<span class="dv">1</span>,[]))
-<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">1</span> <span class="fu">|&gt;</span> push <span class="dv">2</span> <span class="fu">|&gt;</span> pop <span class="fu">|&gt;</span> fst <span class="fu">&amp;&amp;&amp;</span> pop <span class="fu">|&gt;</span> (\(x,ys<span class="fu">@</span>(y,s)) <span class="ot">-&gt;</span> push (x<span class="fu">+</span>y) ys)
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> start <span class="fu">|&gt;</span> push <span class="dv">1</span> <span class="fu">|&gt;</span> push <span class="dv">2</span> <span class="fu">|&gt;</span> pop <span class="fu">|&gt;</span> <span class="fu">fst</span> <span class="fu">&amp;&amp;&amp;</span> pop <span class="fu">|&gt;</span> (\(x,ys<span class="fu">@</span>(y,s)) <span class="ot">-&gt;</span> push (x<span class="fu">+</span>y) ys)
 (<span class="dv">3</span>,[<span class="dv">3</span>])</code></pre>
 <p>appの存在はしってるけど、直接タプルを受け取るような関数を書いた方が早いしコード短いよね</p>
 <p>従って、次のような汎用のスタックの上で動く二項演算子が作れる</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">op f <span class="fu">=</span>
-    pop <span class="fu">&gt;&gt;&gt;</span> fst <span class="fu">&amp;&amp;&amp;</span> id <span class="fu">&gt;&gt;&gt;</span> second pop
+    pop <span class="fu">&gt;&gt;&gt;</span> <span class="fu">fst</span> <span class="fu">&amp;&amp;&amp;</span> <span class="fu">id</span> <span class="fu">&gt;&gt;&gt;</span> second pop
     <span class="fu">&gt;&gt;&gt;</span> (\(x, ys<span class="fu">@</span>(y,s)) <span class="ot">-&gt;</span> push (f x y) ys)
 
 add <span class="fu">=</span> op (<span class="fu">+</span>)

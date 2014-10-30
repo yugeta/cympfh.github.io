@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -67,7 +66,7 @@ args: #f
      6 PUSH-GREF-TAIL-CALL(1) #&lt;identifier user#f&gt;; (f (f &lt;&gt;))
      8 RET </code></pre>
 <p>マクロによって&lt;&gt;を引数とするlambdaで囲まれるはずなのに、 &lt;&gt;がそのままIDとして生き残ってる．マクロそのものについての 勉強と、その後改めてcutの仕様を知るべきだ．</p>
-<hr />
+<hr>
 <p>恥ずかしいけれど、(use srfi-1)で、take, drop, iota, fold, fold-right が使えることを今日はじめてしった．composeもその中にあった．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; ((compose f (cut f &lt;&gt;)) <span class="dv">3</span>)
 <span class="dv">12</span></code></pre>

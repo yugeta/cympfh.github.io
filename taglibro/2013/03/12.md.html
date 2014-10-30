@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -33,25 +32,25 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>2013年 3月 12日 火曜日 23:26:02 JST</p>
 <p>Twitterクライアントを、モジュールが豪華なのを使ってnodeで動かしてたから 必要になっていれようとしたら、nodeがv0.10.0になってた。 相変わらず v1.0 まではまだまだ遠い。</p>
 <p>JavaScript1.8とかは、いつになったら使えるようになるんだろう。 まあ、別にいいけど。</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; lambda = <span class="kw">function</span>(){ <span class="kw">var</span> args = arguments; args[<span class="ot">args</span>.<span class="fu">length</span><span class="dv">-1</span>] = <span class="st">&quot;return &quot;</span> + args[<span class="ot">args</span>.<span class="fu">length</span><span class="dv">-1</span>]; <span class="kw">return</span> (<span class="ot">Function</span>.<span class="fu">apply</span>(<span class="kw">null</span>, args)) }
-[Function]
-&gt; <span class="fu">lambda</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>)
-[Function]
-&gt; id = <span class="fu">lambda</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>)
-[Function]
-&gt; <span class="fu">id</span>(<span class="dv">3</span>)
+<pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; lambda = <span class="kw">function</span>(){ <span class="kw">var</span> args = arguments; args[<span class="kw">args</span>.<span class="fu">length</span><span class="dv">-1</span>] = <span class="st">&quot;return &quot;</span> + args[<span class="kw">args</span>.<span class="fu">length</span><span class="dv">-1</span>]; <span class="kw">return</span> (<span class="kw">Function</span>.<span class="fu">apply</span>(null, args)) }
+[<span class="kw">Function</span>]
+&gt; lambda(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>)
+[<span class="kw">Function</span>]
+&gt; id = lambda(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>)
+[<span class="kw">Function</span>]
+&gt; id(<span class="dv">3</span>)
 <span class="dv">3</span>
-&gt; sq = <span class="fu">lambda</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x*x&quot;</span>)
-[Function]
-&gt; <span class="fu">sq</span> (<span class="dv">9</span>)
+&gt; sq = lambda(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x*x&quot;</span>)
+[<span class="kw">Function</span>]
+&gt; sq (<span class="dv">9</span>)
 <span class="dv">81</span>
-&gt; inc = <span class="fu">lambda</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x+1&quot;</span>)
-[Function]
-&gt; <span class="fu">inc</span> (<span class="dv">9</span>)
+&gt; inc = lambda(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x+1&quot;</span>)
+[<span class="kw">Function</span>]
+&gt; inc (<span class="dv">9</span>)
 <span class="dv">10</span>
-&gt; compose = <span class="fu">lambda</span>(<span class="st">&quot;f&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="fu">lambda</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;f(g(x))&quot;</span>))
-[Function]
-&gt; <span class="fu">compose</span>(sq, inc)(<span class="dv">3</span>)
+&gt; compose = lambda(<span class="st">&quot;f&quot;</span>, <span class="st">&quot;g&quot;</span>, lambda(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;f(g(x))&quot;</span>))
+[<span class="kw">Function</span>]
+&gt; compose(sq, inc)(<span class="dv">3</span>)
 <span class="dv">16</span></code></pre>
 <p><a href="http://blog.nodejs.org/2012/12/20/streams2/">A New Streaming API for Node v0.10</a></p>
 </body>

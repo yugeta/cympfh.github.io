@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -48,34 +47,33 @@ main(){
                (tarai (<span class="kw">-</span> z <span class="dv">1</span>) x y))))
 
 (<span class="kw">write</span> (tarai <span class="dv">13</span> <span class="dv">6</span> <span class="dv">0</span>))</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">gcc</span> -O3 ta.c<span class="kw">;</span> <span class="kw">time</span> ./a.out
-<span class="kw">ta.c</span>: In function ‘main’:
-<span class="kw">ta.c</span>:6:5: warning: incompatible implicit declaration of built-in function ‘printf’ [enabled by default]
-<span class="kw">13</span>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">gcc</span> -O3 ta.c; <span class="kw">time</span> ./a.out
+ta.c: In <span class="kw">function</span><span class="fu"> ‘main’:</span>
+ta.c:6:5: warning: incompatible implicit declaration of built-in <span class="kw">function</span><span class="fu"> ‘printf’ [enabled by</span> default]
+13
 
-<span class="kw">real</span>    0m0.205s
-<span class="kw">user</span>    0m0.204s
-<span class="kw">sys</span>     0m0.000s
+real    0m0.205s
+user    0m0.204s
+sys     0m0.000s
 
-$ <span class="kw">stalin</span> tarai.scm
-<span class="kw">For</span> now, you must specify -On because safe fixnum arithmetic is not (yet) <span class="kw">implemented</span></code></pre>
+$ stalin tarai.scm
+For now, you must specify -On because safe fixnum arithmetic is not <span class="kw">(</span>yet<span class="kw">)</span> implemented</code></pre>
 <p>何もオプション付けないと-Onはつけろと言われる．intのoverflowチェックで あると man stalin には書いてある．</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">stalin</span> -On tarai.scm<span class="kw">;</span> <span class="kw">time</span> ./tarai
-<span class="kw">13</span>
-<span class="kw">real</span>    0m0.635s
-<span class="kw">user</span>    0m0.628s
-<span class="kw">sys</span>     0m0.004s</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ stalin -On tarai.scm; <span class="kw">time</span> ./tarai
+13
+real    0m0.635s
+user    0m0.628s
+sys     0m0.004s</code></pre>
 <p>全然速くないじゃん、と思ってたけど、以下のようにするのが正しい．</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">stalin</span> -On -copt -O3 tarai.scm<span class="kw">;</span> <span class="kw">time</span> ./tarai
-<span class="kw">13</span>
-<span class="kw">real</span>    0m0.191s
-<span class="kw">user</span>    0m0.188s
-<span class="kw">sys</span>     0m0.000s</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ stalin -On -copt -O3 tarai.scm; <span class="kw">time</span> ./tarai
+13
+real    0m0.191s
+user    0m0.188s
+sys     0m0.000s</code></pre>
 <p>stalinはそもそもschemeソースコードをCのソースコードに翻訳するもので、 あとはcc、デフォルトではgccに投げるものらしい．-coptの後ろのオプションは gccへのオプションとして働く．</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">stalin</span> -On -k tarai.scm</code></pre>
-<p>とすると、翻訳されたCのソースコードが残って見ることができる．</p>
+<p><code>bash $ stalin -On -k tarai.scm</code> とすると、翻訳されたCのソースコードが残って見ることができる．</p>
 <p>まあでも実際、StalinのSchemeは実用に耐えない．SRFIとかないし．</p>
-<hr />
+<hr>
 <p>たらい回し関数は、遅延評価でかなり計算が削減されて、</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(tarai x y z)
     (<span class="kw">if</span> (<span class="kw">&lt;=</span> (<span class="kw">force</span> x) (<span class="kw">force</span> y)) (<span class="kw">force</span> y)
@@ -85,11 +83,11 @@ $ <span class="kw">stalin</span> tarai.scm
 
 (<span class="kw">write</span> (tarai (lazy <span class="dv">13</span>) (lazy <span class="dv">6</span>) (lazy <span class="dv">0</span>)))</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">time</span> gosh tarai.scm
-<span class="kw">13</span>
+13
 
-<span class="kw">real</span>    0m0.143s
-<span class="kw">user</span>    0m0.104s
-<span class="kw">sys</span>     0m0.024s</code></pre>
+real    0m0.143s
+user    0m0.104s
+sys     0m0.024s</code></pre>
 <p>Gaucheのほうが，Stalinコンパイルしたものより速い． 速いというか計算を削減してるんだから．</p>
 <p>Stalinだとまずlazyって名前がダメでdelayにするとなんかエラーが 一杯出て分からない．</p>
 </body>

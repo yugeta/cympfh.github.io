@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -33,13 +32,13 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>この日付管理、ちょっと信用できなくなってきた</p>
 <p>一つ上の人の卒論発表会見に行った． あんな、誰でも自由に入って見聞きできるカンジなんだ． 日付と場所さえ、どこかから聞きつけられれば、部外者 でも行ける．修士論文とかは知らんけど．</p>
 <p>自分があの場所に立ってあんなこと発表するなんて 信じられないな．ムリだろうな．研究室次第だろうな とも思った．</p>
-<hr />
+<hr>
 <p>Maybeモナドをschemeで．</p>
 <p><a href="http://d.hatena.ne.jp/kzk/20050902">Monad in Scheme (2) - moratorium</a> のパクリなんだけど、思い出しながらで書いたのであって、丸写しではないという 意味で、自分としては重要なので、</p>
 <p>/scheme/monad.scm.txt</p>
 <p>として残しておくのと、思い出すまでのスケッチも残しておこう． あんまり、他人が読んで面白いかは分からない．</p>
 <h1 id="目次">目次．</h1>
-<ul>
+<ul class="incremental">
 <li>私の持っているモナドに対する知識．</li>
 <li>実装 までのスケッチ</li>
 <li>遊んでみる</li>
@@ -128,8 +127,7 @@ Nothing</code></pre>
 <p>が</p>
 <pre><code>(&gt;&gt;= 1 ..)</code></pre>
 <p>のようになって、そして</p>
-<pre class="sourceCode scheme"><code class="sourceCode scheme">(&gt;&gt;= <span class="dv">1</span> ls)</code></pre>
-<p>は、 <code>scheme (let1 op (car ls)   (apply (op ls 1) ls))</code>scheme</p>
+<p><code>scheme (&gt;&gt;= 1 ls)</code> は、 <code>scheme (let1 op (car ls)   (apply (op ls 1) ls))</code>scheme</p>
 <p>となってほしい．returnは今まで1引数を取るようなラムダ式を返すことにしてたけど、 ここで (&gt;&gt;= ..)という複数の値を渡すことで&gt;&gt;=を実行させるので、書き換えが必要だ．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(return x)
     (<span class="kw">lambda</span> (f . rest) (f x rest)))</code></pre>
@@ -142,7 +140,7 @@ Nothing</code></pre>
 <p>私としては、思い出すべきことは、これでひと通り全て思い出せた．</p>
 <p>(fail)は(return 'Nothing)とするだけだし、 述語 (define fail? (pa$ equal 'Nothing)) を用意してやれば、 &gt;&gt;= の中で、まず (&gt;&gt;= x ls) の x について fail? して #t だったら(fail)を 返してやる．</p>
 <p>以上でできたことになる．</p>
-<ul>
+<ul class="incremental">
 <li>遊んでみる</li>
 </ul>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; zero

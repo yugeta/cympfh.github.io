@@ -3,16 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -38,10 +36,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <span class="kw">read</span> <span class="ot">Q</span>
 <span class="ot">Q=</span><span class="kw">`echo</span> <span class="ot">$Q</span> <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/ /%20/g&#39;</span><span class="kw">`</span>
-<span class="kw">curl</span> -s <span class="st">&quot;https://translate.google.co.jp/translate_a/single?client=t&amp;sl=</span><span class="ot">$1</span><span class="st">&amp;tl=</span><span class="ot">$2</span><span class="st">&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qc&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;dt=at&amp;dt=sw&amp;ie=UTF-8&amp;oe=UTF-8&amp;oc=1&amp;otf=2&amp;ssel=3&amp;tsel=0&amp;q=</span><span class="ot">$Q</span><span class="st">&quot;</span> \
-<span class="kw">-H</span> <span class="st">&#39;Accept-Encoding: gzip, deflate&#39;</span> \
-<span class="kw">-H</span> <span class="st">&#39;Host: translate.google.co.jp&#39;</span> \
-<span class="kw">-H</span> <span class="st">&#39;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0&#39;</span> <span class="kw">|</span> 
+curl -s <span class="st">&quot;https://translate.google.co.jp/translate_a/single?client=t&amp;sl=</span><span class="ot">$1</span><span class="st">&amp;tl=</span><span class="ot">$2</span><span class="st">&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qc&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;dt=at&amp;dt=sw&amp;ie=UTF-8&amp;oe=UTF-8&amp;oc=1&amp;otf=2&amp;ssel=3&amp;tsel=0&amp;q=</span><span class="ot">$Q</span><span class="st">&quot;</span> <span class="kw">\</span>
+-H <span class="st">&#39;Accept-Encoding: gzip, deflate&#39;</span> <span class="kw">\</span>
+-H <span class="st">&#39;Host: translate.google.co.jp&#39;</span> <span class="kw">\</span>
+-H <span class="st">&#39;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0&#39;</span> <span class="kw">|</span> 
 <span class="kw">gunzip</span> -d <span class="kw">|</span> <span class="kw">cut</span> -d<span class="st">&#39;&quot;&#39;</span> -f2</code></pre>
 <p><code>curl</code> のオプションはちょっとずつ試しながら必要最小限をそこまで目指した訳ではない。</p>
 <p>かえって来たデータのほんの一部だけを <code>cut</code> で削りだしてるけど、例文とか発音とか有用そうなものも含まれてたので、使えるかもしれない。</p>

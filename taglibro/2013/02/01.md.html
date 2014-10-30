@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -39,7 +38,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
         ((_ name) (<span class="kw">begin</span> (run-process `(vim ,name) :wait <span class="dv">#t</span>)
                          (<span class="kw">load</span> (<span class="kw">string-append</span> <span class="st">&quot;./&quot;</span> (x-&gt;string name)))) )))</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">tail</span> .bashrc
-<span class="kw">alias</span> gosh=<span class="st">&#39;rlwrap gosh -l ~/autoload.scm&#39;</span></code></pre>
+<span class="kw">alias</span> <span class="ot">gosh=</span><span class="st">&#39;rlwrap gosh -l ~/autoload.scm&#39;</span></code></pre>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (edit &#39;test.scm)
 i(<span class="kw">define</span><span class="fu"> n </span><span class="dv">127</span>)\&lt;esc&gt;:wq
 gosh&gt; n

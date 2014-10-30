@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -33,9 +32,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>2013年 3月 19日 火曜日 00:26:09 JST</p>
 <p>これは一度ちょっと試したかった。 つまり、最大値、最小値を集めるのに、forで回して</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> maxi = -<span class="dv">1</span>; <span class="co">// 数列には-1より大きいものしかないとする</span>
-<span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="ot">array</span>.<span class="fu">length</span>; ++i) {
+<span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="kw">array</span>.<span class="fu">length</span>; ++i) {
     <span class="kw">var</span> a = array[i];
-    maxi = <span class="ot">Math</span>.<span class="fu">max</span>(maxi, a); <span class="co">// とするのと、</span>
+    maxi = <span class="kw">Math</span>.<span class="fu">max</span>(maxi, a); <span class="co">// とするのと、</span>
     <span class="kw">if</span> (maxi &lt; a) maxi = a; <span class="co">// あるいは、こうするのがある</span>
 }</code></pre>
 <p>上のほうは、aを一度参照しない。直接 array[i] と書いていい。 下では二度参照するので、一度何か変数に束縛するべきだ。 また、上では常に代入を行うが、下ではifによって代入を行わない 場合がある。</p>
@@ -45,46 +44,46 @@ code > span.er { color: #ff0000; font-weight: bold; }
 (use srfi<span class="dv">-27</span>)
 (<span class="kw">for-each</span> (^i (print (random-integer <span class="dv">100</span>))) (iota <span class="dv">10000</span>))</code></pre>
 <p>一万個の、0以上100未満の数列を作る。</p>
-<ul>
+<ul class="incremental">
 <li>max, min 関数使うver</li>
 </ul>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> maxi = <span class="dv">0</span>,
-    mini = <span class="kw">Infinity</span>;
+    mini = Infinity;
 
-<span class="fu">require</span>(<span class="st">&quot;fs&quot;</span>).<span class="fu">readFileSync</span>(<span class="st">&quot;/dev/stdin&quot;</span>,<span class="st">&quot;utf8&quot;</span>)
+require(<span class="st">&quot;fs&quot;</span>).<span class="fu">readFileSync</span>(<span class="st">&quot;/dev/stdin&quot;</span>,<span class="st">&quot;utf8&quot;</span>)
     .<span class="fu">split</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>).<span class="fu">map</span>(<span class="kw">function</span>(s){<span class="kw">return</span> +s})
     .<span class="fu">forEach</span>(<span class="kw">function</span>(n) {
-        maxi = <span class="ot">Math</span>.<span class="fu">max</span>(maxi, n);
-        mini = <span class="ot">Math</span>.<span class="fu">min</span>(mini, n);
+        maxi = <span class="kw">Math</span>.<span class="fu">max</span>(maxi, n);
+        mini = <span class="kw">Math</span>.<span class="fu">min</span>(mini, n);
     });
 
-<span class="ot">console</span>.<span class="fu">log</span>(maxi, mini);</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">~/test</span>$ <span class="kw">time</span> node test.js <span class="kw">&lt;</span> input
-<span class="kw">99</span> 0
+<span class="kw">console</span>.<span class="fu">log</span>(maxi, mini);</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">~/test$ <span class="kw">time</span> node test.js <span class="kw">&lt;</span> input
+99 0
 
-<span class="kw">real</span>    0m0.114s
-<span class="kw">user</span>    0m0.088s
-<span class="kw">sys</span>     0m0.016s</code></pre>
-<ul>
+real    0m0.114s
+user    0m0.088s
+sys     0m0.016s</code></pre>
+<ul class="incremental">
 <li>if 使うver</li>
 </ul>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> maxi = <span class="dv">0</span>,
-    mini = <span class="kw">Infinity</span>;
+    mini = Infinity;
 
-<span class="fu">require</span>(<span class="st">&quot;fs&quot;</span>).<span class="fu">readFileSync</span>(<span class="st">&quot;/dev/stdin&quot;</span>,<span class="st">&quot;utf8&quot;</span>)
+require(<span class="st">&quot;fs&quot;</span>).<span class="fu">readFileSync</span>(<span class="st">&quot;/dev/stdin&quot;</span>,<span class="st">&quot;utf8&quot;</span>)
     .<span class="fu">split</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>).<span class="fu">map</span>(<span class="kw">function</span>(s){<span class="kw">return</span> +s})
     .<span class="fu">forEach</span>(<span class="kw">function</span>(n) {
         <span class="kw">if</span> (maxi &lt; n) maxi = n;
         <span class="kw">if</span> (mini &gt; n) mini = n;
     });
 
-<span class="ot">console</span>.<span class="fu">log</span>(maxi, mini);</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">~/test</span>$ <span class="kw">time</span> node test.js <span class="kw">&lt;</span> input
-<span class="kw">99</span> 0
+<span class="kw">console</span>.<span class="fu">log</span>(maxi, mini);</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">~/test$ <span class="kw">time</span> node test.js <span class="kw">&lt;</span> input
+99 0
 
-<span class="kw">real</span>    0m0.124s
-<span class="kw">user</span>    0m0.072s
-<span class="kw">sys</span>     0m0.028s</code></pre>
+real    0m0.124s
+user    0m0.072s
+sys     0m0.028s</code></pre>
 <p>この差はあんまり無視できない 相対差 8% だからね</p>
 </body>
 </html>

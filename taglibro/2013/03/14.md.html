@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -32,7 +31,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <body>
 <p>2013年 3月 14日 木曜日 01:20:15 JST</p>
 <p>言語の速度比較なんていくらでもあるけど。</p>
-<ul>
+<ul class="incremental">
 <li>標準入力を整数としてパースして、</li>
 <li>末尾再帰でない形で、</li>
 <li>多倍長整数演算する。</li>
@@ -40,7 +39,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>四度実行して、maxとminを除いて２つを残す。 Haskellはghcで最適化オプションなし。</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- test.hs</span>
 fact <span class="dv">0</span> <span class="fu">=</span> <span class="dv">1</span>
-fact n <span class="fu">=</span> n <span class="fu">*</span> fact (n<span class="fu">-</span><span class="dv">1</span>)
+fact n <span class="fu">=</span> n <span class="fu">*</span> fact (n<span class="dv">-1</span>)
 main <span class="fu">=</span> <span class="fu">getLine</span> <span class="fu">&gt;&gt;=</span> <span class="fu">print.</span>fact<span class="fu">.read</span>
 
 <span class="co">{-</span>
@@ -78,32 +77,32 @@ user    0m0.016s
 sys     0m0.004s
 |#</code></pre>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// test.js (多倍長演算の一部を実装してるので長い)</span>
-<span class="kw">function</span> <span class="fu">mult</span>(n, bi) {
+<span class="kw">function</span> mult(n, bi) {
     <span class="kw">var</span> base = <span class="dv">19</span>;
-    bi = <span class="ot">bi</span>.<span class="fu">map</span>(<span class="kw">function</span>(s){<span class="kw">return</span> s*n});
-    <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>;i&lt;<span class="ot">bi</span>.<span class="fu">length</span>;++i) {
+    bi = <span class="kw">bi</span>.<span class="fu">map</span>(<span class="kw">function</span>(s){<span class="kw">return</span> s*n});
+    <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>;i&lt;<span class="kw">bi</span>.<span class="fu">length</span>;++i) {
         <span class="kw">var</span> s = bi[i] + <span class="st">&quot;&quot;</span>;
-        <span class="kw">if</span> (<span class="ot">s</span>.<span class="fu">length</span> &gt; base) {
-            <span class="kw">var</span> len = <span class="ot">s</span>.<span class="fu">length</span>;
-            bi[i] = +<span class="ot">s</span>.<span class="fu">slice</span>(len-base, len);
+        <span class="kw">if</span> (<span class="kw">s</span>.<span class="fu">length</span> &gt; base) {
+            <span class="kw">var</span> len = <span class="kw">s</span>.<span class="fu">length</span>;
+            bi[i] = +<span class="kw">s</span>.<span class="fu">slice</span>(len-base, len);
             <span class="kw">if</span> ((i<span class="dv">+1</span>) <span class="kw">in</span> bi)
-                bi[i<span class="dv">+1</span>] += +<span class="ot">s</span>.<span class="fu">slice</span>(<span class="dv">0</span>, len-base);
+                bi[i<span class="dv">+1</span>] += +<span class="kw">s</span>.<span class="fu">slice</span>(<span class="dv">0</span>, len-base);
             <span class="kw">else</span>
-                bi[i<span class="dv">+1</span>] = +<span class="ot">s</span>.<span class="fu">slice</span>(<span class="dv">0</span>, len-base);
+                bi[i<span class="dv">+1</span>] = +<span class="kw">s</span>.<span class="fu">slice</span>(<span class="dv">0</span>, len-base);
         }
     }
     <span class="kw">return</span> bi;
 }
-<span class="kw">function</span> <span class="fu">show</span>(bi) {
-    <span class="kw">var</span> str = <span class="st">&quot;&quot;</span>, len = <span class="ot">bi</span>.<span class="fu">length</span>;
+<span class="kw">function</span> show(bi) {
+    <span class="kw">var</span> str = <span class="st">&quot;&quot;</span>, len = <span class="kw">bi</span>.<span class="fu">length</span>;
     <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>;i&lt;len;++i)
         str += bi[len-i<span class="dv">-1</span>];
     <span class="kw">return</span> str;
 }
-<span class="kw">function</span> <span class="fu">fact</span>(n){
-    <span class="kw">return</span> n==<span class="dv">0</span> ? [<span class="dv">1</span>] : <span class="fu">mult</span>(n, <span class="fu">fact</span>(n<span class="dv">-1</span>));
+<span class="kw">function</span> fact(n){
+    <span class="kw">return</span> n==<span class="dv">0</span> ? [<span class="dv">1</span>] : mult(n, fact(n<span class="dv">-1</span>));
 }
-<span class="ot">console</span>.<span class="fu">log</span>(<span class="fu">show</span>(<span class="fu">fact</span>(+<span class="fu">require</span>(<span class="st">&quot;fs&quot;</span>).<span class="fu">readFileSync</span>(<span class="st">&quot;/dev/stdin&quot;</span>,<span class="st">&quot;utf-8&quot;</span>))))
+<span class="kw">console</span>.<span class="fu">log</span>(show(fact(+require(<span class="st">&quot;fs&quot;</span>).<span class="fu">readFileSync</span>(<span class="st">&quot;/dev/stdin&quot;</span>,<span class="st">&quot;utf-8&quot;</span>))))
 
 <span class="co">/*</span>
 <span class="co">$ time node test.js &lt; input</span>

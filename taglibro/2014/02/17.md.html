@@ -3,16 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -33,12 +31,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <body>
 <p>2014年 2月17日 月曜日 15時12分51秒 JST</p>
 <p>ン(ん)をそと発音する.</p>
-<ul>
+<ul class="incremental">
 <li>〜タン → 〜たそ</li>
 <li>〜クン → 〜くそ</li>
 </ul>
 <p>気をつけた方が良い.</p>
-<hr />
+<hr>
 <p>2014年 2月17日 月曜日 19時23分01秒 JST</p>
 <blockquote>
 <p>「プログラミングClojure 第2版 Stuart 川合訳」</p>
@@ -46,7 +44,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode clojure"><code class="sourceCode clojure">(<span class="kw">defn</span><span class="fu"> gcd </span>[x y]
   (<span class="kw">if</span> (<span class="kw">&lt;</span> x y) (gcd y x)
       (<span class="kw">let</span> [r (<span class="kw">mod</span> x y)]
-        (<span class="kw">if</span> (<span class="kw">zero?</span> r) y (<span class="kw">recur</span> y r)))))
+        (<span class="kw">if</span> (zero? r) y (<span class="kw">recur</span> y r)))))
 
 (<span class="kw">defn</span><span class="fu"> so </span>[x y z]
   (<span class="kw">and</span> (<span class="kw">=</span> (gcd x y) <span class="dv">1</span>)

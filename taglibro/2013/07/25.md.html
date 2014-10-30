@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -15,7 +14,7 @@
 <p>昨夜は試験前日ということで学校で泊まりこみで学科の人たちの勉強をしていた. なのだけどJ言語という面白いのを知ってしまった．APLなら聞いたことはあったけれど (SRFI-1のiotaの由来がある言語だ)それの後継であるらしい.</p>
 <p>この言語では関数とか演算子のことを動詞と呼ぶらしいのだけれど、単項か二項の動詞しか なくて、引数が3つ以上の関数に相当するものがどうしても作れないのだけれど.</p>
 <p>部分適用はあるけど、ラムダ抽象がないので、引数を増やす方法ができない. リストを渡せる場合ならいいけれど.</p>
-<ul>
+<ul class="incremental">
 <li>演算子は全て右結合.</li>
 <li>単項として使うか二項として使うかで異なる作用をほとんど全ての演算子が持っている.</li>
 <li>演算子と引数の間に「副詞」を挟むことでちょっと意味が変えられる.</li>
@@ -28,23 +27,7 @@
 <p>再帰爆発するやつ <code>j   fib =: 3 : 'if. y &lt;: 1 do. y else. (fib y-1) + (fib y-2) end.'   fib 1 1   fib 2 1   fib 2 1   fib 3 2   fib 4 3   fib 1 2 3 4 5 1 2 3 4 5</code></p>
 <p>リスト渡してmapしてくれない. なにゆえ</p>
 <p>線形時間で終わるタイプの再帰呼び出し</p>
-<pre class="j"><code>  next
-3 : &#39;(1{y) , (+/ y)&#39; NB. [a,b] =&gt; [b,a+b]
-  fib2
-4 : &#39;if. x=0 do. (0{y) else. (x-1) fib2 (next y) end.&#39;
-  fib
-3 : &#39;y fib2 0 1&#39;
-  fib 2
-1
-  fib 3
-2
-  fib 4
-3
-  fib 5
-5
-  fib i.10
-0</code></pre>
-<p>wtf!?</p>
+<p><code>j   next 3 : '(1{y) , (+/ y)' NB. [a,b] =&gt; [b,a+b]   fib2 4 : 'if. x=0 do. (0{y) else. (x-1) fib2 (next y) end.'   fib 3 : 'y fib2 0 1'   fib 2 1   fib 3 2   fib 4 3   fib 5 5   fib i.10 0</code> wtf!?</p>
 <h2 id="追記">追記</h2>
 <p>Tue Aug 6 10:46:26 JST 2013</p>
 <p>上の奇妙に見える動作は不取敢，理由はわかった 自分で定義したfibは配列を受け取っても正しく動作してしまうのである</p>

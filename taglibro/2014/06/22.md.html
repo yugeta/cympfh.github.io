@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -65,9 +64,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>を使わせることにした． 名前の重複するファイルがあったら</p>
 <p><code>A.pdf</code> → <code>A.1.pdf</code> → <code>A.1.1.pdf</code></p>
 <p>と無限にファイル名を伸ばす．</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">pdfwget</span> http://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf
-<span class="kw">http</span>://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf
-<span class="kw">db</span>://A3-2.pdf</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ pdfwget http://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf
+http://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf
+db://A3-2.pdf</code></pre>
 <p>という具合．</p>
 </body>
 </html>

@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -30,8 +29,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>つい30分前まで6時間眠っていたというのに<br />体を横にして布団を体の上から被せるだけで簡単に眠れる<br />横にして布団を体の上から被せなければ寝ないのかもしれないが<br />それでも眠りたいのだから仕方がなかった<br />ベッドに向かう途中<br />僕は伯父さんに寝てばかりなのが恥ずかしくて冗談を言ってみた<br /> 睡眠を売る仕事があるとしたら，僕はかなり真面目な労働者ですね<br />伯父さんは一言も発さずに笑った</p>
-<p>私が完全に眠りに落ちた後<br />私はこんな夢を見ていた<br />夢を見ていたというのは完全に眠りに落ちたという他ならぬ証拠だ<br />伯父さんは私の見る夢をパイプに繋いで取り出そうとしてる<br />パイプの先は見えないけれど<br />SFかなんかにありがちで如何にもという機械でないのはきっとだ<br />夢は高く売れるから大事に取り出したいけれど<br />どうしてもパイプの繋ぎ目から夢が漏れ<br />夢を覗き見てしまう<br /> こんな日にまで，こんな夢を見なくたっていいだろうに<br />でも実はこのことは私が目が覚めてから考えたことなので<br />果たして夢と見れるのか分からない</p>
+<p>つい30分前まで6時間眠っていたというのに<br>体を横にして布団を体の上から被せるだけで簡単に眠れる<br>横にして布団を体の上から被せなければ寝ないのかもしれないが<br>それでも眠りたいのだから仕方がなかった<br>ベッドに向かう途中<br>僕は伯父さんに寝てばかりなのが恥ずかしくて冗談を言ってみた<br> 睡眠を売る仕事があるとしたら，僕はかなり真面目な労働者ですね<br>伯父さんは一言も発さずに笑った</p>
+<p>私が完全に眠りに落ちた後<br>私はこんな夢を見ていた<br>夢を見ていたというのは完全に眠りに落ちたという他ならぬ証拠だ<br>伯父さんは私の見る夢をパイプに繋いで取り出そうとしてる<br>パイプの先は見えないけれど<br>SFかなんかにありがちで如何にもという機械でないのはきっとだ<br>夢は高く売れるから大事に取り出したいけれど<br>どうしてもパイプの繋ぎ目から夢が漏れ<br>夢を覗き見てしまう<br> こんな日にまで，こんな夢を見なくたっていいだろうに<br>でも実はこのことは私が目が覚めてから考えたことなので<br>果たして夢と見れるのか分からない</p>
 <h1 id="snlp-chapter7---確認したことと疑問にもったことのメモ">SNLP Chapter7 - 確認したことと疑問にもったことのメモ</h1>
 <blockquote>
 <p>Brown et al. 1991b Flip-Flop algorithm An information-theoretic approach</p>
@@ -55,32 +54,7 @@ xs -&gt; Q1, Q2</code></pre>
 <p>を最大となるような分割を探索する</p>
 <h2 id="例">例</h2>
 <p>ある訓練データの中で曖昧語 w について 次の4つが1つずつ，見つけられた</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">indicator</th>
-<th style="text-align: center;">sense</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">x</td>
-<td style="text-align: center;">a</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">x</td>
-<td style="text-align: center;">b</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">y</td>
-<td style="text-align: center;">b</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">z</td>
-<td style="text-align: center;">d</td>
-</tr>
-</tbody>
-</table>
+<p>|indicator | sense | |:--------:|:-----:| | x | a | | x | b | | y | b | | z | d |</p>
 <p>確率は単純に割合だとすることにして</p>
 <pre><code>Pr(x,a) = .25
 Pr(x,b) = .25
@@ -96,40 +70,40 @@ Pr(b) = 0.5
 pr(d) = .25</code></pre>
 <p>ということになる</p>
 <p>相互情報量は次のように求められる</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="fu">I</span> (p1, p2, q1, q2) {
-  <span class="kw">function</span> <span class="fu">sub</span>(p, q) {
-    <span class="kw">var</span> h = <span class="fu">Pr2</span>(p,q);
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> I (p1, p2, q1, q2) {
+  <span class="kw">function</span> sub(p, q) {
+    <span class="kw">var</span> h = Pr2(p,q);
     <span class="kw">if</span> (h &lt; <span class="fl">0.0001</span>) <span class="kw">return</span> h;
-    <span class="kw">return</span> h * <span class="ot">Math</span>.<span class="fu">log</span>( h / <span class="fu">Pr0</span>(p) / <span class="fu">Pr1</span>(q) );
+    <span class="kw">return</span> h * <span class="kw">Math</span>.<span class="fu">log</span>( h / Pr0(p) / Pr1(q) );
   }
-  <span class="kw">return</span> <span class="fu">sub</span>(p1,q1) + <span class="fu">sub</span>(p1,q2) + <span class="fu">sub</span>(p2,q1) + <span class="fu">sub</span>(p2,q2);
+  <span class="kw">return</span> sub(p1,q1) + sub(p1,q2) + sub(p2,q1) + sub(p2,q2);
 }
 
-<span class="kw">function</span> <span class="fu">Pr0</span>(p) {
+<span class="kw">function</span> Pr0(p) {
   <span class="st">&quot;use strict&quot;</span>;
-  <span class="kw">var</span> ps = <span class="ot">p</span>.<span class="fu">split</span>(<span class="st">&quot;,&quot;</span>);
-  <span class="kw">return</span> <span class="ot">ps</span>.<span class="fu">map</span>(<span class="kw">function</span>(p) {
+  <span class="kw">var</span> ps = <span class="kw">p</span>.<span class="fu">split</span>(<span class="st">&quot;,&quot;</span>);
+  <span class="kw">return</span> <span class="kw">ps</span>.<span class="fu">map</span>(<span class="kw">function</span>(p) {
     <span class="kw">if</span> (p == <span class="st">&quot;b&quot;</span>) <span class="kw">return</span> <span class="fl">0.5</span>;
     <span class="kw">else</span> <span class="kw">return</span> <span class="fl">0.25</span>;
   }).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y})
 }
 
-<span class="kw">function</span> <span class="fu">Pr1</span>(q) {
+<span class="kw">function</span> Pr1(q) {
   <span class="st">&quot;use strict&quot;</span>;
-  <span class="kw">var</span> qs = <span class="ot">q</span>.<span class="fu">split</span>(<span class="st">&quot;,&quot;</span>);
-  <span class="kw">return</span> <span class="ot">qs</span>.<span class="fu">map</span>(<span class="kw">function</span>(q) {
+  <span class="kw">var</span> qs = <span class="kw">q</span>.<span class="fu">split</span>(<span class="st">&quot;,&quot;</span>);
+  <span class="kw">return</span> <span class="kw">qs</span>.<span class="fu">map</span>(<span class="kw">function</span>(q) {
     <span class="kw">if</span> (q === <span class="st">&quot;x&quot;</span>) <span class="kw">return</span> <span class="fl">0.5</span>;
     <span class="kw">else</span> <span class="kw">return</span> <span class="fl">0.25</span>;
   }).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y})
 }
 
-<span class="kw">function</span> <span class="fu">Pr2</span>(p,q) {
-  <span class="kw">var</span> ps = <span class="ot">p</span>.<span class="fu">split</span>(<span class="st">&quot;,&quot;</span>);
-  <span class="kw">var</span> qs = <span class="ot">q</span>.<span class="fu">split</span>(<span class="st">&quot;,&quot;</span>);
+<span class="kw">function</span> Pr2(p,q) {
+  <span class="kw">var</span> ps = <span class="kw">p</span>.<span class="fu">split</span>(<span class="st">&quot;,&quot;</span>);
+  <span class="kw">var</span> qs = <span class="kw">q</span>.<span class="fu">split</span>(<span class="st">&quot;,&quot;</span>);
   <span class="kw">var</span> sum = <span class="dv">0</span>;
 
-  <span class="ot">ps</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(p) {
-    <span class="ot">qs</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(q) {
+  <span class="kw">ps</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(p) {
+    <span class="kw">qs</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(q) {
       <span class="kw">var</span> r = <span class="dv">0</span>;
       <span class="kw">if</span> (p === <span class="st">&quot;x&quot;</span> &amp;&amp; q === <span class="st">&quot;a&quot;</span>) r = <span class="fl">0.25</span>;
       <span class="kw">if</span> (p === <span class="st">&quot;x&quot;</span> &amp;&amp; q === <span class="st">&quot;a&quot;</span>) r = <span class="fl">0.25</span>;
@@ -142,10 +116,10 @@ pr(d) = .25</code></pre>
   <span class="kw">return</span> sum;
 }</code></pre>
 <p>実際の値は</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">console</span>.<span class="fu">log</span>( <span class="fu">I</span>(<span class="st">&quot;x,y&quot;</span>,<span class="st">&quot;z&quot;</span>, <span class="st">&quot;a,b&quot;</span>, <span class="st">&quot;d&quot;</span>) );
-<span class="ot">console</span>.<span class="fu">log</span>( <span class="fu">I</span>(<span class="st">&quot;x&quot;</span>,<span class="st">&quot;y,z&quot;</span>, <span class="st">&quot;a,b&quot;</span>, <span class="st">&quot;d&quot;</span>) );
-<span class="ot">console</span>.<span class="fu">log</span>( <span class="fu">I</span>(<span class="st">&quot;&quot;</span>,<span class="st">&quot;x,y,z&quot;</span>, <span class="st">&quot;a,b&quot;</span>, <span class="st">&quot;d&quot;</span>) );
-<span class="ot">console</span>.<span class="fu">log</span>( <span class="fu">I</span>(<span class="st">&quot;x,y&quot;</span>,<span class="st">&quot;z&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;a,d&quot;</span>) );
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">console</span>.<span class="fu">log</span>( I(<span class="st">&quot;x,y&quot;</span>,<span class="st">&quot;z&quot;</span>, <span class="st">&quot;a,b&quot;</span>, <span class="st">&quot;d&quot;</span>) );
+<span class="kw">console</span>.<span class="fu">log</span>( I(<span class="st">&quot;x&quot;</span>,<span class="st">&quot;y,z&quot;</span>, <span class="st">&quot;a,b&quot;</span>, <span class="st">&quot;d&quot;</span>) );
+<span class="kw">console</span>.<span class="fu">log</span>( I(<span class="st">&quot;&quot;</span>,<span class="st">&quot;x,y,z&quot;</span>, <span class="st">&quot;a,b&quot;</span>, <span class="st">&quot;d&quot;</span>) );
+<span class="kw">console</span>.<span class="fu">log</span>( I(<span class="st">&quot;x,y&quot;</span>,<span class="st">&quot;z&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;a,d&quot;</span>) );
 
 <span class="co">// 0.6931471805599453</span>
 <span class="co">// 0.34657359027997264</span>

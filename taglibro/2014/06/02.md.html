@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -14,7 +13,7 @@
 <h1 id="年-6月-2日-月曜日-201340-jst">2014年 6月 2日 月曜日 20:13:40 JST</h1>
 <p>今までGNU Screenの右下に，「時計，CPUの温度，PCの電池残量」を表示していた．</p>
 <figure>
-<img src="../../img/140403.png" />
+<img src="../../img/140403.png"><figcaption></figcaption>
 </figure>
 <p>この画像の一番右下の，「59.0 deg C ... 」がそれ．</p>
 <p>でもよく考えたらGNU Screen自体はもしかしたら， 複数表示するときもなくはないし， デスクトップ全体に時計が２つ以上表示されてるのが気持ち悪かったので，</p>
@@ -29,15 +28,15 @@
 <p>肝心の<code>i3_status</code> は， <a href="https://gist.github.com/cympfh/5f36cccfb704d9ae3957">i3_status.js</a> です．</p>
 <p>内容は全く変わらず，「CPUの温度，電池残量，時計」</p>
 <p>色を，<code>#ffffff</code> の形式で取らせるのだけど，たぶん１６色くらいにしか対応していないっぽい．</p>
-<hr />
+<hr>
 <p>nodejs で，外のプロセスを作って結果をとるのには普通非同期を使い， 今回の場合，CPUの温度を取るのに，<code>sensors</code> と， 電池の残量を取るのに，<code>acpi</code> を使っているため， 非同期が２つある．</p>
 <p>こういう時のために，Promiseなるものがもてはやされてるんだろう． 正式に追加されるまではなんとなく勉強する気にならない． いや，手元で実験しようと試みてたけど うまく動いてないので．</p>
 <p>自分の書いたプログラムではひどい非同期になっていて， どうせ，１秒ごとに動かすのだから， 結果が多少古くてもいいや，という方針で同期を再現している．</p>
 <p>こんなコードを書いたのも見たのも初めてだ．</p>
-<hr />
+<hr>
 <p>モニタの右下に，</p>
 <figure>
-<img src="../../img/140602.png" />
+<img src="../../img/140602.png"><figcaption></figcaption>
 </figure>
 <p>と，表示される． ターミナルの右下ではなく，モニタ一枚に付き，一箇所． 私は二枚のモニタを使ってるので，二箇所に表示される． これ自体の設定はどうするんだろう．</p>
 </body>

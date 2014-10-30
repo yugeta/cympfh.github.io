@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -39,33 +38,33 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// 学習データのセットdtを作ります</span>
 <span class="kw">var</span> dt = [];
 <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">200</span>; i++) {
-  <span class="kw">var</span> x = <span class="ot">Math</span>.<span class="fu">random</span>()*<span class="dv">2-1</span> 
-    , y = <span class="ot">Math</span>.<span class="fu">random</span>()*<span class="dv">2-1</span>;
-  <span class="ot">dt</span>.<span class="fu">push</span>({<span class="dt">xs </span>: [x,y], <span class="dt">t </span>: (x*x+y*y&lt;<span class="dv">1</span> ? <span class="dv">1</span> : <span class="dv">0</span>) });
+  <span class="kw">var</span> x = <span class="kw">Math</span>.<span class="fu">random</span>()*<span class="dv">2-1</span> 
+    , y = <span class="kw">Math</span>.<span class="fu">random</span>()*<span class="dv">2-1</span>;
+  <span class="kw">dt</span>.<span class="fu">push</span>({<span class="dt">xs </span>: [x,y], <span class="dt">t </span>: (x*x+y*y&lt;<span class="dv">1</span> ? <span class="dv">1</span> : <span class="dv">0</span>) });
   <span class="co">// ランダムな二次元[-1,1]*[-1,1] 上の点 がなんか円の中にあるかどうか</span>
 }
-<span class="kw">var</span> h = <span class="kw">new</span> <span class="fu">NN</span>(<span class="dv">2</span>, <span class="dv">3</span>, dt);
+<span class="kw">var</span> h = <span class="kw">new</span> NN(<span class="dv">2</span>, <span class="dv">3</span>, dt);
 <span class="co">// 2入力隠れ層に3ユニットのニューラルネットワークでdtを学習</span>
 
 <span class="co">// 6つの点で実験</span>
-<span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">h</span>.<span class="fu">test</span>([ <span class="dv">1</span>, <span class="dv">1</span>]));
-<span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">h</span>.<span class="fu">test</span>([-<span class="dv">1</span>, <span class="dv">1</span>]));
-<span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">h</span>.<span class="fu">test</span>([<span class="dv">1</span>, -<span class="dv">1</span>]));
-<span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">h</span>.<span class="fu">test</span>([-<span class="dv">1</span>,-<span class="dv">1</span>]));
-<span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">h</span>.<span class="fu">test</span>([<span class="dv">0</span>,<span class="dv">0</span>]));
-<span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">h</span>.<span class="fu">test</span>([<span class="dv">0</span>,.<span class="dv">5</span>]));
+<span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">h</span>.<span class="fu">test</span>([ <span class="dv">1</span>, <span class="dv">1</span>]));
+<span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">h</span>.<span class="fu">test</span>([-<span class="dv">1</span>, <span class="dv">1</span>]));
+<span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">h</span>.<span class="fu">test</span>([<span class="dv">1</span>, -<span class="dv">1</span>]));
+<span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">h</span>.<span class="fu">test</span>([-<span class="dv">1</span>,-<span class="dv">1</span>]));
+<span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">h</span>.<span class="fu">test</span>([<span class="dv">0</span>,<span class="dv">0</span>]));
+<span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">h</span>.<span class="fu">test</span>([<span class="dv">0</span>,.5]));
 
 これは全然うまくいかなかった
 試しに隠れ層ユニットの数を増やしてみる
 
-<span class="kw">var</span> h = <span class="kw">new</span> <span class="fu">NN</span>(<span class="dv">2</span>, <span class="dv">20</span>, dt);
+<span class="kw">var</span> h = <span class="kw">new</span> NN(<span class="dv">2</span>, <span class="dv">20</span>, dt);
 
-<span class="ot">console</span>.<span class="fu">log</span>( <span class="ot">Math</span>.<span class="fu">round</span>( <span class="ot">h</span>.<span class="fu">test</span>([ <span class="dv">1</span>, <span class="dv">1</span>])) );
-<span class="ot">console</span>.<span class="fu">log</span>( <span class="ot">Math</span>.<span class="fu">round</span>( <span class="ot">h</span>.<span class="fu">test</span>([-<span class="dv">1</span>, <span class="dv">1</span>])) );
-<span class="ot">console</span>.<span class="fu">log</span>( <span class="ot">Math</span>.<span class="fu">round</span>( <span class="ot">h</span>.<span class="fu">test</span>([<span class="dv">1</span>, -<span class="dv">1</span>])) );
-<span class="ot">console</span>.<span class="fu">log</span>( <span class="ot">Math</span>.<span class="fu">round</span>( <span class="ot">h</span>.<span class="fu">test</span>([-<span class="dv">1</span>,-<span class="dv">1</span>])) );
-<span class="ot">console</span>.<span class="fu">log</span>( <span class="ot">Math</span>.<span class="fu">round</span>( <span class="ot">h</span>.<span class="fu">test</span>([<span class="dv">0</span>,<span class="dv">0</span>])) );
-<span class="ot">console</span>.<span class="fu">log</span>( <span class="ot">Math</span>.<span class="fu">round</span>( <span class="ot">h</span>.<span class="fu">test</span>([<span class="dv">0</span>,.<span class="dv">5</span>])) );
+<span class="kw">console</span>.<span class="fu">log</span>( <span class="kw">Math</span>.<span class="fu">round</span>( <span class="kw">h</span>.<span class="fu">test</span>([ <span class="dv">1</span>, <span class="dv">1</span>])) );
+<span class="kw">console</span>.<span class="fu">log</span>( <span class="kw">Math</span>.<span class="fu">round</span>( <span class="kw">h</span>.<span class="fu">test</span>([-<span class="dv">1</span>, <span class="dv">1</span>])) );
+<span class="kw">console</span>.<span class="fu">log</span>( <span class="kw">Math</span>.<span class="fu">round</span>( <span class="kw">h</span>.<span class="fu">test</span>([<span class="dv">1</span>, -<span class="dv">1</span>])) );
+<span class="kw">console</span>.<span class="fu">log</span>( <span class="kw">Math</span>.<span class="fu">round</span>( <span class="kw">h</span>.<span class="fu">test</span>([-<span class="dv">1</span>,-<span class="dv">1</span>])) );
+<span class="kw">console</span>.<span class="fu">log</span>( <span class="kw">Math</span>.<span class="fu">round</span>( <span class="kw">h</span>.<span class="fu">test</span>([<span class="dv">0</span>,<span class="dv">0</span>])) );
+<span class="kw">console</span>.<span class="fu">log</span>( <span class="kw">Math</span>.<span class="fu">round</span>( <span class="kw">h</span>.<span class="fu">test</span>([<span class="dv">0</span>,.5])) );
 
 <span class="co">// 0</span>
 <span class="co">// 0</span>

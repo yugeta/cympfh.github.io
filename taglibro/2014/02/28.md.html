@@ -3,9 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -35,7 +33,7 @@
 <p>Macのデフォルトの動作になる。つまり、F10 キーをそのまま押すとミュートのトグルとして働き、Fn + F10 でF10というキーになる。 変えられるかな？別にこれはこれでいいけど。</p>
 <h3 id="キー入れ替え">キー入れ替え</h3>
 <p>MBP英字配列では私は次の２つの入れ替えを行いたい。</p>
-<ol type="1">
+<ol class="incremental" type="1">
 <li>CapsLock を Ctrl にする</li>
 <li>左Command (Super key 扱い) を Alt にする</li>
 </ol>
@@ -55,7 +53,7 @@
 <pre><code>sudo apt-get install xubuntu-desktop</code></pre>
 <p>で xfce にした。これはいくつかの設定を行うために必要だったけれど、 最終的にはUnityにした。はじめの結論にも書いたとおりである。</p>
 <p>不満点</p>
-<ul>
+<ul class="incremental">
 <li>IMEの設定ができない</li>
 <li>IME切り替え (Ctrl + Space) の反応が大変に悪い (一時的なものだった)</li>
 <li>単純にUnityが嫌い、xfceが好き (これは今でも変わらない)</li>
@@ -65,10 +63,10 @@
 <p>普通にMozcの設定ができる。 辞書のインポートとか各種設定を行うこと。 Control + Space でのIME切り替えがストレスなくできるようになった。 あとでUnityに戻したけど問題がなくなった。よくわからない。</p>
 <h3 id="xfce-の問題点">xfce の問題点</h3>
 <p>見た目ならxubuntu は大変クールなのでこれを使い続けたいのだけどそうもいかなそう。</p>
-<ul>
+<ul class="incremental">
 <li>蓋を閉じても手動でもスリープあるいはサスペンドがうまくできない。</li>
 <li>ショートカットキーが設定できない。(Setting -&gt; Keyboard)
-<ul>
+<ul class="incremental">
 <li>したがってせっかくキーボードにあるのに音量調整とかバックライト調整が行えない</li>
 </ul></li>
 <li>キーボードバックライトはそもそも使えない</li>
@@ -76,13 +74,13 @@
 <h1 id="追記">3/2 追記</h1>
 <p>こんなこと言いたくないけど、 何度かPCのシャットダウンと起動を繰り返すと、動作が安定してきた。 安定してきたので、やっぱりやっぱり xfce にした。 ボリュームの調整はキーボードでできる。</p>
 <p>今はちょっとできないけど。できた時もある。</p>
-<ul>
+<ul class="incremental">
 <li>ディスプレイのバックライトは常に全力。</li>
 <li>キーボードのバックライトは使えない。</li>
 <li>タッチパッドがやたら反応するのは xfce の setting -&gt; &quot;Mouse and Touchpad&quot; の &quot;Touchpad&quot; の項目、&quot;Disable touchpad while typing&quot; で極端に避けられるよう。</li>
 <li>suspend はやっぱり怪しい</li>
 <li>電力消費も半端じゃない
-<ul>
+<ul class="incremental">
 <li>というか、ステータスバーに電池のアイコンが出ない (hint: acpiコマンド)</li>
 </ul></li>
 </ul>

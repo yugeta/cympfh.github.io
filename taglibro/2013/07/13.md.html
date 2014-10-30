@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -32,16 +31,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <body>
 <p>Sat Jul 13 14:29:44 JST 2013</p>
 <p>JavaScriptの型付き配列、使ったことなかった ググったらたぶんbufferを使うやりかたとか色々あるけど、たぶん次のようにやればいい</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// 配列宣言</span>
-<span class="kw">var</span> a = <span class="kw">new</span> <span class="fu">Int32Array</span>(N);</code></pre>
-<p>はじめにサイズNを指定すること．要素はゼロで初期化される</p>
+<p><code>javascript // 配列宣言 var a = new Int32Array(N);</code> はじめにサイズNを指定すること．要素はゼロで初期化される</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// 参照、代入</span>
 a[i]</code></pre>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// ループ</span>
-<span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="ot">a</span>.<span class="fu">length</span>; ++i);</code></pre>
+<span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="kw">a</span>.<span class="fu">length</span>; ++i);</code></pre>
 <p>普通ですね for-in 使うと別のが出てくる． a.bufferを見るとたぶんbyteごとに管理してる.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">const</span> N = <span class="dv">3200000</span>
-a = <span class="kw">new</span> <span class="fu">Array</span>(N)
+a = <span class="kw">new</span> <span class="kw">Array</span>(N)
 a[<span class="dv">0</span>] = <span class="dv">0</span>;
 a[<span class="dv">1</span>] = <span class="dv">1</span>;
 <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">2</span>; i&lt;N; ++i)
@@ -49,7 +46,7 @@ a[<span class="dv">1</span>] = <span class="dv">1</span>;
 
 <span class="co">// real    0m0.989s</span></code></pre>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">const</span> N = <span class="dv">3200000</span>
-a = <span class="kw">new</span> <span class="fu">Int32Array</span>(N)
+a = <span class="kw">new</span> Int32Array(N)
 a[<span class="dv">0</span>] = <span class="dv">0</span>;
 a[<span class="dv">1</span>] = <span class="dv">1</span>;
 <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">2</span>; i&lt;N; ++i)

@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -43,10 +42,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
 
 <span class="kw">function</span><span class="fu"> ej()</span> <span class="kw">{</span>
-  <span class="kw">look</span> -f <span class="ot">$1</span><span class="st">$&#39;</span><span class="dt">\t</span><span class="st">&#39;</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
+  look -f <span class="ot">$1</span><span class="st">$&#39;</span><span class="dt">\t</span><span class="st">&#39;</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
 <span class="kw">}</span>
 <span class="kw">function</span><span class="fu"> ej2()</span> <span class="kw">{</span>
-  <span class="kw">look</span> -f <span class="ot">$1</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
+  look -f <span class="ot">$1</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
 <span class="kw">}</span></code></pre>
 <p><code>ej</code>は英単語の完全一致、<code>ej2</code>は前方一致をする．スペルが怪しいものを探すときに使うことにする．</p>
 <h2 id="vim">vim</h2>
@@ -60,7 +59,7 @@ nnoremap L :call g:lookup(expand(&quot;&lt;cword&gt;&quot;), &quot;&quot;)&lt;cr
 nnoremap K :call g:lookup(expand(&quot;&lt;cword&gt;&quot;), &quot;$&#39;\t&#39;&quot;)&lt;cr&gt;</code></pre>
 <p>カーソルの下にある単語で<code>look</code>するだけ． どうやって単語を取得するんだろうとちょっとググったら <code>expand 関数</code> でできる事を初めて知った． ファイル名の取得以外にも使うんだ．</p>
 <p>あと、小文字に直してから引くっていうことをしてたけど、 辞書を <code>sort -f</code> しておいてから <code>look -f</code> するという技が <a href="http://publib.boulder.ibm.com/infocenter/pseries/v5r3/index.jsp?topic=/com.ibm.aix.cmds/doc/aixcmds3/look.htm">pSeries および AIX インフォメーション・センター</a> にあった．</p>
-<hr />
+<hr>
 <ul class="incremental">
 <li>米2kgで1098円</li>
 <li>米5kgで1980円</li>

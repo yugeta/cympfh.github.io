@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -34,49 +33,49 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2 id="open-jtalk-を使う">Open Jtalk を使う</h2>
 <p>Linuxで何にでもフリーな音声合成ツール，Open Jtalk くらいしかない hts_engine は open_jtalk のコンパイルの時に既にインストールされてる必要がある MMDAgent_Example は，Open Jtalk で使えるような音声のデータ なくても音声データはOpen Jtalk にあるらしい</p>
 <p>ref * http://www.geocities.jp/humanrace96/OpenJTalk.html * http://lingr.com/room/momonga/archives/2013/09/09</p>
-<hr />
+<hr>
 <p>基本の前に，例外的に http://lingr.com/room/momonga/archives/2013/09/09 にある通り，hts_engine, open_jtalk, mmdagent のバージョン関係はすごく重要 最新のバージョンならいいなんてことはなくて 結局</p>
-<ul>
+<ul class="incremental">
 <li>hts_engine_API-1.06</li>
 <li>open_jtalk-1.05</li>
 <li>MMDAgent_Example-1.3.1.zip</li>
 </ul>
 <p>これを使った - hts_engine_API-1.06 - open_jtalk-1.05 については，サイトを見てもリンクとか載ってなくて自分でググるしかない</p>
-<hr />
+<hr>
 <p>基本的には http://www.geocities.jp/humanrace96/OpenJTalk.html の通りにすればいい．checkinstall ってなんだろう．普通に sudo make install した</p>
-<hr />
+<hr>
 <p>具体的な使い方として 一つ目のサイトにあったperlのスクリプトとか意味不明なので，これまたどっかで拾ってきた こんなの</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> test
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> <span class="kw">test</span>
 <span class="co">#!/bin/bash</span>
 <span class="ot">VOICE=</span>/usr/local/share/hts_voice/MMDAgent_Example-1.3.1/Voice/mei_happy
 <span class="ot">DIC=</span>/usr/local/share/open_jtalk/open_jtalk_dic_utf_8-1.06
-<span class="kw">open_jtalk</span> \
-<span class="kw">-td</span> <span class="ot">$VOICE</span>/tree-dur.inf \
-<span class="kw">-tf</span> <span class="ot">$VOICE</span>/tree-lf0.inf \
-<span class="kw">-tm</span> <span class="ot">$VOICE</span>/tree-mgc.inf \
-<span class="kw">-md</span> <span class="ot">$VOICE</span>/dur.pdf \
-<span class="kw">-mf</span> <span class="ot">$VOICE</span>/lf0.pdf \
-<span class="kw">-mm</span> <span class="ot">$VOICE</span>/mgc.pdf \
-<span class="kw">-df</span> <span class="ot">$VOICE</span>/lf0.win1 \
-<span class="kw">-df</span> <span class="ot">$VOICE</span>/lf0.win2 \
-<span class="kw">-df</span> <span class="ot">$VOICE</span>/lf0.win3 \
-<span class="kw">-dm</span> <span class="ot">$VOICE</span>/mgc.win1 \
-<span class="kw">-dm</span> <span class="ot">$VOICE</span>/mgc.win2 \
-<span class="kw">-dm</span> <span class="ot">$VOICE</span>/mgc.win3 \
-<span class="kw">-ef</span> <span class="ot">$VOICE</span>/tree-gv-lf0.inf \
-<span class="kw">-em</span> <span class="ot">$VOICE</span>/tree-gv-mgc.inf \
-<span class="kw">-cf</span> <span class="ot">$VOICE</span>/gv-lf0.pdf \
-<span class="kw">-cm</span> <span class="ot">$VOICE</span>/gv-mgc.pdf \
-<span class="kw">-k</span> <span class="ot">$VOICE</span>/gv-switch.inf \
-<span class="kw">-x</span> <span class="ot">$DIC</span> \
-<span class="kw">-ow</span> /tmp/ojtalktmpvoice.wav \
+open_jtalk <span class="kw">\</span>
+-td <span class="ot">$VOICE</span>/tree-dur.inf <span class="kw">\</span>
+-tf <span class="ot">$VOICE</span>/tree-lf0.inf <span class="kw">\</span>
+-tm <span class="ot">$VOICE</span>/tree-mgc.inf <span class="kw">\</span>
+-md <span class="ot">$VOICE</span>/dur.pdf <span class="kw">\</span>
+-mf <span class="ot">$VOICE</span>/lf0.pdf <span class="kw">\</span>
+-mm <span class="ot">$VOICE</span>/mgc.pdf <span class="kw">\</span>
+-df <span class="ot">$VOICE</span>/lf0.win1 <span class="kw">\</span>
+-df <span class="ot">$VOICE</span>/lf0.win2 <span class="kw">\</span>
+-df <span class="ot">$VOICE</span>/lf0.win3 <span class="kw">\</span>
+-dm <span class="ot">$VOICE</span>/mgc.win1 <span class="kw">\</span>
+-dm <span class="ot">$VOICE</span>/mgc.win2 <span class="kw">\</span>
+-dm <span class="ot">$VOICE</span>/mgc.win3 <span class="kw">\</span>
+-ef <span class="ot">$VOICE</span>/tree-gv-lf0.inf <span class="kw">\</span>
+-em <span class="ot">$VOICE</span>/tree-gv-mgc.inf <span class="kw">\</span>
+-cf <span class="ot">$VOICE</span>/gv-lf0.pdf <span class="kw">\</span>
+-cm <span class="ot">$VOICE</span>/gv-mgc.pdf <span class="kw">\</span>
+-k <span class="ot">$VOICE</span>/gv-switch.inf <span class="kw">\</span>
+-x <span class="ot">$DIC</span> <span class="kw">\</span>
+-ow /tmp/ojtalktmpvoice.wav <span class="kw">\</span>
 <span class="ot">$1</span>
-<span class="kw">mplayer</span> /tmp/ojtalktmpvoice.wav
+mplayer /tmp/ojtalktmpvoice.wav
 
 $ <span class="kw">cat</span> input
-<span class="kw">こ</span>んにちわ こんにちわ こんにちわ こんにちわ こんにちわ こんにちわ こんにちわ こんにちわ こんにちわ
+こんにちわ こんにちわ こんにちわ こんにちわ こんにちわ こんにちわ こんにちわ こんにちわ こんにちわ
 
-$ <span class="kw">./test</span> ./input</code></pre>
+$ ./test ./input</code></pre>
 <p>気持ち悪い音声が流れる</p>
 </body>
 </html>

@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -42,8 +41,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <li>prepare input file <code>input</code></li>
 </ul>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cat</span> template.js test.js <span class="kw">&gt;</span> /tmp/test.js
-<span class="kw">node</span> /tmp/test.js <span class="kw">&lt;</span> input
-<span class="kw">xsel</span> -bi <span class="kw">&lt;</span> /tmp/test.js <span class="co"># for rapid submit</span></code></pre>
+node /tmp/test.js <span class="kw">&lt;</span> input
+xsel -bi <span class="kw">&lt;</span> /tmp/test.js <span class="co"># for rapid submit</span></code></pre>
 <h1 id="api">API</h1>
 <h3 id="global-var">GLOBAL VAR</h3>
 <ul class="incremental">

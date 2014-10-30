@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -32,7 +31,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <body>
 <p>2013/07/02</p>
 <p>Haskellにおける遅延評価でモナドが計算順序を定めることの意味が ようやくにして理解できた． つまり、いくら関数をつないでも渡した引数は必要になるまで評価 してくれない．それが入出力であっても．</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> System.IO.Unsafe
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">System.IO.Unsafe</span>
 
 <span class="ot">getLn ::</span> () <span class="ot">-&gt;</span> <span class="dt">String</span>
 getLn _ <span class="fu">=</span> unsafePerformIO <span class="fu">getLine</span>

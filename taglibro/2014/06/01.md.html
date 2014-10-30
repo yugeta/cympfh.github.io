@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -36,12 +35,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <ul class="incremental">
 <li>in a Terminal</li>
 </ul>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vim</span> --servername VS</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">vim --servername VS</code></pre>
 <p><code>servername</code> にはユニークにユーザーが与える． ここでは， <code>vim server</code> の頭文字のつもりで <code>VS</code>とした．</p>
 <ul class="incremental">
 <li>in another Terminal</li>
 </ul>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vim</span> --servername VS --remote-send <span class="st">&quot;&lt;esc&gt;&lt;esc&gt;iHello, VS. Do you read this?&quot;</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">vim --servername VS --remote-send <span class="st">&quot;&lt;esc&gt;&lt;esc&gt;iHello, VS. Do you read this?&quot;</span></code></pre>
 <p>--remote-send で与えた文字列を、<code>VS</code>と名のついた vim で、 忠実に、キーストロークを再現してくれる． ここでvim特有のキー表記、<code>&lt;esc&gt;</code> だとか <code>&lt;cr&gt;</code> だとか <code>&lt;C-n&gt;</code> だとか が効く．</p>
 <p>今の場合、</p>
 <pre class="vim"><code> &quot;&lt;esc&gt;&lt;esc&gt;iHello, VS. Do you read this?&quot;</code></pre>
@@ -50,7 +49,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="vim"><code>&lt;C-\&gt;&lt;C-n&gt;</code></pre>
 <p>を使おうと、書いてあった． 理由は、<code>&lt;esc&gt;</code> だと、ビープ音がなったり、画面のなんていうのかあのぴかっってやつ、一瞬白くなるやつ、あれがあるように設定してる人もいるから．それにしても、<code>&lt;c-\&gt;&lt;c-n&gt;</code> なんて初めてみた．確かに今、挿入モードやコマンドモードでこれを打ってみると、ノーマルに移行できた．</p>
 <p>ノーマルモードへの移行は、頭ですることにしよう．</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">i</span> in <span class="kw">`seq</span> 1 10<span class="kw">`;</span> <span class="kw">do</span> <span class="kw">vim</span> --servername VS --remote-send <span class="st">&quot;&lt;esc&gt;&lt;esc&gt;:insert&lt;cr&gt;</span><span class="ot">${i}</span><span class="st">&lt;cr&gt;.&quot;</span><span class="kw">;</span> <span class="kw">done</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> i <span class="kw">in</span> <span class="kw">`seq</span> 1 10<span class="kw">`</span>; <span class="kw">do</span> vim --servername VS --remote-send <span class="st">&quot;&lt;esc&gt;&lt;esc&gt;:insert&lt;cr&gt;</span><span class="ot">${i}</span><span class="st">&lt;cr&gt;.&quot;</span>; <span class="kw">done</span></code></pre>
 <p><code>:insert</code> コマンドの存在は知ってたけど、実際に使ったのは初めてだ．</p>
 <pre class="vim"><code>:insert&lt;cr&gt;hoge&lt;cr&gt;fuga&lt;cr&gt;.&lt;cr&gt;</code></pre>
 <p>と使うものらしい． へぇ．</p>
@@ -63,24 +62,24 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>実際に使われてる例をまず見るのが一番だった． 実は、<code>vmail</code>に使われている．</p>
 <p>vim で gmail を見たり、送受信したりできるよ！っていう 謳い文句だけど、vimと言いながら <code>gem install</code> させるじゃねーかと 思ってたんだけど、 vim単体で実現するのが面倒そうなこと（きっとメールの送受信部分だろう） は、Rubyで実現して、vimはユーザーインターフェースであり、インターフェースへの反映に使ってると見た．</p>
 <p><a href="https://github.com/danchoi/vmail/search?q=servername&amp;ref=cmdform">Search Results</a></p>
-<hr />
+<hr>
 <p>i3wm で，壁紙画像をどう設定するんだって調べると，feh を使えっていう 記事が大量に出てくるので，私は少し前からそうしてた</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">feh</span> --bg-fill ~/Dropbox/Pictures/cool.jpg</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">feh --bg-fill ~/Dropbox/Pictures/cool.jpg</code></pre>
 <p>feh はそのまま使うとただの画像ビューワとして働く．というかこちらがメインな感じもする．</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># 一枚だけ</span>
-<span class="kw">feh</span> ~/Dropbox/Pictures/cool.jpg</code></pre>
+feh ~/Dropbox/Pictures/cool.jpg</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># 4.0 秒で次々行くスライドショー</span>
-<span class="kw">feh</span> -D 4.0 ~/Dropbox/Pictures/</code></pre>
+feh -D 4.0 ~/Dropbox/Pictures/</code></pre>
 <p>サムネールモードなるものがあることに気づいた． 他にもモンタージュモードだとか， リストモードだとかあるんだけど， それらの差異はそこまで大きくなくて， それよりも，アクションなるものを設定できる． それが便利だ．</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">feh</span> -t -E300 -y300 ~/Pictures/ -A <span class="st">&#39;feh --bg-fill &quot;%f&quot;&#39;</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">feh -t -E300 -y300 ~/Pictures/ -A <span class="st">&#39;feh --bg-fill &quot;%f&quot;&#39;</span></code></pre>
 <p>これは，~/Picutures/ 内の画像を，300x300 におさまる大きさに全部変換して， いっぺんに一枚に表示する．アクションとして， <code>'feh --bg-fill &quot;%f&quot;'</code> が設定されているが， これは，一枚の画像の上にマウスオーバーした状態で， キーボードの<code>0</code> を押すと， <code>'feh --bg-fill &quot;%f&quot;'</code> が新しい /bin/sh から実行される． ただし，<code>%f</code> は，その画像のフルパス． フォーマットは他にもたくさんあって，もちろん組み合わせられる．</p>
 <p>希望としては，マウスオーバーして，キーを押すなんてまどろっこしいことじゃなくて，クリックでいいじゃんって思うんだけど，サムネールモードにおいてクリックは，その一枚を新しいウィンドウで表示，という動作に結び付けられている．</p>
 <p>アクションは10個まで，設定できて， <code>1</code> キー以上でそのアクションを起こせる</p>
 <p>不満点として，さきほどのクリックにアクションを設定できないこともだけど， デフォルトだと，横に細く縦に長く表示されて， スクロールするのに，マウスのスクロールする回るあれじゃ動かなくて， ドラッグしないとスクロールできない． 面倒だ．</p>
 <p>全体の大きさ(画像一枚じゃなくて，画像郡を表示するあのウィンドウ自体)は，-W, -H で設定するんだけど，両方を設定すると，W * H に表示できない画像は表示しない．だからどちらか一方までしか設定しないほうがいい．</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">feh</span> -t -W 1300 -E300 -y300 ~/Pictures/ -A <span class="st">&#39;feh --bg-fill &quot;%f&quot;&#39;</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">feh -t -W 1300 -E300 -y300 ~/Pictures/ -A <span class="st">&#39;feh --bg-fill &quot;%f&quot;&#39;</span></code></pre>
 <figure>
-<img src="../../img/140601.png" />
+<img src="../../img/140601.png"><figcaption></figcaption>
 </figure>
 </body>
 </html>

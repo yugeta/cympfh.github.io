@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -217,43 +216,43 @@ code > span.er { color: #ff0000; font-weight: bold; }
   (x-append <span class="st">&quot;(&quot;</span> contents <span class="st">&quot;)&quot;</span>)))
 
 (<span class="kw">define</span><span class="fu"> </span>(comma . args) (x-join args <span class="st">&quot;, &quot;</span>))</code></pre>
-<hr />
+<hr>
 <p>Wed Jun 5 15:23:24 JST 2013</p>
 <h1 id="プロジェクター実験">プロジェクター実験</h1>
 <p>先週xfceのパソコンでプロジェクタつないでもモニタは検知できても &quot;output on&quot; が出来なかった．</p>
 <p>別のパソコンで，やはりxfce ので，xrandr 使ってできた．使わなくても できたような気がすごくするけど．</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># 使える（繋がってないの含めて）モニタ出力デバイス一覧</span>
-$ <span class="kw">xrandr</span> -q
-<span class="kw">Screen</span> 0: minimum 320 x 200, current 1280 x 800, maximum 8192 x 8192
-<span class="kw">LVDS1</span> connected 1280x800+0+0 (normal left inverted right x axis y axis) <span class="kw">286mm</span> x 179mm
-   <span class="kw">1280x800</span>       60.5*+
-   <span class="kw">1024x768</span>       60.0  
-   <span class="kw">800x600</span>        60.3     56.2  
-   <span class="kw">640x480</span>        59.9  
-<span class="kw">VGA1</span> disconnected (normal left inverted right x axis y axis)
-<span class="kw">HDMI1</span> disconnected (normal left inverted right x axis y axis)
-<span class="kw">DP1</span> disconnected (normal left inverted right x axis y axis)
-<span class="kw">HDMI2</span> disconnected (normal left inverted right x axis y axis)
-<span class="kw">DP2</span> disconnected (normal left inverted right x axis y axis)
-<span class="kw">DP3</span> disconnected (normal left inverted right x axis y axis)
-<span class="kw">TV1</span> disconnected (normal left inverted right x axis y axis)</code></pre>
+$ xrandr -q
+Screen 0: minimum 320 x 200, current 1280 x 800, maximum 8192 x 8192
+LVDS1 connected 1280x800+0+0 <span class="kw">(</span>normal left inverted right x axis y axis<span class="kw">)</span> 286mm x 179mm
+   1280x800       60.5*+
+   1024x768       60.0  
+   800x600        60.3     56.2  
+   640x480        59.9  
+VGA1 disconnected <span class="kw">(</span>normal left inverted right x axis y axis<span class="kw">)</span>
+HDMI1 disconnected <span class="kw">(</span>normal left inverted right x axis y axis<span class="kw">)</span>
+DP1 disconnected <span class="kw">(</span>normal left inverted right x axis y axis<span class="kw">)</span>
+HDMI2 disconnected <span class="kw">(</span>normal left inverted right x axis y axis<span class="kw">)</span>
+DP2 disconnected <span class="kw">(</span>normal left inverted right x axis y axis<span class="kw">)</span>
+DP3 disconnected <span class="kw">(</span>normal left inverted right x axis y axis<span class="kw">)</span>
+TV1 disconnected <span class="kw">(</span>normal left inverted right x axis y axis<span class="kw">)</span></code></pre>
 <p>LVDS1 がおそらく組み込みの（ノートパソコンです）のモニタ VGA1 が，私がプロジェクタ出力に使ってる穴</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># 私のノートパソコンの最高解像度</span>
-$ <span class="kw">xrandr</span> --output LVDS1 --mode 1280x800</code></pre>
+$ xrandr --output LVDS1 --mode 1280x800</code></pre>
 <p>--modeの後でタブ補完すれば，使える解像度一覧がわかる．すごい遅いけど</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># これでもたぶん大丈夫</span>
-$ <span class="kw">xrandr</span> --output LVDS1 --auto
+$ xrandr --output LVDS1 --auto
 
 <span class="co"># プロジェクタの解像度に合わせる</span>
-$ <span class="kw">xrandr</span> --output LVDS1 --mode 1024x768
+$ xrandr --output LVDS1 --mode 1024x768
 
 <span class="co"># プロジェクタに出力</span>
-$ <span class="kw">xrandr</span> --output VGA1 --mode 1024x768
+$ xrandr --output VGA1 --mode 1024x768
 
 <span class="co"># なんか一旦別の解像度にしないと映らない</span>
-$ <span class="kw">xrandr</span> --output VGA1 --mode 800x600
+$ xrandr --output VGA1 --mode 800x600
 
 <span class="co"># 今度こそいける</span>
-$ <span class="kw">xrandr</span> --output VGA1 --mode 1024x768</code></pre>
+$ xrandr --output VGA1 --mode 1024x768</code></pre>
 </body>
 </html>

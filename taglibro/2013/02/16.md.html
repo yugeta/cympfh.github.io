@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -36,11 +35,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode haskell"><code class="sourceCode haskell">main <span class="fu">=</span> <span class="fu">print</span> <span class="fu">$</span> <span class="fu">take</span> <span class="dv">10</span> fib
     <span class="kw">where</span>
     fib <span class="fu">=</span> <span class="dv">0</span> <span class="fu">:</span> <span class="dv">1</span> <span class="fu">:</span> (<span class="fu">zipWith</span> (<span class="fu">+</span>) fib <span class="fu">$</span> <span class="fu">tail</span> fib)</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash">[<span class="kw">0</span>,1,1,2,3,5,8,13,21,34]
+<pre class="sourceCode bash"><code class="sourceCode bash">[0,1,1,2,3,5,8,13,21,34]
 
-<span class="kw">real</span>    0m0.003s
-<span class="kw">user</span>    0m0.000s
-<span class="kw">sys</span> 0m0.000s</code></pre>
+real    0m0.003s
+user    0m0.000s
+sys 0m0.000s</code></pre>
 <p>十分シンプル． fib!!0, fib!!1 までは、consによって与えられ、例えば fib!!2 は <code>haskell fib!!2 = head (zipWith (+) .. ..)        = (head fib) + (head $ tail fib)        = 0 + (head (1 : ..))        = 0 + 1</code> 何も問題ない．</p>
 <p>Scheme での実験．Gauche 0.9.3 には、プリミティブ型としてのlconsが あり、cdrにのみ、遅延が入るconsであり、しかもこれは、一度評価したら その値をメモしておく．</p>
 <p>上の Haskell でのコードをほとんどそのまま翻訳したもの．</p>
@@ -69,16 +68,16 @@ gosh&gt; (<span class="kw">cadr</span> a)
 <span class="kw">caddr</span>
 #&lt;undef&gt;</code></pre>
 <p>だから問題なのは、fib!!1に相当する(cadr fib)の計算には、これはそもそも (car (cdr fib)) であり、(cdr fib) の計算とは、(cadr fib) 及び (cddr fib) である．だから fib!!1 の評価に fib!!2 の計算が伴い、そしてそれには(cdr fib) が必要である．よって無限の再帰が行われる．</p>
-<p>頭３つを用意して、またmapの計算を直してやれば、(Fib_nを計算するのに Fib_{n-2}とFib_{n-1}を用いることになるから)よくて．</p>
+<p>頭３つを用意して、またmapの計算を直してやれば、(Fib_nを計算するのに Fib<em>{n-2}とFib</em>{n-1}を用いることになるから)よくて．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(use gauche.lazy)
 (<span class="kw">define</span><span class="fu"> fib</span>
     ($ lcons* <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> $ lmap (cut $ <span class="kw">+</span> &lt;&gt; $ * &lt;&gt; <span class="dv">2</span>) fib $ <span class="kw">cdr</span> fib))
 (<span class="kw">define</span><span class="fu"> </span>(main _)
     ($ <span class="kw">display</span> $ take fib <span class="dv">10</span>))</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">(0</span> 1 1 2 3 5 8 13 21 34<span class="kw">)</span>
-<span class="kw">real</span>    0m0.052s
-<span class="kw">user</span>    0m0.040s
-<span class="kw">sys</span> 0m0.008s</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">(</span>0 1 1 2 3 5 8 13 21 34<span class="kw">)</span>
+real    0m0.052s
+user    0m0.040s
+sys 0m0.008s</code></pre>
 <p>綺麗じゃない</p>
 </body>
 </html>

@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -32,7 +31,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <body>
 <p>2013年 3月 6日 水曜日 04:43:00 JST</p>
 <p>A sample code should not answer 7 because the character, 7 seems to see ?.</p>
-<hr />
+<hr>
 <p>R5RSを初めて読んだ。 call/ccが少しわからなくなった。 多値を返すためのvaluesをcall/ccで定義してて、なんで多値になるのか分からない。</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(<span class="kw">values</span> . things)
     (<span class="kw">call/cc</span> (<span class="kw">lambda</span> (cc) (apply cc things))) )</code></pre>

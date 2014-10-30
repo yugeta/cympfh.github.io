@@ -3,16 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -38,13 +36,13 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
   <span class="kw">var</span> a = [];
   <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">10</span>; ++j) {
-    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+    a[j] = <span class="kw">Math</span>.<span class="fu">round</span>(<span class="kw">Math</span>.<span class="fu">random</span>());
   }
-  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  <span class="kw">var</span> t = <span class="kw">a</span>.<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
   t = t &gt; <span class="dv">5</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
-  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+  <span class="kw">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="kw">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="ch">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="ch">&#39; &#39;</span>));
 }</code></pre>
 <blockquote>
 <p>間違ってた。番号を0スタートにしてるけど、 よく見るとWARNINGが出てて、1スタートにしてほしかったらしい。 ちゃんと動いてるっぽいからまぁいっか</p>
@@ -71,13 +69,13 @@ Cross Validation Accuracy = 100%</code></pre>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
   <span class="kw">var</span> a = [];
   <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">20</span>; ++j) {
-    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+    a[j] = <span class="kw">Math</span>.<span class="fu">round</span>(<span class="kw">Math</span>.<span class="fu">random</span>());
   }
-  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  <span class="kw">var</span> t = <span class="kw">a</span>.<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
   t = t &gt; <span class="dv">10</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
-  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+  <span class="kw">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="kw">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="ch">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="ch">&#39; &#39;</span>));
 }</code></pre>
 <pre><code>$ svm-train -t 0 -v 10 train.scale
 
@@ -93,15 +91,15 @@ Cross Validation Accuracy = 99%</code></pre>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
   <span class="kw">var</span> a = [];
   <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">10</span>; ++j) {
-    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+    a[j] = <span class="kw">Math</span>.<span class="fu">round</span>(<span class="kw">Math</span>.<span class="fu">random</span>());
   }
-  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  <span class="kw">var</span> t = <span class="kw">a</span>.<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
   t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
-  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+  <span class="kw">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="kw">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="ch">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="ch">&#39; &#39;</span>));
 }</code></pre>
-<ul>
+<ul class="incremental">
 <li>線形</li>
 </ul>
 <pre><code>$ svm-train -t 0 -v 10 train.scale
@@ -114,7 +112,7 @@ obj = -59.094108, rho = 0.338879
 nSV = 65, nBSV = 53
 Total nSV = 65
 Cross Validation Accuracy = 61%</code></pre>
-<ul>
+<ul class="incremental">
 <li>多項式</li>
 </ul>
 <pre><code>$ svm-train -t 1 -v 10 train.scale
@@ -127,7 +125,7 @@ obj = -43.537098, rho = 0.154695
 nSV = 81, nBSV = 40
 Total nSV = 81
 Cross Validation Accuracy = 41%</code></pre>
-<ul>
+<ul class="incremental">
 <li>RBF</li>
 </ul>
 <pre><code>$ svm-train -t 1 -v 10 train.scale
@@ -145,65 +143,31 @@ Cross Validation Accuracy = 59%</code></pre>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
   <span class="kw">var</span> a = [];
   <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">10</span>; ++j) {
-    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+    a[j] = <span class="kw">Math</span>.<span class="fu">round</span>(<span class="kw">Math</span>.<span class="fu">random</span>());
   }
-  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">slice</span>(<span class="dv">0</span>,<span class="dv">2</span>).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  <span class="kw">var</span> t = <span class="kw">a</span>.<span class="fu">slice</span>(<span class="dv">0</span>,<span class="dv">2</span>).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
   t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
-  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+  <span class="kw">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="kw">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="ch">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="ch">&#39; &#39;</span>));
 }</code></pre>
 <p>入力は10だけど初めの２つだけで答えは実は決まってる。</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">-t</th>
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">Ac.</td>
-<td style="text-align: right;">52%</td>
-<td style="text-align: right;">62%</td>
-<td style="text-align: right;">82%</td>
-</tr>
-</tbody>
-</table>
+<p>| -t | 0 | 1 | 2 | |:--:|----:|----:|----:| | Ac.| 52% | 62% | 82% |</p>
 <p>パラメタのいじり方はわかってないので -t と -v 10 以外のオプション以外はつけてない。</p>
 <h2 id="入力を倍-1">入力を倍</h2>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
   <span class="kw">var</span> a = [];
   <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">20</span>; ++j) {
-    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+    a[j] = <span class="kw">Math</span>.<span class="fu">round</span>(<span class="kw">Math</span>.<span class="fu">random</span>());
   }
-  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">slice</span>(<span class="dv">0</span>,<span class="dv">2</span>).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  <span class="kw">var</span> t = <span class="kw">a</span>.<span class="fu">slice</span>(<span class="dv">0</span>,<span class="dv">2</span>).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
   t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
-  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+  <span class="kw">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="kw">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="ch">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="ch">&#39; &#39;</span>));
 }</code></pre>
 <p>入力の数は倍だけど、やはり最初の２つだけで答えは決まる。</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">-t</th>
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">Ac.</td>
-<td style="text-align: right;">49%</td>
-<td style="text-align: right;">45%</td>
-<td style="text-align: right;">70%</td>
-</tr>
-</tbody>
-</table>
+<p>| -t | 0 | 1 | 2 | |:--:|----:|----:|----:| | Ac.| 49% | 45% | 70% |</p>
 <h2 id="section"></h2>
 <p>期待してたような数字は出なかったのだけど、 あとSVMは入力次元がどんなに大きくてもうまい事取捨してくれるとか聞いた気がするんだけど、 けどけど、 パラメタのイジリ方勉強しないとだ。</p>
 <h3 id="分かった">分かった</h3>
@@ -211,13 +175,13 @@ Cross Validation Accuracy = 59%</code></pre>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">1000</span>; ++i) {
   <span class="kw">var</span> a = [];
   <span class="kw">for</span> (<span class="kw">var</span> j=<span class="dv">0</span>; j&lt;<span class="dv">20</span>; ++j) {
-    a[j] = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">Math</span>.<span class="fu">random</span>());
+    a[j] = <span class="kw">Math</span>.<span class="fu">round</span>(<span class="kw">Math</span>.<span class="fu">random</span>());
   }
-  <span class="kw">var</span> t = <span class="ot">a</span>.<span class="fu">slice</span>(<span class="dv">0</span>,<span class="dv">2</span>).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
+  <span class="kw">var</span> t = <span class="kw">a</span>.<span class="fu">slice</span>(<span class="dv">0</span>,<span class="dv">2</span>).<span class="fu">reduce</span>(<span class="kw">function</span>(x,y){<span class="kw">return</span> x+y});
   t = t % <span class="dv">2</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
-  <span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
+  <span class="kw">console</span>.<span class="fu">log</span>(<span class="st">&quot;%d %s&quot;</span>
            , t
-           , <span class="ot">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> (i<span class="dv">+1</span>)+<span class="st">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="st">&#39; &#39;</span>));
+           , <span class="kw">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> (i<span class="dv">+1</span>)+<span class="ch">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="ch">&#39; &#39;</span>));
 }</code></pre>
 <pre><code>$ svm-train -t 2 -v 10 train.scale
 
