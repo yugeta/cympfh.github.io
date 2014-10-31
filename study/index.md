@@ -28,7 +28,7 @@
 - [coding rule](coding_rules.txt)
 - [monad](monad.html)
 - [Neural network](neuralNetwork.txt)
-- [NLP のメモ](NLPmemo.txt)
+- [NLP のメモ](nlp/memo.md)
 - [数](numbers.txt)
 - [並列処理のHaskell実装](parallel_in_hs.txt)
 - [量子計算1](comp/quantum1.pdf)
