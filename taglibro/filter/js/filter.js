@@ -35,28 +35,21 @@ function filter() {
 
   R.innerHTML = 'filtering';
 
-  var t = q.value;
-  var tris = gram(3, t);
-  var bis = gram(2, t);
+  var text = q.value.toLowerCase();
   var a;
-  var article;
 
   var cx;
   var standing = [];
   for (a in datum) {
     cx = 0;
-    article = datum[a];
-    article.forEach(function (x) {
-      tris.forEach(function (y) {
-        if (x === y) {
-          cx += 3;
-        }
-      });
-      bis.forEach(function (y) {
-        if (x === y) {
-          cx += 1;
-        }
-      });
+    datum[a].forEach(function (x) {
+      for (var n = 2; n <= 5; ++n) {
+        gram(n, text).forEach(function (y) {
+          if (x === y) {
+            cx += Math.pow(n, 1.55);
+          }
+        });
+      }
     });
     standing.push({ title: a, cx: cx });
 

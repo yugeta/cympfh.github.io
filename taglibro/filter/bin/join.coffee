@@ -4,15 +4,15 @@ fs = require 'fs'
 
 dict = {}
 
-tri = (y, m, d) ->
+grams = (y, m, d) ->
   fname = "nouns/#{y}/#{m}/#{d}.txt"
   ls = fs.readFileSync fname, 'utf8'
   buf = ls.replace(/[\r\n\'\"]/g, '')
+  buf = buf.toLowerCase()
   ret = []
-  for i in [0 .. buf.length - 2]
-    ret.push buf.slice(i, i + 2)
-  for i in [0 .. buf.length - 3]
-    ret.push buf.slice(i, i + 3)
+  for k in [2 .. 5]
+    for i in [0 .. buf.length - k]
+      ret.push buf.slice(i, i + k)
   ret
 
 lst = fs.readdirSync 'nouns'
@@ -22,6 +22,6 @@ lst.forEach (y) ->
     lst = fs.readdirSync "nouns/#{y}/#{m}"
     lst.forEach (d) ->
       d = d.slice 0, -4
-      dict["#{y}_#{m}_#{d}"] = tri y, m, d
+      dict["#{y}_#{m}_#{d}"] = grams y, m, d
 
 console.log '%j', dict
