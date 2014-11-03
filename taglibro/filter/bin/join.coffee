@@ -9,8 +9,10 @@ tri = (y, m, d) ->
   ls = fs.readFileSync fname, 'utf8'
   buf = ls.replace(/[\r\n\'\"]/g, '')
   ret = []
+  for i in [0 .. buf.length - 2]
+    ret.push buf.slice(i, i + 2)
   for i in [0 .. buf.length - 3]
-    ret.push buf.slice(i, i+3)
+    ret.push buf.slice(i, i + 3)
   ret
 
 lst = fs.readdirSync 'nouns'

@@ -1,8 +1,8 @@
-function tri(t) {
+function gram(n, t) {
   var ret = [];
   var i;
-  for (i = 0; i <= t.length - 3; ++i) {
-    ret.push(t.slice(i, i + 3));
+  for (i = 0; i <= t.length - n; ++i) {
+    ret.push(t.slice(i, i + n));
   }
   return ret;
 }
@@ -24,7 +24,7 @@ function display(lst) {
         return;
       }
       var fname = xs[0] + '/' + xs[1] + '/' + xs[2];
-      LI.innerHTML = "<a href='../" + fname + ".md.html'>" + fname + "</a>"
+      LI.innerHTML = "<a href='../" + fname + ".md.html'>" + fname + "</a>";
       OL.appendChild(LI);
     });
   }
@@ -36,19 +36,25 @@ function filter() {
   R.innerHTML = 'filtering';
 
   var t = q.value;
-  var ls = tri(t);
+  var tris = gram(3, t);
+  var bis = gram(2, t);
   var a;
-  var tris;
+  var article;
 
   var cx;
   var standing = [];
   for (a in datum) {
     cx = 0;
-    tris = datum[a];
-    tris.forEach(function (x) {
-      ls.forEach(function (y) {
+    article = datum[a];
+    article.forEach(function (x) {
+      tris.forEach(function (y) {
         if (x === y) {
-          ++cx;
+          cx += 3;
+        }
+      });
+      bis.forEach(function (y) {
+        if (x === y) {
+          cx += 1;
         }
       });
     });
