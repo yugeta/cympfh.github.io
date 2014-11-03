@@ -1,31 +1,41 @@
-function save (flg) {
+var checked = true;
+function save() {
   if (localStorage) {
-    localStorage.setItem('check_iframe', flg ? 1 : 0);
+    localStorage.setItem('check_iframe', checked);
   }
 }
-function restore(id) {
+
+function check(b) {
+  var false_inner = "✗ view with new window";
+  var true_inner = "✔ view on iframe";
+  checked = b;
+  document.getElementById('check_iframe').innerHTML = b ? true_inner : false_inner;
+  save();
+}
+
+function restore() {
   if (localStorage && localStorage.getItem('check_iframe')) {
-    var n = +localStorage.getItem('check_iframe');
-    document.getElementById(id).checked = (n == 1);
+    check(localStorage.getItem('check_iframe') === 'true');
   }
 }
 
-var check_id = 'check_if_iframe';
+function toggle() {
+  check(!checked);
+}
 
-function main () {
+function opener_initial() {
 
   // restore setting
-  restore(check_id);
+  restore();
 
   // update all links
   var ls = document.links;
-  for (var i=0; i<ls.length; ++i) {
+  for (var i = 0; i < ls.length; ++i) {
     var lk = ls[i];
     lk.onclick = (function(url) {
       return function () {
-        var flg = document.getElementById(check_id).checked;
-        save(flg);
-        if (! flg) { // open ordinary
+        save();
+        if (! checked) {
           return true;
         }
         var fr = document.createElement('iframe');
@@ -38,9 +48,9 @@ function main () {
     }(lk.href));
   }
 
-  document.getElementById("check_wrap").onclick = function () {
-    check_if_iframe.checked =! check_if_iframe.checked
-    save();
+
+  document.getElementById('check_iframe').onclick = function () {
+    toggle();
   };
 
 }

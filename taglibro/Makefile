@@ -12,7 +12,7 @@ md2html:
 	pandoc --mathml -t html5 -i $^ -o $@ --css ../../css/h1.css
 
 sum:
-	cd summary/; make
+	#cd summary/; make
 
 today:
 	./script/vimtoday
