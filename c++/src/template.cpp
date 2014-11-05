@@ -1,9 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define rep2(i,n,m) for(int i=(int)(n);i<(int)(m);++i)
-#define rep(i,n) rep2(i,0,n)
-#define iota(i,n,b,s) for(int i=int(b);i<int(b+s*n);i+=s)
+#define iota(i,n,b,s) for(int i=int(b);i!=int(b+s*n);i+=s)
+#define range_debug(i,n,m) (n>m?(n-m+1):(m-n+1))<<n<<(n>m?-1:1)
+#define range(i,n,m) iota(i,(n>m?(n-m+1):(m-n+1)),n,(n>m?-1:1))
+#define rep(i,n) iota(i,n,0,1)
 
 #define INF (1e9)
 #define EPS (1e-9)
@@ -34,7 +35,12 @@ ostream& operator<<(ostream& os, vector<T> v) {
 }
 
 int main() {
-  int n;
+  int n; cin >> n;
+
+  rep(i,10) cout << i << ' '; cout << endl;
+  range(i,-10, 10) cout << i << ' '; cout << endl;
+  range(i,0, 0) cout << i << ' '; cout << endl;
+  range(i,10, -10) cout << i << ' '; cout << endl;
 
   return 0;
 }
