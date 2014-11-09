@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
 <title>c++</title>
 <script src='../taglibro/js/openarticle.js'></script>
 <style>
@@ -26,6 +30,9 @@ hr.shorthr {
   margin-left: 0;
 }
 </style>
-<body onload='main()'>
-<div class='article' id='article'></div>
-<div class='dates'><input type='checkbox' id='check_if_iframe'>view on iframe<hr class='shorthr'>
+</head>
+<body onload='opener_initial()'>
+  <div class='article' id='article'></div>
+  <div class='dates'>
+    <div id='check_iframe' style='cursor:link'></div>
+    <hr class='shorthr'>

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "\`\`\`cpp" > /tmp/cpphtml.md
+cat $1 >> /tmp/cpphtml.md
+echo "\`\`\`" >> /tmp/cpphtml.md
+pandoc -s -i /tmp/cpphtml.md -o $1.html

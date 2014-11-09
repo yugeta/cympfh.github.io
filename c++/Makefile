@@ -7,7 +7,7 @@ main.html: main.md
 	pandoc -i main.md -o main.html
 
 cpphtml:
-	./toHTML
+	for f in ./src/*.cpp; do ./bin/cpp2html $$f; done
 
 git:
 	cd ..; make git

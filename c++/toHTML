@@ -1,9 +1,0 @@
-#!/bin/bash
-
-for f in ./src/*.cpp; do
-  echo $f
-  echo "\`\`\`cpp" > /tmp/cpphtml.md
-  cat $f >> /tmp/cpphtml.md
-  echo "\`\`\`" >> /tmp/cpphtml.md
-  pandoc -s -i /tmp/cpphtml.md -o $f.html
-done
