@@ -10,7 +10,7 @@ G = (V, E)
 |V| = N ~ 1e3
 V = { 1, 2, .., N }
 |E| = m ~ 1e4
-distance of `e` in `E`: d(u, v)
+distance of `e = (u, v)` in `E`: d(u, v)
 
  * output
  *
