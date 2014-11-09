@@ -8,3 +8,6 @@ main.html: main.md
 
 cpphtml:
 	./toHTML
+
+git:
+	cd ..; make git

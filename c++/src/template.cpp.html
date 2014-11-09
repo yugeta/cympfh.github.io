@@ -5,10 +5,11 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; }
+table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -29,9 +30,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;bits/stdc++.h&gt;</span>
 <span class="kw">using</span> <span class="kw">namespace</span> std;
 
-<span class="ot">#define rep2(i,n,m) for(int i=(int)(n);i&lt;(int)(m);++i)</span>
-<span class="ot">#define rep(i,n) rep2(i,0,n)</span>
-<span class="ot">#define iota(i,n,b,s) for(int i=int(b);i&lt;int(b+s*n);i+=s)</span>
+<span class="ot">#define iota(i,n,b,s) for(int i=int(b);i!=int(b+s*n);i+=s)</span>
+<span class="ot">#define range_debug(i,n,m) (n&gt;m?(n-m+1):(m-n+1))&lt;&lt;n&lt;&lt;(n&gt;m?-1:1)</span>
+<span class="ot">#define range(i,n,m) iota(i,(n&gt;m?(n-m+1):(m-n+1)),n,(n&gt;m?-1:1))</span>
+<span class="ot">#define rep(i,n) iota(i,n,0,1)</span>
 
 <span class="ot">#define INF (1e9)</span>
 <span class="ot">#define EPS (1e-9)</span>
@@ -42,27 +44,30 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="ot">#define cddr(a) (cdr(cdr(a)))</span>
 <span class="ot">#define trace(var) cout&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;#var&lt;&lt;&quot; = &quot;&lt;&lt;var&lt;&lt;endl;</span>
 
-<span class="kw">typedef</span> pair&lt;<span class="dt">int</span>,<span class="dt">int</span>&gt; P;
-<span class="kw">typedef</span> vector&lt;<span class="dt">int</span>&gt; vi;
- 
-<span class="dt">int</span> dx[<span class="dv">4</span>] = {-<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>};
-<span class="dt">int</span> dy[<span class="dv">4</span>] = {<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,-<span class="dv">1</span>};
+<span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> INTEGER;
+<span class="kw">typedef</span> <span class="dt">double</span> FLOAT;
 
 <span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt;
 ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S,T&gt; p) {
-  os &lt;&lt; &#39;(&#39; &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; &#39;)&#39;;
+  os &lt;&lt; <span class="st">&#39;(&#39;</span> &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; <span class="st">&#39;)&#39;</span>;
   <span class="kw">return</span> os;
 }
+
 <span class="kw">template</span>&lt;<span class="kw">class</span> T&gt;
 ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt;T&gt; v) {
-  os &lt;&lt; <span class="st">&quot;(vector&quot;</span>;
-  <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">0</span>, len=v.size(); i&lt;len; ++i) os &lt;&lt; &#39; &#39; &lt;&lt; v[i];
-  os &lt;&lt; &#39;)&#39;;
+  os &lt;&lt; v[<span class="dv">0</span>];
+  <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">1</span>, len=v.size(); i&lt;len; ++i) os &lt;&lt; <span class="st">&#39; &#39;</span> &lt;&lt; v[i];
   <span class="kw">return</span> os;
 }
 
 <span class="dt">int</span> main() {
-  <span class="dt">int</span> n;
+
+  <span class="dt">int</span> n, m;
+  cin &gt;&gt; n &gt;&gt; m;
+
+  range (i, n, m) {
+    cout &lt;&lt; i &lt;&lt; endl;
+  }
 
   <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>
