@@ -19,6 +19,7 @@ ref STL
 
 - Shortest Path
     - [Dijkstra](src/graph.dij.cpp.html)
+        - [Dijkstra - use](src/graph.dij.use.cpp.html)
     - [Warshall-Floyd](src/graph.wall.cpp.html)
         - [Warshall-Floyd - use](src/graph.wall.use.cpp.html)
 
