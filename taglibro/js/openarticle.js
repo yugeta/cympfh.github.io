@@ -14,8 +14,12 @@ function check(b) {
 }
 
 function restore() {
-  if (localStorage && localStorage.getItem('check_iframe')) {
-    check(localStorage.getItem('check_iframe') === 'true');
+  if (localStorage) {
+    if (localStorage.getItem('check_iframe')) {
+      check(localStorage.getItem('check_iframe') === 'true');
+    } else {
+      check(true);
+    }
   }
 }
 
