@@ -51,5 +51,5 @@ $ echo composed number &gt; cases/3.out
 $ make test</code></pre>
 <p>通れば <code>all passed!</code>が表示される。</p>
 <h2 id="note">note</h2>
-<p>入力をコピペでやると、たいてい、 不要な空行とか空白文字が入る。 私は、C++のcinを使うので、 問題ないが、たまに困るかもしれない。</p>
+<p>ただの <code>make</code> のとき、 クリップボードの中身を <code>input</code> という名前のファイルに保存する。 <code>sed</code> で簡単にではあるが、 不要な空行とか空白文字を取り除いている。</p>
 <p><code>make test</code> による検査は単に diff をするから、 ある誤差を許す浮動小数点の出力でちょっとアレかもしんない。</p>
