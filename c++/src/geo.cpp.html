@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;bits/stdc++.h&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="ot">#define INF (1e9)</span>
+<span class="ot">#define EPS (1e-9)</span>
+<span class="ot">#define cons(a,b) (make_pair(a,b))</span>
+<span class="ot">#define car(a) (a.first)</span>
+<span class="ot">#define cdr(a) (a.second)</span>
+
+<span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">double</span> FLOAT;
+<span class="kw">typedef</span> pair&lt;FLOAT, FLOAT&gt; P; <span class="co">// Point</span>
+<span class="kw">typedef</span> pair&lt;P, P&gt; L; <span class="co">// segment or line</span>
+<span class="dt">const</span> FLOAT PI = acos(<span class="dv">-1</span>);
+
+<span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt;
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S,T&gt; p) {
+  os &lt;&lt; <span class="st">&#39;(&#39;</span> &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; <span class="st">&#39;)&#39;</span>;
+  <span class="kw">return</span> os;
+}
+
+<span class="co">// inner dot</span>
+FLOAT dot(P&amp;a, P&amp;b) {
+  <span class="kw">return</span> car(a) * car(b) + cdr(a) * cdr(b);
+}
+FLOAT <span class="kw">operator</span>*(P&amp;a, P&amp;b) {
+  <span class="kw">return</span> car(a) * car(b) + cdr(a) * cdr(b);
+}
+
+FLOAT det(P&amp;a, P&amp;b) {
+  <span class="kw">return</span> car(a) * cdr(b) - cdr(a) * car(b);
+}
+
+<span class="co">// vector operator</span>
+P <span class="kw">operator</span>+(P&amp;a, P&amp;b) {
+  <span class="kw">return</span> cons(car(a) + car(b), cdr(a) + cdr(b));
+}
+
+P <span class="kw">operator</span>-(P&amp;a) {
+  <span class="kw">return</span> cons(-car(a), -cdr(a));
+}
+
+P <span class="kw">operator</span>-(P&amp;a, P&amp;b) {
+  <span class="kw">return</span> cons(car(a) - car(b), cdr(a) - cdr(b));
+}
+
+<span class="co">// distance</span>
+FLOAT Manhattan(P&amp;a, P&amp;b) {
+  <span class="kw">return</span> abs(car(a) - car(b)) + abs(cdr(a) - cdr(b));
+}
+FLOAT Euclidean(P&amp;a, P&amp;b) {
+  P p = a - b;
+  <span class="kw">return</span> sqrt(pow(car(p), <span class="dv">2</span>) + pow(cdr(p), <span class="dv">2</span>));
+}
+
+<span class="co">// equality with EPS (default: 1e-9)</span>
+<span class="dt">bool</span> eq(FLOAT x, FLOAT y) {
+  <span class="kw">return</span> abs(x - y) &lt; EPS;
+}
+<span class="dt">bool</span> <span class="kw">operator</span>==(P&amp;a, P&amp;b) {
+  <span class="kw">return</span> eq(car(a), car(b)) &amp;&amp; eq(cdr(a), cdr(b));
+  <span class="co">//return (car(a) == car(b)) &amp;&amp; (cdr(a) == cdr(b));</span>
+}
+
+<span class="dt">int</span> sign(FLOAT a) {
+  <span class="kw">if</span> (eq(a, <span class="dv">0</span>)) <span class="kw">return</span> <span class="dv">0</span>;
+  <span class="kw">return</span> a &gt; <span class="dv">0</span> ? <span class="dv">1</span> : <span class="dv">-1</span>;
+}
+
+
+<span class="kw">enum</span> CCW {
+  FRONT,
+  BACK,
+  RIGHT,
+  LEFT,
+  ON
+};
+CCW ccw(L&amp;l, P&amp;p) {
+  P u = car(l);
+  P v = cdr(l);
+
+  P dif = p - u;
+  P dir = v - u;
+
+  <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dir))) {
+    <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dif))) {
+      FLOAT k = cdr(dif) / cdr(dir);
+      <span class="kw">if</span> (k &gt; <span class="fl">1.</span><span class="dv">0</span>) <span class="kw">return</span> FRONT;
+      <span class="kw">if</span> (k &lt; <span class="fl">0.</span><span class="dv">0</span>) <span class="kw">return</span> BACK;
+      <span class="kw">return</span> ON;
+    } <span class="kw">else</span> {
+      <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.</span><span class="dv">0</span>) {
+        <span class="kw">return</span> LEFT;
+      }
+      <span class="kw">return</span> RIGHT;
+    }
+  }
+
+  FLOAT k = car(dif) / car(dir);
+  <span class="kw">if</span> (eq(cdr(dir) * k, cdr(dif))) {
+    <span class="kw">if</span> (k &gt; <span class="fl">1.</span><span class="dv">0</span>) <span class="kw">return</span> FRONT;
+    <span class="kw">if</span> (k &lt; <span class="fl">0.</span><span class="dv">0</span>) <span class="kw">return</span> BACK;
+    <span class="kw">return</span> ON;
+  } <span class="kw">else</span> {
+    <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.</span><span class="dv">0</span>) {
+      <span class="kw">return</span> LEFT;
+    }
+    <span class="kw">return</span> RIGHT;
+  }
+}
+
+FLOAT magnitude(P&amp;a) {
+  <span class="kw">return</span> sqrt(pow(car(a), <span class="dv">2</span>) + pow(cdr(a), <span class="dv">2</span>));
+}
+
+FLOAT arg(P&amp;a, P&amp;b) {
+  FLOAT x = dot(a, b) / magnitude(a) / magnitude(b);
+  x = min&lt;FLOAT&gt;(<span class="dv">1</span>, max&lt;FLOAT&gt;(<span class="dv">-1</span>, x));
+  <span class="kw">return</span> acos(x);
+}
+
+<span class="dt">int</span> main() {
+
+  P a(<span class="dv">1</span>,<span class="dv">2</span>);
+  P b(<span class="dv">2</span>,<span class="dv">3</span>);
+
+  cout &lt;&lt; <span class="st">&quot;two points (or vector): &quot;</span>
+    &lt;&lt; a &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; b &lt;&lt; endl;
+
+  <span class="co">// basic operation</span>
+  <span class="co">//</span>
+  assert((a + b) == P(<span class="dv">3</span>, <span class="dv">5</span>));
+  assert((a - b) == P(<span class="dv">-1</span>, <span class="dv">-1</span>));
+  assert((-a) == P(<span class="dv">-1</span>, <span class="dv">-2</span>));
+  assert(dot(a, b) == <span class="fl">8.</span><span class="dv">0</span>);
+
+  <span class="co">// equality</span>
+  <span class="co">//</span>
+  assert(a != b);
+
+  P c(<span class="fl">0.</span><span class="dv">999999999L</span>, <span class="fl">1.</span><span class="dv">999999999L</span>);
+  assert(a != c);
+
+  assert(eq(<span class="kw">static_cast</span>&lt;FLOAT&gt;(<span class="fl">1.</span><span class="dv">0</span>),
+            <span class="kw">static_cast</span>&lt;FLOAT&gt;(<span class="fl">1.</span><span class="dv">0</span> + EPS/<span class="fl">2.</span><span class="dv">0</span>)));
+
+  P d(<span class="fl">0.</span><span class="dv">99999999999L</span>, <span class="fl">1.</span><span class="dv">99999999999L</span>);
+  assert(a == d);
+
+  <span class="co">// CCW</span>
+  <span class="co">//</span>
+  P u(<span class="dv">0</span>, <span class="dv">0</span>), v(<span class="dv">1</span>, <span class="dv">1</span>);
+  L line(u, v);
+
+  P x1(<span class="dv">1</span>,<span class="dv">0</span>);
+  P x2(<span class="dv">0</span>,<span class="dv">1</span>);
+  P x3(<span class="dv">2</span>,<span class="dv">2</span>);
+  P x4(<span class="fl">0.</span><span class="dv">5</span>, <span class="fl">0.</span><span class="dv">5</span>);
+  P x5(<span class="dv">-1</span>, <span class="dv">-1</span>);
+
+  assert(ccw(line, x1) == RIGHT);
+  assert(ccw(line, x2) == LEFT);
+  assert(ccw(line, x3) == FRONT);
+  assert(ccw(line, x4) == ON);
+  assert(ccw(line, x5) == BACK);
+
+  <span class="co">// NOTE</span>
+  assert(ccw(line, u) == ON);
+  assert(ccw(line, v) == ON);
+
+  <span class="co">// arg</span>
+  <span class="co">//</span>
+  assert(eq(arg(x1, x2), PI/<span class="dv">2</span>));
+  assert(eq(arg(x3, x5), PI));
+  assert(eq(arg(v, x3), <span class="dv">0</span>));
+  assert(eq(arg(x1, x3), PI/<span class="dv">4</span>));
+
+  <span class="co">// distance</span>
+  a = P(<span class="dv">0</span>, <span class="dv">0</span>),
+  b = P(<span class="dv">1</span>, <span class="dv">1</span>);
+  assert(eq(Manhattan(a, b), <span class="fl">2.</span><span class="dv">0</span>));
+  assert(eq(Euclidean(a, b), sqrt(<span class="fl">2.</span><span class="dv">0</span>)));
+
+  <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+</body>
+</html>

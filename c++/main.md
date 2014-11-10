@@ -6,37 +6,39 @@ g++ -std=c++0x ./%
 
 ## link
 
-- [C/C++ リファレンス](http://www.cppll.jp/cppreference/index.html)
-ref STL
+- [C++ and STL reference](http://www.cppll.jp/cppreference/index.html)
+- [１次元幾何ライブラリ - not's memo - TopCoder部](http://topcoder.g.hatena.ne.jp/not522/20130401/1364781205)
 
-## src/
-
-### [template](src/template.cpp.html)
+## [template](src/template.cpp.html)
 
 - [alt includes](src/include.cpp.html)
 
-### [graph](src/graph.head.cpp.html)
+## [graph](src/graph.head.cpp.html)
 
-- Shortest Path
-    - [Dijkstra](src/graph.dij.cpp.html)
-        - [Dijkstra - use](src/graph.dij.use.cpp.html)
-    - [Warshall-Floyd](src/graph.wall.cpp.html)
-        - [Warshall-Floyd - use](src/graph.wall.use.cpp.html)
+### Shortest Path
 
-- Minimum Spanning Tree
-    - [Prim](src/graph.prim.cpp.html)
-        - [Prim - use](src/graph.prim.use.cpp.html)
-        - [Prim - maze](src/graph.prim.maze.cpp.html)
-    - [Kruskal](src/graph.kruskal.cpp.html)
-        - [Kruskal - use](src/graph.kruskal.use.cpp.html)
+- [Dijkstra](src/graph.dij.cpp.html)
+    - [Dijkstra - use](src/graph.dij.use.cpp.html)
+- [Warshall-Floyd](src/graph.wall.cpp.html)
+    - [Warshall-Floyd - use](src/graph.wall.use.cpp.html)
+
+### Minimum Spanning Tree
+
+- [Prim](src/graph.prim.cpp.html)
+    - [Prim - use](src/graph.prim.use.cpp.html)
+    - [Prim - maze](src/graph.prim.maze.cpp.html)
+- [Kruskal](src/graph.kruskal.cpp.html)
+    - [Kruskal - use](src/graph.kruskal.use.cpp.html)
+
+### Flow
 
 - [Max Flow](src/graph.maxflow.cpp.html)
     - [Max Flow - use](src/graph.maxflow.use.cpp.html)
 
-### misc
+## [Geometry](src/geo.cpp.html)
+
+## misc
 
 - [bit_count](src/bit.count.cpp.html)
 
-### test
-
-- [テスト環境](src/test.html)
+## [テスト環境](src/test.html)

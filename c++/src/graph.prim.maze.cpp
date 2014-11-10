@@ -1,6 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+ * this program generates maze
+ * with random parameter
+ * using Prim method
+ *
+ * the size of maze
+ * is setted
+ * as const `W` and `H`
+ */
+
 #define rep2(i,n,m) for(int i=(int)(n);i<(int)(m);++i)
 #define rep(i,n) rep2(i,0,n)
 #define iota(i,n,b,s) for(int i=int(b);i<int(b+s*n);i+=s)

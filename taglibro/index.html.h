@@ -11,7 +11,7 @@
       <div class='article' id='article'></div>
       <div class='dates'>
         <div>
-          <div id='check_iframe'>check to view on iframe</div>
+          <div id='check_iframe' style='cursor:pointer'>check to view on iframe</div>
           <input type='text' value='filter' value='' id='q' style='border: 0px white solid;width:91%;'>
         </div>
         <div id='filtered'></div>

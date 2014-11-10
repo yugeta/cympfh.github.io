@@ -34,5 +34,5 @@ hr.shorthr {
 <body onload='opener_initial()'>
   <div class='article' id='article'></div>
   <div class='dates'>
-    <div id='check_iframe' style='cursor:link'></div>
+    <div id='check_iframe' style='cursor:pointer'></div>
     <hr class='shorthr'>
