@@ -5,11 +5,10 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -39,7 +38,7 @@ kruskal() {
   <span class="dt">bool</span> used[N];
   rep(i, N) used[i] = <span class="kw">false</span>;
 
-  <span class="kw">auto</span> es = edges;
+  <span class="dt">auto</span> es = edges;
   <span class="kw">while</span> (!es.empty()) {
     edge e = es.top(); es.pop();
     <span class="kw">if</span> (used[e.from] &amp;&amp; used[e.to]) <span class="kw">continue</span>;
