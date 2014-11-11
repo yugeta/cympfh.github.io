@@ -67,7 +67,6 @@ int sign(FLOAT a) {
   return a > 0 ? 1 : -1;
 }
 
-
 enum CCW {
   FRONT,
   BACK,
