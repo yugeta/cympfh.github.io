@@ -28,15 +28,23 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </head>
 <body>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;bits/stdc++.h&gt;</span>
-
 <span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="ot">#define iota(i,n,b,s) for(int i=int(b);i!=int(b+s*n);i+=s)</span>
+<span class="ot">#define range_debug(i,n,m) (n&gt;m?(n-m+1):(m-n+1))&lt;&lt;n&lt;&lt;(n&gt;m?-1:1)</span>
+<span class="ot">#define range(i,n,m) iota(i,(n&gt;m?(n-m+1):(m-n+1)),n,(n&gt;m?-1:1))</span>
+<span class="ot">#define rep(i,n) iota(i,n,0,1)</span>
 
 <span class="ot">#define INF (1e9)</span>
 <span class="ot">#define EPS (1e-9)</span>
 <span class="ot">#define cons(a,b) (make_pair(a,b))</span>
 <span class="ot">#define car(a) (a.first)</span>
 <span class="ot">#define cdr(a) (a.second)</span>
+<span class="ot">#define cadr(a) (car(cdr(a)))</span>
+<span class="ot">#define cddr(a) (cdr(cdr(a)))</span>
+<span class="ot">#define trace(var) cout&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;#var&lt;&lt;&quot; = &quot;&lt;&lt;var&lt;&lt;endl;</span>
 
+<span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> INTEGER;
 <span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">double</span> FLOAT;
 <span class="kw">typedef</span> pair&lt;FLOAT, FLOAT&gt; P; <span class="co">// Point</span>
 <span class="kw">typedef</span> pair&lt;P, P&gt; L; <span class="co">// segment or line</span>
@@ -145,71 +153,6 @@ FLOAT arg(P&amp;a, P&amp;b) {
   FLOAT x = dot(a, b) / magnitude(a) / magnitude(b);
   x = min&lt;FLOAT&gt;(<span class="dv">1</span>, max&lt;FLOAT&gt;(<span class="dv">-1</span>, x));
   <span class="kw">return</span> acos(x);
-}
-
-<span class="dt">int</span> main() {
-
-  P a(<span class="dv">1</span>,<span class="dv">2</span>);
-  P b(<span class="dv">2</span>,<span class="dv">3</span>);
-
-  cout &lt;&lt; <span class="st">&quot;two points (or vector): &quot;</span>
-    &lt;&lt; a &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; b &lt;&lt; endl;
-
-  <span class="co">// basic operation</span>
-  <span class="co">//</span>
-  assert((a + b) == P(<span class="dv">3</span>, <span class="dv">5</span>));
-  assert((a - b) == P(<span class="dv">-1</span>, <span class="dv">-1</span>));
-  assert((-a) == P(<span class="dv">-1</span>, <span class="dv">-2</span>));
-  assert(dot(a, b) == <span class="fl">8.</span><span class="dv">0</span>);
-
-  <span class="co">// equality</span>
-  <span class="co">//</span>
-  assert(a != b);
-
-  P c(<span class="fl">0.</span><span class="dv">999999999L</span>, <span class="fl">1.</span><span class="dv">999999999L</span>);
-  assert(a != c);
-
-  assert(eq(<span class="kw">static_cast</span>&lt;FLOAT&gt;(<span class="fl">1.</span><span class="dv">0</span>),
-            <span class="kw">static_cast</span>&lt;FLOAT&gt;(<span class="fl">1.</span><span class="dv">0</span> + EPS/<span class="fl">2.</span><span class="dv">0</span>)));
-
-  P d(<span class="fl">0.</span><span class="dv">99999999999L</span>, <span class="fl">1.</span><span class="dv">99999999999L</span>);
-  assert(a == d);
-
-  <span class="co">// CCW</span>
-  <span class="co">//</span>
-  P u(<span class="dv">0</span>, <span class="dv">0</span>), v(<span class="dv">1</span>, <span class="dv">1</span>);
-  L line(u, v);
-
-  P x1(<span class="dv">1</span>,<span class="dv">0</span>);
-  P x2(<span class="dv">0</span>,<span class="dv">1</span>);
-  P x3(<span class="dv">2</span>,<span class="dv">2</span>);
-  P x4(<span class="fl">0.</span><span class="dv">5</span>, <span class="fl">0.</span><span class="dv">5</span>);
-  P x5(<span class="dv">-1</span>, <span class="dv">-1</span>);
-
-  assert(ccw(line, x1) == RIGHT);
-  assert(ccw(line, x2) == LEFT);
-  assert(ccw(line, x3) == FRONT);
-  assert(ccw(line, x4) == ON);
-  assert(ccw(line, x5) == BACK);
-
-  <span class="co">// NOTE</span>
-  assert(ccw(line, u) == ON);
-  assert(ccw(line, v) == ON);
-
-  <span class="co">// arg</span>
-  <span class="co">//</span>
-  assert(eq(arg(x1, x2), PI/<span class="dv">2</span>));
-  assert(eq(arg(x3, x5), PI));
-  assert(eq(arg(v, x3), <span class="dv">0</span>));
-  assert(eq(arg(x1, x3), PI/<span class="dv">4</span>));
-
-  <span class="co">// distance</span>
-  a = P(<span class="dv">0</span>, <span class="dv">0</span>),
-  b = P(<span class="dv">1</span>, <span class="dv">1</span>);
-  assert(eq(Manhattan(a, b), <span class="fl">2.</span><span class="dv">0</span>));
-  assert(eq(Euclidean(a, b), sqrt(<span class="fl">2.</span><span class="dv">0</span>)));
-
-  <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>
 </body>
 </html>

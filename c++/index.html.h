@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>c++</title>
-<script src='../taglibro/js/openarticle.js'></script>
+<script src='./js/openarticle.js'></script>
 <style>
 a {
   color: #402020;
