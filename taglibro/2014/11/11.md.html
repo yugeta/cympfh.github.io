@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="tue-nov-11-225544-jst-2014">Tue Nov 11 22:55:44 JST 2014</h1>
+<p>こんな経験がないという人がいたら、 それは大変うらやましいことで、 でもなんだか、 そういう人の方が多いんじゃないかなって 思う。</p>
+<p>昨日たくさん喋って、 仲良くなって、 すっかり友達だと思ってたのに、 今日会ったらヒトコトも話してくれなくて、 挨拶してくれなくて、 僕は必死に会釈くらいするのに、 それにも返してくれない。</p>
+<p>人間は気まぐれだから。<br>「猫は気まぐれ」だと意味が随分違うね。</p>
+<hr>
+<p>絶対昔読んだことのある本に書いてあったはずなのに、 何も覚えてない。 読み方が悪いのだろうか。 でも、大事そうなところだけ拾い読みして、 結果何も残らないような読み方は癖で治らないだろう。</p>
+<pre class="coffee"><code>stack = []
+
+has_read (book) -&gt;
+  stack.push book if valuable book
+
+rec = -&gt;
+  book = stack.shift()
+  begin_read book, -&gt;
+    has_read book
+    do rec
+
+do rec</code></pre>
+</body>
+</html>
