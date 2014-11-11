@@ -19,30 +19,30 @@ g++ -std=c++0x ./%
 ### Shortest Path
 
 - [Dijkstra](src/graph.dij.cc.html)
-    - [Dijkstra - use](src/graph.dij.use.cc.html)
+    - [sample](src/graph.dij.use.cc.html)
 - [Warshall-Floyd](src/graph.wall.cc.html)
-    - [Warshall-Floyd - use](src/graph.wall.use.cc.html)
+    - [sample](src/graph.wall.use.cc.html)
 
 ### Minimum Spanning Tree
 
 - [Prim](src/graph.prim.cc.html)
-    - [Prim - use](src/graph.prim.use.cc.html)
-    - [Prim - maze](src/graph.prim.maze.cc.html)
+    - [sample](src/graph.prim.use.cc.html)
+    - [maze](src/graph.prim.maze.cc.html)
 - [Kruskal](src/graph.kruskal.cc.html)
-    - [Kruskal - use](src/graph.kruskal.use.cc.html)
+    - [sample](src/graph.kruskal.use.cc.html)
 
 ### Flow
 
 - [Max Flow](src/graph.maxflow.cc.html)
-    - [Max Flow - use](src/graph.maxflow.use.cc.html)
+    - [sample](src/graph.maxflow.use.cc.html)
 
 ## 幾何
 
-- [2D template](src/geo.2d.cc.html)
+- [平面テンプレート](src/geo.2d.cc.html)
     - [test](src/geo.2d.test.cc.html)
 
 ## misc
 
-- [bit_count](src/bit.count.cc.html)
+- [bit count](src/bit.count.cc.html)
 
 ## [テスト環境](src/test.html)
