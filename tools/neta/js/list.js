@@ -64,6 +64,7 @@ list = [
   "B0VD0CvCYAAttth.jpg",
   "B0VDH0lCQAAu-lx.png",
   "B0jidBxCEAExZ93.jpg",
+  "B126B-bCEAAKTJ1.jpg",
   "B1BWpH3CUAAT3QW.jpg",
   "B1K_mcZCQAAzJTG.jpg",
   "B1Mf9-ACcAAsUkI.png",
