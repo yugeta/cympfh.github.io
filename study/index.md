@@ -18,6 +18,7 @@
 
 ## 調査発表
 
+- [SNS上のデータマイニング](nlp/twitter-profile.pdf)
 - [パターンによるテキスト分類(英中語)](nlp/phrase_pattern.pdf)
 - [皮肉文の検出](nlp/great_catchy_name.pdf)
 - [word2vec.md](word2vec.html)
