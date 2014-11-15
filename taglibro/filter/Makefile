@@ -1,5 +1,6 @@
 do:
 	./bin/mecab.sh
-	echo "datum = " >> js/datum.js
-	./bin/join.coffee >> js/datum.js
+	>datum.js
+	echo "datum = " > datum.js
+	./bin/join.coffee >> datum.js
 

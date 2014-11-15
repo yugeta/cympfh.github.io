@@ -1,4 +1,4 @@
-all: md2html index sum
+all: md2html index summary_ filter_
 
 index:
 	sed "s/MD5/$$(git log | head -1 | cut -d' ' -f2)/" index.html.h > index.html
@@ -11,8 +11,11 @@ md2html:
 %.md.html: %.md
 	pandoc --mathml -t html5 -i $^ -o $@ --css ../../css/h1.css
 
-sum:
-	#cd summary/; make
+summary_:
+	cd summary/; make
+
+filter_:
+	cd filter/; make
 
 today:
 	./script/vimtoday
