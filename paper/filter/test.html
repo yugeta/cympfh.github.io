@@ -1,0 +1,17 @@
+<head>
+<script src="./datum.js"></script>
+<script src="./filter.js"></script>
+</head>
+<body>
+
+<script>
+function doFilter() {
+  var q = document.getElementById("q").value;
+  var result = filter(q, datum);
+  console.log(result);
+  return false;
+}
+</script>
+<form onsubmit="return doFilter(this)">
+  <input type="text" id="q">
+</form>

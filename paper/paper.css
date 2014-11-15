@@ -1,54 +1,56 @@
-h2 {
+body {
+  font-size: 15px;
+  width: 800px;
+}
+
+section {
+  padding: 5px;
+}
+
+div.title {
+  color: black;
   font-size: 17px;
-  margin: 0;
-  width: 80%;
-  border-bottom: 1px black solid;
-}
-h2.active {
-  color: black;
-}
-h2.inactive {
-  color: #baa;
 }
 
-p {
-  width: 80%;
-  margin: 0 0 1em 0;
-  padding-left: 10px;
-  transition-duration: 1s;
-}
-p.active {
-  color: #511;
-}
-p.inactive {
-  color: #f0eaea;
-}
-a {
-  color: black;
+div.title:before {
+  content: "- "
 }
 
-div.active {
-  color: #f33;
-}
-div.inactive {
-}
-div.inactive:hover {
-  color: #900;
+div.url {
 }
 
-div.notify {
-  color: black;
-  font-size: 12px;
-  background: #add;
-  padding: 2px;
-  position: fixed;
-  right: 5px;
-  top: 5px;
-  opacity: 1.0;
+div.url > a {
+  color: #603030;
 }
 
-a.button {
-  border: 3px #8bb solid;
-  float: left;
-  width: 30%;
+div.read {
+  border-left: 5px #603030 solid;
+  padding-left: 5px;
+}
+
+div.bibtex {
+  display: inline;
+}
+
+div.bibtex > a {
+  color: #802020;
+}
+
+div.memo {
+  display: inline;
+}
+
+div.memo > a {
+  color: #a02020;
+}
+
+div.unread {
+  border-left: 5px #f03030 solid;
+  padding-left: 5px;
+  display: inline;
+}
+div.unread:before {
+  content: "unread!";
+  color: red;
+  font-weight: bold;
 }

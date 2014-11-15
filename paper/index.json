@@ -1,0 +1,268 @@
+[
+  {
+    "id": "exact-quantum-query",
+    "title": "Exact quantum query complexity of EXACT and THRESHOLD"
+  },
+
+  {
+    "id": "mcdonald-ryan-fine-to-coarse",
+    "title": "Structured models for fine-to-coarse sentiment analysis"
+  },
+
+  {
+    "id": "fine-grained-sentiment-analysis-with-structural-features",
+    "title": "Fine grained sentiment analysis with structural features",
+    "url": "http://aclweb.org/anthology/I/I11/I11-1038.pdf"
+  },
+
+  {
+    "id": "analysis-of-difference-approaches-to-sentence-level-sentiment",
+    "title": "Analysis of different approaches to Sentence-Level Sentiment Classification"
+  },
+
+  {
+    "id": "EMNLP2013_RNTN",
+    "title": "Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank",
+    "unread": true,
+    "url": "http://nlp.stanford.edu/sentiment"
+  },
+
+  {
+    "id": "fractal-hash-seq",
+    "unread": true,
+    "title": "Fractal Hash Sequence Representation and Traversal",
+    "url": "http://markus-jakobsson.com/papers/jakobsson-isit02.pdf"
+  },
+
+  {
+    "id": "robust-hash-for-detect-and-local-tamper",
+    "title": "Robust Hash for Detecting and Localizing Image Tampering"
+  },
+
+  {
+    "id": "understanding-user-query-intent",
+    "title": "Understanding Users Query Intent with Wikipedia"
+  },
+
+  {
+    "id": "a1-6",
+    "title": "データ圧縮による Twitter のツイート話題分類",
+    "url": "http://db-event.jpn.org/deim2011/proceedings/pdf/a1-6.pdf"
+  },
+
+  {
+    "title": "Automatic Sentence Generation from Images",
+    "url": "http://dl.acm.org/citation.cfm?id=2072058",
+    "id": "auto-sentence-from-images"
+
+  },
+
+  {
+    "title": "b-Bit minwise hashing",
+    "id": "bBit"
+
+  },
+
+  {
+    "title": "Finding Thoughtful Comments from Social Media",
+    "url": "http://t.co/wA1raxxkzW",
+    "id": "finding-thoughtful-comments"
+  },
+
+  {
+    "title": "顔文字の役割に着目したツイートの文の感情値抽出手法の提案",
+    "id": "E6-2"
+
+  },
+
+  {
+    "title": "顔文字に着目した映画に対する tweet の感情抽出",
+    "url": "http://www.nadasemi.ii.konan-u.ac.jp/publication/research/2012/final/tanaka.pdf",
+    "id": "tanaka-sent"
+
+  },
+
+  {
+    "title": "新聞記事を対象とするテキスト印象マイニング手法の設計と評価",
+    "url": "http://ci.nii.ac.jp/naid/110008460413",
+    "id": "sinbun-inshou"
+
+  },
+
+  {
+    "title": "NMFによる重み付きハイパーグラフを用いたアンサンブル文書クラスタリング",
+    "url": "http://nlp.dse.ibaraki.ac.jp/~shinnou/papers/gengosyori-2007.pdf",
+    "id": "nmp-hypergraph"
+  },
+
+  {
+    "title": "情報処理北海道シンポジウム 2013 SNSからの1次情報自動抽出に向けた表層的言語情報の分",
+    "url": "http://arakilab.media.eng.hokudai.ac.jp/~ptaszynski/data/fuku-gen.pdf",
+    "id": "fuku-gen"
+  },
+
+  {
+    "title": "Webマイニングを用いた文章中の行為者及び被行為者の感情推定",
+    "url": "http://arakilab.media.eng.hokudai.ac.jp/~ptaszynski/data/info2011_dokoshi.pdf",
+    "id": "webmining-sentiment"
+  },
+
+  {
+    "title": "Exploring Twitter Hashtags",
+    "url": "http://arxiv.org/pdf/1111.6553.pdf",
+    "id": "exploring-hashtags"
+  },
+
+  {
+    "title": "共起と潜在トピックを考慮したハッシュタグの構造化手法",
+    "url": "http://db-event.jpn.org/deim2014/final/proceedings/B8-1.pdf",
+    "id": "hashtag-struct"
+  },
+
+  {
+    "title": "Twitter を利用した評価極性辞書の自動拡張",
+    "url": "http://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf",
+    "id": "A3-2"
+  },
+
+  {
+    "title": "スピンモデルによる単語の感情極性抽出",
+    "url": "http://ci.nii.ac.jp/els/110004081271.pdf?id=ART0006342992&type=pdf&lang=jp&host=cinii&order_no=&ppv_type=0&lang_sw=&no=1403574685&cp=",
+    "id": "spin-sent"
+  },
+
+  {
+    "title": "The Rate Adapting Poisson Model for Information Retrieval and Object Recognition",
+    "url": "http://www.kyb.mpg.de/fileadmin/user_upload/files/publications/attachments/rap_icml06_final_3929[0].pdf",
+    "id": "information_retrieval_object_recogntion"
+  },
+
+  {
+    "title": "Coarse to Fine Grained Sense Disambiguation in Wikipedia ",
+    "url": "http://www.aclweb.org/anthology/S/S13/S13-1003.pdf",
+    "id": "coarse_to_fin_grained_WSD"
+  },
+
+  {
+    "id": "S13-1036",
+    "title": "Unsupervised Word Usage Similarity in Social Media Texts ",
+    "url": "http://www.aclweb.org/anthology/S/S13/S13-1036.pdf"
+  },
+
+  {
+    "id": "twitter-profile",
+    "title": "Weakly Supervised User Profile Extraction from Twitter ",
+    "url": "http://www.aclweb.org/anthology/P/P14/P14-1016.pdf",
+    "comment": "handout here, http://cympfh.github.io/study/nlp/twitter-profile.pdf"
+  },
+
+  {
+    "title": "Distant supervision for relation extraction without labeled data",
+    "url": "http://web.stanford.edu/~jurafsky/mintz.pdf",
+    "id": "mintz"
+  },
+
+  {
+    "title": "検索エンジンを利用した未登録単語に関する単語間距離の測定",
+    "url": "http://nlp.dse.ibaraki.ac.jp/~shinnou/papers/gengonenji12-D2-1.pdf",
+    "id": "google-similarity"
+  },
+
+  {
+    "title": "EmpaTweet: Annotating and Detecting Emotions on Twitter",
+    "url": "http://lrec.elra.info/proceedings/lrec2012/pdf/201_Paper.pdf",
+    "id": "empatweet"
+  },
+
+  {
+    "id": "Wilson.TwitterSentiment.OMG.ICWSM2011",
+    "title": "Twitter Sentiment Analysis: The Good the Bad and the OMG",
+    "url": "http://classes.ischool.syr.edu/ist600smd/spring2014/Papers/Wilson.TwitterSentiment.OMG.ICWSM2011.pdf"
+  },
+
+  {
+    "id": "S0306457396000684",
+    "title": "A cooccurrence-based thesaurus and two applications to information retrieval",
+    "url": "http://www.sciencedirect.com/science/article/pii/S0306457396000684"
+  },
+
+  {
+    "id": "643",
+    "title": "文字列パターンと MathML による構造を利用した数学問題文の検索 (A Method for Searching Question Sentences in Mathematics by String Patterns and the Structure of MathML)",
+    "url": "https://kaigi.org/jsai/webprogram/2013/pdf/643.pdf"
+  },
+
+  {
+    "id": "learning-phrase-patterns",
+    "title": "Learning Phrase Patterns for Text Classification",
+    "url": "http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6457440",
+    "comment": "handout here, http://cympfh.github.io/study/nlp/phrase_pattern.pdf"
+  },
+
+  {
+    "id": "N10-1108",
+    "title": "Extracting Phrase Patterns with Minimum Redundancy for Unsupervised Speaker Role Classification",
+    "url": "http://www.aclweb.org/anthology/N10-1108"
+  },
+
+  {
+    "id": "sigirSoboro",
+    "title": "Ranking Retrieval Systems without Relevance Judgments",
+    "url": "http://comminfo.rutgers.edu/~muresan/IR/Docs/Articles/sigirSoboroff2001.pdf"
+  },
+
+  {
+    "id": "05-EVIA2010-SakaiT",
+    "title": "Ranking Retrieval Systems without Relevance Assessments - Revisited"
+  },
+
+  {
+    "id": "aslam-and-savell",
+    "title": "On the Effectiveness of Evaluating Retrieval Systems in the Absence of Relevance Judgments",
+    "url": "http://dl.acm.org/citation.cfm?id=860501"
+  },
+
+  {
+    "id": "sentiment-phrase-patterns",
+    "title": "Sentiment classification using phrase patterns",
+    "url": "http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=1357349&tag=1"
+  },
+
+  {
+    "id": "sarcastic",
+    "title": "ICWSM - A Great Catchy Name: Semi-Supervised Recognition of Sarcastic Sentences in Online Product Reviews",
+    "url": "http://www.aaai.org/ocs/index.php/ICWSM/ICWSM10/paper/viewFile/1495/1851/",
+    "comment": "handout here, http://cympfh.github.io/study/nlp/great_catchy_name.pdf"
+  },
+
+  {
+    "title": "Using Maximum Entropy for Text Classification",
+    "url": "http://www.kamalnigam.com/papers/maxent-ijcaiws99.pdf",
+    "id": "ME-for-classification"
+  },
+
+  {
+    "id": "brown-class-model",
+    "title": "Class-based n-gram models of natural language",
+    "url": "http://dl.acm.org/citation.cfm?id=176316"
+  },
+
+  {
+    "id": "maxent-ijcaiws99",
+    "title": "Using Maximum Entropy for Text Classification",
+    "url": "http://www.kamalnigam.com/papers/maxent-ijcaiws99.pdf"
+  },
+
+  {
+    "id": "davidov06",
+    "title": "Efficient unsupervised discovery of word categories using symmetric patterns and high frequency words (2006)",
+    "url": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.138.8157"
+  },
+
+  {
+    "title": "Learning syntactic patterns for automatic hypernym discovery",
+    "url": "http://braque.cc/ShowItem;jsessionid=14x3b6g0f438qsgjp4vaqa03v?handle=DNAYAPXQ",
+    "id": "hypernym-discovery"
+
+  }
+]
