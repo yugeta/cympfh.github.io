@@ -35,6 +35,12 @@ function display(lst) {
 function filter() {
 
   var query = q.value.toLowerCase();
+
+  if (query === '') {
+    filtered.innerHTML = '';
+    return false;
+  }
+
   var scores = {};
   for (var n = 2; n <= 3; ++n) {
     gram(n, query).forEach(function (word) {
