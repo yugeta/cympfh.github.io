@@ -1,7 +1,8 @@
 [
   {
     "id": "exact-quantum-query",
-    "title": "Exact quantum query complexity of EXACT and THRESHOLD"
+    "title": "Exact quantum query complexity of EXACT and THRESHOLD",
+    "url": "http://arxiv.org/abs/1302.1235"
   },
   {
     "id": "mcdonald-ryan-fine-to-coarse",
