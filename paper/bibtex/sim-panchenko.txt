@@ -1,0 +1,13 @@
+@INPROCEEDINGS{konvens:23_panchenko12p,
+  author = {Alexander Panchenko and Olga Morozova and Hubert Naets},
+  title = {A semantic similarity measure based on lexico-syntactic patterns},
+  booktitle = {Proceedings of KONVENS 2012},
+  pages = {174--178},
+  year = {2012},
+  editor = {Jeremy Jancsary},
+  publisher = {\"{O}GAI},
+  month = {September},
+  url = {http://www.oegai.at/konvens2012/proceedings/23_panchenko12p/},
+  note = {Main track: poster presentations}
+}
+
