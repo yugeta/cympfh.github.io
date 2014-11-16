@@ -6,8 +6,14 @@ echo -n "title> "
 read TITLE
 echo -n "id> "
 read ID
+
 echo -n "bibtex? [y/N]> "
 read BIBTEX
+
+if [ "_${BIBTEX}" == "_y" ]; then
+  vim "./bibtex/${ID}.txt"
+fi
+
 echo -n "memo? [y/N]> "
 read MEMO
 
@@ -16,10 +22,6 @@ TMP=/tmp/info
 echo $URL >> $TMP
 echo $TITLE >> $TMP
 echo $ID >> $TMP
-
-if [ "_${BIBTEX}" == "_y" ]; then
-  vim "./bibtex/${ID}.txt"
-fi
 
 if [ "_${MEMO}" == "_y" ]; then
   MEMOFILE="./memo/${ID}.md"
