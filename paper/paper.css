@@ -12,7 +12,7 @@ section {
 
 div.title {
   color: black;
-  font-size: 17px;
+  font-size: 16px;
 }
 
 div.title:before {
@@ -55,6 +55,7 @@ div.unread {
   border-left: 5px #f03030 solid;
   padding-left: 5px;
   display: inline;
+  font-family: Lucida Sans,Lucida Sans Unicode,Arial,Helvetica,sans-serif;
 }
 
 div.unread:before {
