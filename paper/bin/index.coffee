@@ -1,4 +1,4 @@
-db = require './index.json'
+db = require '../index.json'
 fs = require 'fs'
 
 ###

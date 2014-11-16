@@ -1,0 +1,34 @@
+#!/bin/bash
+
+echo -n "url> "
+read URL
+echo -n "title> "
+read TITLE
+echo -n "id> "
+read ID
+echo -n "bibtex? [y/N]> "
+read BIBTEX
+echo -n "memo? [y/N]> "
+read MEMO
+
+TMP=/tmp/info
+>$TMP
+echo $URL >> $TMP
+echo $TITLE >> $TMP
+echo $ID >> $TMP
+
+if [ "_${BIBTEX}" == "_y" ]; then
+  vim "./bibtex/${ID}.txt"
+fi
+
+if [ "_${MEMO}" == "_y" ]; then
+  MEMOFILE="./memo/${ID}.md"
+  [ -f $MEMOFILE ] || echo "# ${TITLE}" > $MEMOFILE
+  vim $MEMOFILE
+else
+  echo unread >> $TMP
+fi
+
+coffee ./bin/add.coffee
+cp index.json index.json.bk
+jq . /tmp/index.json > index.json
