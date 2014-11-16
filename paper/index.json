@@ -225,5 +225,11 @@
     "url": "http://www.oegai.at/konvens2012/proceedings/23_panchenko12p/",
     "title": "A semantic similarity measure based on lexico-syntactic patterns",
     "id": "sim-panchenko"
+  },
+  {
+    "url": "http://nlp.stanford.edu/pubs/gupta14evalpatterns.pdf",
+    "title": "Improved Pattern Learning for Bootstrapped Entity Extraction",
+    "id": "gupta14",
+    "comments": "published slide: http://nlp.stanford.edu/pubs/Gupta_Manning_CoNLL14_slides.pdf"
   }
 ]

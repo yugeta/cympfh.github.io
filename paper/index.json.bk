@@ -220,5 +220,10 @@
     "url": "http://www.lrec-conf.org/proceedings/lrec2014/pdf/764_Paper.pdf",
     "title": "Freepal: A Large Collection of Deep Lexico-Syntactic Patterns for Relation Extraction",
     "id": "freepal"
+  },
+  {
+    "url": "http://www.oegai.at/konvens2012/proceedings/23_panchenko12p/",
+    "title": "A semantic similarity measure based on lexico-syntactic patterns",
+    "id": "sim-panchenko"
   }
 ]

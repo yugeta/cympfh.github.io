@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/m.css">
+</head>
+<body>
+<h1 id="improved-pattern-learning-for-bootstrapped-entity-extraction">Improved Pattern Learning for Bootstrapped Entity Extraction</h1>
+<h2 id="goal">Goal</h2>
+<p>あるPOSのword (たとえば名詞) について、 entityを決定づけるような、 パターンを抽出する。</p>
+<h2 id="method">Method</h2>
+<p>windowサイズ2 - 4 を固定して、 token の列をパターンとする。</p>
+<p>例えば、</p>
+<ul class="incremental">
+<li>&quot;own a car&quot;</li>
+<li>&quot;my pet car&quot;</li>
+</ul>
+<p>という tokenの列から、</p>
+<ul class="incremental">
+<li>&quot;own a [X]&quot;</li>
+<li>&quot;my pet [X]&quot;</li>
+</ul>
+<p>というパターンを作る</p>
+<p>パターンを組み合わせてスコアをつける。 例えば、</p>
+<ul class="incremental">
+<li>own a car</li>
+<li>own a cat</li>
+<li>my pet cat</li>
+<li>my pet dog</li>
+</ul>
+<p>から、</p>
+<p><code>{{dog, cat}, {car}}</code></p>
+<p>というクラスタリングをする</p>
+<h2 id="bootstrapped-ってなんだろう">Bootstrapped ってなんだろう</h2>
+<ol class="incremental" type="1">
+<li>labed data をコーパスとする</li>
+<li>pattern を抽出</li>
+<li>pattern をスコアリングして上位だけ残す</li>
+<li>pattern を使ってentities を取る</li>
+<li>labeld data に追加</li>
+</ol>
+<p>を繰り返す。</p>
+</body>
+</html>
