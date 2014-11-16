@@ -230,6 +230,6 @@
     "url": "http://nlp.stanford.edu/pubs/gupta14evalpatterns.pdf",
     "title": "Improved Pattern Learning for Bootstrapped Entity Extraction",
     "id": "gupta14",
-    "comments": "published slide: http://nlp.stanford.edu/pubs/Gupta_Manning_CoNLL14_slides.pdf"
+    "comment": "published slide: http://nlp.stanford.edu/pubs/Gupta_Manning_CoNLL14_slides.pdf"
   }
 ]
