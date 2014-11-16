@@ -24,6 +24,9 @@ div.url {
 
 div.url > a {
   color: #603030;
+  font-size: 12px;
+  font-family: Lucida Sans,Lucida Sans Unicode,Arial,Helvetica,sans-serif;
+  font-style: italic;
 }
 
 div.read {

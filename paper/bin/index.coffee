@@ -20,14 +20,6 @@ if not (db.every ((pp) -> pp.title? and pp.id?))
       console.warn "#{JSON.stringify pp}\nnot contain title"
   process.exit 1
 
-shorten = (str) ->
-  N = 60
-  M = N / 2 | 0
-  if str.length > N
-    str.slice(0, M) + '...' + str.slice (M - N)
-  else
-    str
-
 has_bibtex = (id) ->
   fn = "./bibtex/#{id}.txt"
   if fs.existsSync fn then fn else false
@@ -48,7 +40,7 @@ print = console.log
 db.forEach (pp) ->
   print "<section id=\"#{pp.id}\">"
   print "<div class=\"title\">#{pp.title}</div>"
-  print "<div class=\"url\"><a href=\"#{pp.url}\">#{shorten pp.url}</a></div>" if pp.url?
+  print "<div class=\"url\"><a href=\"#{pp.url}\">#{pp.url}</a></div>" if pp.url?
 
   bibtex = has_bibtex pp.id
   memo = has_memo pp.id
