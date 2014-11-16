@@ -13,5 +13,8 @@ add:
 edit:
 	bash ./bin/edit
 
+ls:
+	jq . index.json
+
 git:
 	cd ..; make git
