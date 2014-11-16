@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="./paper.css">
 <script src="./filter/datum.js"></script>
 <script src="./filter/filter.js"></script>
@@ -49,15 +50,39 @@ function doFilter() {
 }
 </script>
 
-<div style="border: 1px #e0e0e0 solid; background-color: #f0f0f0;">
-filter:
-<input onkeyup="doFilter()" type="text" id="q" style="width:50%; border:0px solid white;">
-<div id="result_msg" style="color:#803030"></div>
+<div class="filter">
+  filter:
+  <input onkeyup="doFilter()" type="text" id="q" value="keywords">
+  <div id="result_msg" style="color:#803030"></div>
 </div>
+
+<script>
+var baby = true;
+q.value = "keywords";
+q.style.color = "#aaa0a0";
+
+q.onfocus = function () {
+  q.style.color = "black";
+  if (baby) {
+    baby = false;
+    q.value = '';
+  }
+};
+
+q.onblur = function () {
+  if (q.value === '' || q.value === 'keywords') {
+    baby = true;
+    q.value = 'keywords';
+    q.style.color = "#aaa0a0";
+    result_msg.innerHTML = '';
+  }
+}
+
+</script>
 <section id="exact-quantum-query">
 <div class="title">Exact quantum query complexity of EXACT and THRESHOLD</div>
-<div class="read">
 <div class="bibtex"><a href="./bibtex/exact-quantum-query.txt">bibtex</a></div>
+<div class="read">
 <div class="memo"><a href="./memo/exact-quantum-query.html">memo</a></div>
 </div>
 </section>
@@ -70,8 +95,8 @@ filter:
 <section id="fine-grained-sentiment-analysis-with-structural-features">
 <div class="title">Fine grained sentiment analysis with structural features</div>
 <div class="url"><a href="http://aclweb.org/anthology/I/I11/I11-1038.pdf">http://aclweb.org/anthology/I/I11/I11-1038.pdf</a></div>
-<div class="read">
 <div class="bibtex"><a href="./bibtex/fine-grained-sentiment-analysis-with-structural-features.txt">bibtex</a></div>
+<div class="read">
 <div class="memo"><a href="./memo/fine-grained-sentiment-analysis-with-structural-features.html">memo</a></div>
 </div>
 </section>
@@ -84,16 +109,14 @@ filter:
 <section id="EMNLP2013_RNTN">
 <div class="title">Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank</div>
 <div class="url"><a href="http://nlp.stanford.edu/sentiment">http://nlp.stanford.edu/sentiment</a></div>
-<div class="read">
 <div class="bibtex"><a href="./bibtex/EMNLP2013_RNTN.txt">bibtex</a></div>
-</div>
+<div class="unread"></div>
 </section>
 <section id="fractal-hash-seq">
 <div class="title">Fractal Hash Sequence Representation and Traversal</div>
 <div class="url"><a href="http://markus-jakobsson.com/papers/jakobsson-isit02.pdf">http://markus-jakobsson.com/papers/jakobsson-isit02.pdf</a></div>
-<div class="read">
 <div class="bibtex"><a href="./bibtex/fractal-hash-seq.txt">bibtex</a></div>
-</div>
+<div class="unread"></div>
 </section>
 <section id="robust-hash-for-detect-and-local-tamper">
 <div class="title">Robust Hash for Detecting and Localizing Image Tampering</div>
@@ -110,22 +133,21 @@ filter:
 <section id="a1-6">
 <div class="title">データ圧縮による Twitter のツイート話題分類</div>
 <div class="url"><a href="http://db-event.jpn.org/deim2011/proceedings/pdf/a1-6.pdf">http://db-event.jpn.org/deim2011/proceedings/pdf/a1-6.pdf</a></div>
-<div class="read">
 <div class="bibtex"><a href="./bibtex/a1-6.txt">bibtex</a></div>
-</div>
+<div class="unread"></div>
 </section>
 <section id="auto-sentence-from-images">
 <div class="title">Automatic Sentence Generation from Images</div>
 <div class="url"><a href="http://dl.acm.org/citation.cfm?id=2072058">http://dl.acm.org/citation.cfm?id=2072058</a></div>
-<div class="read">
 <div class="bibtex"><a href="./bibtex/auto-sentence-from-images.txt">bibtex</a></div>
+<div class="read">
 <div class="memo"><a href="./memo/auto-sentence-from-images.html">memo</a></div>
 </div>
 </section>
 <section id="bBit">
 <div class="title">b-Bit minwise hashing</div>
-<div class="read">
 <div class="bibtex"><a href="./bibtex/bBit.txt">bibtex</a></div>
+<div class="read">
 <div class="memo"><a href="./memo/bBit.html">memo</a></div>
 </div>
 </section>
@@ -174,8 +196,8 @@ filter:
 <section id="exploring-hashtags">
 <div class="title">Exploring Twitter Hashtags</div>
 <div class="url"><a href="http://arxiv.org/pdf/1111.6553.pdf">http://arxiv.org/pdf/1111.6553.pdf</a></div>
-<div class="read">
 <div class="bibtex"><a href="./bibtex/exploring-hashtags.txt">bibtex</a></div>
+<div class="read">
 <div class="memo"><a href="./memo/exploring-hashtags.html">memo</a></div>
 </div>
 </section>
@@ -187,9 +209,8 @@ filter:
 <section id="A3-2">
 <div class="title">Twitter を利用した評価極性辞書の自動拡張</div>
 <div class="url"><a href="http://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-2.pdf">http://www.anlp.jp/proceedings..._meeting/2012/pdf_dir/A3-2.pdf</a></div>
-<div class="read">
 <div class="bibtex"><a href="./bibtex/A3-2.txt">bibtex</a></div>
-</div>
+<div class="unread"></div>
 </section>
 <section id="spin-sent">
 <div class="title">スピンモデルによる単語の感情極性抽出</div>
@@ -333,8 +354,8 @@ filter:
 <section id="davidov06">
 <div class="title">Efficient unsupervised discovery of word categories using symmetric patterns and high frequency words (2006)</div>
 <div class="url"><a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.138.8157">http://citeseerx.ist.psu.edu/v...oc/summary?doi=10.1.1.138.8157</a></div>
-<div class="read">
 <div class="bibtex"><a href="./bibtex/davidov06.txt">bibtex</a></div>
+<div class="read">
 <div class="memo"><a href="./memo/davidov06.html">memo</a></div>
 </div>
 </section>
@@ -342,4 +363,12 @@ filter:
 <div class="title">Learning syntactic patterns for automatic hypernym discovery</div>
 <div class="url"><a href="http://braque.cc/ShowItem;jsessionid=14x3b6g0f438qsgjp4vaqa03v?handle=DNAYAPXQ">http://braque.cc/ShowItem;jses...8qsgjp4vaqa03v?handle=DNAYAPXQ</a></div>
 <div class="unread"></div>
+</section>
+<section id="freepal">
+<div class="title">Freepal: A Large Collection of Deep Lexico-Syntactic Patterns for Relation Extraction</div>
+<div class="url"><a href="http://www.lrec-conf.org/proceedings/lrec2014/pdf/764_Paper.pdf">http://www.lrec-conf.org/proce...ngs/lrec2014/pdf/764_Paper.pdf</a></div>
+<div class="bibtex"><a href="./bibtex/freepal.txt">bibtex</a></div>
+<div class="read">
+<div class="memo"><a href="./memo/freepal.html">memo</a></div>
+</div>
 </section>

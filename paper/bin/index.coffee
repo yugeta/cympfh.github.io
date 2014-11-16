@@ -53,10 +53,11 @@ db.forEach (pp) ->
   bibtex = has_bibtex pp.id
   memo = has_memo pp.id
 
-  if bibtex or memo
+  print "<div class=\"bibtex\"><a href=\"#{bibtex}\">bibtex</a></div>" if bibtex
+
+  if memo
     print "<div class=\"read\">"
 
-    print "<div class=\"bibtex\"><a href=\"#{bibtex}\">bibtex</a></div>" if bibtex
     print "<div class=\"memo\"><a href=\"#{memo}\">memo</a></div>" if memo
     print "</div>"
 

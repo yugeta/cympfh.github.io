@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/m.css">
+</head>
+<body>
+<h1 id="freepal-a-large-collection-of-deep-lexico-syntactic-patterns-for-relation-extraction">Freepal: A Large Collection of Deep Lexico-Syntactic Patterns for Relation Extraction</h1>
+<h2 id="目的">目的</h2>
+<p>コーパス中の一文に現れた二つの名詞の関係を抽出する。</p>
+<h2 id="手法">手法</h2>
+<p>現れた二つの名詞 A, B について、</p>
+<ul class="incremental">
+<li>freebase によって、entity linking する. (id_A, id_B) (いつ使うかわからん)</li>
+<li>freebase によって、AとBの関係 R を取ってくる</li>
+<li>dependency tree で、AとBの最短路を取る (列にする)</li>
+<li>最短路に現れるA, B を [X], [Y] で置き換えてパターンとする</li>
+</ul>
+<h2 id="例">例</h2>
+<ul class="incremental">
+<li>パターン: PLAY [X] IN MOVIE [Y]</li>
+<li>関係: StarringInFilm</li>
+<li>confidence: 0.431</li>
+</ul>
+<h2 id="実装">実装</h2>
+<p>http://free-pal.appspot.com/#show で公開されてる。</p>
+<ul class="incremental">
+<li>Free Text Search</li>
+<li>Search by Relation</li>
+</ul>
+<p>の二つがある。 前者は、なんかサーバーのエラーで動かなかった。 後者は、freebaseにある関係から、 その関係はどんなパターンで抽出できるかを列挙してくれる。</p>
+<p>例えば、 <code>education.field_of_study.students_majoring..education.education.specialization</code> は、</p>
+<ul class="incremental">
+<li>receive in [X] with emphasis in [Y]</li>
+<li>receive in [X] with specialization in [Y]</li>
+</ul>
+<p>とかパターンが19個出てきて、 各々に、 Counts, Entropy, Confidence が情報として付いてる。</p>
+</body>
+</html>

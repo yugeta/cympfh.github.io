@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="./paper.css">
 <script src="./filter/datum.js"></script>
 <script src="./filter/filter.js"></script>
@@ -49,8 +50,32 @@ function doFilter() {
 }
 </script>
 
-<div style="border: 1px #e0e0e0 solid; background-color: #f0f0f0;">
-filter:
-<input onkeyup="doFilter()" type="text" id="q" style="width:50%; border:0px solid white;">
-<div id="result_msg" style="color:#803030"></div>
+<div class="filter">
+  filter:
+  <input onkeyup="doFilter()" type="text" id="q" value="keywords">
+  <div id="result_msg" style="color:#803030"></div>
 </div>
+
+<script>
+var baby = true;
+q.value = "keywords";
+q.style.color = "#aaa0a0";
+
+q.onfocus = function () {
+  q.style.color = "black";
+  if (baby) {
+    baby = false;
+    q.value = '';
+  }
+};
+
+q.onblur = function () {
+  if (q.value === '' || q.value === 'keywords') {
+    baby = true;
+    q.value = 'keywords';
+    q.style.color = "#aaa0a0";
+    result_msg.innerHTML = '';
+  }
+}
+
+</script>

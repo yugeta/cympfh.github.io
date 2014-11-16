@@ -4,7 +4,10 @@ body {
 }
 
 section {
-  padding: 5px;
+  padding: 3px;
+  margin: 10px;
+  border-left: 1px solid #600;
+  border-bottom: 1px solid #900;
 }
 
 div.title {
@@ -29,7 +32,8 @@ div.read {
 }
 
 div.bibtex {
-  display: inline;
+  float: right;
+  background-color: #fff0f0;
 }
 
 div.bibtex > a {
@@ -53,4 +57,16 @@ div.unread:before {
   content: "unread!";
   color: red;
   font-weight: bold;
+}
+
+div.filter {
+  border: 1px #e0e0e0 solid;
+  background-color: #fffafa;
+}
+
+div.filter > input{
+  background-color: #fffafa;
+  width: 80%;
+  font-size: 17px;
+  border: 1px solid #fffafa;
 }
