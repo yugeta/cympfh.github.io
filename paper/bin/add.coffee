@@ -16,9 +16,13 @@ url = trim url
 title = trim title
 id = trim id
 
-index.push
+obj =
   url: url
   title: title
   id: id
+
+obj.unread = true if unread
+
+index.push obj
 
 require('fs').writeFileSync '/tmp/index.json', (JSON.stringify index)

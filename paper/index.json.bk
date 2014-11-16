@@ -232,5 +232,10 @@
     "url": "http://dl.acm.org/citation.cfm?id=992154",
     "title": "Automatic acquisition of hyponyms from large text corpora",
     "id": "hearst"
+  },
+  {
+    "url": "http://www.aaai.org/Papers/AAAI/2007/AAAI07-228.pdf",
+    "title": "Deriving a large scale taxonomy from Wikipedia",
+    "id": "taxonomy-wikipedia"
   }
 ]

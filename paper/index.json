@@ -237,5 +237,11 @@
     "url": "http://www.aaai.org/Papers/AAAI/2007/AAAI07-228.pdf",
     "title": "Deriving a large scale taxonomy from Wikipedia",
     "id": "taxonomy-wikipedia"
+  },
+  {
+    "url": "http://nlp.stanford.edu/pubs/tokensregex-tr-2014.pdf",
+    "title": "TOKENSREGEX : Defining cascaded regular expressions over tokens",
+    "id": "tokensregex",
+    "unread": true
   }
 ]
