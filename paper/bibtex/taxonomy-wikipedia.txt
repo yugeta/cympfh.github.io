@@ -1,0 +1,8 @@
+@inproceedings{ponzetto2007deriving,
+  title={Deriving a large scale taxonomy from Wikipedia},
+  author={Ponzetto, Simone Paolo and Strube, Michael},
+  booktitle={AAAI},
+  volume={7},
+  pages={1440--1445},
+  year={2007}
+}

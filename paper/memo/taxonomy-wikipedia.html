@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/m.css">
+</head>
+<body>
+<h1 id="deriving-a-large-scale-taxonomy-from-wikipedia">Deriving a large scale taxonomy from Wikipedia</h1>
+<h2 id="goal">Goal</h2>
+<p>Wikipedia から、is-a 関係、not-is-a 関係を拾ってくる</p>
+<h2 id="motivation">Motivation</h2>
+<p>Wikipedia には、階層的ではないカテゴライズがしてある。 例えば、&quot;CAPITALS IN ASIA&quot; というカテゴリがある。 これは、一種の is-a だ。 (おそらく、 <code>(Tokyo, Japan)</code> から、 <code>hyponym(Tokyo, Japan)</code> を取ってこれると言いたんだろう)</p>
+<h2 id="method">Method</h2>
+<ol class="incremental" type="1">
+<li>Category network cleanup</li>
+</ol>
+<ul class="incremental">
+<li>165,744 category nodes</li>
+<li>349,263 links</li>
+</ul>
+<p>明らかに不要なカテゴリは除く。 結構あって、</p>
+<ul class="incremental">
+<li>127,325 categories</li>
+<li>267,707 links</li>
+</ul>
+<p>になった。</p>
+<ol class="incremental" start="2" type="1">
+<li>Refinement link identification</li>
+</ol>
+<pre><code>Y X and X BY Z
+(e.g.  MILES DAVIS ALBUMS and ALBUMS BY ARTIST).</code></pre>
+<p>こんなパターンは、Wikipedia において頻出する。</p>
+<p>このように、 名前に &quot;BY&quot; の入ってるものは <code>is-refined-by</code> という意味的関係にあると考える。</p>
+<pre><code>refine   …‘を&#39;『精製する』,精錬する / 〈言葉・態度など〉‘を&#39;『洗練する』,上品にする,優雅にする</code></pre>
+<p>あー、面倒臭くなった</p>
+</body>
+</html>
