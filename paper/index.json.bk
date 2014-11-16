@@ -194,7 +194,8 @@
   {
     "title": "Using Maximum Entropy for Text Classification",
     "url": "http://www.kamalnigam.com/papers/maxent-ijcaiws99.pdf",
-    "id": "ME-for-classification"
+    "id": "maxent-ijcaiws99",
+    "comment": "違う誰かによる解説: http://blog.datumbox.com/machine-learning-tutorial-the-max-entropy-text-classifier/"
   },
   {
     "id": "brown-class-model",
@@ -202,19 +203,9 @@
     "url": "http://dl.acm.org/citation.cfm?id=176316"
   },
   {
-    "id": "maxent-ijcaiws99",
-    "title": "Using Maximum Entropy for Text Classification",
-    "url": "http://www.kamalnigam.com/papers/maxent-ijcaiws99.pdf"
-  },
-  {
     "id": "davidov06",
     "title": "Efficient unsupervised discovery of word categories using symmetric patterns and high frequency words (2006)",
     "url": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.138.8157"
-  },
-  {
-    "title": "Learning syntactic patterns for automatic hypernym discovery",
-    "url": "http://braque.cc/ShowItem;jsessionid=14x3b6g0f438qsgjp4vaqa03v?handle=DNAYAPXQ",
-    "id": "hypernym-discovery"
   },
   {
     "url": "http://www.lrec-conf.org/proceedings/lrec2014/pdf/764_Paper.pdf",
@@ -225,5 +216,16 @@
     "url": "http://www.oegai.at/konvens2012/proceedings/23_panchenko12p/",
     "title": "A semantic similarity measure based on lexico-syntactic patterns",
     "id": "sim-panchenko"
+  },
+  {
+    "url": "http://nlp.stanford.edu/pubs/gupta14evalpatterns.pdf",
+    "title": "Improved Pattern Learning for Bootstrapped Entity Extraction",
+    "id": "gupta14",
+    "comment": "published slide: http://nlp.stanford.edu/pubs/Gupta_Manning_CoNLL14_slides.pdf"
+  },
+  {
+    "title": "Learning syntactic patterns for automatic hypernym discovery",
+    "url": "http://braque.cc/ShowItem;jsessionid=14x3b6g0f438qsgjp4vaqa03v?handle=DNAYAPXQ",
+    "id": "hypernym-discovery"
   }
 ]

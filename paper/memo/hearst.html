@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/m.css">
+</head>
+<body>
+<h1 id="automatic-acquisition-of-hyponyms-from-large-text-corpora">Automatic acquisition of hyponyms from large text corpora</h1>
+<p>パターンを使って知識獲得 (情報抽出) の初出っぽい。</p>
+<p>それらしい、6つのパターンを手でまず作る。</p>
+<p>一例として、</p>
+<pre><code>pattern ::= NP [,] especially NPs
+NPs ::= NP | NP, NPs | NP and NP | NP or NP</code></pre>
+<blockquote>
+<p>most European contries, especially France, England and Spain</p>
+</blockquote>
+<p>という文から</p>
+<ul class="incremental">
+<li>hyponyms(&quot;France&quot;, &quot;European contries&quot;)</li>
+<li>hyponyms(&quot;England&quot;, &quot;European contries)</li>
+<li>hyponyms(&quot;Spain&quot;, &quot;European contries)</li>
+</ul>
+<p>という関係を得る。</p>
+<p>パターンを新たに学習することはしません。</p>
+</body>
+</html>
