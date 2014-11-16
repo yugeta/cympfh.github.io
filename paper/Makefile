@@ -1,4 +1,4 @@
-all: memo_ index_
+all: memo_ filter_ index_
 
 index_: index.json
 	cp index.html.h index.html
@@ -6,6 +6,9 @@ index_: index.json
 
 memo_:
 	cd memo; make
+
+filter_:
+	cd filter/; make
 
 add:
 	bash ./bin/add
