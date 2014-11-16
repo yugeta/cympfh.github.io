@@ -7,5 +7,11 @@ index_: index.json
 memo_:
 	cd memo; make
 
+add:
+	bash ./bin/add
+
+edit:
+	bash ./bin/edit
+
 git:
 	cd ..; make git
