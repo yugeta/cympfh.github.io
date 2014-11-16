@@ -1,0 +1,11 @@
+@incollection{NIPS2005_887,
+  Publisher = {MIT Press},
+  Address = {Cambridge, MA},
+  Author = {Rion Snow and Daniel Jurafsky and Andrew Y. Ng},
+  Url = {http://books.nips.cc/papers/files/nips17/NIPS2004_0887.pdf},
+  Booktitle = {Advances in Neural Information Processing Systems 17},
+  Title = {Learning Syntactic Patterns for Automatic Hypernym Discovery},
+  Editor = {Lawrence K. Saul and Yair Weiss and Léon Bottou},
+  Year = {2004},
+  Pages = {1297-1304}
+} 
