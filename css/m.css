@@ -20,6 +20,7 @@ pre > code {
   display: block;
 }
 
+/*
 math {
   background-color: #fafaf0;
   border-left: double #dadad0 5px;
@@ -28,6 +29,7 @@ math {
   display: block;
   text-align: left;
 }
+*/
 
 h1 {
   font-size: 22px;

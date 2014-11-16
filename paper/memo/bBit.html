@@ -1,25 +1,30 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
-  <link rel="stylesheet" href="../../css/m.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/m.css">
 </head>
 <body>
-<pre><code>resemble s t = length (intersection s t) / length (union s t)</code></pre>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>r</mi><mi>e</mi><mi>s</mi><mi>e</mi><mi>m</mi><mi>b</mi><mi>l</mi><mi>e</mi><mo stretchy="false">(</mo><mi>s</mi><mo>,</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mo>#</mo><mo stretchy="false">(</mo><mi>s</mi><mo>∩</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><mrow><mo>#</mo><mo stretchy="false">(</mo><mi>s</mi><mo>∪</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow></math></p>
 <p>これの利用例として、重複した web page の発見とか．</p>
 <p>しかしながら、intersectionなんかに時間がかかりすぎる．</p>
 <p>そのためのよくある手法が、Minwise hashing</p>
-<pre><code>D = { 1 .. m }
-S \subset D
-T \subset D
-pi :: D -&gt; D -- 置換, bijection</code></pre>
-<p>Pr [ min(pi(S)) == min(pi(T)) ] = resemble S T</p>
+<ul class="incremental">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>D</mi><mo>=</mo><mo stretchy="false">{</mo><mn>1</mn><mo>…</mo><mi>m</mi><mo stretchy="false">}</mo></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>S</mi><mo>⊆</mo><mi>D</mi></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>T</mi><mo>⊆</mo><mi>D</mi></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>π</mi><mo>:</mo><mi>D</mi><mo>→</mo><mi>D</mi></mrow></math> -- 置換, bijection</li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>min</mi><mi>π</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>=</mo><mi>min</mi><mi>π</mi><mo stretchy="false">(</mo><mi>T</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mi>r</mi><mi>e</mi><mi>s</mi><mi>e</mi><mi>m</mi><mi>b</mi><mi>l</mi><mi>e</mi><mo stretchy="false">(</mo><mi>S</mi><mo>,</mo><mi>T</mi><mo stretchy="false">)</mo></mrow></math></p>
 <p>その時に、イコールを見るのに、下bビットだけしかcheckしない．</p>
-<p><code>b=1</code>で十分いい．</p>
-<p><code>b &lt; 1</code> の場合も考えられる． 例えば、2bitをxorなどで1bitに圧縮して、その1bitを見る？？？？？ いみふ</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>b</mi><mo>=</mo><mn>1</mn></mrow></math> で十分いい．</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>b</mi><mo>&lt;</mo><mn>1</mn></mrow></math> の場合も考えられる． 例えば、2bitをxorなどで1bitに圧縮して、その1bitを見る？？？？？ いみふ</p>
 </body>
 </html>
