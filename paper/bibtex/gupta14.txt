@@ -1,0 +1,6 @@
+@inproceedings{gupta14evalpatterns,
+  author = {Sonal Gupta and Christopher D. Manning},
+  booktitle = {Proceedings of the Eighteenth Conference on Computational Natural Language Learning (CoNLL)},
+  title = {Improved Pattern Learning for Bootstrapped Entity Extraction},
+  year = {2014},
+}

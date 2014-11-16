@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo -n "id? >"
-read $ID
+echo -n "id?> "
+read ID
 
 vim ./bibtex/${ID}.txt
 vim ./memo/${ID}.md
