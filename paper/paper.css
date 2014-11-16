@@ -53,10 +53,17 @@ div.unread {
   padding-left: 5px;
   display: inline;
 }
+
 div.unread:before {
   content: "unread!";
   color: red;
   font-weight: bold;
+}
+
+div.comment {
+  background-color: #fffafa;
+  padding-left: 10px;
+  border-left: 5px #903030 solid;
 }
 
 div.filter {
