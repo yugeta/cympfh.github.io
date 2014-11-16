@@ -194,7 +194,8 @@
   {
     "title": "Using Maximum Entropy for Text Classification",
     "url": "http://www.kamalnigam.com/papers/maxent-ijcaiws99.pdf",
-    "id": "maxent-ijcaiws99"
+    "id": "maxent-ijcaiws99",
+    "comment": "違う誰かによる解説: http://blog.datumbox.com/machine-learning-tutorial-the-max-entropy-text-classifier/"
   },
   {
     "id": "brown-class-model",
