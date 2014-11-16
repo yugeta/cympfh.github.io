@@ -212,11 +212,6 @@
     "url": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.138.8157"
   },
   {
-    "title": "Learning syntactic patterns for automatic hypernym discovery",
-    "url": "http://braque.cc/ShowItem;jsessionid=14x3b6g0f438qsgjp4vaqa03v?handle=DNAYAPXQ",
-    "id": "hypernym-discovery"
-  },
-  {
     "url": "http://www.lrec-conf.org/proceedings/lrec2014/pdf/764_Paper.pdf",
     "title": "Freepal: A Large Collection of Deep Lexico-Syntactic Patterns for Relation Extraction",
     "id": "freepal"
@@ -231,5 +226,10 @@
     "title": "Improved Pattern Learning for Bootstrapped Entity Extraction",
     "id": "gupta14",
     "comment": "published slide: http://nlp.stanford.edu/pubs/Gupta_Manning_CoNLL14_slides.pdf"
+  },
+  {
+    "title": "Learning syntactic patterns for automatic hypernym discovery",
+    "url": "http://braque.cc/ShowItem;jsessionid=14x3b6g0f438qsgjp4vaqa03v?handle=DNAYAPXQ",
+    "id": "hypernym-discovery"
   }
 ]
