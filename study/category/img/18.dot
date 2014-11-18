@@ -1,6 +1,4 @@
 digraph {
-  X -> Y [label="f"];
-  X -> Y [label="g"];
-  E -> X [label="e"];
+  I -> J; I -> J;
   rankdir="LR";
 }

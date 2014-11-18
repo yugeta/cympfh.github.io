@@ -1,5 +1,9 @@
 digraph {
-  x -> x [label="id"]; y -> y [label="id"];
-  x [label="I"];
-  y [label="J"];
+  node[group=a];
+  L -> DI;
+  X -> DI;
+  L -> DJ [label="λ"];
+  X -> DJ [label="γ"];
+  node[group=c];
+  DI -> DJ;
 }

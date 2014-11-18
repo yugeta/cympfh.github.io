@@ -1,7 +1,10 @@
 digraph C {
-  E; V;
-  E -> E;
-  V -> V;
-  E -> V [label = "c"];
-  E -> V [label = "d"];
+  P -> X;
+  P -> Y;
+  Z -> X;
+  Z -> Y;
+  Z -> P [style="dotted", label=" h"];
+  {rank=same; X Y}
+  {rank=min; P}
+  {rank=max; Z}
 }

@@ -1,20 +1,24 @@
-digraph const {
-
-  subgraph cluster_I {
-    label = "I";
-    I; J;
-    I -> J [label = " i"];
-    {rank=same; I; J}
-  }
-   
+digraph hc {
   subgraph cluster_C {
     label = "C";
-    X; X2;
-    X2 [label = "X"];
-    X -> X2 [label = " id"];
-    {rank=same; X X2}
+    labeljust = "r";
+    X;
   }
-
-  I -> X [label = "deltaX"]
-  J -> X2 [label = "deltaX"]
+  subgraph cluster_D {
+    label = "D";
+    labeljust = "r";
+    FX;
+    GX;
+    FX -> GX [label = " α",style=bold]
+  }
+  subgraph cluster_E {
+    label = "E";
+    labeljust = "r";
+    HFX -> KGX [label = " β",style=bold];
+  }
+  X -> FX;
+  X -> GX;
+  FX -> HFX;
+  GX -> KGX;
+  rankdir="LR";
 }

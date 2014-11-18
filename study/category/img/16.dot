@@ -1,9 +1,8 @@
 digraph {
-  E;
-  subgraph cluster_p {
-    X -> Y; X -> Y;
-  }
-  E -> X [label="e"];
-  E -> Y [label="f.e = g.e"];
+  E -> X [label = "e"];
+  X -> Y [label = "f"];
+  X -> Y [label = "g"];
+  Z -> X;
+  Z -> E [label = "k", style="dotted"];
   rankdir="LR";
 }

@@ -1,21 +1,12 @@
-digraph hc {
-  subgraph cluster_C {
-    label = "C";
-    X;
-  }
-  subgraph cluster_D {
-    label = "D";
-    FX;
-    GX;
-    FX -> GX [label = " alpha"]
-  }
-  subgraph cluster_E {
-    label = "E";
-    HFX -> KGX [label = " beta"];
-  }
-  X -> FX;
-  X -> GX;
-  FX -> HFX;
-  GX -> KGX;
-  rankdir="LR";
+digraph vc {
+  FX -> FY;
+  GX -> GY;
+  HX -> HY;
+  FX -> GX [style=bold, label = " α"];
+  FY -> GY [style=bold, label = " α"];
+  GX -> HX [style=bold, label = " β"];
+  GY -> HY [style=bold, label = " β"];
+  {rank=same; FX FY}
+  {rank=same; GX GY}
+  {rank=same; HX HY}
 }

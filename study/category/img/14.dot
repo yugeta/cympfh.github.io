@@ -1,5 +1,16 @@
 digraph {
-  X -> Y [label="f"];
-  X -> Y [label="g"];
-  {rank=same; X Y}
+  rankdir="LR";
+  subgraph cluster_I {
+    label = "I";
+    I; J
+  }
+  subgraph cluster_C {
+    label = "C";
+    X; DI; DJ;
+    X -> DI [label="γ_I"];
+    X -> DJ [label="γ_J"];
+    {rank=same; X DI};
+  }
+  I -> X [label = "⊿X"];
+  J -> X [label = "⊿X"];
 }
