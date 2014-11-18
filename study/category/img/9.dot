@@ -1,0 +1,6 @@
+digraph {
+  deltaL -> D [label = "lambda", style="bold"];
+  deltaX -> deltaL [label = "delta k", style="bold"];
+  deltaX -> D [label = "gamma", style="bold"];
+  {rank=same; deltaX; D};
+}

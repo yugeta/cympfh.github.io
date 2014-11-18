@@ -1,0 +1,7 @@
+digraph C {
+  P -> X;
+  P -> Y;
+  Z [label = "forall Z"];
+  Z -> X;
+  Z -> Y;
+}

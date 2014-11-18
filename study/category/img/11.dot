@@ -1,0 +1,11 @@
+digraph {
+  L; X;
+  subgraph cluster_p {
+    DI -> DJ;
+  }
+  L -> DI [ label = "lambda_I" ];
+  L -> DJ [ label = "lambda_J" ];
+  X -> DI [ label = "gamma_I" ];
+  X -> DJ [ label = "gamma_J" ];
+  X -> L [label = "k", style = "dotted"];
+}

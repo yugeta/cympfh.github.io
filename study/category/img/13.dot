@@ -1,0 +1,14 @@
+digraph {
+  subgraph cluster_I {
+    label = "I";
+    I; J
+  }
+  subgraph cluster_C {
+    label = "C";
+    X; DI; DJ;
+    X -> DI [label="gamma_I"];
+    X -> DJ [label="gamma_J"];
+    {rank=same; X DI};
+  }
+  I -> X [label = "delta X"];
+}

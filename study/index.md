@@ -8,6 +8,7 @@
 
 ## 講義
 
+- [数理的意味論](category/)
 - [計算機言語](comp-lang.pdf) comp-lang.tex
 - [コンピュータアーキテクチャ](computer_architecture.txt)
 - [データ構造とアルゴリズム](data_struct_algo.txt)
