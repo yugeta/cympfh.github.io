@@ -2,10 +2,10 @@ digraph vc {
   FX -> FY;
   GX -> GY;
   HX -> HY;
-  FX -> GX [label = "alpha"];
-  FY -> GY [label = "alpha"];
-  GX -> HX [label = "beta"];
-  GY -> HY [label = "beta"];
+  FX -> GX [label = " alpha"];
+  FY -> GY [label = " alpha"];
+  GX -> HX [label = " beta"];
+  GY -> HY [label = " beta"];
   {rank=same; FX FY}
   {rank=same; GX GY}
   {rank=same; HX HY}

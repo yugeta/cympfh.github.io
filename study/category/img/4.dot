@@ -7,14 +7,15 @@ digraph hc {
     label = "D";
     FX;
     GX;
-    FX -> GX [label = "alpha"]
+    FX -> GX [label = " alpha"]
   }
   subgraph cluster_E {
     label = "E";
-    HFX -> KGX [label = "beta"];
+    HFX -> KGX [label = " beta"];
   }
   X -> FX;
   X -> GX;
   FX -> HFX;
   GX -> KGX;
+  rankdir="LR";
 }
