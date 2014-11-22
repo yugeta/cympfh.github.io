@@ -1,10 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define iota(i,n,b,s) for(int i=int(b);i!=int(b+s*n);i+=s)
-#define range_debug(i,n,m) (n>m?(n-m+1):(m-n+1))<<n<<(n>m?-1:1)
-#define range(i,n,m) iota(i,(n>m?(n-m+1):(m-n+1)),n,(n>m?-1:1))
-#define rep(i,n) iota(i,n,0,1)
+#define iota(i,n,b,s) for(int i=int(b);i!=int((b)+(s)*(n));i+=(s))
+#define range(i,n,m) iota(i,(((n)>(m))?((n)-(m)+1):((m)-(n)+1)),(n),((n)>(m)?-1:1))
+#define rep(i,n) iota(i,(n),0,1)
 
 #define INF (1e9)
 #define EPS (1e-9)
@@ -14,7 +13,7 @@ using namespace std;
 #define cadr(a) (car(cdr(a)))
 #define cddr(a) (cdr(cdr(a)))
 #define all(a) a.begin(), a.end()
-#define trace(var) cout<<">>> "<<#var<<" = "<<var<<endl;
+#define trace(var) cerr<<">>> "<<#var<<" = "<<var<<endl;
 
 typedef long long INTEGER;
 typedef double FLOAT;
