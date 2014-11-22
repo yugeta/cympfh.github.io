@@ -5,10 +5,11 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; }
+table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -54,7 +55,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 }
 
 ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, <span class="dt">const</span> edge&amp; e) {
-  os&lt;&lt;<span class="st">&quot;(edge &quot;</span>&lt;&lt;e.from&lt;&lt;&#39; &#39;&lt;&lt;e.to&lt;&lt;&#39; &#39;&lt;&lt;e.cost&lt;&lt;&#39;)&#39;;
+  os&lt;&lt;<span class="st">&quot;(edge &quot;</span>&lt;&lt;e.from&lt;&lt;<span class="st">&#39; &#39;</span>&lt;&lt;e.to&lt;&lt;<span class="st">&#39; &#39;</span>&lt;&lt;e.cost&lt;&lt;<span class="st">&#39;)&#39;</span>;
   <span class="kw">return</span> os;
 }
 
@@ -83,7 +84,7 @@ vector&lt;edge&gt; d[MAXN];
   used[begin] = <span class="kw">true</span>;
 
   priority_queue&lt;edge, vector&lt;edge&gt;, greater&lt;edge&gt;&gt; q;
-  <span class="kw">for</span> (<span class="dt">auto</span> e: d[begin]) q.push(e);
+  <span class="kw">for</span> (<span class="kw">auto</span> e: d[begin]) q.push(e);
   <span class="kw">while</span> (!q.empty()) {
     edge e = q.top(); q.pop();
     <span class="kw">if</span> (used[e.to]) <span class="kw">continue</span>;
@@ -91,7 +92,7 @@ vector&lt;edge&gt; d[MAXN];
     used[e.to] = <span class="kw">true</span>;
     walk[e.from][e.to] = <span class="kw">true</span>;
     walk[e.to][e.from] = <span class="kw">true</span>;
-    <span class="kw">for</span> (<span class="dt">auto</span> f: d[e.to]) q.push(f);
+    <span class="kw">for</span> (<span class="kw">auto</span> f: d[e.to]) q.push(f);
   }
   <span class="kw">return</span> total;
 }
@@ -116,17 +117,17 @@ vector&lt;edge&gt; d[MAXN];
 
   rep(i, <span class="dv">2</span>*H<span class="dv">+1</span>) {
     rep(j, <span class="dv">2</span>*W<span class="dv">+1</span>) {
-      <span class="dt">char</span> c = &#39;#&#39;;
+      <span class="dt">char</span> c = <span class="st">&#39;#&#39;</span>;
       <span class="kw">if</span> (i % <span class="dv">2</span> &amp;&amp; j % <span class="dv">2</span>) {
-        c = &#39; &#39;;
+        c = <span class="st">&#39; &#39;</span>;
       }
       <span class="kw">else</span> <span class="kw">if</span> (i % <span class="dv">2</span> &amp;&amp; j &gt; <span class="dv">0</span>) {
         <span class="dt">int</span> idx = (i/<span class="dv">2</span>) * W + ((j<span class="dv">-1</span>)/<span class="dv">2</span>);
-        <span class="kw">if</span> (walk[idx][idx<span class="dv">+1</span>]) c = &#39; &#39;;
+        <span class="kw">if</span> (walk[idx][idx<span class="dv">+1</span>]) c = <span class="st">&#39; &#39;</span>;
       }
       <span class="kw">else</span> <span class="kw">if</span> (j % <span class="dv">2</span> &amp;&amp; i &gt; <span class="dv">0</span>) {
         <span class="dt">int</span> idx = ((i<span class="dv">-1</span>)/<span class="dv">2</span>) * W + (j/<span class="dv">2</span>);
-        <span class="kw">if</span> (walk[idx][idx+W]) c = &#39; &#39;;
+        <span class="kw">if</span> (walk[idx][idx+W]) c = <span class="st">&#39; &#39;</span>;
       }
       cout &lt;&lt; c;
     }

@@ -13,6 +13,7 @@ using namespace std;
 #define cdr(a) (a.second)
 #define cadr(a) (car(cdr(a)))
 #define cddr(a) (cdr(cdr(a)))
+#define all(a) a.begin(), a.end()
 #define trace(var) cout<<">>> "<<#var<<" = "<<var<<endl;
 
 typedef long long INTEGER;
