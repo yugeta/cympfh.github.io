@@ -10,4 +10,3 @@
   <div class='article' id='article'></div>
   <div class='dates'>
     <div id='check_iframe' style='cursor:pointer'></div>
-    <hr class='shorthr'>

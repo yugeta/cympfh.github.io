@@ -1,27 +1,23 @@
-```sh
-g++ -std=c++0x ./%
-```
-
-## link
+## 参考
 
 - [C++ and STL reference](http://www.ccll.jp/cppreference/index.html)
 - [cpprefjp - C++ Library Reference](https://sites.google.com/site/cpprefjp/)
 - [１次元幾何ライブラリ - not's memo - TopCoder部](http://topcoder.g.hatena.ne.jp/not522/20130401/1364781205)
 
-## [template](src/template.cc.html)
+## [鋳型](src/template.cc.html)
 
-- [alt includes](src/include.cc.html)
+- [要求の代替](src/include.cc.html)
 
-## [graph](src/graph.head.cc.html)
+## [グラフ](src/graph.head.cc.html)
 
-### Shortest Path
+### 最短路
 
 - [Dijkstra](src/graph.dij.cc.html)
     - [sample](src/graph.dij.use.cc.html)
 - [Warshall-Floyd](src/graph.wall.cc.html)
     - [sample](src/graph.wall.use.cc.html)
 
-### Minimum Spanning Tree
+### 最小全域木
 
 - [Prim](src/graph.prim.cc.html)
     - [sample](src/graph.prim.use.cc.html)
@@ -29,9 +25,9 @@ g++ -std=c++0x ./%
 - [Kruskal](src/graph.kruskal.cc.html)
     - [sample](src/graph.kruskal.use.cc.html)
 
-### Flow
+### 最大流量
 
-- [Max Flow](src/graph.maxflow.cc.html)
+- [Ford-Fulkerson](src/graph.maxflow.cc.html)
     - [sample](src/graph.maxflow.use.cc.html)
 
 ## 幾何
