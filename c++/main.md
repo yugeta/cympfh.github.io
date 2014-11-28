@@ -38,5 +38,6 @@
 ## misc
 
 - [bit count](src/bit.count.cc.html)
+- [ツェラーの公式](src/misc.zeller.cc.html)
 
 ## [テスト環境](src/test.html)
