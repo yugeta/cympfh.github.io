@@ -29,13 +29,13 @@ hr.shorthr {
   margin-left: 0;
 }
 
-h2 {
+h1 {
   background-color: #fffff0;
   border-right: 10px solid #ffffc8;
   border-bottom: 2px solid #ffffd0;
 }
 
-h3 {
+h2 {
   padding-left: 10px;
   border-bottom: 1px black solid;
 }

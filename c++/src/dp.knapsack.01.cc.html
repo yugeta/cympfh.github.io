@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode cpp"><code class="sourceCode cpp">
+<span class="co">/*</span>
+<span class="co"> * 0-1 knapsack problem</span>
+<span class="co"> *</span>
+<span class="co"> * Knapsack problem - Wikipedia</span>
+<span class="co"> * http://en.wikipedia.org/wiki/Knapsack_problem</span>
+<span class="co"> *</span>
+<span class="co"> * solve with DP of cost</span>
+<span class="co"> * O(N * C)</span>
+<span class="co"> *</span>
+<span class="co"> * where</span>
+<span class="co"> *   N is the number of variety</span>
+<span class="co"> *   C is the total capacity</span>
+<span class="co"> */</span>
+
+<span class="ot">#include &lt;iostream&gt;</span>
+<span class="ot">#include &lt;vector&gt;</span>
+<span class="ot">#include &lt;sstream&gt;</span>
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="ot">#define iota(i,n,b,s) for(int i=int(b);i!=int((b)+(s)*(n));i+=(s))</span>
+<span class="ot">#define range(i,n,m) iota(i,(((n)&gt;(m))?((n)-(m)+1):((m)-(n)+1)),(n),((n)&gt;(m)?-1:1))</span>
+<span class="ot">#define rep(i,n) iota(i,(n),0,1)</span>
+
+<span class="dt">void</span> debug(<span class="dt">int</span>*ar, <span class="dt">int</span> size) {
+  cerr &lt;&lt; ar[<span class="dv">0</span>];
+  <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">1</span>; i&lt;size; ++i) {
+    cerr &lt;&lt; &#39; &#39; &lt;&lt; ar[i];
+  }
+  cerr &lt;&lt; endl;
+}
+
+<span class="kw">template</span>&lt;<span class="kw">class</span> T&gt;
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt;T&gt; v) {
+  os &lt;&lt; v[<span class="dv">0</span>];
+  <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">1</span>, len=v.size(); i&lt;len; ++i) os &lt;&lt; &#39; &#39; &lt;&lt; v[i];
+  <span class="kw">return</span> os;
+}
+
+<span class="dt">void</span> solve(istream&amp;);
+
+<span class="dt">int</span> main(){
+
+  <span class="co">/*</span>
+<span class="co">   * number-of-variety (N)</span>
+<span class="co">   * capacity (C)</span>
+<span class="co">   * i-th-cost i-th-value (c[i], v[i])</span>
+<span class="co">   */</span>
+
+  stringstream sample1(<span class="st">&quot;\</span>
+<span class="dv">6</span>\n\
+<span class="dv">10</span>\n\
+<span class="dv">3</span> <span class="dv">70</span>\n\
+<span class="dv">2</span> <span class="dv">40</span>\n\
+<span class="dv">2</span> <span class="dv">80</span>\n\
+<span class="dv">5</span> <span class="dv">90</span>\n\
+<span class="dv">1</span> <span class="dv">30</span>\n\
+<span class="dv">1</span> <span class="dv">50</span><span class="st">&quot;);</span>
+
+  solve(sample1);
+
+  <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+<span class="dt">void</span>
+solve(istream&amp;is) {
+  <span class="dt">int</span> N, C;
+  is &gt;&gt; N &gt;&gt; C;
+
+  <span class="dt">int</span> c[N], v[N];
+
+  rep (i, N) {
+    is &gt;&gt; c[i];
+    is &gt;&gt; v[i];
+  }
+
+  <span class="co">// DP of cost</span>
+  <span class="dt">int</span> dp[C<span class="dv">+1</span>];
+  vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt; detail(C<span class="dv">+1</span>, {});
+
+  rep (k, C<span class="dv">+1</span>) dp[k] = <span class="dv">0</span>;
+
+  rep (i, N) {
+    range (k, C-c[i], <span class="dv">0</span>) {
+      <span class="dt">int</span> k2 = k + c[i];
+      <span class="kw">if</span> (dp[k2] &lt; dp[k] + v[i]) {
+        dp[k2] = dp[k] + v[i];
+        detail[k2] = detail[k];
+        detail[k2].push_back(i);
+      }
+    }
+    debug(dp, C<span class="dv">+1</span>);
+  }
+  cout &lt;&lt; dp[C] &lt;&lt; endl;
+  cout &lt;&lt; <span class="st">&quot;内訳: &quot;</span> &lt;&lt; detail[C] &lt;&lt; endl;
+}
+ </code></pre>
+</body>
+</html>
