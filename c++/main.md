@@ -1,12 +1,12 @@
 # 参考
 
 - [C++ and STL reference](http://www.ccll.jp/cppreference/index.html)
-- [cpprefjp - C++ Library Reference](https://sites.google.com/site/cpprefjp/)
 - [１次元幾何ライブラリ - not's memo - TopCoder部](http://topcoder.g.hatena.ne.jp/not522/20130401/1364781205)
 
 # [鋳型](src/template.cc.html)
 
 - [要求の代替](src/include.cc.html)
+- [ループマクロについて](memo/loop.html)
 
 # [グラフ](src/graph.head.cc.html)
 
@@ -44,11 +44,10 @@
 ## Knapsack problem
 
 - [0-1 knapsack](src/dp.knapsack.01.cc.html)
-- [0-1 knapsack](src/dp.knapsack.01.cc)
 
 # misc
 
 - [bit count](src/bit.count.cc.html)
 - [ツェラーの公式](src/misc.zeller.cc.html)
 
-# [テスト環境](src/test.html)
+# [テスト環境](memo/test.html)

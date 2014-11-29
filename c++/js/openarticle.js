@@ -29,6 +29,7 @@ function toggle() {
 
 var extension = '.cc.html';
 function hasExtension(fn) {
+  return true; // tempo
   return fn.slice(- extension.length) === extension;
 }
 

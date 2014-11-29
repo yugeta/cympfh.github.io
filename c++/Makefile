@@ -1,4 +1,4 @@
-all: cpphtml index.html test
+all: cpphtml index.html
 
 index.html: index.html.h main.html
 	cat index.html.h main.html > $@
@@ -8,9 +8,6 @@ main.html: main.md
 
 cpphtml:
 	for f in ./src/*.cc; do ./bin/cpp2html $$f; done
-
-test:
-	pandoc -t html5 -i src/test.md -o src/test.html
 
 git:
 	cd ..; make git

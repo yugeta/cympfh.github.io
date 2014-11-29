@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>loop macro</title>
+<style>
+
+body {
+  width: 960px;
+  font-size: 17px;
+  background-color: #ffffff;
+}
+
+time {
+  text-decoration: underline;
+  margin-right: 0;
+  display: block;
+  text-align: right;
+}
+
+code {
+  font-family: "Ricty";
+  display: block;
+  background-color: #fffff0;
+  border-left: 10px solid #ffffd0;
+  margin-left: 5px;
+}
+
+article:before {
+  content: "◇";
+        }
+
+</style>
+</head>
+<body>
+<h1>ループマクロについて</h1>
+
+<time>2014年 11月29日 土曜日 16時43分01秒 JST</time>
+
+<article>
+  <p> 現在、次の三種類をいつも定義している。
+  すなわち、
+
+  <code>#define iota(i,n,b,s) for(int i=int(b);i!=int((b)+(s)*(n));i+=(s))</code>
+  <code>#define range(i,n,m) iota(i,(((n)&gt;(m))?((n)-(m)+1):((m)-(n)+1)),(n),((n)>(m)?-1:1))</code>
+  <code>#define rep(i,n) iota(i,(n),0,1)</code>
+
+  である。</p>
+
+  <p>
+  <kbd>iota</kbd>は、この中で最も汎用的であり、
+  取るパラメータの数も多い。
+  また、他の二つのループは見てわかるように
+  <kbd>iota</kbd>に書き換えている。</p>
+
+  <p>
+  <kbd>range</kbd>は次に汎用的である。
+  使う場面も多いと感じるが、
+  ついつい嵌ってしまう場面もあり、
+  解決すべき問題だと思っている。後述。
+  </p>
+
+  <p>
+  <kbd>rep</kbd>
+  は、おそらくC++でプロコンをする人間なら誰でも使っていて、
+  使う場面は最も多い。
+  </p>
+
+  <p>詳細を逆順に示していく。</p>
+</article>
+
+<article>
+  <p><kbd>rep(i, N)</kbd> は
+  <code>for (int i = 0; i != N; ++i)</code>
+  に等しい。</p>
+</article>
+
+<article>
+  <p><kbd>range(i, N, M)</kbd> は、
+  両端を含むような整数の区間 <kbd>[N, M]</kbd> の上を変数<kbd>i</kbd>で走査するループであり、
+  <kbd>N &lt; M</kbd>
+  の場合は、
+  <code>for (int i = N; i != M; ++i)</code>
+  に等しい。
+  <kbd>N &gt; M</kbd>
+  の場合は、
+  <code>for (int i = N; i != M; --i)</code>
+  に等しい。
+  <kbd>N == M</kbd>
+  の場合は、
+  <code>int i = N;</code>
+  に等しいということである。</p>
+
+  <p>
+  注意点としては、
+  空のループは作れないということである。
+  例えば、<kbd>rep</kbd>ならば、<kbd>rep(i,0)</kbd>によって一度も回らないような
+  空のループが自然に導かれる。
+  対して、<kbd>range</kbd> は、任意の整数 <kbd>N</kbd>、<kbd>M</kbd>
+  に対して、
+  必ず一度は回るようなループが導かれる。
+  </p>
+
+  <p>実体験を書いておくと、
+  ついつい、
+  <code>range(i, N, N)</code>
+  が空のループだと思っていた。</p>
+
+  <p>対応策としては、
+  <kbd>N &lt; M</kbd> の場合に区間<kbd>[N, M)</kbd>の上を走査し、
+  <kbd>N &gt;= M</kbd> の場合は空のループであるような
+  類似のループマクロを用意すること。
+  <kbd>rep2</kbd>と呼ばれているものかもしれない。</p>
+
+</article>
+
+<article>
+  <p>
+  <kbd>iota(i, N, begin, step)</kbd>
+  は、APL, J のι関数を想定して書いたものである。
+  <code>for (int i = begin; i != begin + step * N; i += step)</code>
+  に等しい。
+  次のようにも書ける。
+  <code>for (int k = 0, i; i = begin + step * k, k &lt; N; ++k)</code>
+  </p>
+
+</article>
+</body>
+</html>

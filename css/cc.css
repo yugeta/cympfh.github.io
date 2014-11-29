@@ -1,5 +1,6 @@
 a {
   color: #402020;
+  font-size: 14px;
 }
 /* preview window */
 div#article {
@@ -33,9 +34,18 @@ h1 {
   background-color: #fffff0;
   border-right: 10px solid #ffffc8;
   border-bottom: 2px solid #ffffd0;
+  font-size: 18px;
 }
 
 h2 {
   padding-left: 10px;
   border-bottom: 1px black solid;
+  font-size: 15px;
+}
+
+h1 > a {
+  font-size: 18px;
+}
+h2 > a {
+  font-size: 15px;
 }

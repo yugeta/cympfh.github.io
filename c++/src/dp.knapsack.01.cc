@@ -1,4 +1,3 @@
-
 /*
  * 0-1 knapsack problem
  *
@@ -94,4 +93,3 @@ solve(istream&is) {
   cout << dp[C] << endl;
   cout << "内訳: " << detail[C] << endl;
 }
- 
