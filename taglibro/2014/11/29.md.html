@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="年-11月29日-土曜日-20時26分03秒-jst">2014年 11月29日 土曜日 20時26分03秒 JST</h1>
+<h3 id="家賃を振り込み忘れたこと">家賃を振り込み忘れたこと。</h3>
+<h3 id="linux-debian-wheezy-で音楽cdを取り込んだこと">Linux (Debian wheezy) で音楽CDを取り込んだこと</h3>
+<blockquote>
+<p>結論: <code>Asunder</code>さんが良い</p>
+</blockquote>
+<p>初め、mplayer を用いて取り込もうとしたけど、 途中でEnterキーを押すと今の取り込んでるトラックを打ち切って 次に行ってしまうだという仕様に気づいて やめた。</p>
+<p>これは、一応、 mplayerで通常通りに再生させて、 音楽の出力をスピーカーでなく wavファイルへの書き出しとしているだけなので、 仕方ない。</p>
+<p>Linuxで完成度の高い音楽再生ソフトウェアといえば、 Ubuntuの経験から、 <code>Banshee</code> しか知らなかった。 しかしCDから取り込む際の 音楽情報付加がうまくいかなかった。 音楽情報を見つけられないみたいなことを言った。</p>
+<p>ググると、 &quot;<code>sound-juicer</code> を使え。これでうまくいかなかったことはない&quot; みたいな書き込みがあったので、 入れてみた。</p>
+<p><code>/dev/cdrw</code> を読んでくれず、 CDが見つからないと抜かした。</p>
+<p>そのメッセージそのままググると、 &quot;僕はAsunderが好きだな&quot; という、解決策が載ってた。</p>
+<p>直接の解決策じゃなくて、 別のソフトを紹介するだけという 先ほどと同じパターンだ。</p>
+<figure>
+<img src="../../img/141129.png" />
+</figure>
+<p>オプションでmp3を選択すると、 <code>lame</code>が見つからない、と怒られたので</p>
+<pre class="sh"><code>sudo apt-get install lame</code></pre>
+<p>これで問題なさそう。</p>
+</body>
+</html>
