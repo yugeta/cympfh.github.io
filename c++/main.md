@@ -35,6 +35,11 @@
 - [平面テンプレート](src/geo.2d.cc.html)
     - [test](src/geo.2d.test.cc.html)
 
+## 集合
+
+- [Union-Find](src/set.union.find.cc.html)
+- [Union-Find](src/set.union.find.cc)
+
 ## misc
 
 - [bit count](src/bit.count.cc.html)
