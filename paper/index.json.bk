@@ -244,5 +244,11 @@
     "title": "TOKENSREGEX : Defining cascaded regular expressions over tokens",
     "id": "tokensregex",
     "unread": true
+  },
+  {
+    "url": "http://eprints.eemcs.utwente.nl/23268/01/sac13-senticon.pdf",
+    "title": "Exploiting Emoticons in Sentiment Analysis",
+    "id": "exploit-emoticons",
+    "comment": "handout here, http://cympfh.github.io/study/nlp/exploit-emoticons.pdf"
   }
 ]
