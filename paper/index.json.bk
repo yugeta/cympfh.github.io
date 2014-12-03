@@ -1,7 +1,8 @@
 [
   {
     "id": "exact-quantum-query",
-    "title": "Exact quantum query complexity of EXACT and THRESHOLD"
+    "title": "Exact quantum query complexity of EXACT and THRESHOLD",
+    "url": "http://arxiv.org/abs/1302.1235"
   },
   {
     "id": "mcdonald-ryan-fine-to-coarse",
@@ -101,7 +102,7 @@
   },
   {
     "title": "スピンモデルによる単語の感情極性抽出",
-    "url": "http://ci.nii.ac.jp/els/110004081271.pdf?id=ART0006342992&type=pdf&lang=jp&host=cinii&order_no=&ppv_type=0&lang_sw=&no=1403574685&cp=",
+    "url": "http://ci.nii.ac.jp/naid/110004081271",
     "id": "spin-sent"
   },
   {
@@ -225,7 +226,7 @@
   },
   {
     "title": "Learning syntactic patterns for automatic hypernym discovery",
-    "url": "http://braque.cc/ShowItem;jsessionid=14x3b6g0f438qsgjp4vaqa03v?handle=DNAYAPXQ",
+    "url": "http://ai.stanford.edu/~rion/papers/hypernym_nips05.pdf",
     "id": "hypernym-discovery"
   },
   {
@@ -237,5 +238,11 @@
     "url": "http://www.aaai.org/Papers/AAAI/2007/AAAI07-228.pdf",
     "title": "Deriving a large scale taxonomy from Wikipedia",
     "id": "taxonomy-wikipedia"
+  },
+  {
+    "url": "http://nlp.stanford.edu/pubs/tokensregex-tr-2014.pdf",
+    "title": "TOKENSREGEX : Defining cascaded regular expressions over tokens",
+    "id": "tokensregex",
+    "unread": true
   }
 ]
