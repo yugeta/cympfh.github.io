@@ -52,6 +52,7 @@ myAlbums/OP
 myAlbums/PV-and-CM
 myAlbums/schrantz-has-gone
 myAlbums/vektor-und-struct
+myAlbums/2014-to-2015
 voice/AiNonaka
 voice/AyaHirano
 voice/Marinavi
