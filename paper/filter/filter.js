@@ -35,7 +35,7 @@ function filter(query, datum) {
   var ret = [];
   var id;
   for (id in scores) {
-    if (scores[id] > sup * 0.1) {
+    if (scores[id] > sup * 0.03) {
       ret.push(id);
       console.log('push', id, scores[id]);
     }
