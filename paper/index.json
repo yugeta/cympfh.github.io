@@ -255,5 +255,15 @@
     "url": "http://ilpubs.stanford.edu:8090/421/1/1999-65.pdf",
     "title": "Dual Iterative Pattern Relation Extraction (DIPRE)",
     "id": "dipre"
+  },
+  {
+    "url": "http://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/1426-8.pdf",
+    "title": "正規パターン言語の和と共通部分の帰納学習",
+    "id": "inductive-train"
+  },
+  {
+    "url": "http://link.springer.com/chapter/10.1007/3-540-11980-9_19",
+    "title": "Polynomial time inference of extended regular pattern languages",
+    "id": "poly-inference-extended-language"
   }
 ]

@@ -250,5 +250,15 @@
     "title": "Exploiting Emoticons in Sentiment Analysis",
     "id": "exploit-emoticons",
     "comment": "handout here, http://cympfh.github.io/study/nlp/exploit-emoticons.pdf"
+  },
+  {
+    "url": "http://ilpubs.stanford.edu:8090/421/1/1999-65.pdf",
+    "title": "Dual Iterative Pattern Relation Extraction (DIPRE)",
+    "id": "dipre"
+  },
+  {
+    "url": "http://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/1426-8.pdf",
+    "title": "正規パターン言語の和と共通部分の帰納学習",
+    "id": "inductive-train"
   }
 ]
