@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -27,7 +28,7 @@ ostream& operator<<(ostream& os, pair<S,T> p) {
   return os;
 }
 
-// inner dot
+/* inner dot */
 FLOAT dot(P&a, P&b) {
   return car(a) * car(b) + cdr(a) * cdr(b);
 }
@@ -35,11 +36,19 @@ FLOAT operator*(P&a, P&b) {
   return car(a) * car(b) + cdr(a) * cdr(b);
 }
 
+/* scalar multiple */
+P operator*(P&a, FLOAT c) {
+  return cons(c * car(a), c * cdr(a));
+}
+P operator*(FLOAT c, P&a) {
+  return cons(c * car(a), c * cdr(a));
+}
+
 FLOAT det(P&a, P&b) {
   return car(a) * cdr(b) - cdr(a) * car(b);
 }
 
-// vector operator
+/* vector operator */
 P operator+(P&a, P&b) {
   return cons(car(a) + car(b), cdr(a) + cdr(b));
 }
@@ -52,7 +61,7 @@ P operator-(P&a, P&b) {
   return cons(car(a) - car(b), cdr(a) - cdr(b));
 }
 
-// distance
+/* distance */
 FLOAT Manhattan(P&a, P&b) {
   return abs(car(a) - car(b)) + abs(cdr(a) - cdr(b));
 }
@@ -61,13 +70,12 @@ FLOAT Euclidean(P&a, P&b) {
   return sqrt(pow(car(p), 2) + pow(cdr(p), 2));
 }
 
-// equality with EPS (default: 1e-9)
+/* equality with EPS (default: 1e-9) */
 bool eq(FLOAT x, FLOAT y) {
   return abs(x - y) < EPS;
 }
 bool operator==(P&a, P&b) {
   return eq(car(a), car(b)) && eq(cdr(a), cdr(b));
-  //return (car(a) == car(b)) && (cdr(a) == cdr(b));
 }
 
 int sign(FLOAT a) {

@@ -27,7 +27,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;bits/stdc++.h&gt;</span>
+<pre class="sourceCode cpp"><code class="sourceCode cpp">
+<span class="ot">#include &lt;bits/stdc++.h&gt;</span>
 <span class="kw">using</span> <span class="kw">namespace</span> std;
 
 <span class="ot">#define iota(i,n,b,s) for(int i=int(b);i!=int(b+s*n);i+=s)</span>
@@ -56,7 +57,7 @@ ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S
   <span class="kw">return</span> os;
 }
 
-<span class="co">// inner dot</span>
+<span class="co">/* inner dot */</span>
 FLOAT dot(P&amp;a, P&amp;b) {
   <span class="kw">return</span> car(a) * car(b) + cdr(a) * cdr(b);
 }
@@ -64,11 +65,19 @@ FLOAT <span class="kw">operator</span>*(P&amp;a, P&amp;b) {
   <span class="kw">return</span> car(a) * car(b) + cdr(a) * cdr(b);
 }
 
+<span class="co">/* scalar multiple */</span>
+P <span class="kw">operator</span>*(P&amp;a, FLOAT c) {
+  <span class="kw">return</span> cons(c * car(a), c * cdr(a));
+}
+P <span class="kw">operator</span>*(FLOAT c, P&amp;a) {
+  <span class="kw">return</span> cons(c * car(a), c * cdr(a));
+}
+
 FLOAT det(P&amp;a, P&amp;b) {
   <span class="kw">return</span> car(a) * cdr(b) - cdr(a) * car(b);
 }
 
-<span class="co">// vector operator</span>
+<span class="co">/* vector operator */</span>
 P <span class="kw">operator</span>+(P&amp;a, P&amp;b) {
   <span class="kw">return</span> cons(car(a) + car(b), cdr(a) + cdr(b));
 }
@@ -81,7 +90,7 @@ P <span class="kw">operator</span>-(P&amp;a, P&amp;b) {
   <span class="kw">return</span> cons(car(a) - car(b), cdr(a) - cdr(b));
 }
 
-<span class="co">// distance</span>
+<span class="co">/* distance */</span>
 FLOAT Manhattan(P&amp;a, P&amp;b) {
   <span class="kw">return</span> abs(car(a) - car(b)) + abs(cdr(a) - cdr(b));
 }
@@ -90,13 +99,12 @@ FLOAT Euclidean(P&amp;a, P&amp;b) {
   <span class="kw">return</span> sqrt(pow(car(p), <span class="dv">2</span>) + pow(cdr(p), <span class="dv">2</span>));
 }
 
-<span class="co">// equality with EPS (default: 1e-9)</span>
+<span class="co">/* equality with EPS (default: 1e-9) */</span>
 <span class="dt">bool</span> eq(FLOAT x, FLOAT y) {
   <span class="kw">return</span> abs(x - y) &lt; EPS;
 }
 <span class="dt">bool</span> <span class="kw">operator</span>==(P&amp;a, P&amp;b) {
   <span class="kw">return</span> eq(car(a), car(b)) &amp;&amp; eq(cdr(a), cdr(b));
-  <span class="co">//return (car(a) == car(b)) &amp;&amp; (cdr(a) == cdr(b));</span>
 }
 
 <span class="dt">int</span> sign(FLOAT a) {
