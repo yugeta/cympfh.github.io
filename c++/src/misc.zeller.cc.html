@@ -37,7 +37,7 @@ Day
 zeller(<span class="dt">int</span> y, <span class="dt">int</span> m, <span class="dt">int</span> d) {
   <span class="dt">int</span> Y = y % <span class="dv">100</span>;
   <span class="dt">int</span> c = <span class="dt">int</span>(y/<span class="dv">100</span>);
-  <span class="dt">int</span> gamma = -<span class="dv">2</span> * c + <span class="dt">int</span>(c/<span class="dv">4</span>); <span class="co">// Gregorian (1582 &lt;= y)</span>
+  <span class="dt">int</span> gamma = <span class="dv">-2</span> * c + <span class="dt">int</span>(c/<span class="dv">4</span>); <span class="co">// Gregorian (1582 &lt;= y)</span>
   <span class="co">//int gamma = -c + 5; // Julian (4 &lt;= y &lt;= 1582)</span>
   <span class="dt">int</span> h = d + <span class="dt">int</span>(<span class="dv">26</span> * (m<span class="dv">+1</span>) / <span class="dv">10</span>)
     + Y + <span class="dt">int</span>(Y/<span class="dv">4</span>) + gamma;
