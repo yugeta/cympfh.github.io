@@ -14,7 +14,7 @@
 
 - [Dijkstra](src/graph.dij.cc.html)
     - [test](src/graph.dij.test.cc.html)
-    - [sample](src/graph.dij.use.cc.html)
+    - [sample](src/graph.dij.sample.cc.html)
 - [Warshall-Floyd](src/graph.wall.cc.html)
     - [sample](src/graph.wall.use.cc.html)
 
