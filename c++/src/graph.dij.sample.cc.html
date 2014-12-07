@@ -30,36 +30,30 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="ot">#include &lt;iostream&gt;</span>
 
 <span class="co">/*</span>
+<span class="co"> * グラフとその異なる2頂点が与えられる</span>
+<span class="co"> * 2頂点から共に同じ距離で辿れる頂点を求めよ</span>
+<span class="co"> </span>
 <span class="co"> ** input</span>
 <span class="co"> *</span>
-<span class="co"> *    G = (V, E)</span>
-<span class="co"> *    |V| = N ~ 1e3</span>
-<span class="co"> *    V = { 1, 2, .., N }</span>
-<span class="co"> *    |E| = m ~ 1e4</span>
-<span class="co"> *    distance of `e = (u, v)` in `E`: d(u, v)</span>
-
-<span class="co"> ** output</span>
+<span class="co"> * n m</span>
+<span class="co"> * s t</span>
+<span class="co"> * a[i] b[i] c[i]</span>
 <span class="co"> *</span>
-<span class="co"> *    `m` in `V`</span>
-<span class="co"> *    such that</span>
-<span class="co"> *</span>
-<span class="co"> *    sd(s, m) == sd(m, t)</span>
-<span class="co"> *</span>
-<span class="co"> *    where</span>
-<span class="co"> *</span>
-<span class="co"> *    `sd(u, v)` is the shortest distance from `u` to `v`</span>
-<span class="co"> *      where `u` in `V` and `v` in `V`</span>
-<span class="co"> *</span>
+<span class="co"> * n: 頂点数</span>
+<span class="co"> * m: 枝数</span>
+<span class="co"> * s, t : ノード ([1, n])</span>
+<span class="co"> * a[i], b[i], c[i]: 枝 ((a[i], b[i]) with cost c[i])</span>
 <span class="co"> </span>
 <span class="co"> ** sample</span>
 <span class="co"> *</span>
-<span class="co"> *    $ cat input</span>
+<span class="co"> * input</span>
 <span class="co"> *    3 3</span>
 <span class="co"> *    1 2</span>
 <span class="co"> *    1 3 3</span>
 <span class="co"> *    3 2 3</span>
 <span class="co"> *    1 2 1</span>
-<span class="co"> *    $ cat output</span>
+<span class="co"> *</span>
+<span class="co"> * output</span>
 <span class="co"> *    3</span>
 <span class="co"> *</span>
 <span class="co"> */</span>

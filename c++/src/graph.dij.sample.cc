@@ -2,36 +2,30 @@
 #include <iostream>
 
 /*
+ * グラフとその異なる2頂点が与えられる
+ * 2頂点から共に同じ距離で辿れる頂点を求めよ
+ 
  ** input
  *
- *    G = (V, E)
- *    |V| = N ~ 1e3
- *    V = { 1, 2, .., N }
- *    |E| = m ~ 1e4
- *    distance of `e = (u, v)` in `E`: d(u, v)
-
- ** output
+ * n m
+ * s t
+ * a[i] b[i] c[i]
  *
- *    `m` in `V`
- *    such that
- *
- *    sd(s, m) == sd(m, t)
- *
- *    where
- *
- *    `sd(u, v)` is the shortest distance from `u` to `v`
- *      where `u` in `V` and `v` in `V`
- *
+ * n: 頂点数
+ * m: 枝数
+ * s, t : ノード ([1, n])
+ * a[i], b[i], c[i]: 枝 ((a[i], b[i]) with cost c[i])
  
  ** sample
  *
- *    $ cat input
+ * input
  *    3 3
  *    1 2
  *    1 3 3
  *    3 2 3
  *    1 2 1
- *    $ cat output
+ *
+ * output
  *    3
  *
  */
