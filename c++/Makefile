@@ -8,6 +8,7 @@ main.html: main.md
 
 cpphtml:
 	for f in ./src/*.cc; do ./bin/cpp2html $$f; done
+	rm -f ./src/*.exe
 
 git:
 	cd ..; make git

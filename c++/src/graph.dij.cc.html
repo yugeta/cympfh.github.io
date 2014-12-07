@@ -26,24 +26,39 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">// ds[t] is the shortest distance from s to t</span>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/*</span>
+<span class="co"> * vector&lt;int&gt;</span>
+<span class="co"> * Dij(vector&lt;vector&lt;int&gt;&gt; neigh,</span>
+<span class="co"> *     vector&lt;vector&lt;int&gt;&gt; cost,</span>
+<span class="co"> *     int s)</span>
+<span class="co"> *</span>
+<span class="co"> * take:</span>
+<span class="co"> *    - neigh: neighbour list, neigh[u] = { v : (u, v) in E }</span>
+<span class="co"> *    - cost: cost table, cost[u][v] is the cost of (u, v)</span>
+<span class="co"> *    - s: start node</span>
+<span class="co"> *</span>
+<span class="co"> * return:</span>
+<span class="co"> *    - vector&lt;int&gt; d</span>
+<span class="co"> *    - d[t]: shortest distance from s to t</span>
+<span class="co"> */</span>
+
 vector&lt;<span class="dt">int</span>&gt;
-dij(<span class="dt">const</span> graph &amp;g, <span class="dt">int</span> s) {
-  vector&lt;<span class="dt">int</span>&gt; ds(g.n, INF);
-  ds[s] = <span class="dv">0</span>;
+Dij(vector&lt;vector&lt;<span class="dt">int</span>&gt; &gt;&amp;neigh, vector&lt;vector&lt;<span class="dt">int</span>&gt; &gt;&amp;cost, <span class="dt">int</span> s) {
+  <span class="dt">int</span> N = neigh.size();
+  vector&lt;<span class="dt">int</span>&gt; d(N, INF);
+  d[s] = <span class="dv">0</span>;
   queue&lt;<span class="dt">int</span>&gt; q;
   q.push(s);
   <span class="kw">while</span> (!q.empty()) {
     <span class="dt">int</span> u = q.front(); q.pop();
-    <span class="kw">for</span> (edge&amp;e: g.g[u]) {
-      <span class="dt">int</span> d = ds[u] + e.cost;
-      <span class="kw">if</span> (ds[e.to] &gt; d) {
-        ds[e.to] = d;
-        q.push(e.to);
+    <span class="kw">for</span> (<span class="dt">int</span> v : neigh[u]) {
+      <span class="kw">if</span> (d[v] &gt; d[u] + cost[u][v]) {
+        d[v] = d[u] + cost[u][v];
+        q.push(v);
       }
     }
   }
-  <span class="kw">return</span> ds;
+  <span class="kw">return</span> d;
 }</code></pre>
 </body>
 </html>
