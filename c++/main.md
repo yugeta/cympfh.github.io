@@ -13,6 +13,7 @@
 ## 最短路
 
 - [Dijkstra](src/graph.dij.cc.html)
+    - [test](src/graph.dij.test)
     - [sample](src/graph.dij.use.cc.html)
 - [Warshall-Floyd](src/graph.wall.cc.html)
     - [sample](src/graph.wall.use.cc.html)
