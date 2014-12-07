@@ -11,7 +11,7 @@ int prim() {
   int begin = 0;
   int total = 0;
 
-  bool *used = (bool*)calloc(N, sizeof(bool));
+  vector<bool> used(N, false);
   used[begin] = true;
 
   priority_queue<edge, vector<edge>, greater<edge>> q;

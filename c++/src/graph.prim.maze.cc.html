@@ -27,6 +27,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </head>
 <body>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;bits/stdc++.h&gt;</span>
+<span class="ot">#include &lt;ctime&gt;</span>
 <span class="kw">using</span> <span class="kw">namespace</span> std;
 
 <span class="co">/*</span>
@@ -79,7 +80,7 @@ vector&lt;edge&gt; d[MAXN];
   <span class="dt">int</span> begin = <span class="dv">0</span>;
   <span class="dt">int</span> total = <span class="dv">0</span>;
 
-  <span class="dt">bool</span> *used = (<span class="dt">bool</span>*)calloc(N, <span class="kw">sizeof</span>(<span class="dt">bool</span>));
+  vector&lt;<span class="dt">bool</span>&gt; used(N, <span class="kw">false</span>);
   used[begin] = <span class="kw">true</span>;
 
   priority_queue&lt;edge, vector&lt;edge&gt;, greater&lt;edge&gt;&gt; q;
@@ -98,6 +99,7 @@ vector&lt;edge&gt; d[MAXN];
 
 <span class="dt">int</span> main() {
 
+  srand(time(NULL));
   rep(i, N) rep(j, N) walk[i][j] = <span class="kw">false</span>;
 
   rep(i, H) rep(j, W) {

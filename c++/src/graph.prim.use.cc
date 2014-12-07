@@ -33,18 +33,17 @@ int prim() {
   int begin = 0;
   int total = 0;
 
-  bool *used = (bool*)calloc(N, sizeof(bool));
+  vector<bool> used(N, false);
   used[begin] = true;
 
   priority_queue<edge, vector<edge>, greater<edge>> q;
-  for (auto e: d[begin]) q.push(e);
+  for (auto&e: d[begin]) q.push(e);
   while (!q.empty()) {
     edge e = q.top(); q.pop();
     if (used[e.to]) continue;
-    // cerr << "(edge " << e.from << " " << e.to << " " << e.cost << ")" << endl;
     total += e.cost;
     used[e.to] = true;
-    for (auto f: d[e.to]) q.push(f);
+    for (auto&f: d[e.to]) q.push(f);
   }
   return total;
 }

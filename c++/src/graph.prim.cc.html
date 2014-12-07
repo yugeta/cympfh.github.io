@@ -39,7 +39,7 @@ vector&lt;edge&gt; d[MAXN];
   <span class="dt">int</span> begin = <span class="dv">0</span>;
   <span class="dt">int</span> total = <span class="dv">0</span>;
 
-  <span class="dt">bool</span> *used = (<span class="dt">bool</span>*)calloc(N, <span class="kw">sizeof</span>(<span class="dt">bool</span>));
+  vector&lt;<span class="dt">bool</span>&gt; used(N, <span class="kw">false</span>);
   used[begin] = <span class="kw">true</span>;
 
   priority_queue&lt;edge, vector&lt;edge&gt;, greater&lt;edge&gt;&gt; q;

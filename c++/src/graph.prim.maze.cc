@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <ctime>
 using namespace std;
 
 /*
@@ -51,7 +52,7 @@ int prim() {
   int begin = 0;
   int total = 0;
 
-  bool *used = (bool*)calloc(N, sizeof(bool));
+  vector<bool> used(N, false);
   used[begin] = true;
 
   priority_queue<edge, vector<edge>, greater<edge>> q;
@@ -70,6 +71,7 @@ int prim() {
 
 int main() {
 
+  srand(time(NULL));
   rep(i, N) rep(j, N) walk[i][j] = false;
 
   rep(i, H) rep(j, W) {

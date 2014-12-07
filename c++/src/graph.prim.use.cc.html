@@ -61,18 +61,17 @@ vector&lt;edge&gt; d[MAXN];
   <span class="dt">int</span> begin = <span class="dv">0</span>;
   <span class="dt">int</span> total = <span class="dv">0</span>;
 
-  <span class="dt">bool</span> *used = (<span class="dt">bool</span>*)calloc(N, <span class="kw">sizeof</span>(<span class="dt">bool</span>));
+  vector&lt;<span class="dt">bool</span>&gt; used(N, <span class="kw">false</span>);
   used[begin] = <span class="kw">true</span>;
 
   priority_queue&lt;edge, vector&lt;edge&gt;, greater&lt;edge&gt;&gt; q;
-  <span class="kw">for</span> (<span class="dt">auto</span> e: d[begin]) q.push(e);
+  <span class="kw">for</span> (<span class="dt">auto</span>&amp;e: d[begin]) q.push(e);
   <span class="kw">while</span> (!q.empty()) {
     edge e = q.top(); q.pop();
     <span class="kw">if</span> (used[e.to]) <span class="kw">continue</span>;
-    <span class="co">// cerr &lt;&lt; &quot;(edge &quot; &lt;&lt; e.from &lt;&lt; &quot; &quot; &lt;&lt; e.to &lt;&lt; &quot; &quot; &lt;&lt; e.cost &lt;&lt; &quot;)&quot; &lt;&lt; endl;</span>
     total += e.cost;
     used[e.to] = <span class="kw">true</span>;
-    <span class="kw">for</span> (<span class="dt">auto</span> f: d[e.to]) q.push(f);
+    <span class="kw">for</span> (<span class="dt">auto</span>&amp;f: d[e.to]) q.push(f);
   }
   <span class="kw">return</span> total;
 }
