@@ -38,7 +38,7 @@ kruskal() {
   <span class="dt">bool</span> used[N];
   rep(i, N) used[i] = <span class="kw">false</span>;
 
-  <span class="kw">auto</span> es = edges;
+  <span class="dt">auto</span> es = edges;
   <span class="kw">while</span> (!es.empty()) {
     edge e = es.top(); es.pop();
     <span class="kw">if</span> (used[e.from] &amp;&amp; used[e.to]) <span class="kw">continue</span>;

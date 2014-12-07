@@ -48,11 +48,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">double</span> FLOAT;
 <span class="kw">typedef</span> pair&lt;FLOAT, FLOAT&gt; P; <span class="co">// Point</span>
 <span class="kw">typedef</span> pair&lt;P, P&gt; L; <span class="co">// segment or line</span>
-<span class="dt">const</span> FLOAT PI = acos(<span class="dv">-1</span>);
+<span class="dt">const</span> FLOAT PI = acos(-<span class="dv">1</span>);
 
 <span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt;
 ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S,T&gt; p) {
-  os &lt;&lt; <span class="st">&#39;(&#39;</span> &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; <span class="st">&#39;)&#39;</span>;
+  os &lt;&lt; &#39;(&#39; &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; &#39;)&#39;;
   <span class="kw">return</span> os;
 }
 
@@ -108,7 +108,7 @@ FLOAT Euclidean(P&amp;a, P&amp;b) {
 
 <span class="dt">int</span> sign(FLOAT a) {
   <span class="kw">if</span> (eq(a, <span class="dv">0</span>)) <span class="kw">return</span> <span class="dv">0</span>;
-  <span class="kw">return</span> a &gt; <span class="dv">0</span> ? <span class="dv">1</span> : <span class="dv">-1</span>;
+  <span class="kw">return</span> a &gt; <span class="dv">0</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
 }
 
 <span class="kw">enum</span> CCW {
@@ -128,11 +128,11 @@ CCW ccw(L&amp;l, P&amp;p) {
   <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dir))) {
     <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dif))) {
       FLOAT k = cdr(dif) / cdr(dir);
-      <span class="kw">if</span> (k &gt; <span class="fl">1.</span><span class="dv">0</span>) <span class="kw">return</span> FRONT;
-      <span class="kw">if</span> (k &lt; <span class="fl">0.</span><span class="dv">0</span>) <span class="kw">return</span> BACK;
+      <span class="kw">if</span> (k &gt; <span class="fl">1.0</span>) <span class="kw">return</span> FRONT;
+      <span class="kw">if</span> (k &lt; <span class="fl">0.0</span>) <span class="kw">return</span> BACK;
       <span class="kw">return</span> ON;
     } <span class="kw">else</span> {
-      <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.</span><span class="dv">0</span>) {
+      <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.0</span>) {
         <span class="kw">return</span> LEFT;
       }
       <span class="kw">return</span> RIGHT;
@@ -141,11 +141,11 @@ CCW ccw(L&amp;l, P&amp;p) {
 
   FLOAT k = car(dif) / car(dir);
   <span class="kw">if</span> (eq(cdr(dir) * k, cdr(dif))) {
-    <span class="kw">if</span> (k &gt; <span class="fl">1.</span><span class="dv">0</span>) <span class="kw">return</span> FRONT;
-    <span class="kw">if</span> (k &lt; <span class="fl">0.</span><span class="dv">0</span>) <span class="kw">return</span> BACK;
+    <span class="kw">if</span> (k &gt; <span class="fl">1.0</span>) <span class="kw">return</span> FRONT;
+    <span class="kw">if</span> (k &lt; <span class="fl">0.0</span>) <span class="kw">return</span> BACK;
     <span class="kw">return</span> ON;
   } <span class="kw">else</span> {
-    <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.</span><span class="dv">0</span>) {
+    <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.0</span>) {
       <span class="kw">return</span> LEFT;
     }
     <span class="kw">return</span> RIGHT;
@@ -158,7 +158,7 @@ FLOAT magnitude(P&amp;a) {
 
 FLOAT arg(P&amp;a, P&amp;b) {
   FLOAT x = dot(a, b) / magnitude(a) / magnitude(b);
-  x = min&lt;FLOAT&gt;(<span class="dv">1</span>, max&lt;FLOAT&gt;(<span class="dv">-1</span>, x));
+  x = min&lt;FLOAT&gt;(<span class="dv">1</span>, max&lt;FLOAT&gt;(-<span class="dv">1</span>, x));
   <span class="kw">return</span> acos(x);
 }</code></pre>
 </body>
