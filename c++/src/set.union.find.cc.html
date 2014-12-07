@@ -32,7 +32,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <span class="kw">struct</span> UnionFind {
   vector&lt;<span class="dt">int</span>&gt; table;
-  UnionFind(<span class="dt">int</span> size) : table(size, -<span class="dv">1</span>) {}
+  UnionFind(<span class="dt">int</span> size) : table(size, <span class="dv">-1</span>) {}
   <span class="dt">int</span> find(<span class="dt">int</span> x) {
     <span class="kw">return</span> root(x);
   }

@@ -39,7 +39,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 }
 
 ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, <span class="dt">const</span> edge&amp; e) {
-  os&lt;&lt;<span class="st">&quot;(edge &quot;</span>&lt;&lt;e.from&lt;&lt;&#39; &#39;&lt;&lt;e.to&lt;&lt;&#39; &#39;&lt;&lt;e.cost&lt;&lt;&#39;)&#39;;
+  os&lt;&lt;<span class="st">&quot;(edge &quot;</span>&lt;&lt;e.from&lt;&lt;<span class="st">&#39; &#39;</span>&lt;&lt;e.to&lt;&lt;<span class="st">&#39; &#39;</span>&lt;&lt;e.cost&lt;&lt;<span class="st">&#39;)&#39;</span>;
   <span class="kw">return</span> os;
 }</code></pre>
 </body>

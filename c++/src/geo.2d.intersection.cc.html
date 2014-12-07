@@ -5,10 +5,11 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; }
+table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -26,27 +27,31 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#define N 1000</span>
-priority_queue&lt;edge,vector&lt;edge&gt;,greater&lt;edge&gt;&gt; edges;
-<span class="dt">void</span> add_edge(<span class="dt">int</span> u, <span class="dt">int</span> v, <span class="dt">int</span> c) {
-  edges.push(edge(u, v, c));
-}
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/*</span>
+<span class="co"> * 線分 [p1, p2] と、[p3, p4] との交差判定</span>
+<span class="co"> *</span>
+<span class="co"> * ちょうど乗ってる場合は、`false`にしちゃってるので註意</span>
+<span class="co"> */</span>
 
-<span class="dt">int</span>
-kruskal() {
-  <span class="dt">int</span> total = <span class="dv">0</span>;
-  <span class="dt">bool</span> used[N];
-  rep(i, N) used[i] = <span class="kw">false</span>;
+<span class="dt">bool</span> inter(P p1, P p2, P p3, P p4) {
 
-  <span class="kw">auto</span> es = edges;
-  <span class="kw">while</span> (!es.empty()) {
-    edge e = es.top(); es.pop();
-    <span class="kw">if</span> (used[e.from] &amp;&amp; used[e.to]) <span class="kw">continue</span>;
-    used[e.from] = used[e.to] = <span class="kw">true</span>;
-    <span class="co">// cerr &lt;&lt; e &lt;&lt; endl;</span>
-    total += e.cost;
-  }
-  <span class="kw">return</span> total;
+  P p12 = p1 - p2;
+  P p31 = p3 - p1;
+  P p41 = p4 - p1;
+  P p34 = p3 - p4;
+  P p23 = p2 - p3;
+
+  FLOAT f1 = car(p12) * cdr(p31) - cdr(p12) * car(p31);
+  FLOAT f2 = car(p12) * cdr(p41) - cdr(p12) * car(p41);
+
+  <span class="kw">if</span> (f1 * f2 &gt;= <span class="dv">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
+
+  FLOAT f3 = - car(p34) * cdr(p31) + cdr(p34) * car(p31);
+  FLOAT f4 = car(p34) * cdr(p23) - cdr(p34) * car(p23);
+
+  <span class="kw">if</span> (f3 * f4 &gt;= <span class="dv">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
+
+  <span class="kw">return</span> <span class="kw">true</span>;
 }</code></pre>
 </body>
 </html>
