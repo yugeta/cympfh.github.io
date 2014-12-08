@@ -1,5 +1,3 @@
-#ifndef stdc++
-
 #include <algorithm>
 #include <array>
 #include <bitset>
@@ -43,5 +41,3 @@
 #include <utility>
 #include <valarray>
 #include <vector>
-
-#endif

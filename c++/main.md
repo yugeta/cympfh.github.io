@@ -48,7 +48,7 @@
 - [平面テンプレート](src/geo.2d.cc.html)
     - [test](src/geo.2d.test.cc.html)
 - [線分交差判定](src/geo.2d.intersection.cc.html)
-- 三角形の面積
+- [三角形の面積](src/geo.2d.triangle.cc.html)
 - 多角形の内外判定
 - 凸包
 
