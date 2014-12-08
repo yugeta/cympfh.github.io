@@ -31,11 +31,15 @@
 - [Ford-Fulkerson](src/graph.maxflow.cc.html)
     - [sample](src/graph.maxflow.use.cc.html)
 
-## トポロジカルソート
+## [トポロジカルソート](src/graph.topological.cc.html)
 
-- [実装](src/graph.topological.cc.html)
-    - [Wikipedia:ja](http://ja.wikipedia.org/wiki/トポロジカルソート)
-    - [実装例](http://code-thanks-festival-2014-a-open.contest.atcoder.jp/submissions/294748)
+- [Wikipedia:ja](http://ja.wikipedia.org/wiki/トポロジカルソート)
+- [実装例](http://code-thanks-festival-2014-a-open.contest.atcoder.jp/submissions/294748)
+
+## [強連結成分分解](src/graph.scc.cc.html)
+
+- [Strongly connected component - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Strongly_connected_component)
+- [2-SATと強連結成分分解 - naoya_t@hatenablog](http://naoyat.hatenablog.jp/entry/2013/07/13/220034)
 
 # 幾何
 
