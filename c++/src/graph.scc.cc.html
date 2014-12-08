@@ -45,7 +45,6 @@ code > span.er { color: #ff0000; font-weight: bold; }
   }
 
   <span class="dt">void</span> rdfs(<span class="dt">int</span> v, <span class="dt">int</span> k) {
-    cerr &lt;&lt; <span class="st">&quot;rdfs &quot;</span> &lt;&lt; v &lt;&lt; <span class="st">&quot; &quot;</span> &lt;&lt; k &lt;&lt; endl;
     used[v] = <span class="kw">true</span>;
     cmp[v] = k;
     <span class="kw">for</span> (<span class="dt">int</span> u : arc_r[v]) {
@@ -72,7 +71,6 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
     <span class="dt">int</span> k = <span class="dv">0</span>;
     used = vector&lt;<span class="dt">bool</span>&gt;(N, <span class="kw">false</span>);
-    trace(vs);
     reverse(all(vs));
     <span class="kw">for</span> (<span class="dt">int</span> u : vs) <span class="kw">if</span> (!used[u]) rdfs(u, k++);
 

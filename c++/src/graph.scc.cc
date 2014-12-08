@@ -16,7 +16,6 @@ struct StronglyConnectedComponents {
   }
 
   void rdfs(int v, int k) {
-    cerr << "rdfs " << v << " " << k << endl;
     used[v] = true;
     cmp[v] = k;
     for (int u : arc_r[v]) {
@@ -43,7 +42,6 @@ struct StronglyConnectedComponents {
 
     int k = 0;
     used = vector<bool>(N, false);
-    trace(vs);
     reverse(all(vs));
     for (int u : vs) if (!used[u]) rdfs(u, k++);
 
