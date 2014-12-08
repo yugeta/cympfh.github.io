@@ -8,7 +8,6 @@ using namespace std;
 #define range(i,n,m) iota(i,(((n)>(m))?((n)-(m)+1):((m)-(n)+1)),(n),((n)>(m)?-1:1))
 #define rep(i,n) iota(i,(n),0,1)
 
-
 #define INF (1e9)
 #define EPS (1e-9)
 #define cons(a,b) (make_pair(a,b))
