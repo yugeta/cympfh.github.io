@@ -27,31 +27,38 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/*</span>
-<span class="co"> * 線分 [p1, p2] と、[p3, p4] との交差判定</span>
-<span class="co"> *</span>
-<span class="co"> * ちょうど乗ってる場合は、`false`にしちゃってるので註意</span>
-<span class="co"> */</span>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">struct</span> Topological {
+  <span class="dt">int</span> N;
+  vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt; rd; <span class="co">// 逆隣接リスト</span>
 
-<span class="dt">bool</span> inter(P p1, P p2, P p3, P p4) {
+  Topological(vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt;&amp;d) {
+    N = d.size();
+    rd.resize(N);
+    rep (u, N) {
+      <span class="kw">for</span> (<span class="dt">int</span> v : d[u]) {
+        rd[v].push_back(u);
+      }
+    }
+  }
 
-  P p12 = p1 - p2;
-  P p31 = p3 - p1;
-  P p41 = p4 - p1;
-  P p34 = p3 - p4;
-  P p23 = p2 - p3;
+  vector&lt;<span class="dt">int</span>&gt; L;
+  vector&lt;<span class="dt">bool</span>&gt; used;
 
-  FLOAT f1 = car(p12) * cdr(p31) - cdr(p12) * car(p31);
-  FLOAT f2 = car(p12) * cdr(p41) - cdr(p12) * car(p41);
+  vector&lt;<span class="dt">int</span>&gt; sort() {
+    L.resize(<span class="dv">0</span>);
+    used = vector&lt;<span class="dt">bool</span>&gt;(N, <span class="kw">false</span>);
+    rep (i, N) visit(i);
+    <span class="kw">return</span> L;
+  }
 
-  <span class="kw">if</span> (f1 * f2 &gt;= <span class="dv">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
-
-  FLOAT f3 = - car(p34) * cdr(p31) + cdr(p34) * car(p31);
-  FLOAT f4 = car(p34) * cdr(p23) - cdr(p34) * car(p23);
-
-  <span class="kw">if</span> (f3 * f4 &gt;= <span class="dv">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
-
-  <span class="kw">return</span> <span class="kw">true</span>;
-}</code></pre>
+  <span class="dt">void</span> visit(<span class="dt">int</span> u) {
+    <span class="kw">if</span> (used[u]) <span class="kw">return</span>;
+    used[u] = <span class="kw">true</span>;
+    <span class="kw">for</span> (<span class="dt">int</span> v : rd[u]) {
+      visit(v);
+    }
+    L.push_back(u);
+  }
+};</code></pre>
 </body>
 </html>

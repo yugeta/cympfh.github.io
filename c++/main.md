@@ -33,8 +33,9 @@
 
 ## トポロジカルソート
 
-- [Wikipedia:ja](http://ja.wikipedia.org/wiki/トポロジカルソート)
-- [実装例 (怪しい)](http://code-thanks-festival-2014-a-open.contest.atcoder.jp/submissions/294748)
+- [実装](src/graph.topological.cc.html)
+    - [Wikipedia:ja](http://ja.wikipedia.org/wiki/トポロジカルソート)
+    - [実装例](http://code-thanks-festival-2014-a-open.contest.atcoder.jp/submissions/294748)
 
 # 幾何
 
