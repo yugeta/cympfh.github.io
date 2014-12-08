@@ -38,8 +38,10 @@
 
 ## [強連結成分分解](src/graph.scc.cc.html)
 
-- [Strongly connected component - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Strongly_connected_component)
-- [2-SATと強連結成分分解 - naoya_t@hatenablog](http://naoyat.hatenablog.jp/entry/2013/07/13/220034)
+- [非閉路有向グラフへの変換](src/graph.scc.dag.cc.html)
+- 参考
+    - [Strongly connected component - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Strongly_connected_component)
+    - [2-SATと強連結成分分解 - naoya_t@hatenablog](http://naoyat.hatenablog.jp/entry/2013/07/13/220034)
 
 # 幾何
 

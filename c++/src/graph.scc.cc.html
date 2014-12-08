@@ -77,6 +77,22 @@ code > span.er { color: #ff0000; font-weight: bold; }
     K = k;
   }
 
+  <span class="co">/* K * K の隣接グラフ */</span>
+  vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt;
+  dag() {
+    vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt; d(K, vector&lt;<span class="dt">int</span>&gt;(K, <span class="dv">0</span>));
+
+    rep (u, N) {
+      <span class="dt">int</span> u2 = cmp[u];
+      <span class="kw">for</span> (<span class="dt">int</span> v : arc[u]) {
+        <span class="dt">int</span> v2 = cmp[v];
+        <span class="kw">if</span> (u2 != v2) d[cmp[u]][cmp[v]] = <span class="dv">1</span>;
+      }
+    }
+
+    <span class="kw">return</span> d;
+  }
+
 };</code></pre>
 </body>
 </html>

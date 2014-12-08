@@ -48,4 +48,20 @@ struct StronglyConnectedComponents {
     K = k;
   }
 
+  /* K * K の隣接グラフ */
+  vector<vector<int>>
+  dag() {
+    vector<vector<int>> d(K, vector<int>(K, 0));
+
+    rep (u, N) {
+      int u2 = cmp[u];
+      for (int v : arc[u]) {
+        int v2 = cmp[v];
+        if (u2 != v2) d[cmp[u]][cmp[v]] = 1;
+      }
+    }
+
+    return d;
+  }
+
 };
