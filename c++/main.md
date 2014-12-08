@@ -66,5 +66,6 @@
 
 - [bit count](src/bit.count.cc.html)
 - [ツェラーの公式](src/misc.zeller.cc.html)
+- [K-平均法](src/misc.kmeans.cc.html)
 
 # [テスト環境](memo/test.html)
