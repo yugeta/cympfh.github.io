@@ -12,13 +12,13 @@ bool inter(P p1, P p2, P p3, P p4) {
   P p34 = p3 - p4;
   P p23 = p2 - p3;
 
-  FLOAT f1 = car(p12) * cdr(p31) - cdr(p12) * car(p31);
-  FLOAT f2 = car(p12) * cdr(p41) - cdr(p12) * car(p41);
+  Real f1 = car(p12) * cdr(p31) - cdr(p12) * car(p31);
+  Real f2 = car(p12) * cdr(p41) - cdr(p12) * car(p41);
 
   if (f1 * f2 >= 0) return false;
 
-  FLOAT f3 = - car(p34) * cdr(p31) + cdr(p34) * car(p31);
-  FLOAT f4 = car(p34) * cdr(p23) - cdr(p34) * car(p23);
+  Real f3 = - car(p34) * cdr(p31) + cdr(p34) * car(p31);
+  Real f4 = car(p34) * cdr(p23) - cdr(p34) * car(p23);
 
   if (f3 * f4 >= 0) return false;
 

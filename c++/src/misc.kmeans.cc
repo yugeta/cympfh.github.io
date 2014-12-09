@@ -31,8 +31,8 @@ ostream& operator<<(ostream& os, vector<T> v) {
   return os;
 }
 
-typedef double FLOAT;
-typedef pair<FLOAT, FLOAT> P;
+typedef double Real;
+typedef pair<Real, Real> P;
 
 /*
  * k-means
@@ -53,7 +53,7 @@ P operator-(P&a, P&b) {
     return cons(car(a) - car(b), cdr(a) - cdr(b));
 }
 
-FLOAT Euclidean(P&a, P&b) {
+Real Euclidean(P&a, P&b) {
   P p = a - b;
   return sqrt(pow(car(p), 2) + pow(cdr(p), 2));
 }
@@ -74,9 +74,9 @@ kmeans(int cluster_N, vector<P>&ps, int iterator_N = 20) {
     // ps[j] と ms[n] の比較
     rep (j, len) {
       int id = -1;
-      FLOAT min_d = INF;
+      Real min_d = INF;
       rep (n, cluster_N) {
-        FLOAT d = Euclidean(ps[j], ms[n]);
+        Real d = Euclidean(ps[j], ms[n]);
         if (min_d > d) {
           min_d = d;
           id = n;
@@ -104,10 +104,10 @@ kmeans(int cluster_N, vector<P>&ps, int iterator_N = 20) {
 }
 
 const int M = 10;
-FLOAT gaussian_gen() {
+Real gaussian_gen() {
   const int mu = 10;
-  FLOAT x = 0;
-  rep (j, M) x += FLOAT((rand() % (mu * 2)) - mu);
+  Real x = 0;
+  rep (j, M) x += Real((rand() % (mu * 2)) - mu);
   x /= M;
   return x;
 }
@@ -123,8 +123,8 @@ int main() {
   const int N = 100;
   rep (i, N) {
     int klass = rand() % 3;
-    FLOAT x = gaussian_gen();
-    FLOAT y = gaussian_gen();
+    Real x = gaussian_gen();
+    Real y = gaussian_gen();
 
     // give klass by its mean
     switch (klass) {

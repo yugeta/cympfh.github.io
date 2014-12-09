@@ -5,11 +5,10 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -41,13 +40,13 @@ code > span.er { color: #ff0000; font-weight: bold; }
   P p34 = p3 - p4;
   P p23 = p2 - p3;
 
-  FLOAT f1 = car(p12) * cdr(p31) - cdr(p12) * car(p31);
-  FLOAT f2 = car(p12) * cdr(p41) - cdr(p12) * car(p41);
+  Real f1 = car(p12) * cdr(p31) - cdr(p12) * car(p31);
+  Real f2 = car(p12) * cdr(p41) - cdr(p12) * car(p41);
 
   <span class="kw">if</span> (f1 * f2 &gt;= <span class="dv">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
 
-  FLOAT f3 = - car(p34) * cdr(p31) + cdr(p34) * car(p31);
-  FLOAT f4 = car(p34) * cdr(p23) - cdr(p34) * car(p23);
+  Real f3 = - car(p34) * cdr(p31) + cdr(p34) * car(p31);
+  Real f4 = car(p34) * cdr(p23) - cdr(p34) * car(p23);
 
   <span class="kw">if</span> (f3 * f4 &gt;= <span class="dv">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
 

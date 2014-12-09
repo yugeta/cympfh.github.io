@@ -20,8 +20,8 @@ int main() {
   P c(0.999999999L, 1.999999999L);
   assert(a != c);
 
-  assert(eq(static_cast<FLOAT>(1.0),
-            static_cast<FLOAT>(1.0 + EPS/2.0)));
+  assert(eq(static_cast<Real>(1.0),
+            static_cast<Real>(1.0 + EPS/2.0)));
 
   P d(0.99999999999L, 1.99999999999L);
   assert(a == d);

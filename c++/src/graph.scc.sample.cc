@@ -59,7 +59,7 @@ using namespace std;
 #define trace(var) cerr<<">>> "<<#var<<" = "<<var<<endl;
 
 typedef long long INTEGER;
-typedef double FLOAT;
+typedef double Real;
 
 template<class S, class T>
 ostream& operator<<(ostream& os, pair<S,T> p) {

@@ -5,11 +5,10 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -60,8 +59,8 @@ ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt
   <span class="kw">return</span> os;
 }
 
-<span class="kw">typedef</span> <span class="dt">double</span> FLOAT;
-<span class="kw">typedef</span> pair&lt;FLOAT, FLOAT&gt; P;
+<span class="kw">typedef</span> <span class="dt">double</span> Real;
+<span class="kw">typedef</span> pair&lt;Real, Real&gt; P;
 
 <span class="co">/*</span>
 <span class="co"> * k-means</span>
@@ -82,7 +81,7 @@ P <span class="kw">operator</span>-(P&amp;a, P&amp;b) {
     <span class="kw">return</span> cons(car(a) - car(b), cdr(a) - cdr(b));
 }
 
-FLOAT Euclidean(P&amp;a, P&amp;b) {
+Real Euclidean(P&amp;a, P&amp;b) {
   P p = a - b;
   <span class="kw">return</span> sqrt(pow(car(p), <span class="dv">2</span>) + pow(cdr(p), <span class="dv">2</span>));
 }
@@ -103,9 +102,9 @@ kmeans(<span class="dt">int</span> cluster_N, vector&lt;P&gt;&amp;ps, <span clas
     <span class="co">// ps[j] と ms[n] の比較</span>
     rep (j, len) {
       <span class="dt">int</span> id = -<span class="dv">1</span>;
-      FLOAT min_d = INF;
+      Real min_d = INF;
       rep (n, cluster_N) {
-        FLOAT d = Euclidean(ps[j], ms[n]);
+        Real d = Euclidean(ps[j], ms[n]);
         <span class="kw">if</span> (min_d &gt; d) {
           min_d = d;
           id = n;
@@ -133,10 +132,10 @@ kmeans(<span class="dt">int</span> cluster_N, vector&lt;P&gt;&amp;ps, <span clas
 }
 
 <span class="dt">const</span> <span class="dt">int</span> M = <span class="dv">10</span>;
-FLOAT gaussian_gen() {
+Real gaussian_gen() {
   <span class="dt">const</span> <span class="dt">int</span> mu = <span class="dv">10</span>;
-  FLOAT x = <span class="dv">0</span>;
-  rep (j, M) x += FLOAT((rand() % (mu * <span class="dv">2</span>)) - mu);
+  Real x = <span class="dv">0</span>;
+  rep (j, M) x += Real((rand() % (mu * <span class="dv">2</span>)) - mu);
   x /= M;
   <span class="kw">return</span> x;
 }
@@ -152,8 +151,8 @@ FLOAT gaussian_gen() {
   <span class="dt">const</span> <span class="dt">int</span> N = <span class="dv">100</span>;
   rep (i, N) {
     <span class="dt">int</span> klass = rand() % <span class="dv">3</span>;
-    FLOAT x = gaussian_gen();
-    FLOAT y = gaussian_gen();
+    Real x = gaussian_gen();
+    Real y = gaussian_gen();
 
     <span class="co">// give klass by its mean</span>
     <span class="kw">switch</span> (klass) {
