@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>i3 (i3wm)</title>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="memo.css" type="text/css" />
+</head>
+<body>
+<div id="header">
+<h1 class="title">i3 (i3wm)</h1>
+</div>
+<h1 id="font">font</h1>
+<h2 id="config">config</h2>
+<p><code>.i3/config</code> に、</p>
+<pre><code>font pango:FontAwesome, aquafont, Mono, DejaVu Sans Mono 11</code></pre>
+<p>i3bar のみへの適用ならば、</p>
+<pre class="conf"><code>bar {
+  status_command $HOME/Dropbox/cympfh/i3status.js
+  font pango:FontAwesome, aquafont, Mono, DejaVu Sans Mono 11
+}</code></pre>
+<p>上の、FontAwesomeというフォントは、</p>
+<ul class="incremental">
+<li>http://fortawesome.github.io/Font-Awesome/</li>
+</ul>
+<p>から利用できる。 使える文字は、</p>
+<ul class="incremental">
+<li>http://fortawesome.github.io/Font-Awesome/cheatsheet/</li>
+</ul>
+<p>からコピペするのが良い。</p>
+<h2 id="debian-etc-へのフォントの追加">debian (etc) へのフォントの追加</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> ~/.fonts
+$ <span class="kw">cp</span> *.ttf ~/.fonts
+$ fc-cache -fv
+$ fc-list <span class="co"># check</span></code></pre>
+</body>
+</html>
