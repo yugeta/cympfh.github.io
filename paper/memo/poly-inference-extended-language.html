@@ -3,9 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -18,15 +16,83 @@
 <li>Kyushu Univ.</li>
 </ul>
 <h2 id="要旨">要旨</h2>
-<p>空の代入を許さない正規パターン言語</p>
+<p>消去可能世紀パターン言語の学習 (the class of extended regular pattern languages)</p>
 <p>パターン言語とは、 パターンの変数に空でない文字列を代入して得られる文字列全ての集合のこと。 正例から消去不能正規パターン言語の族を、 多項式時間で構築することを考える。</p>
 <p><code>MINL</code> とは、文字列の有限集合が与えられた時に、 最小の言語 (minimal language) を計算するアルゴリズムのことで、 これを用いる。</p>
-<h1 id="導入">導入</h1>
-<p>推論には、</p>
+<p>MINL が行う計算は明らかに、最長共通部分列と関連がある。 これについても議論する。</p>
+<h1 id="準備">準備</h1>
+<h2 id="lemma-1">Lemma 1</h2>
+<ol class="incremental" type="1">
+<li><p>2つのパターン<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>,</mo><mi>q</mi></mrow></math> が<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>≡</mo><mi>q</mi></mrow></math> ならば、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math></p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>≼</mo><mi>q</mi></mrow></math> ならば、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>⊆</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math></p></li>
+</ol>
+<p>逆は一般には成り立たない.</p>
+<ol class="incremental" start="3" type="1">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">∣</mo><mi>p</mi><mo stretchy="false">∣</mo><mo>=</mo><mo stretchy="false">∣</mo><mi>q</mi><mo stretchy="false">∣</mo></mrow></math> のとき、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>≼</mo><mi>q</mi><mo>⇔</mo><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>⊆</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math></li>
+</ol>
+<h1 id="正例からの推論-inference-from-positive-data">正例からの推論 (Inference from Positive Data)</h1>
+<h2 id="theorem-1">Theorem 1</h2>
+<p>言語族 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>ℒ</mo><mo>=</mo><msub><mi>L</mi><mn>1</mn></msub><mo>,</mo><msub><mi>L</mi><mn>2</mn></msub><mo>,</mo><mo>.</mo><mo>.</mo><mo>.</mo></mrow></math> が、次を満たすとき、これを正例から推論することが可能である。</p>
+<h3 id="condition">Condition</h3>
+<p>空でない文字列集合 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>S</mi></mrow></math> について、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">{</mo><mi>L</mi><mo>:</mo><mi>S</mi><mo>⊂</mo><mi>L</mi><mo>,</mo><mi>L</mi><mo>=</mo><msub><mi>L</mi><mi>i</mi></msub><mo stretchy="false">}</mo></mrow></math> が有限集合。</p>
+<h2 id="lemma-2">Lemma 2</h2>
+<p>消去不能正規パターン言語は、先の Condition を満たす。</p>
+<h1 id="消去可能正規パターン言語">消去可能正規パターン言語</h1>
+<h2 id="proposition-1">Proposition 1</h2>
+<ol class="incremental" type="1">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>≼</mo><mi>q</mi><mo>⇒</mo><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>⊆</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>≡</mo><mi>q</mi><mo>⇒</mo><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math></li>
+</ol>
+<h2 id="標準形-canonical-form">標準形 (canonical form)</h2>
+<p>パターン<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi></mrow></math>に就いて、次の命題から、それと等しいパターンが在る。</p>
+<p>消去可能において、連続した変数は意味がないので一つに簡約して、 また、変数名も意味がないので、左から順に <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><mo>.</mo><mo>.</mo><mo>.</mo><msub><mi>x</mi><mi>k</mi></msub></mrow></math> と命名したものを、標準形とよぶ。</p>
+<p>一般に、 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>w</mi><mn>0</mn></msub><msub><mi>v</mi><mn>1</mn></msub><msub><mi>w</mi><mn>1</mn></msub><mo>.</mo><mo>.</mo><mo>.</mo><msub><mi>w</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><msub><mi>v</mi><mi>n</mi></msub><msub><mi>w</mi><mi>n</mi></msub></mrow></math> と表せる。 ここで、</p>
 <ul class="incremental">
-<li>演繹 (deductive)</li>
-<li>帰納 (inductive)</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>w</mi><mn>0</mn></msub><mo>,</mo><msub><mi>w</mi><mi>n</mi></msub><mo>∈</mo><msup><mo>Σ</mo><mo>*</mo></msup></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>w</mi><mn>1</mn></msub><mo>.</mo><mo>.</mo><msub><mi>w</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>∈</mo><msup><mo>Σ</mo><mo>+</mo></msup></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>v</mi><mi>i</mi></msub><mo>∈</mo><mi>X</mi></mrow></math></li>
 </ul>
-<p>の二つがある。</p>
+<p>である。</p>
+<p>また、任意のパターンは唯一つの標準形を持つ。</p>
+<h3 id="lemma-4">Lemma 4</h3>
+<p>パターンの <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>Σ</mo></mrow></math> (constant) 部分だけ取り出す写像を <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>c</mi></mrow></math> とする (パターンを文字列に変換する)。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>=</mo><msub><mi>w</mi><mn>0</mn></msub><msub><mi>v</mi><mn>1</mn></msub><msub><mi>w</mi><mn>1</mn></msub><mo>.</mo><mo>.</mo><mo>.</mo><msub><mi>w</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><msub><mi>v</mi><mi>n</mi></msub><msub><mi>w</mi><mi>n</mi></msub></mrow></math> に対して、 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>c</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>w</mi><mn>0</mn></msub><msub><mi>w</mi><mn>1</mn></msub><mo>.</mo><mo>.</mo><mo>.</mo><msub><mi>w</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><msub><mi>w</mi><mi>n</mi></msub></mrow></math> である。</p>
+<p>明らかに、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">∣</mo><mi>p</mi><mo stretchy="false">∣</mo><mo>≤</mo><mn>2</mn><mo stretchy="false">∣</mo><mi>c</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo stretchy="false">∣</mo><mo>+</mo><mn>1</mn></mrow></math> が成立する。</p>
+<h2 id="theorem-6">Theorem 6</h2>
+<p>消去可能正規パターン言語は、 Theorem 1 の Condition を成立させて、 正例からの推論が可能。</p>
+<p>何故ならば、Lemma 4 より、文字列 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>w</mi></mrow></math> を生成させるパターン(の標準形)の長さは、 たかだか、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>2</mn><mo stretchy="false">∣</mo><mi>w</mi><mo stretchy="false">∣</mo><mo>+</mo><mn>1</mn></mrow></math> の長さを持ち、 そのようなパターンは有限であるから。</p>
+<h2 id="theorem-7">Theorem 7</h2>
+<p>パターン <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi></mrow></math>, 文字列 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>w</mi></mrow></math> に対して、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>w</mi><mo>∈</mo><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow></math> の判定は、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>O</mi><mo stretchy="false">(</mo><mo stretchy="false">∣</mo><mi>p</mi><mo stretchy="false">∣</mo><mo>+</mo><mo stretchy="false">∣</mo><mi>w</mi><mo stretchy="false">∣</mo><mo stretchy="false">)</mo></mrow></math> の時間で計算可能。 <a href="">Aho+, 1974 (The Design and Analysis of Computer Algorithms, Addison-Weley, Reading, Mass)</a></p>
+<h1 id="minl-caluculation-for-regular-pattern-languages">MINL Caluculation for Regular Pattern Languages</h1>
+<h2 id="部分列-subsequence">部分列 (subsequence)</h2>
+<ol class="incremental" type="1">
+<li><p>文字列 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>w</mi><mo>=</mo><msub><mi>a</mi><mn>1</mn></msub><mo>.</mo><mo>.</mo><mo>.</mo><msub><mi>a</mi><mi>k</mi></msub><mo stretchy="false">(</mo><msub><mi>a</mi><mi>i</mi></msub><mo>∈</mo><mo>Σ</mo><mo stretchy="false">)</mo></mrow></math> と、 文字列 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>s</mi><mo>∈</mo><msup><mo>Σ</mo><mo>*</mo></msup></mrow></math> について、 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>s</mi><mo>=</mo><msub><mi>a</mi><msub><mi>i</mi><mn>1</mn></msub></msub><mo>.</mo><mo>.</mo><mo>.</mo><msub><mi>a</mi><msub><mi>i</mi><mi>m</mi></msub></msub><mo stretchy="false">(</mo><mn>1</mn><mo>≤</mo><msub><mi>i</mi><mn>1</mn></msub><mo>≤</mo><mo>.</mo><mo>.</mo><mo>.</mo><mo>≤</mo><msub><mi>i</mi><mi>m</mi></msub><mo>≤</mo><mi>k</mi><mo stretchy="false">)</mo></mrow></math> とある時、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>s</mi></mrow></math>を<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>w</mi></mrow></math>の部分列と言って (或いは、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>w</mi></mrow></math>は<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>s</mi></mrow></math>の上位列と言って)、 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>s</mi><mo>≤</mo><mi>w</mi><mspace width="0.333em"></mspace><mspace width="0.333em"></mspace><mo stretchy="false">(</mo><mo>⇔</mo><mi>w</mi><mo>≥</mo><mi>s</mi><mo stretchy="false">)</mo></mrow></math> と表す。</p></li>
+<li><p>文字列集合<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>S</mi></mrow></math>の共通部分列集合 (the set of common subsequences) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>C</mi><mi>S</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo></mrow></math>とは、 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>C</mi><mi>S</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">{</mo><mi>s</mi><mo>∈</mo><msup><mo>Σ</mo><mo>*</mo></msup><mo>:</mo><mi>s</mi><mo>≤</mo><mi>w</mi><mo>,</mo><mo>∀</mo><mi>w</mi><mo>∈</mo><mi>S</mi><mo stretchy="false">}</mo></mrow></math></p></li>
+<li><p>極大共通部分列集合 (the set of maximal common subsequences) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>M</mi><mi>C</mi><mi>S</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo></mrow></math>とは、 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>M</mi><mi>C</mi><mi>S</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">{</mo><mi>s</mi><mo>∈</mo><mi>C</mi><mi>S</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>:</mo><mi>s</mi><mo>=</mo><mi>s</mi><mo>ʹ</mo><mo>∨</mo><mo>¬</mo><mo stretchy="false">(</mo><mi>s</mi><mo>≤</mo><mi>s</mi><mo>ʹ</mo><mo stretchy="false">)</mo><mo>,</mo><mo>∀</mo><mi>s</mi><mo>ʹ</mo><mo>∈</mo><mi>C</mi><mi>S</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo stretchy="false">}</mo></mrow></math></p></li>
+</ol>
+<blockquote>
+<p>文字列の <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>≤</mo></mrow></math> は全順序ではないことに註意。</p>
+</blockquote>
+<ol class="incremental" start="4" type="1">
+<li>最長共通部分列集合 (the set of the longest common subsequences) <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mi>C</mi><mi>S</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">{</mo><mi>s</mi><mo>∈</mo><mi>C</mi><mi>S</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>:</mo><mo stretchy="false">∣</mo><mi>s</mi><mo stretchy="false">∣</mo><mo>≥</mo><mo stretchy="false">∣</mo><mi>s</mi><mo>ʹ</mo><mo stretchy="false">∣</mo><mo>,</mo><mo>∀</mo><mi>s</mi><mo>ʹ</mo><mo>∈</mo><mi>C</mi><mi>S</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo stretchy="false">}</mo></mrow></math></li>
+</ol>
+<h2 id="proposition-2">Proposition 2</h2>
+<ol class="incremental" type="1">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>w</mi><mo>∈</mo><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>⇒</mo><mi>w</mi><mo>≥</mo><mi>c</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>⊆</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo><mo>⇒</mo><mi>c</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>≥</mo><mi>c</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo><mo>⇒</mo><mi>c</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><mi>c</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>S</mi><mo>⊆</mo><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>⇒</mo><mi>c</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>∈</mo><mi>C</mi><mi>S</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo></mrow></math></li>
+</ol>
+<h2 id="theorem-8">Theorem 8</h2>
+<p>アルファベット濃度が3以上の時、 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>⊆</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo><mo>⇒</mo><mi>p</mi><mo>≤</mo><mi>q</mi></mrow></math></p>
+<p>証明は略。 アルファベットが2以下の時の反例は、以下通り。</p>
+<h3 id="lemma-5">Lemma 5</h3>
+<ul class="incremental">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>Σ</mo><mo>=</mo><mo stretchy="false">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false">}</mo></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mn>0</mn><mn>1</mn><msub><mi>x</mi><mn>2</mn></msub><mn>0</mn><msub><mi>x</mi><mn>3</mn></msub></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>q</mi><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mn>0</mn><msub><mi>x</mi><mn>2</mn></msub><mn>1</mn><mn>0</mn><msub><mi>x</mi><mn>3</mn></msub></mrow></math></li>
+</ul>
+<p>これらに就いて、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math> であるが、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>¬</mo><mo stretchy="false">(</mo><mi>p</mi><mo>≤</mo><mi>q</mi><mo stretchy="false">)</mo><mo>∧</mo><mo>¬</mo><mo stretchy="false">(</mo><mi>p</mi><mo>≥</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math> である。</p>
+<p>アルファベットがそんなに少ない場合は珍しいので、 3以上の場合だけを考える。</p>
 </body>
 </html>
