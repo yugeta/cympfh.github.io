@@ -3,9 +3,9 @@
 - [C++ and STL reference](http://www.cppll.jp/cppreference/index.html)
 - [１次元幾何ライブラリ - not's memo - TopCoder部](http://topcoder.g.hatena.ne.jp/not522/20130401/1364781205)
 
-# [鋳型](src/template.cc.html)
+# [テンプレート](src/template.cc.html)
 
-- [要求の代替](src/include.cc.html)
+- [Mac用代替](src/include.cc.html)
 - [ループマクロについて](memo/loop.html)
 
 # [グラフ](src/graph.head.cc.html)
