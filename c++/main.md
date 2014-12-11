@@ -1,6 +1,6 @@
 # 参考
 
-- [C++ and STL reference](http://www.ccll.jp/cppreference/index.html)
+- [C++ and STL reference](http://www.cppll.jp/cppreference/index.html)
 - [１次元幾何ライブラリ - not's memo - TopCoder部](http://topcoder.g.hatena.ne.jp/not522/20130401/1364781205)
 
 # [鋳型](src/template.cc.html)
