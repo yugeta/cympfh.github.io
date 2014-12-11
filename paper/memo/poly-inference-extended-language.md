@@ -155,5 +155,8 @@ $$L(p) \subseteq L(q) \Rightarrow p \leq q$$
 アルファベットがそんなに少ない場合は珍しいので、
 3以上の場合だけを考える。
 
-[MINLの実装](https://gist.github.com/cympfh/dd3b151d9ff1585e68e7)
+# MINLの実装
+
+- [Scheme (Gauche)](https://gist.github.com/cympfh/dd3b151d9ff1585e68e7)
+- [C++11 (g++)](https://gist.github.com/d0dbc98052c0d51b2863)
 
