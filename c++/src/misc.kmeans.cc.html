@@ -30,6 +30,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="ot">#include &lt;stack&gt;</span>
 <span class="ot">#include &lt;cmath&gt;</span>
 <span class="ot">#include &lt;vector&gt;</span>
+<span class="ot">#include &lt;ctime&gt;</span>
 <span class="kw">using</span> <span class="kw">namespace</span> std;
 
 <span class="ot">#define iota(i,n,b,s) for(int i=int(b);i!=int((b)+(s)*(n));i+=(s))</span>
@@ -141,6 +142,7 @@ Real gaussian_gen() {
 }
 
 <span class="dt">int</span> main() {
+  srand(time(NULL));
 
   <span class="co">/*</span>
 <span class="co">   * Point ps[j] has class ts[j]</span>
@@ -176,8 +178,24 @@ Real gaussian_gen() {
   <span class="co">/*</span>
 <span class="co">   * IDは違うので、単純に比較はできない。</span>
 <span class="co">   */</span>
-  cerr &lt;&lt; ts &lt;&lt; endl;
-  cerr &lt;&lt; result &lt;&lt; endl;
+  <span class="dt">float</span> acc = <span class="dv">0</span>;
+  <span class="kw">for</span> (<span class="dt">int</span> id0 = <span class="dv">0</span>; id0 &lt; <span class="dv">3</span>; ++id0) {
+    <span class="kw">for</span> (<span class="dt">int</span> id1 = <span class="dv">0</span>; id1 &lt; <span class="dv">3</span>; ++id1) {
+      <span class="kw">if</span> (id0 == id1) <span class="kw">continue</span>;
+      <span class="kw">for</span> (<span class="dt">int</span> id2 = <span class="dv">0</span>; id2 &lt; <span class="dv">3</span>; ++id2) {
+        <span class="kw">if</span> (id0 == id2) <span class="kw">continue</span>;
+        <span class="kw">if</span> (id1 == id2) <span class="kw">continue</span>;
+        <span class="dt">int</span> n = <span class="dv">0</span>;
+        rep (i, N) {
+          <span class="kw">if</span> (ts[i] == <span class="dv">0</span> &amp;&amp; result[i] == id0) ++n;
+          <span class="kw">else</span> <span class="kw">if</span> (ts[i] == <span class="dv">1</span> &amp;&amp; result[i] == id1) ++n;
+          <span class="kw">else</span> <span class="kw">if</span> (ts[i] == <span class="dv">2</span> &amp;&amp; result[i] == id2) ++n;
+        }
+        acc = max&lt;<span class="dt">float</span>&gt;(acc, <span class="dt">float</span>(n) / <span class="dt">float</span>(N));
+      }
+    }
+  }
+  cerr &lt;&lt; <span class="st">&quot;Accuracy: &quot;</span> &lt;&lt; (acc * <span class="dv">100</span>) &lt;&lt; <span class="st">&quot;%&quot;</span> &lt;&lt; endl;
 
   <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>

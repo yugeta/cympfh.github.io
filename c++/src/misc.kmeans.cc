@@ -2,6 +2,7 @@
 #include <stack>
 #include <cmath>
 #include <vector>
+#include <ctime>
 using namespace std;
 
 #define iota(i,n,b,s) for(int i=int(b);i!=int((b)+(s)*(n));i+=(s))
@@ -113,6 +114,7 @@ Real gaussian_gen() {
 }
 
 int main() {
+  srand(time(NULL));
 
   /*
    * Point ps[j] has class ts[j]
@@ -148,8 +150,24 @@ int main() {
   /*
    * IDは違うので、単純に比較はできない。
    */
-  cerr << ts << endl;
-  cerr << result << endl;
+  float acc = 0;
+  for (int id0 = 0; id0 < 3; ++id0) {
+    for (int id1 = 0; id1 < 3; ++id1) {
+      if (id0 == id1) continue;
+      for (int id2 = 0; id2 < 3; ++id2) {
+        if (id0 == id2) continue;
+        if (id1 == id2) continue;
+        int n = 0;
+        rep (i, N) {
+          if (ts[i] == 0 && result[i] == id0) ++n;
+          else if (ts[i] == 1 && result[i] == id1) ++n;
+          else if (ts[i] == 2 && result[i] == id2) ++n;
+        }
+        acc = max<float>(acc, float(n) / float(N));
+      }
+    }
+  }
+  cerr << "Accuracy: " << (acc * 100) << "%" << endl;
 
   return 0;
 }
