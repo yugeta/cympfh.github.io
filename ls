@@ -1,4 +1,4 @@
-tools/
+tool/
 template/
 c++/
 memo/
