@@ -16,7 +16,7 @@ using namespace std;
 #define cddr(a) (cdr(cdr(a)))
 #define trace(var) cout<<">>> "<<#var<<" = "<<var<<endl;
 
-typedef long long INTEGER;
+typedef long long Integer;
 typedef long double Real;
 typedef pair<Real, Real> P; // Point
 typedef pair<P, P> L; // segment or line

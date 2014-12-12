@@ -58,7 +58,7 @@ using namespace std;
 #define all(a) a.begin(), a.end()
 #define trace(var) cerr<<">>> "<<#var<<" = "<<var<<endl;
 
-typedef long long INTEGER;
+typedef long long Integer;
 typedef double Real;
 
 template<class S, class T>
