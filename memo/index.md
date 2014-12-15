@@ -6,3 +6,4 @@ tools memo
 - [libsvm](libsvm.html)
 - [mplayer](mplayer.html)
 - [i3](i3.md)
+- [debian](debian.md)
