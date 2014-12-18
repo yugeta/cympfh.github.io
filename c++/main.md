@@ -62,6 +62,11 @@
 
 - [0-1 knapsack](src/dp.knapsack.01.cc.html)
 
+# [サイコロ](src/dice.cc.html)
+
+- [AOJ1181_Biased Dice](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1181)
+    - [src](https://gist.github.com/cympfh/6a1fbd8b8f2c9b292ee3)
+
 # misc
 
 - [bit count](src/bit.count.cc.html)
