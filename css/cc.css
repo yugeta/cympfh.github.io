@@ -31,16 +31,16 @@ hr.shorthr {
 }
 
 h1 {
-  background-color: #fffff0;
-  border-right: 10px solid #ffffc8;
-  border-bottom: 2px solid #ffffd0;
   font-size: 18px;
+  border-bottom: 1px black solid;
 }
 
 h2 {
   padding-left: 10px;
-  border-bottom: 1px #fff000 solid;
   font-size: 15px;
+  background-color: #fffff0;
+  border-right: 10px solid #fafa08;
+  border-bottom: 2px solid #fbfba0;
 }
 
 h1 > a {
