@@ -1,6 +1,8 @@
-int dice_line1[4] = {2,3,5,4};
-int dice_line2[4] = {1,4,6,3};
-int dice_line3[4] = {1,2,6,5};
+constexpr int dice_lines[][4] = {
+  {2,3,5,4},
+  {1,4,6,3},
+  {1,2,6,5}
+};
 
 enum Face {
   U, D, L, R, F, B
@@ -11,10 +13,10 @@ struct Dice {
     if (u > 3) {
       return 7 - get_right(7 - u, f);
     }
-    int *line;
-    if (u == 1) line = dice_line1;
-    if (u == 2) line = dice_line2;
-    if (u == 3) line = dice_line3;
+    const int *line;
+    if (u == 1) line = dice_lines[0];
+    if (u == 2) line = dice_lines[1];
+    if (u == 3) line = dice_lines[2];
     for (int i = 0; i < 4; ++i) {
       if (line[i] == f) return line[-~i % 4];
     }

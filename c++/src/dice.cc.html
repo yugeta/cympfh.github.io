@@ -27,9 +27,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span> dice_line1[<span class="dv">4</span>] = {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">4</span>};
-<span class="dt">int</span> dice_line2[<span class="dv">4</span>] = {<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">3</span>};
-<span class="dt">int</span> dice_line3[<span class="dv">4</span>] = {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">5</span>};
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">constexpr</span> <span class="dt">int</span> dice_lines[][<span class="dv">4</span>] = {
+  {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">4</span>},
+  {<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">3</span>},
+  {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">5</span>}
+};
 
 <span class="kw">enum</span> Face {
   U, D, L, R, F, B
@@ -40,10 +42,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
     <span class="kw">if</span> (u &gt; <span class="dv">3</span>) {
       <span class="kw">return</span> <span class="dv">7</span> - get_right(<span class="dv">7</span> - u, f);
     }
-    <span class="dt">int</span> *line;
-    <span class="kw">if</span> (u == <span class="dv">1</span>) line = dice_line1;
-    <span class="kw">if</span> (u == <span class="dv">2</span>) line = dice_line2;
-    <span class="kw">if</span> (u == <span class="dv">3</span>) line = dice_line3;
+    <span class="dt">const</span> <span class="dt">int</span> *line;
+    <span class="kw">if</span> (u == <span class="dv">1</span>) line = dice_lines[<span class="dv">0</span>];
+    <span class="kw">if</span> (u == <span class="dv">2</span>) line = dice_lines[<span class="dv">1</span>];
+    <span class="kw">if</span> (u == <span class="dv">3</span>) line = dice_lines[<span class="dv">2</span>];
     <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">4</span>; ++i) {
       <span class="kw">if</span> (line[i] == f) <span class="kw">return</span> line[-~i % <span class="dv">4</span>];
     }
