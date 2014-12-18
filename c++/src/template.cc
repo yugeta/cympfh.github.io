@@ -31,6 +31,9 @@ ostream& operator<<(ostream& os, vector<T> v) {
   return os;
 }
 
+int dx[] = { -1, 0, 1, 0 };
+int dy[] = {  0, -1, 0, 1 };
+
 int main() {
 
   int n, m;

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>正規パターン言語の帰納的学習</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">正規パターン言語の帰納的学習</h1>
+</header>
+<h2 id="参考">参考</h2>
+<ol class="incremental" type="1">
+<li><a href="http://download.springer.com/static/pdf/959/chp%3A10.1007%2F3-540-11980-9_19.pdf?auth66=1418886017_78227e06964f03a63867b1de96db7649&amp;ext=.pdf">Polynomial time inference of extended regular pattern languages (1991)</a></li>
+<li><a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.52.5331">Finding Minimal Generalizations for Unions of Pattern Languages and Its Application to Inductive Inference from Positive Data (1994)</a></li>
+<li><a href="http://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/1426-8.pdf">正規パターン言語の和と共通部分の帰納学習 (2005)</a></li>
+</ol>
+<h1 id="必要知識">必要知識</h1>
+<h2 id="パターンとは">パターンとは</h2>
+<ul class="incremental">
+<li>アルファベットの<code>大きさ 2 以上</code>の有限集合 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>Σ</mo><mo stretchy="false">(</mo><mo stretchy="false">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>.</mo><mo>.</mo><mo>.</mo><mo stretchy="false">}</mo><mo stretchy="false">)</mo></mrow></math></li>
+<li>変数の加算無限集合 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>X</mi><mo stretchy="false">(</mo><mo stretchy="false">{</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>,</mo><mi>z</mi><mo>,</mo><mo>.</mo><mo>.</mo><mo>.</mo><mo stretchy="false">}</mo><mo stretchy="false">)</mo></mrow></math></li>
+</ul>
+<p>によって構成されて、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mo>Σ</mo><mo>∪</mo><mi>X</mi><msup><mo stretchy="false">)</mo><mo>+</mo></msup></mrow></math> で表現される列のこと</p>
+<p>一つの変数が高々1回出現するものを、 <code>正規パターン</code> という。</p>
+<p>特別な場合のパターンとして、 長さ0の列のパターンを <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>λ</mi></mrow></math> と書く。 普通パターンと言うときにこれは含まない。</p>
+<p>同様に文字列とは、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mo>Σ</mo><mo>+</mo></msup></mrow></math> である。 特別な場合の文字列として、 空の文字列を <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>ε</mi></mrow></math> と書く。</p>
+<h2 id="汎化">汎化</h2>
+<p>パターンの変数にまたパターンを入れる準同型写像を代入という。</p>
+<h3 id="例">例</h3>
+<ul class="incremental">
+<li>パターン <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>=</mo><mn>0</mn><mi>x</mi><mi>y</mi></mrow></math></li>
+<li>代入 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>θ</mi><mo>=</mo><mo stretchy="false">{</mo><mi>x</mi><mo>:</mo><mo>=</mo><mi>c</mi><mi>c</mi><mo>,</mo><mi>y</mi><mo>:</mo><mo>=</mo><mi>x</mi><mn>2</mn><mi>y</mi><mo stretchy="false">}</mo></mrow></math></li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>q</mi><mo>=</mo><mi>p</mi><mi>θ</mi><mo>=</mo><mn>0</mn><mi>c</mi><mi>c</mi><mi>x</mi><mn>2</mn><mi>y</mi></mrow></math></p>
+<p>二つのパターン <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>,</mo><mi>q</mi></mrow></math> の間に次の関係があるとき、</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>∃</mo><mi>θ</mi><mo>.</mo><mspace width="0.333em"></mspace><mi>p</mi><mo>=</mo><mi>q</mi><mi>θ</mi></mrow></math></p>
+<p>この関係を</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>≼</mo><mi>q</mi></mrow></math></p>
+<p>と書いて、 「<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>q</mi></mrow></math>は<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi></mrow></math>の汎化である (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>q</mi></mrow></math> is a generalization of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi></mrow></math>)」という。</p>
+<p>この関係は半順序である。 そして、明らかに極大を持ち、 それは変数一つで表現されるパターンである。</p>
+<p>同値関係 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>≡</mo><mi>q</mi><mo>⇔</mo><mi>p</mi><mo>≼</mo><mi>q</mi><mo>∧</mo><mi>p</mi><mo>≽</mo><mi>q</mi></mrow></math> を定義すれば、 変数一つのパターンは同一視できて、最大元 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>⊤</mo></mrow></math> が定まる。</p>
+<h2 id="言語">言語</h2>
+<p>パターン <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi></mrow></math> に代入を複数回行って最終的に得られるような 文字列全体のことを、 パターン<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi></mrow></math>が表現するパターン言語といい、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow></math>と書いて表す。</p>
+<p>この代入において、 特別に <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>λ</mi></mrow></math> を許すものを、 <code>消去可能パターン言語</code> といい、 逆に許さないものを、 <code>消去不能パターン言語</code> という。</p>
+<p>また、パターンが正規パターンの場合、 <code>正規パターン言語</code> とか <code>消去可能正規パターン言語</code> のようにいう。</p>
+<h3 id="lemma">Lemma</h3>
+<ol class="incremental" type="1">
+<li><p>2つのパターン<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>,</mo><mi>q</mi></mrow></math> が<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>≡</mo><mi>q</mi></mrow></math> ならば、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math></p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>≼</mo><mi>q</mi></mrow></math> ならば、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>⊆</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math></p></li>
+</ol>
+<p>これの逆は一般には成り立たない。 成立するとき、その汎化は完全であるという (the generalization system is complete)。</p>
+<p>(消去可能正規パターン言語の逆が成立しないパターン、 結構難しいよ！ あとのLemmaで示す。 $= {0, 1})</p>
+<ol class="incremental" start="3" type="1">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">∣</mo><mi>p</mi><mo stretchy="false">∣</mo><mo>=</mo><mo stretchy="false">∣</mo><mi>q</mi><mo stretchy="false">∣</mo></mrow></math> のとき、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mo>≼</mo><mi>q</mi><mo>⇔</mo><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>⊆</mo><mi>L</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo></mrow></math></li>
+</ol>
+<p>これはたぶん嘘!</p>
+<h2 id="正例-正提示-からの帰納的推論">正例 (正提示) からの帰納的推論</h2>
+<p>Goldさんが言い出した概念</p>
+<h3 id="生例-正提示">生例 (正提示)</h3>
+<p>言語 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi></mrow></math> の要素である文字列の無限列のこと</p>
+<h3 id="推論アルゴリズム">推論アルゴリズム</h3>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi></mrow></math>の正提示 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>σ</mi></mrow></math>の初期断片 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>σ</mi><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo><mo>=</mo><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mspace width="0.333em"></mspace><mi>n</mi><mspace width="0.333em"></mspace><mi>σ</mi></mrow></math> を入力にして、 言語 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>G</mi><mi>n</mi></msub></mrow></math> を出力する。 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>n</mi><mo>→</mo><mo>∞</mo></mrow></math>について収束して、 それが、任意の正提示について、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>G</mi><mo>∞</mo></msub><mo>=</mo><mi>L</mi></mrow></math> のとき、このアルゴリズムは言語を極限同定する推論アルゴリズムであると言って、 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>L</mi></mrow></math>を、正例から推論可能であるという。</p>
+<h1 id="polynomial-time-inference-of-extended-regular-pattern-languages-1991">Polynomial time inference of extended regular pattern languages (1991)</h1>
+<p>一つ目の参考文献</p>
+</body>
+</html>
