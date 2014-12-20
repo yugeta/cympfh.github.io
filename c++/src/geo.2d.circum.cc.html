@@ -27,14 +27,27 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span> bit_count(<span class="dt">long</span> <span class="dt">long</span> x) {
-  x = (x &amp; <span class="bn">0x5555555555555555ll</span>) + (x &gt;&gt; <span class="dv">1</span> &amp; <span class="bn">0x5555555555555555ll</span>);
-  x = (x &amp; <span class="bn">0x3333333333333333ll</span>) + (x &gt;&gt; <span class="dv">2</span> &amp; <span class="bn">0x3333333333333333ll</span>);
-  x = (x &amp; <span class="bn">0x0f0f0f0f0f0f0f0fll</span>) + (x &gt;&gt; <span class="dv">4</span> &amp; <span class="bn">0x0f0f0f0f0f0f0f0fll</span>);
-  x = (x &amp; <span class="bn">0x00ff00ff00ff00ffll</span>) + (x &gt;&gt; <span class="dv">8</span> &amp; <span class="bn">0x00ff00ff00ff00ffll</span>);
-  x = (x &amp; <span class="bn">0x0000ffff0000ffffll</span>) + (x &gt;&gt;<span class="dv">16</span> &amp; <span class="bn">0x0000ffff0000ffffll</span>);
-  x = (x &amp; <span class="bn">0x00000000ffffffffll</span>) + (x &gt;&gt;<span class="dv">32</span> &amp; <span class="bn">0x00000000ffffffffll</span>);
-  <span class="kw">return</span> x;
-}</code></pre>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/* 外接円 */</span>
+<span class="kw">struct</span> Circumcenter {
+  P x; <span class="co">// 外心</span>
+  Real r; <span class="co">// 半径</span>
+  Circumcenter(P p0, P p1, P p2) {
+    Real a = Euclidean(p1, p2);
+    Real b = Euclidean(p2, p0);
+    Real c = Euclidean(p0, p1);
+    Real A = a * a;
+    Real B = b * b;
+    Real C = c * c;
+    
+    Real den = <span class="dv">2</span> * (A * B + B * C + C * A) - (A * A + B * B + C * C);
+    Real dec_a = A * (B + C - A);
+    Real dec_b = B * (C + A - B);
+    Real dec_c = C * (A + B - C);
+
+    x = (dec_a * p0 + dec_b * p1 + dec_c * p2) / den;
+
+    r = Euclidean(x, p0);
+  }
+};</code></pre>
 </body>
 </html>

@@ -49,11 +49,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">double</span> Real;
 <span class="kw">typedef</span> pair&lt;Real, Real&gt; P; <span class="co">// Point</span>
 <span class="kw">typedef</span> pair&lt;P, P&gt; L; <span class="co">// segment or line</span>
-<span class="dt">const</span> Real PI = acos(-<span class="dv">1</span>);
+<span class="dt">const</span> Real PI = acos(<span class="dv">-1</span>);
 
 <span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt;
 ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S,T&gt; p) {
-  os &lt;&lt; &#39;(&#39; &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; &#39;)&#39;;
+  os &lt;&lt; <span class="st">&#39;(&#39;</span> &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; <span class="st">&#39;)&#39;</span>;
   <span class="kw">return</span> os;
 }
 
@@ -66,35 +66,39 @@ Real <span class="kw">operator</span>*(P&amp;a, P&amp;b) {
 }
 
 <span class="co">/* scalar multiple */</span>
-P <span class="kw">operator</span>*(P&amp;a, Real c) {
+P <span class="kw">operator</span>*(P a, Real c) {
   <span class="kw">return</span> cons(c * car(a), c * cdr(a));
 }
-P <span class="kw">operator</span>*(Real c, P&amp;a) {
+P <span class="kw">operator</span>*(Real c, P a) {
   <span class="kw">return</span> cons(c * car(a), c * cdr(a));
 }
 
-Real det(P&amp;a, P&amp;b) {
+P <span class="kw">operator</span>/(P a, Real d) {
+  <span class="kw">return</span> cons(car(a) / d, cdr(a) / d);
+}
+
+Real det(P a, P b) {
   <span class="kw">return</span> car(a) * cdr(b) - cdr(a) * car(b);
 }
 
 <span class="co">/* vector operator */</span>
-P <span class="kw">operator</span>+(P&amp;a, P&amp;b) {
+P <span class="kw">operator</span>+(P a, P b) {
   <span class="kw">return</span> cons(car(a) + car(b), cdr(a) + cdr(b));
 }
 
-P <span class="kw">operator</span>-(P&amp;a) {
+P <span class="kw">operator</span>-(P a) {
   <span class="kw">return</span> cons(-car(a), -cdr(a));
 }
 
-P <span class="kw">operator</span>-(P&amp;a, P&amp;b) {
+P <span class="kw">operator</span>-(P a, P b) {
   <span class="kw">return</span> cons(car(a) - car(b), cdr(a) - cdr(b));
 }
 
 <span class="co">/* distance */</span>
-Real Manhattan(P&amp;a, P&amp;b) {
+Real Manhattan(P a, P b) {
   <span class="kw">return</span> abs(car(a) - car(b)) + abs(cdr(a) - cdr(b));
 }
-Real Euclidean(P&amp;a, P&amp;b) {
+Real Euclidean(P a, P b) {
   P p = a - b;
   <span class="kw">return</span> sqrt(pow(car(p), <span class="dv">2</span>) + pow(cdr(p), <span class="dv">2</span>));
 }
@@ -103,13 +107,13 @@ Real Euclidean(P&amp;a, P&amp;b) {
 <span class="dt">bool</span> eq(Real x, Real y) {
   <span class="kw">return</span> abs(x - y) &lt; EPS;
 }
-<span class="dt">bool</span> <span class="kw">operator</span>==(P&amp;a, P&amp;b) {
+<span class="dt">bool</span> <span class="kw">operator</span>==(P a, P b) {
   <span class="kw">return</span> eq(car(a), car(b)) &amp;&amp; eq(cdr(a), cdr(b));
 }
 
 <span class="dt">int</span> sign(Real a) {
   <span class="kw">if</span> (eq(a, <span class="dv">0</span>)) <span class="kw">return</span> <span class="dv">0</span>;
-  <span class="kw">return</span> a &gt; <span class="dv">0</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
+  <span class="kw">return</span> a &gt; <span class="dv">0</span> ? <span class="dv">1</span> : <span class="dv">-1</span>;
 }
 
 <span class="kw">enum</span> CCW {
@@ -129,11 +133,11 @@ CCW ccw(L&amp;l, P&amp;p) {
   <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dir))) {
     <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dif))) {
       Real k = cdr(dif) / cdr(dir);
-      <span class="kw">if</span> (k &gt; <span class="fl">1.0</span>) <span class="kw">return</span> FRONT;
-      <span class="kw">if</span> (k &lt; <span class="fl">0.0</span>) <span class="kw">return</span> BACK;
+      <span class="kw">if</span> (k &gt; <span class="fl">1.</span><span class="dv">0</span>) <span class="kw">return</span> FRONT;
+      <span class="kw">if</span> (k &lt; <span class="fl">0.</span><span class="dv">0</span>) <span class="kw">return</span> BACK;
       <span class="kw">return</span> ON;
     } <span class="kw">else</span> {
-      <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.0</span>) {
+      <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.</span><span class="dv">0</span>) {
         <span class="kw">return</span> LEFT;
       }
       <span class="kw">return</span> RIGHT;
@@ -142,11 +146,11 @@ CCW ccw(L&amp;l, P&amp;p) {
 
   Real k = car(dif) / car(dir);
   <span class="kw">if</span> (eq(cdr(dir) * k, cdr(dif))) {
-    <span class="kw">if</span> (k &gt; <span class="fl">1.0</span>) <span class="kw">return</span> FRONT;
-    <span class="kw">if</span> (k &lt; <span class="fl">0.0</span>) <span class="kw">return</span> BACK;
+    <span class="kw">if</span> (k &gt; <span class="fl">1.</span><span class="dv">0</span>) <span class="kw">return</span> FRONT;
+    <span class="kw">if</span> (k &lt; <span class="fl">0.</span><span class="dv">0</span>) <span class="kw">return</span> BACK;
     <span class="kw">return</span> ON;
   } <span class="kw">else</span> {
-    <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.0</span>) {
+    <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.</span><span class="dv">0</span>) {
       <span class="kw">return</span> LEFT;
     }
     <span class="kw">return</span> RIGHT;
@@ -159,7 +163,7 @@ Real magnitude(P&amp;a) {
 
 Real arg(P&amp;a, P&amp;b) {
   Real x = dot(a, b) / magnitude(a) / magnitude(b);
-  x = min&lt;Real&gt;(<span class="dv">1</span>, max&lt;Real&gt;(-<span class="dv">1</span>, x));
+  x = min&lt;Real&gt;(<span class="dv">1</span>, max&lt;Real&gt;(<span class="dv">-1</span>, x));
   <span class="kw">return</span> acos(x);
 }</code></pre>
 </body>

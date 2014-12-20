@@ -37,35 +37,39 @@ Real operator*(P&a, P&b) {
 }
 
 /* scalar multiple */
-P operator*(P&a, Real c) {
+P operator*(P a, Real c) {
   return cons(c * car(a), c * cdr(a));
 }
-P operator*(Real c, P&a) {
+P operator*(Real c, P a) {
   return cons(c * car(a), c * cdr(a));
 }
 
-Real det(P&a, P&b) {
+P operator/(P a, Real d) {
+  return cons(car(a) / d, cdr(a) / d);
+}
+
+Real det(P a, P b) {
   return car(a) * cdr(b) - cdr(a) * car(b);
 }
 
 /* vector operator */
-P operator+(P&a, P&b) {
+P operator+(P a, P b) {
   return cons(car(a) + car(b), cdr(a) + cdr(b));
 }
 
-P operator-(P&a) {
+P operator-(P a) {
   return cons(-car(a), -cdr(a));
 }
 
-P operator-(P&a, P&b) {
+P operator-(P a, P b) {
   return cons(car(a) - car(b), cdr(a) - cdr(b));
 }
 
 /* distance */
-Real Manhattan(P&a, P&b) {
+Real Manhattan(P a, P b) {
   return abs(car(a) - car(b)) + abs(cdr(a) - cdr(b));
 }
-Real Euclidean(P&a, P&b) {
+Real Euclidean(P a, P b) {
   P p = a - b;
   return sqrt(pow(car(p), 2) + pow(cdr(p), 2));
 }
@@ -74,7 +78,7 @@ Real Euclidean(P&a, P&b) {
 bool eq(Real x, Real y) {
   return abs(x - y) < EPS;
 }
-bool operator==(P&a, P&b) {
+bool operator==(P a, P b) {
   return eq(car(a), car(b)) && eq(cdr(a), cdr(b));
 }
 
