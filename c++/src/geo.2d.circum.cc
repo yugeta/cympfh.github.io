@@ -1,3 +1,8 @@
+/*
+ * 三角形 (平面上の三点) から外接円の中心と半径をやる
+ * http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0010
+ */
+
 /* 外接円 */
 struct Circumcenter {
   P x; // 外心
