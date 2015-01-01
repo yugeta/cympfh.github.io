@@ -43,6 +43,13 @@
     - [Strongly connected component - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Strongly_connected_component)
     - [2-SATと強連結成分分解 - naoya_t@hatenablog](http://naoyat.hatenablog.jp/entry/2013/07/13/220034)
 
+# [行列](memo/matrix.html)
+
+## 行列式
+
+- [定義](src/mat.det.naiiv.cc.html)
+- [Camelの方法](src/mat.det.camel.cc.html)
+
 # 幾何
 
 - [平面テンプレート](src/geo.2d.cc.html)
