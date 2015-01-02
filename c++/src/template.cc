@@ -21,6 +21,7 @@ typedef double Real;
 typedef vector<int> vi;
 typedef vector<string> vs;
 typedef map<string,int> Dictionary;
+const Real PI = acos(-1);
 
 template<class S, class T>
 ostream& operator<<(ostream& os, pair<S,T> p) {
