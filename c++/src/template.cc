@@ -2,8 +2,9 @@
 using namespace std;
 
 #define iota(i,n,b,s) for(int i=int(b);i!=int((b)+(s)*(n));i+=(s))
-#define range(i,n,m) iota(i,(((n)>(m))?((n)-(m)+1):((m)-(n)+1)),(n),((n)>(m)?-1:1))
+#define range(i,n,m) iota(i,(((n)>(m))?((n)-(m)):((m)-(n))),(n),((n)>(m)?-1:1))
 #define rep(i,n) iota(i,(n),0,1)
+#define loop for(;;)
 
 #define INF (1e9)
 #define EPS (1e-9)

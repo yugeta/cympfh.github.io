@@ -31,8 +31,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">using</span> <span class="kw">namespace</span> std;
 
 <span class="ot">#define iota(i,n,b,s) for(int i=int(b);i!=int((b)+(s)*(n));i+=(s))</span>
-<span class="ot">#define range(i,n,m) iota(i,(((n)&gt;(m))?((n)-(m)+1):((m)-(n)+1)),(n),((n)&gt;(m)?-1:1))</span>
+<span class="ot">#define range(i,n,m) iota(i,(((n)&gt;(m))?((n)-(m)):((m)-(n))),(n),((n)&gt;(m)?-1:1))</span>
 <span class="ot">#define rep(i,n) iota(i,(n),0,1)</span>
+<span class="ot">#define loop for(;;)</span>
 
 <span class="ot">#define INF (1e9)</span>
 <span class="ot">#define EPS (1e-9)</span>
