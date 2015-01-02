@@ -55,10 +55,19 @@
 - [平面テンプレート](src/geo.2d.cc.html)
     - [test](src/geo.2d.test.cc.html)
 - [線分交差判定](src/geo.2d.intersection.cc.html)
+
+## 多角形
+
 - [三角形の面積](src/geo.2d.triangle.cc.html)
 - [三角形の外接円](src/geo.2d.circum.cc.html)
 - 多角形の内外判定
 - 凸包
+
+## 円
+
+- [Circles Intersection | Aizu Online Judge](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0023)
+    - [solve](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=1177149#1)
+    - TODO: ちゃんと書く
 
 # 集合
 
