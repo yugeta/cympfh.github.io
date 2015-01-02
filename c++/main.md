@@ -70,6 +70,10 @@
 
 - [0-1 knapsack](src/dp.knapsack.01.cc.html)
 
+# 素数
+
+- [エラトステネスの篩](src/prime.sieve.cc.html)
+
 # [サイコロ](src/dice.cc.html)
 
 - [AOJ1181_Biased Dice](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1181)
