@@ -18,6 +18,9 @@ using namespace std;
 
 typedef long long Integer;
 typedef double Real;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef map<string,int> Dictionary;
 
 template<class S, class T>
 ostream& operator<<(ostream& os, pair<S,T> p) {
