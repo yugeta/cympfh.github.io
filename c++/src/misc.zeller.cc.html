@@ -33,27 +33,30 @@ code > span.er { color: #ff0000; font-weight: bold; }
   Mon, Tue, Wed, Thu, Fri
 };
 
-Day
-zeller(<span class="dt">int</span> y, <span class="dt">int</span> m, <span class="dt">int</span> d) {
+Day zeller(<span class="dt">int</span> y, <span class="dt">int</span> m, <span class="dt">int</span> d) {
+  <span class="kw">if</span> (m == <span class="dv">1</span> || m == <span class="dv">2</span>) {
+    --y; m += <span class="dv">12</span>;
+  }
   <span class="dt">int</span> Y = y % <span class="dv">100</span>;
-  <span class="dt">int</span> c = <span class="dt">int</span>(y/<span class="dv">100</span>);
-  <span class="dt">int</span> gamma = <span class="dv">-2</span> * c + <span class="dt">int</span>(c/<span class="dv">4</span>); <span class="co">// Gregorian (1582 &lt;= y)</span>
-  <span class="co">//int gamma = -c + 5; // Julian (4 &lt;= y &lt;= 1582)</span>
+  <span class="dt">int</span> c = y / <span class="dv">100</span>;
+  <span class="dt">int</span> gamma = <span class="dv">5</span> * c + c / <span class="dv">4</span>; <span class="co">// Gregorian (1582 &lt;= y)</span>
+  <span class="co">//int gamma = 6 * c + 5; // Julian (4 &lt;= y &lt;= 1582)</span>
   <span class="dt">int</span> h = d + <span class="dt">int</span>(<span class="dv">26</span> * (m<span class="dv">+1</span>) / <span class="dv">10</span>)
-    + Y + <span class="dt">int</span>(Y/<span class="dv">4</span>) + gamma;
+    + Y + Y / <span class="dv">4</span> + gamma;
   h %= <span class="dv">7</span>;
   <span class="kw">return</span> Day(h);
 }
 
 string show_day (Day a) {
   <span class="kw">switch</span> (a) {
-    <span class="kw">case</span> Mon: <span class="kw">return</span> <span class="st">&quot;Monday&quot;</span>; <span class="kw">break</span>;
-    <span class="kw">case</span> Tue: <span class="kw">return</span> <span class="st">&quot;Tuesday&quot;</span>; <span class="kw">break</span>;
-    <span class="kw">case</span> Wed: <span class="kw">return</span> <span class="st">&quot;Wednesday&quot;</span>; <span class="kw">break</span>;
-    <span class="kw">case</span> Thu: <span class="kw">return</span> <span class="st">&quot;Thursday&quot;</span>; <span class="kw">break</span>;
-    <span class="kw">case</span> Fri: <span class="kw">return</span> <span class="st">&quot;Friday&quot;</span>; <span class="kw">break</span>;
-    <span class="kw">case</span> Sat: <span class="kw">return</span> <span class="st">&quot;Saturday&quot;</span>; <span class="kw">break</span>;
-    <span class="kw">case</span> Sun: <span class="kw">return</span> <span class="st">&quot;Sunday&quot;</span>; <span class="kw">break</span>;
+    <span class="kw">case</span> Mon: <span class="kw">return</span> <span class="st">&quot;Monday&quot;</span>;
+    <span class="kw">case</span> Tue: <span class="kw">return</span> <span class="st">&quot;Tuesday&quot;</span>;
+    <span class="kw">case</span> Wed: <span class="kw">return</span> <span class="st">&quot;Wednesday&quot;</span>;
+    <span class="kw">case</span> Thu: <span class="kw">return</span> <span class="st">&quot;Thursday&quot;</span>;
+    <span class="kw">case</span> Fri: <span class="kw">return</span> <span class="st">&quot;Friday&quot;</span>;
+    <span class="kw">case</span> Sat: <span class="kw">return</span> <span class="st">&quot;Saturday&quot;</span>;
+    <span class="kw">case</span> Sun: <span class="kw">return</span> <span class="st">&quot;Sunday&quot;</span>;
+    <span class="kw">default</span>: <span class="kw">return</span> <span class="st">&quot;Holiday&quot;</span>;
   }
 }
 
