@@ -16,6 +16,18 @@ zeller(int y, int m, int d) {
   return Day(h);
 }
 
+string show_day (Day a) {
+  switch (a) {
+    case Mon: return "Monday"; break;
+    case Tue: return "Tuesday"; break;
+    case Wed: return "Wednesday"; break;
+    case Thu: return "Thursday"; break;
+    case Fri: return "Friday"; break;
+    case Sat: return "Saturday"; break;
+    case Sun: return "Sunday"; break;
+  }
+}
+
 int main() {
   cout << (Fri == zeller(2014, 11,28)) << endl;
   cout << (Tue == zeller(1990, 11, 6)) << endl;

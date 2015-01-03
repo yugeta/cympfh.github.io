@@ -45,6 +45,18 @@ zeller(<span class="dt">int</span> y, <span class="dt">int</span> m, <span class
   <span class="kw">return</span> Day(h);
 }
 
+string show_day (Day a) {
+  <span class="kw">switch</span> (a) {
+    <span class="kw">case</span> Mon: <span class="kw">return</span> <span class="st">&quot;Monday&quot;</span>; <span class="kw">break</span>;
+    <span class="kw">case</span> Tue: <span class="kw">return</span> <span class="st">&quot;Tuesday&quot;</span>; <span class="kw">break</span>;
+    <span class="kw">case</span> Wed: <span class="kw">return</span> <span class="st">&quot;Wednesday&quot;</span>; <span class="kw">break</span>;
+    <span class="kw">case</span> Thu: <span class="kw">return</span> <span class="st">&quot;Thursday&quot;</span>; <span class="kw">break</span>;
+    <span class="kw">case</span> Fri: <span class="kw">return</span> <span class="st">&quot;Friday&quot;</span>; <span class="kw">break</span>;
+    <span class="kw">case</span> Sat: <span class="kw">return</span> <span class="st">&quot;Saturday&quot;</span>; <span class="kw">break</span>;
+    <span class="kw">case</span> Sun: <span class="kw">return</span> <span class="st">&quot;Sunday&quot;</span>; <span class="kw">break</span>;
+  }
+}
+
 <span class="dt">int</span> main() {
   cout &lt;&lt; (Fri == zeller(<span class="dv">2014</span>, <span class="dv">11</span>,<span class="dv">28</span>)) &lt;&lt; endl;
   cout &lt;&lt; (Tue == zeller(<span class="dv">1990</span>, <span class="dv">11</span>, <span class="dv">6</span>)) &lt;&lt; endl;
