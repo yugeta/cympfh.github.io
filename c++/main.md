@@ -88,10 +88,14 @@
 - [AOJ1181_Biased Dice](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1181)
     - [src](https://gist.github.com/cympfh/6a1fbd8b8f2c9b292ee3)
 
+# 暦
+
+- [ツェラーの公式](src/misc.zeller.cc.html)
+    - [What day is today? | Aizu Online Judge](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0027)
+
 # misc
 
 - [bit count](src/bit.count.cc.html)
-- [ツェラーの公式](src/misc.zeller.cc.html)
 - [K-平均法](src/misc.kmeans.cc.html)
 
 # [テスト環境](memo/test.html)
