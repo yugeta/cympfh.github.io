@@ -5,11 +5,10 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -52,22 +51,22 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">typedef</span> map&lt;string,<span class="dt">int</span>&gt; Dictionary;
 <span class="kw">typedef</span> pair&lt;Real, Real&gt; P; <span class="co">// Point</span>
 <span class="kw">typedef</span> pair&lt;P, P&gt; L; <span class="co">// segment or line</span>
-<span class="dt">const</span> Real PI = acos(<span class="dv">-1</span>);
+<span class="dt">const</span> Real PI = acos(-<span class="dv">1</span>);
 
 <span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt;
 ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S,T&gt; p) {
-  os &lt;&lt; <span class="st">&#39;(&#39;</span> &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; <span class="st">&#39;)&#39;</span>;
+  os &lt;&lt; &#39;(&#39; &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; &#39;)&#39;;
   <span class="kw">return</span> os;
 }
 <span class="kw">template</span>&lt;<span class="kw">class</span> T&gt;
 ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt;T&gt; v) {
   os &lt;&lt; v[<span class="dv">0</span>];
-  <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">1</span>, len=v.size(); i&lt;len; ++i) os &lt;&lt; <span class="st">&#39; &#39;</span> &lt;&lt; v[i];
+  <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">1</span>, len=v.size(); i&lt;len; ++i) os &lt;&lt; &#39; &#39; &lt;&lt; v[i];
   <span class="kw">return</span> os;
 }
 
-<span class="dt">int</span> dx[] = { <span class="dv">-1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span> };
-<span class="dt">int</span> dy[] = {  <span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">0</span>, <span class="dv">1</span> };
+<span class="dt">int</span> dx[] = { -<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span> };
+<span class="dt">int</span> dy[] = {  <span class="dv">0</span>, -<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span> };
 
 <span class="co">/* inner dot */</span>
 Real dot(P&amp;a, P&amp;b) {
@@ -125,7 +124,7 @@ Real Euclidean(P a, P b) {
 
 <span class="dt">int</span> sign(Real a) {
   <span class="kw">if</span> (eq(a, <span class="dv">0</span>)) <span class="kw">return</span> <span class="dv">0</span>;
-  <span class="kw">return</span> a &gt; <span class="dv">0</span> ? <span class="dv">1</span> : <span class="dv">-1</span>;
+  <span class="kw">return</span> a &gt; <span class="dv">0</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
 }
 
 <span class="kw">enum</span> CCW {
@@ -145,11 +144,11 @@ CCW ccw(L&amp;l, P&amp;p) {
   <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dir))) {
     <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dif))) {
       Real k = cdr(dif) / cdr(dir);
-      <span class="kw">if</span> (k &gt; <span class="fl">1.</span><span class="dv">0</span>) <span class="kw">return</span> FRONT;
-      <span class="kw">if</span> (k &lt; <span class="fl">0.</span><span class="dv">0</span>) <span class="kw">return</span> BACK;
+      <span class="kw">if</span> (k &gt; <span class="fl">1.0</span>) <span class="kw">return</span> FRONT;
+      <span class="kw">if</span> (k &lt; <span class="fl">0.0</span>) <span class="kw">return</span> BACK;
       <span class="kw">return</span> ON;
     } <span class="kw">else</span> {
-      <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.</span><span class="dv">0</span>) {
+      <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.0</span>) {
         <span class="kw">return</span> LEFT;
       }
       <span class="kw">return</span> RIGHT;
@@ -158,11 +157,11 @@ CCW ccw(L&amp;l, P&amp;p) {
 
   Real k = car(dif) / car(dir);
   <span class="kw">if</span> (eq(cdr(dir) * k, cdr(dif))) {
-    <span class="kw">if</span> (k &gt; <span class="fl">1.</span><span class="dv">0</span>) <span class="kw">return</span> FRONT;
-    <span class="kw">if</span> (k &lt; <span class="fl">0.</span><span class="dv">0</span>) <span class="kw">return</span> BACK;
+    <span class="kw">if</span> (k &gt; <span class="fl">1.0</span>) <span class="kw">return</span> FRONT;
+    <span class="kw">if</span> (k &lt; <span class="fl">0.0</span>) <span class="kw">return</span> BACK;
     <span class="kw">return</span> ON;
   } <span class="kw">else</span> {
-    <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.</span><span class="dv">0</span>) {
+    <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.0</span>) {
       <span class="kw">return</span> LEFT;
     }
     <span class="kw">return</span> RIGHT;
@@ -175,7 +174,7 @@ Real magnitude(P&amp;a) {
 
 Real arg(P&amp;a, P&amp;b) {
   Real x = dot(a, b) / magnitude(a) / magnitude(b);
-  x = min&lt;Real&gt;(<span class="dv">1</span>, max&lt;Real&gt;(<span class="dv">-1</span>, x));
+  x = min&lt;Real&gt;(<span class="dv">1</span>, max&lt;Real&gt;(-<span class="dv">1</span>, x));
   <span class="kw">return</span> acos(x);
 }</code></pre>
 </body>

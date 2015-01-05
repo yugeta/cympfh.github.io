@@ -5,11 +5,10 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -44,13 +43,13 @@ vector&lt;edge&gt; d[MAXN];
   used[begin] = <span class="kw">true</span>;
 
   priority_queue&lt;edge, vector&lt;edge&gt;, greater&lt;edge&gt;&gt; q;
-  <span class="kw">for</span> (<span class="kw">auto</span> e: d[begin]) q.push(e);
+  <span class="kw">for</span> (<span class="dt">auto</span> e: d[begin]) q.push(e);
   <span class="kw">while</span> (!q.empty()) {
     edge e = q.top(); q.pop();
     <span class="kw">if</span> (used[e.to]) <span class="kw">continue</span>;
     total += e.cost;
     used[e.to] = <span class="kw">true</span>;
-    <span class="kw">for</span> (<span class="kw">auto</span> f: d[e.to]) q.push(f);
+    <span class="kw">for</span> (<span class="dt">auto</span> f: d[e.to]) q.push(f);
   }
   <span class="kw">return</span> total;
 }</code></pre>

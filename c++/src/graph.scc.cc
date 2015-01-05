@@ -23,6 +23,7 @@ struct StronglyConnectedComponents {
     }
   }
 
+  /* NOTE: passing adjacency list */
   StronglyConnectedComponents(vector<vector<int>>&d) {
     N = d.size();
 

@@ -5,11 +5,10 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -45,7 +44,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 }
 
 ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, <span class="dt">const</span> edge&amp; e) {
-  os&lt;&lt;<span class="st">&quot;(edge &quot;</span>&lt;&lt;e.from&lt;&lt;<span class="st">&#39; &#39;</span>&lt;&lt;e.to&lt;&lt;<span class="st">&#39; &#39;</span>&lt;&lt;e.cost&lt;&lt;<span class="st">&#39;)&#39;</span>;
+  os&lt;&lt;<span class="st">&quot;(edge &quot;</span>&lt;&lt;e.from&lt;&lt;&#39; &#39;&lt;&lt;e.to&lt;&lt;&#39; &#39;&lt;&lt;e.cost&lt;&lt;&#39;)&#39;;
   <span class="kw">return</span> os;
 }
 
@@ -66,13 +65,13 @@ vector&lt;edge&gt; d[MAXN];
   used[begin] = <span class="kw">true</span>;
 
   priority_queue&lt;edge, vector&lt;edge&gt;, greater&lt;edge&gt;&gt; q;
-  <span class="kw">for</span> (<span class="kw">auto</span>&amp;e: d[begin]) q.push(e);
+  <span class="kw">for</span> (<span class="dt">auto</span>&amp;e: d[begin]) q.push(e);
   <span class="kw">while</span> (!q.empty()) {
     edge e = q.top(); q.pop();
     <span class="kw">if</span> (used[e.to]) <span class="kw">continue</span>;
     total += e.cost;
     used[e.to] = <span class="kw">true</span>;
-    <span class="kw">for</span> (<span class="kw">auto</span>&amp;f: d[e.to]) q.push(f);
+    <span class="kw">for</span> (<span class="dt">auto</span>&amp;f: d[e.to]) q.push(f);
   }
   <span class="kw">return</span> total;
 }

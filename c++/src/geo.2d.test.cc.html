@@ -5,11 +5,10 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -38,21 +37,21 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <span class="co">// basic operation</span>
   <span class="co">//</span>
   assert((a + b) == P(<span class="dv">3</span>, <span class="dv">5</span>));
-  assert((a - b) == P(<span class="dv">-1</span>, <span class="dv">-1</span>));
-  assert((-a) == P(<span class="dv">-1</span>, <span class="dv">-2</span>));
-  assert(dot(a, b) == <span class="fl">8.</span><span class="dv">0</span>);
+  assert((a - b) == P(-<span class="dv">1</span>, -<span class="dv">1</span>));
+  assert((-a) == P(-<span class="dv">1</span>, -<span class="dv">2</span>));
+  assert(dot(a, b) == <span class="fl">8.0</span>);
 
   <span class="co">// equality</span>
   <span class="co">//</span>
   assert(a != b);
 
-  P c(<span class="fl">0.</span><span class="dv">999999999L</span>, <span class="fl">1.</span><span class="dv">999999999L</span>);
+  P c(<span class="fl">0.</span>999999999L, <span class="fl">1.</span>999999999L);
   assert(a != c);
 
-  assert(eq(<span class="kw">static_cast</span>&lt;Real&gt;(<span class="fl">1.</span><span class="dv">0</span>),
-            <span class="kw">static_cast</span>&lt;Real&gt;(<span class="fl">1.</span><span class="dv">0</span> + EPS/<span class="fl">2.</span><span class="dv">0</span>)));
+  assert(eq(<span class="kw">static_cast</span>&lt;Real&gt;(<span class="fl">1.0</span>),
+            <span class="kw">static_cast</span>&lt;Real&gt;(<span class="fl">1.0</span> + EPS/<span class="fl">2.0</span>)));
 
-  P d(<span class="fl">0.</span><span class="dv">99999999999L</span>, <span class="fl">1.</span><span class="dv">99999999999L</span>);
+  P d(<span class="fl">0.</span>99999999999L, <span class="fl">1.</span>99999999999L);
   assert(a == d);
 
   <span class="co">// CCW</span>
@@ -63,8 +62,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
   P x1(<span class="dv">1</span>,<span class="dv">0</span>);
   P x2(<span class="dv">0</span>,<span class="dv">1</span>);
   P x3(<span class="dv">2</span>,<span class="dv">2</span>);
-  P x4(<span class="fl">0.</span><span class="dv">5</span>, <span class="fl">0.</span><span class="dv">5</span>);
-  P x5(<span class="dv">-1</span>, <span class="dv">-1</span>);
+  P x4(<span class="fl">0.5</span>, <span class="fl">0.5</span>);
+  P x5(-<span class="dv">1</span>, -<span class="dv">1</span>);
 
   assert(ccw(line, x1) == RIGHT);
   assert(ccw(line, x2) == LEFT);
@@ -86,8 +85,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <span class="co">// distance</span>
   a = P(<span class="dv">0</span>, <span class="dv">0</span>),
   b = P(<span class="dv">1</span>, <span class="dv">1</span>);
-  assert(eq(Manhattan(a, b), <span class="fl">2.</span><span class="dv">0</span>));
-  assert(eq(Euclidean(a, b), sqrt(<span class="fl">2.</span><span class="dv">0</span>)));
+  assert(eq(Manhattan(a, b), <span class="fl">2.0</span>));
+  assert(eq(Euclidean(a, b), sqrt(<span class="fl">2.0</span>)));
 
   <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>

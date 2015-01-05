@@ -5,11 +5,10 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -48,7 +47,7 @@ Number det(Matrix a) {
         b[bi][bj] = a[ai][<span class="dv">1</span> + bj];
       }
     }
-    d += (i % <span class="dv">2</span> == <span class="dv">0</span> ? <span class="dv">1</span> : <span class="dv">-1</span>) * a[i][<span class="dv">0</span>] * det(b);
+    d += (i % <span class="dv">2</span> == <span class="dv">0</span> ? <span class="dv">1</span> : -<span class="dv">1</span>) * a[i][<span class="dv">0</span>] * det(b);
   }
 
   <span class="kw">return</span> d;
