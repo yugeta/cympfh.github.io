@@ -32,6 +32,22 @@ function display(lst) {
   opener_initial();
 }
 
+function maximum(ar) {
+  if (ar.length == 0) return false;
+  var ac = ar[0];
+  for (var i = 1; i < ar.length; ++i) {
+    ac = Math.max(ac, ar[i]);
+  }
+  return ac;
+}
+
+function second_max(ar) {
+  var m = maximum(ar);
+  var ar2 = ar.filter(function (x) { return x < m; });
+  var m2 = maximum(ar2);
+  return m2;
+}
+
 function filter(debug) {
 
   var query = q.value.toLowerCase();
@@ -54,13 +70,13 @@ function filter(debug) {
   }
 
   var result = (function () {
-    var mx = -1;
-    for (var id in scores) {
-      mx = Math.max(mx, scores[id]);
-    }
     if (debug) console.log("scores = ", scores);
-    //var thresh = mx / 10;
-    var thresh = Math.sqrt(mx);
+    var ar = [];
+    for (var id in scores) {
+      ar[ar.length] = scores[id];
+    }
+    if (debug) console.log("ar = ", ar);
+    var thresh = ar.length < 3 ? 0 : second_max(ar) / 2.1;
     if (debug) console.log("thresh = ", thresh);
 
 
