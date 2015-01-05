@@ -32,7 +32,7 @@ function display(lst) {
   opener_initial();
 }
 
-function filter() {
+function filter(debug) {
 
   var query = q.value.toLowerCase();
 
@@ -58,11 +58,18 @@ function filter() {
     for (var id in scores) {
       mx = Math.max(mx, scores[id]);
     }
-    var thresh = mx * 0.1;
+    if (debug) console.log("scores = ", scores);
+    //var thresh = mx / 10;
+    var thresh = Math.sqrt(mx);
+    if (debug) console.log("thresh = ", thresh);
+
 
     var lst = [];
     for (var id in scores) {
-      if (scores[id] > thresh) lst.push(id);
+      if (scores[id] > thresh) {
+        lst.push(id);
+        if (debug) console.log("id, scores[id] = ", id, scores[id]);
+      }
     }
     return lst;
   }());
