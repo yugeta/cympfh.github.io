@@ -59,6 +59,10 @@ ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S
 
 <span class="kw">template</span>&lt;<span class="kw">class</span> T&gt;
 ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt;T&gt; v) {
+  <span class="kw">if</span> (v.size() == <span class="dv">0</span>) {
+    os &lt;&lt; <span class="st">&quot;(empty)&quot;</span>;
+    <span class="kw">return</span> os;
+  }
   os &lt;&lt; v[<span class="dv">0</span>];
   <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">1</span>, len=v.size(); i&lt;len; ++i) os &lt;&lt; &#39; &#39; &lt;&lt; v[i];
   <span class="kw">return</span> os;
