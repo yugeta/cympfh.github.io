@@ -39,13 +39,17 @@ lst.forEach (y) ->
 # どうにかヒューリスティックにやってこう
 #
 
-n = dict['夢日記'].length
+famouns = [ '夢日記', 'ske', 'sch', 'che']
+n =
+  famouns.map((w) -> dict[w].length)
+    .reduce((x, y) -> if x > y then x else y)
+n = n * 2
 
 for w of dict
   switch
     when '0' <= w[0] and w[0] <= '9'
       delete dict[w]
-    when dict[w].length > n * 2
+    when dict[w].length > n
       delete dict[w]
 
 console.log '%j', dict
