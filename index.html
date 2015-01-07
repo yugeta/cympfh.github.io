@@ -1,5 +1,5 @@
 <!-- vim: set ft=html: -->
-<title>cympfh.github.io</title>
+<title>cympfh</title>
 <link rel="stylesheet" type="text/css" href="css/b.css">
 <script src='./js/poster.js'></script>
 
