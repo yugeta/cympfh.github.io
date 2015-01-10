@@ -227,16 +227,14 @@ exec i3</code></pre>
 <p>これで、<code>/swap</code>が、スワップ領域として使われるようになる。 次に、GRUB2に、<code>/swap</code>を再開位置とさせる設定を行う。</p>
 <p>次のコマンド出力の、ext 0 の、physical_offsetを読んでメモしておく。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> filefrag -v /swap</code></pre>
-<p>私の場合は、</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> filefrag -v /swap <span class="kw">|</span> <span class="kw">head</span> -4 <span class="kw">|</span> <span class="kw">tail</span> -1 <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;{print $4}&#39;</span>
-276480..</code></pre>
-<p>というわけで、 <code>276480</code> がオフセット位置になる。 数字のオーダーは人によって結構違う。</p>
+<p>私の場合は、 <code>276480</code> がオフセット位置であった。 数字のオーダーは人によって結構違う。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">sudoedit /etc/default/grub</code></pre>
 <pre><code>GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet&quot;</code></pre>
 <p>っていう行が割と頭にあるので、</p>
 <pre><code>GRUB_CMDLINE_LINUX_DEFAULT=&quot;resume=/dev/sda3 resume_offset=276480 acpi_sleep=nonvs&quot;</code></pre>
 <p>とする。 <code>/dev/sda3</code> は、私の、ホームディレクトリのあるパーティション。 GRUBの設定を書き直したので、最後に必ず</p>
-<p><code>bash sudo grub-mkconfig -o /boot/grub/grub.cfg</code> として完了する。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> grub-mkconfig -o /boot/grub/grub.cfg </code></pre>
+<p>として完了する。</p>
 <p>書き残したことあるかな。 あったら追記しよう。</p>
 </body>
 </html>
