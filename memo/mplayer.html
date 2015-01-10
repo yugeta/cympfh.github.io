@@ -83,9 +83,11 @@ $ mplayer -playlist pls.txt</code></pre>
 
 <h1 id="cd-rom">CD-ROM</h1>
 
-<pre><code>$ mplayer --cd-rom /dev/cdrw1 cdda://</code></pre>
+<p>CDを聞くには、cdrom が例えば `/dev/cdrw1` なら</p>
 
-<p>CD中身を全部再生する
+<pre><code>$ mplayer --cdrom-device /dev/cdrw1 cdda://</code></pre>
+
+<p>とすることで再生できる。
 複数トラックが入ってても一つのファイルとして扱う</p>
 
 <pre><code>Found audio CD with 4 tracks. </code></pre>
