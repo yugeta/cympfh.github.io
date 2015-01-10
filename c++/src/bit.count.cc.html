@@ -26,7 +26,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span> bit_count(<span class="dt">long</span> <span class="dt">long</span> x) {
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span>
+__builtin_popcount
+(<span class="dt">int</span>);
+
+<span class="dt">int</span> bit_count(<span class="dt">long</span> <span class="dt">long</span> x) {
   x = (x &amp; 0x5555555555555555ll) + (x &gt;&gt; <span class="dv">1</span> &amp; 0x5555555555555555ll);
   x = (x &amp; 0x3333333333333333ll) + (x &gt;&gt; <span class="dv">2</span> &amp; 0x3333333333333333ll);
   x = (x &amp; 0x0f0f0f0f0f0f0f0fll) + (x &gt;&gt; <span class="dv">4</span> &amp; 0x0f0f0f0f0f0f0f0fll);

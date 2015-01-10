@@ -1,3 +1,7 @@
+int
+__builtin_popcount
+(int);
+
 int bit_count(long long x) {
   x = (x & 0x5555555555555555ll) + (x >> 1 & 0x5555555555555555ll);
   x = (x & 0x3333333333333333ll) + (x >> 2 & 0x3333333333333333ll);
