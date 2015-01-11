@@ -8,6 +8,7 @@
 ```make
 all: main.exe input_
 	./main.exe < input | tee out
+	[ ! -f ans ] || diff out ans
 
 main.exe: main.cc
 	g++ -o $@ -std=c++11 $^

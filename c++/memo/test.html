@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -17,6 +19,7 @@
 </ul>
 <pre class="make"><code>all: main.exe input_
     ./main.exe &lt; input | tee out
+    [ ! -f ans ] || diff out ans
 
 main.exe: main.cc
     g++ -o $@ -std=c++11 $^
@@ -47,7 +50,7 @@ clean:
 </ul>
 <p>一つの入力をクリップボードにコピー</p>
 <pre><code>$ make</code></pre>
-<p>出力は <code>out</code> に保存されるのと同時に標準出力される。<br>目視することが前提。</p>
+<p>出力は <code>out</code> に保存されるのと同時に標準出力される。<br />目視することが前提。</p>
 <ul class="incremental">
 <li>難しい場合</li>
 </ul>
