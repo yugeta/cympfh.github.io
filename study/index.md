@@ -29,8 +29,8 @@
 - [パターンによるテキスト分類(英中語)](nlp/phrase_pattern.pdf)
 - [皮肉文の検出](nlp/great_catchy_name.pdf)
 - [word2vec.md](word2vec.html)
-- [automatic-summarization.md](automatic-summarization.html) 自動要約: 劣モジュラー、新規性(surprise)
-- [language-model.md](language-model.html) 言語モデルとは何か
+- [新規性の度合いを指標にした自動要約](automatic-summarization.html)
+- [言語モデルとは何か](language-model.html)
 - [Neural network](neuralNetwork.txt)
 - [NLP のメモ](nlp/memo.md)
 - [テキスト分類](text_categorization.pdf)
