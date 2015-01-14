@@ -270,5 +270,10 @@
     "url": "http://www-ikn.ist.hokudai.ac.jp/~arim/papers/arimura_stacs94.pdf",
     "title": "Finding minimal generalizations for unions of pattern languages and its application to inductive inference from positive data",
     "id": "mmg"
+  },
+  {
+    "url": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.52.5331",
+    "title": "Finding Minimal Generalizations for Unions of Pattern Languages and Its Application to Inductive Inference from Positive Data. (1994)",
+    "id": "k-mmg"
   }
 ]
