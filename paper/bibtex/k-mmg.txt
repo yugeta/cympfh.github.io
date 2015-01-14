@@ -1,0 +1,8 @@
+@INPROCEEDINGS{Arimura94findingminimal,
+  author = {Hiroki Arimura and Takeshi Shinohara and Setsuko Otsuki},
+  title = {Finding Minimal Generalizations for Unions of Pattern Languages and Its Application to Inductive Inference from Positive Data.},
+  booktitle = {In Proc. the 11th STACS, LNCS 775},
+  year = {1994},
+  pages = {649--660},
+  publisher = {Springer-Verlag}
+}

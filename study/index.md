@@ -19,26 +19,44 @@
 
 ## 調査発表
 
+### パターン言語
+
+- [汎化システム、正規パターン、k-mmg (入門的文書)](pattern-language/kmmg.pdf)
+
+### 自然言語処理
+
 - [SNS上のデータマイニング](nlp/twitter-profile.pdf)
 - [パターンによるテキスト分類(英中語)](nlp/phrase_pattern.pdf)
 - [皮肉文の検出](nlp/great_catchy_name.pdf)
 - [word2vec.md](word2vec.html)
 - [automatic-summarization.md](automatic-summarization.html) 自動要約: 劣モジュラー、新規性(surprise)
-- [hash.md](hash.html)
 - [language-model.md](language-model.html) 言語モデルとは何か
-- [BFS in Haskell](BFSinHaskell.hs.txt)
-- [coding rule](coding_rules.txt)
-- [monad](monad.html)
 - [Neural network](neuralNetwork.txt)
 - [NLP のメモ](nlp/memo.md)
+- [テキスト分類](text_categorization.pdf)
+
+### ハッシュ
+
+- [hash.md](hash.html)
+
+### 数
+
 - [数](numbers.txt)
-- [並列処理のHaskell実装](parallel_in_hs.txt)
+
+### 量子計算
+
 - [量子計算1](comp/quantum1.pdf)
 - [量子計算2](comp/quantum2.pdf)
 - [量子計算3](comp/quantum3.pdf)
 - [量子計算 in Scheme](comp/quantum-comp.scm.html)
 - [量子計算メモ](comp/quantum-memo.txt)
+
+### 計算
+
+- [BFS in Haskell](BFSinHaskell.hs.txt)
+- [coding rule](coding_rules.txt)
+- [monad](monad.html)
+- [並列処理のHaskell実装](parallel_in_hs.txt)
 - [レジスタ予約](register_alloc.txt)
 - [JavaScriptにおける並列スコープ](scope_js.html)
 - [SKI計算](SKI.txt)
-- [テキスト分類](text_categorization.pdf)
