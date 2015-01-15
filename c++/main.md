@@ -79,6 +79,10 @@
 
 - [0-1 knapsack](src/dp.knapsack.01.cc.html)
 
+# 二分探索
+
+- [出現回数](src/bin.count.cc.html)
+
 # 素数
 
 - [エラトステネスの篩](src/prime.sieve.cc.html)
