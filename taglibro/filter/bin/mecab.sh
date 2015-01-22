@@ -1,6 +1,7 @@
 #!/bin/bash
 
-for f in ../*/*/*.md; do
+# 2015 以下だけハッシュする
+for f in ../2015/*/*.md; do
   dir=${f%/*}
   dir=${dir#../}
   p=${f##*/}
