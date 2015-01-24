@@ -72,13 +72,12 @@ ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt
 <span class="dt">int</span> dy[] = {  <span class="dv">0</span>, -<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span> };
 
 <span class="dt">int</span> main() {
+  cin.tie(<span class="dv">0</span>);
+  ios::sync_with_stdio(<span class="dv">0</span>);
+  cout.setf(ios::fixed);
+  cout.precision(<span class="dv">10</span>);
 
-  <span class="dt">int</span> n, m;
-  cin &gt;&gt; n &gt;&gt; m;
-
-  range (i, n, m) {
-    cout &lt;&lt; i &lt;&lt; endl;
-  }
+  <span class="dt">int</span> n, m; cin &gt;&gt; n &gt;&gt; m;
 
   <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>

@@ -44,13 +44,12 @@ int dx[] = { -1, 0, 1, 0 };
 int dy[] = {  0, -1, 0, 1 };
 
 int main() {
+  cin.tie(0);
+  ios::sync_with_stdio(0);
+  cout.setf(ios::fixed);
+  cout.precision(10);
 
-  int n, m;
-  cin >> n >> m;
-
-  range (i, n, m) {
-    cout << i << endl;
-  }
+  int n, m; cin >> n >> m;
 
   return 0;
 }
