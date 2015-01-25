@@ -47,7 +47,7 @@
 
 ## 行列式
 
-- [定義](src/mat.det.naiiv.cc.html)
+- [定義に拠る算法](src/mat.det.naiiv.cc.html)
 - [Camelの方法](src/mat.det.camel.cc.html)
 
 # 幾何
@@ -75,9 +75,7 @@
 
 # 動的計画法
 
-## Knapsack problem
-
-- [0-1 knapsack](src/dp.knapsack.01.cc.html)
+- [0-1 Knapsack problem](src/dp.knapsack.01.cc.html)
 
 # 二分探索
 
