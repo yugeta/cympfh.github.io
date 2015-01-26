@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/*</span>
+<span class="co"> * Cramer の小行列式による再帰的計算</span>
+<span class="co"> * O(n!)</span>
+<span class="co"> */</span>
+
+<span class="kw">typedef</span> <span class="dt">int</span> Number;
+<span class="kw">typedef</span> vector&lt;vector&lt;Number&gt;&gt; Matrix;
+
+Number det(Matrix a) {
+  <span class="dt">const</span> <span class="dt">int</span> n = a.size();
+  <span class="kw">if</span> (n == <span class="dv">1</span>) <span class="kw">return</span> a[<span class="dv">0</span>][<span class="dv">0</span>];
+
+  vector&lt;vector&lt;Number&gt;&gt; b(n<span class="dv">-1</span>, vector&lt;Number&gt;(n<span class="dv">-1</span>));
+  Number d = <span class="dv">0</span>;
+  rep (i, n) {
+    rep (bi, n<span class="dv">-1</span>) {
+      rep (bj, n<span class="dv">-1</span>) {
+        <span class="dt">int</span> ai = bi &lt; i ? bi : bi + <span class="dv">1</span>;
+        b[bi][bj] = a[ai][<span class="dv">1</span> + bj];
+      }
+    }
+    d += (i % <span class="dv">2</span> == <span class="dv">0</span> ? <span class="dv">1</span> : -<span class="dv">1</span>) * a[i][<span class="dv">0</span>] * det(b);
+  }
+
+  <span class="kw">return</span> d;
+}</code></pre>
+</body>
+</html>

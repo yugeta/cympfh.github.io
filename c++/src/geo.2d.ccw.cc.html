@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">enum</span> CCW {
+  FRONT,
+  BACK,
+  RIGHT,
+  LEFT,
+  ON
+};
+
+CCW ccw(L&amp;l, P&amp;p) {
+  P u = car(l);
+  P v = cdr(l);
+
+  P dif = p - u;
+  P dir = v - u;
+
+  <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dir))) {
+    <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dif))) {
+      Real k = cdr(dif) / cdr(dir);
+      <span class="kw">if</span> (k &gt; <span class="fl">1.0</span>) <span class="kw">return</span> FRONT;
+      <span class="kw">if</span> (k &lt; <span class="fl">0.0</span>) <span class="kw">return</span> BACK;
+      <span class="kw">return</span> ON;
+    } <span class="kw">else</span> {
+      <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.0</span>) {
+        <span class="kw">return</span> LEFT;
+      }
+      <span class="kw">return</span> RIGHT;
+    }
+  }
+
+  Real k = car(dif) / car(dir);
+  <span class="kw">if</span> (eq(cdr(dir) * k, cdr(dif))) {
+    <span class="kw">if</span> (k &gt; <span class="fl">1.0</span>) <span class="kw">return</span> FRONT;
+    <span class="kw">if</span> (k &lt; <span class="fl">0.0</span>) <span class="kw">return</span> BACK;
+    <span class="kw">return</span> ON;
+  } <span class="kw">else</span> {
+    <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.0</span>) {
+      <span class="kw">return</span> LEFT;
+    }
+    <span class="kw">return</span> RIGHT;
+  }
+}</code></pre>
+</body>
+</html>

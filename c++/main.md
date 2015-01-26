@@ -48,13 +48,14 @@
 ## 行列式
 
 - [定義に拠る算法](src/mat.det.naiiv.cc.html)
-- [Camelの方法](src/mat.det.camel.cc.html)
+- [Cramer's rule](src/mat.det.cramer.cc.html)
 
-# 幾何
+# [幾何](src/geo.2d.cc.html)
 
-- [平面テンプレート](src/geo.2d.cc.html)
-    - [test](src/geo.2d.test.cc.html)
-- [線分交差判定](src/geo.2d.intersection.cc.html)
+## 線分
+
+- [線分と点の接触関係](src/geo.2d.ccw.cc.html)
+- [線分と線分の交差判定](src/geo.2d.intersection.cc.html)
 
 ## 多角形
 
@@ -65,9 +66,10 @@
 
 ## 円
 
-- [Circles Intersection | Aizu Online Judge](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0023)
+- [円の定義](src/geo.2d.circle.cc.html)
+- [円と円の接触関係](src/geo.2d.circle.intersection.cc.html)
+    - [Circles Intersection | Aizu Online Judge](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0023)
     - [solve](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=1177149#1)
-    - TODO: ちゃんと書く
 
 # 集合
 

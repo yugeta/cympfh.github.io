@@ -127,47 +127,6 @@ Real Euclidean(P a, P b) {
   <span class="kw">return</span> a &gt; <span class="dv">0</span> ? <span class="dv">1</span> : -<span class="dv">1</span>;
 }
 
-<span class="kw">enum</span> CCW {
-  FRONT,
-  BACK,
-  RIGHT,
-  LEFT,
-  ON
-};
-CCW ccw(L&amp;l, P&amp;p) {
-  P u = car(l);
-  P v = cdr(l);
-
-  P dif = p - u;
-  P dir = v - u;
-
-  <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dir))) {
-    <span class="kw">if</span> (eq(<span class="dv">0</span>, car(dif))) {
-      Real k = cdr(dif) / cdr(dir);
-      <span class="kw">if</span> (k &gt; <span class="fl">1.0</span>) <span class="kw">return</span> FRONT;
-      <span class="kw">if</span> (k &lt; <span class="fl">0.0</span>) <span class="kw">return</span> BACK;
-      <span class="kw">return</span> ON;
-    } <span class="kw">else</span> {
-      <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.0</span>) {
-        <span class="kw">return</span> LEFT;
-      }
-      <span class="kw">return</span> RIGHT;
-    }
-  }
-
-  Real k = car(dif) / car(dir);
-  <span class="kw">if</span> (eq(cdr(dir) * k, cdr(dif))) {
-    <span class="kw">if</span> (k &gt; <span class="fl">1.0</span>) <span class="kw">return</span> FRONT;
-    <span class="kw">if</span> (k &lt; <span class="fl">0.0</span>) <span class="kw">return</span> BACK;
-    <span class="kw">return</span> ON;
-  } <span class="kw">else</span> {
-    <span class="kw">if</span> (det(dir, dif) &gt; <span class="fl">0.0</span>) {
-      <span class="kw">return</span> LEFT;
-    }
-    <span class="kw">return</span> RIGHT;
-  }
-}
-
 Real magnitude(P&amp;a) {
   <span class="kw">return</span> sqrt(pow(car(a), <span class="dv">2</span>) + pow(cdr(a), <span class="dv">2</span>));
 }

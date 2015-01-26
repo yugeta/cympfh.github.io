@@ -26,31 +26,21 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/*</span>
-<span class="co"> * Camelの小行列式による再帰的計算</span>
-<span class="co"> * O(n!)</span>
-<span class="co"> */</span>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">enum</span> circle_rel {
+  SUB, SUP, <span class="co">// one contains the other</span>
+  TAN, <span class="co">// one intersection</span>
+  INT, <span class="co">// two intersections</span>
+  NOI <span class="co">// no intersection</span>
+};
 
-<span class="kw">typedef</span> <span class="dt">int</span> Number;
-<span class="kw">typedef</span> vector&lt;vector&lt;Number&gt;&gt; Matrix;
-
-Number det(Matrix a) {
-  <span class="dt">const</span> <span class="dt">int</span> n = a.size();
-  <span class="kw">if</span> (n == <span class="dv">1</span>) <span class="kw">return</span> a[<span class="dv">0</span>][<span class="dv">0</span>];
-
-  vector&lt;vector&lt;Number&gt;&gt; b(n<span class="dv">-1</span>, vector&lt;Number&gt;(n<span class="dv">-1</span>));
-  Number d = <span class="dv">0</span>;
-  rep (i, n) {
-    rep (bi, n<span class="dv">-1</span>) {
-      rep (bj, n<span class="dv">-1</span>) {
-        <span class="dt">int</span> ai = bi &lt; i ? bi : bi + <span class="dv">1</span>;
-        b[bi][bj] = a[ai][<span class="dv">1</span> + bj];
-      }
-    }
-    d += (i % <span class="dv">2</span> == <span class="dv">0</span> ? <span class="dv">1</span> : -<span class="dv">1</span>) * a[i][<span class="dv">0</span>] * det(b);
-  }
-
-  <span class="kw">return</span> d;
+circle_rel
+circle_intersect(C a, C b) {
+  Real d = Euclidean(a.o, b.o);
+  <span class="kw">if</span> (d + a.r &lt; b.r) <span class="kw">return</span> SUB; <span class="co">// a is in b</span>
+  <span class="kw">if</span> (a.r &gt; d + b.r) <span class="kw">return</span> SUP; <span class="co">// b is in a</span>
+  <span class="kw">if</span> (d &lt; a.r + b.r) <span class="kw">return</span> INT;
+  <span class="kw">if</span> (d &lt;= a.r + b.r + EPS) <span class="kw">return</span> TAN;
+  <span class="kw">return</span> NOI;
 }</code></pre>
 </body>
 </html>
