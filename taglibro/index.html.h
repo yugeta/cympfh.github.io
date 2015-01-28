@@ -8,7 +8,7 @@
     <script src='./filter/datum.js'></script>
     <link rel='stylesheet' type='text/css' href='css/i.css'>
     <body onload='opener_initial()'>
-      <div class='article' id='article'></div>
+      <div class='article' id='article'><iframe id='fr' src="./summary/index.html"></iframe></div>
       <div class='dates'>
         <div>
           <div id='check_iframe' style='cursor:pointer'>check to view on iframe</div>

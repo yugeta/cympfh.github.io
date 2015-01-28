@@ -42,16 +42,14 @@ function opener_initial() {
         if (! checked) {
           return true;
         }
-        var fr = document.createElement('iframe');
         fr.src = url;
-        article.innerHTML = '';
-        article.style.display = 'block';
-        article.appendChild(fr);
+        //article.innerHTML = '';
+        //article.style.display = 'block';
+        //article.appendChild(fr);
         return false;
       };
     }(lk.href));
   }
-
 
   document.getElementById('check_iframe').onclick = function () {
     toggle();

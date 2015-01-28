@@ -24,7 +24,6 @@ a:visited {
 /* preview window */
 div#article {
   float: right;
-  display: none;
   width: 620px;
 }
 iframe {
