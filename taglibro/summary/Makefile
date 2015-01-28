@@ -12,7 +12,7 @@ newest:
 	ls -1t ../*/*/*.md | sort -r > newest.txt
 
 random:
-	for md in ../*/*/*.md; do echo "$${RANDOM} $${md}"; done | sort -n | cut -d' ' -f2 > random.txt
+	for md in ../*/*/*.md; do echo "$${RANDOM} $${md}"; done | sort -R | cut -d' ' -f2 > random.txt
 
 # get 12 random
 images:
