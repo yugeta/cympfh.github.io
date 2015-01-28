@@ -36,19 +36,25 @@ function opener_initial() {
   var ls = document.links;
   for (var i = 0; i < ls.length; ++i) {
     var lk = ls[i];
-    lk.onclick = (function(url) {
+    lk.onclick = (function(url, lk) {
       return function () {
         save();
         if (! checked) {
           return true;
         }
         fr.src = url;
-        //article.innerHTML = '';
-        //article.style.display = 'block';
-        //article.appendChild(fr);
+
+        (function () {
+          var origin = lk.className;
+          lk.className = 'article hober';
+          setTimeout(function () {
+            lk.className = origin;
+          }, 22000);
+        }());
+
         return false;
       };
-    }(lk.href));
+    }(lk.href, lk));
   }
 
   document.getElementById('check_iframe').onclick = function () {

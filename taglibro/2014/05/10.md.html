@@ -29,40 +29,50 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<h1 id="gosh-info-のインストール-ビルド">gosh, info のインストール (ビルド)</h1>
-<p>2014年 5月 10日 土曜日 01:58:20 JST</p>
-<p>gosh の組み込み関数、 <code>apropos</code> と <code>info</code> が大変便利なんだけれど、 <code>info</code>を呼ぶと、参照するだけで</p>
-<pre><code>gosh&gt; info
-*** ERROR: Compile Error: Compile Error: cannot find &quot;rfc/zlib&quot; in (&quot;/usr/local/share/gauche-0.9/site/lib&quot; &quot;/usr/local/share/gauche-0.9/0.9.3.3/lib&quot; &quot;/usr/local/share/gauche/site/lib&quot; &quot;/usr/local/share/gauche/0.9/lib&quot;)
-    &quot;/usr/local/share/gauche-0.9/0.9.3.3/lib/text/info.scm&quot;:34:(define-module text.info (use srfi-1 ...
+<h1 id="年-5月-10日-土曜日-015820-jst">2014年 5月 10日 土曜日 01:58:20 JST</h1>
+<h2 id="gauche-gosh-およびそれの-info-のビルドとインストール">Gauche (gosh) およびそれの info のビルドとインストール</h2>
+<p>gosh の組み込み関数、 <code>apropos</code> と <code>info</code> が大変便利なんだけれど、<br><code>info</code>を呼ぶと、参照するだけで</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; info
+*** ERROR: Compile Error: Compile Error: cannot find <span class="st">&quot;rfc/zlib&quot;</span> in (<span class="st">&quot;/usr/local/share/gauche-0.9/site/lib&quot;</span> <span class="st">&quot;/usr/local/share/gauche-0.9/0.9.3.3/lib&quot;</span> <span class="st">&quot;/usr/local/share/gauche/site/lib&quot;</span> <span class="st">&quot;/usr/local/share/gauche/0.9/lib&quot;</span>)
+    <span class="st">&quot;/usr/local/share/gauche-0.9/0.9.3.3/lib/text/info.scm&quot;</span>:<span class="dv">34</span>:(<span class="kw">define-module</span><span class="fu"> text</span>.info (use srfi<span class="dv">-1</span> ...
 
-    &quot;/usr/local/share/gauche-0.9/0.9.3.3/lib/gauche/interactive/info.scm&quot;:34:(define-module gauche.interactive.in ...</code></pre>
+    <span class="st">&quot;/usr/local/share/gauche-0.9/0.9.3.3/lib/gauche/interactive/info.scm&quot;</span>:<span class="dv">34</span>:(<span class="kw">define-module</span><span class="fu"> gauche</span>.interactive.in ...</code></pre>
 <p>このように出る。rfc/zlibというSchemeモジュールがないという。</p>
-<p>今まで何度もgoshをいくつものマシンにインストールしてきて、 <code>info</code>が使えるようになったのは一度だけで、 それも何故使えるようになったのか理解していなかった。</p>
-<p>たまにはちゃんとエラーメッセージを読んで解決を試みよう。 <code>configure</code>のメッセージ</p>
-<pre><code>checking for makeinfo... no</code></pre>
-<p><code>gauche-refe.info.gz</code>を作るために<code>makeinfo</code>が必要。</p>
+<p>今まで何度もgoshをいくつものマシンにインストールしてきて、<br><code>info</code>が使えるようになったのは一度だけで、<br>それも何故使えるようになったのか理解していなかった。</p>
+<p>たまにはちゃんとエラーメッセージを読んで解決を試みよう。</p>
+<h3 id="configureのメッセージ"><code>configure</code>のメッセージ</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">checking <span class="kw">for</span> makeinfo..<span class="kw">.</span> no</code></pre>
+<p><code>gauche-refe.info.gz</code>を作るために<code>makeinfo</code>が必要らしい</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">sudo</span> apt-get <span class="kw">install</span> makeinfo</code></pre>
-<pre><code>configure: WARNING: &quot;Can&#39;t find zlib.h so I turned off using zlib; you may want to use --with-zlib=PATH.&quot;</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">configure: WARNING: <span class="st">&quot;Can&#39;t find zlib.h so I turned off using zlib; you may want to use --with-zlib=PATH.&quot;</span></code></pre>
 <p>zlibっていうSchemeモジュールがないって言うので、Scheme側の問題かと思ってたのだけれど、 そもそも共有ヘッダファイルがないので、生成されてなかったらしい。</p>
-<pre><code>$ sudo apt-get install zlib1g-dev</code></pre>
-<p>このパッケージ名は自分で見つけられなかったので</p>
-<p><a href="http://d.hatena.ne.jp/embedded/20081101/p3">Ubuntuで足りないファイルがどのパッケージにあるか調べる方法Add Starmacchayoshihiro503</a> を参照した。</p>
-<p>``` gosh&gt; info #<closure info> gosh&gt; (info 'display) 6.22.8 Output -------------</p>
-<pre><code>For the following procedures, the optional PORT argument must be an
-output port, and when omitted, the current output port is assumed.</code></pre>
-<p>-- Function: write obj :optional port -- Function: display obj :optional port [R5RS] Produces a printable representation of an object OBJ to the ``` できた！</p>
-<hr>
-<pre><code>alias f=&#39;echo this is ef&#39;</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> apt-get <span class="kw">install</span> zlib1g-dev</code></pre>
+<p>このパッケージ名は自分で見つけられなかったので <a href="http://d.hatena.ne.jp/embedded/20081101/p3">Ubuntuで足りないファイルがどのパッケージにあるか調べる方法Add Starmacchayoshihiro503</a> を参照した。</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; info
+#&lt;closure info&gt;
+gosh&gt; (info &#39;display)
+<span class="fl">6.22.8</span> Output
+-------------
+
+    For the following procedures, the optional PORT argument must be an
+    output port, <span class="kw">and</span> when omitted, the current output port is assumed.
+
+-- Function: <span class="kw">write</span> obj :optional port
+-- Function: <span class="kw">display</span> obj :optional port
+           [R5RS] Produces a printable representation of an object OBJ to the</code></pre>
+<p>できた！</p>
+<h2 id="便利なrlwrap">便利なrlwrap</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">alias</span> <span class="ot">f=</span><span class="st">&#39;echo this is ef&#39;</span></code></pre>
 <p>aliasは''でくくるなりしないといけなくて、中に'を含めるのにエスケープがちょっと今の眠たい頭じゃ無理そうなので関数として</p>
-<pre><code>gauche() {
-  rlwrap -pRED -b &quot;&#39;&quot;&#39;(){}[].,#@;|`&quot;&#39; -f ~/Dropbox/cympfh/.gosh_complements -q&#39;&quot;&#39; -m gosh
-}</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">gauche()</span> <span class="kw">{</span>
+  rlwrap -pRED -b <span class="st">&quot;&#39;&quot;&#39;(){}[].,#@;|`&quot;&#39;</span> -f ~/Dropbox/cympfh/.gosh_complements -q<span class="st">&#39;&quot;&#39;</span> -m gosh
+<span class="kw">}</span></code></pre>
 <p>aliasならば、名前と中からの呼び出しに同じ名前があっても、 関数とは違って、再帰呼び出しにはならない。 というわけで、上の関数は <code>gosh</code> とは異なる名前にした。</p>
 <p>補完のためのファイルには、存在する手続きの名前を列挙するのだけど、</p>
 <p><a href="http://d.hatena.ne.jp/rui314/20070604/p1">http://d.hatena.ne.jp/rui314/20070604/p1</a> には、そのためのGauche用スクリプトがあった。</p>
 <p>でも、私は、gosh REPLから</p>
-<p><code>scheme (apropos '||)</code> として、出力結果をコピペして、ちょっとだけ整形してやる手間を加えた。</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(apropos &#39;||)</code></pre>
+<p>として、出力結果をコピペして、ちょっとだけ整形してやる手間を加えた。</p>
 <blockquote>
 <p>/dots/gosh_complements.txt</p>
 </blockquote>

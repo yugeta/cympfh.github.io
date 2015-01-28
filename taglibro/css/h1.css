@@ -11,7 +11,14 @@ body {
 /* main title for a page */
 h1 {
   border-bottom: 1px black dotted;
+  text-align: right;
   font-family: 'eufm10', 'aquafont', Meiryo, メイリオ, serif;
+  font-size: 15px;
+}
+
+h2 {
+  border-bottom: 1px black dotted;
+  font-family: 'Consolas', Meiryo, メイリオ, serif;
 }
 
 /* in a page */
@@ -48,13 +55,9 @@ pre code {
 }
 
 blockquote {
-  background-color: #fffcfc;
-  border-top: 1px solid #0f0f0f;
-  border-bottom: 1px solid #0f0f0f;
-  border-left: 11px solid #1f0f0f;
+  background-color: #f0f0f0;
+  padding: 3px;
   padding-left: 12px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin-left: 0;
+  margin: 0;
 }
 
