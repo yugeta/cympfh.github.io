@@ -5,8 +5,30 @@ body {
   padding: 0;
   width: 42em;
   font-size: 16px;
-  font-family: Consolas, 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
+  font-family: 'aquafont', Consolas, 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
 }
+
+/* main title for a page */
+h1 {
+  border-bottom: 1px black dotted;
+  font-family: 'eufm10', 'aquafont', Meiryo, メイリオ, serif;
+}
+
+/* in a page */
+
+a {
+  color: #600;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+img {
+  max-width: 670px;
+}
+
+p {
+}
+
 code {
   font-family: Consolas,"Liberation Mono",Courier,monospace;
   margin-left: 3px;
@@ -15,6 +37,7 @@ code {
   background-color: #fff9f9;
   border: 1px solid orange;
 }
+
 pre code {
   display: block;
   padding: 3px;
@@ -35,12 +58,3 @@ blockquote {
   margin-left: 0;
 }
 
-a {
-  color: #600;
-  font-weight: bold;
-  font-size: 17px;
-}
-
-img {
-  max-width: 670px;
-}
