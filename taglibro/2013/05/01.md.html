@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>Wed May 1 02:22:31 JST 2013</p>
+<h1 id="wed-may-1-022231-jst-2013">Wed May 1 02:22:31 JST 2013</h1>
 <pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">; これはご存知</span>
 gosh&gt; &#39;(&#39;a)
 (&#39;a)</code></pre>
@@ -37,26 +37,24 @@ gosh&gt; &#39;(&#39;a)
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; &#39;(-i)
 (<span class="fl">0.0-1.</span>0i)</code></pre>
 <p>これだけちょっと引っかかった</p>
-<hr>
-<p>Wed May 1 11:16:53 JST 2013</p>
+<h1 id="wed-may-1-111653-jst-2013">Wed May 1 11:16:53 JST 2013</h1>
 <p>今日以前の最近木曜日の日付を計算する</p>
 <p>例えば今日なら =&gt; &quot;130425&quot;</p>
-<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">#! gosh</span>
-<span class="co">(use srfi-19 :only (current-date date-week-day))</span>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(use srfi<span class="dv">-19</span> :only (current-date date-week-day))
 
-<span class="co">(define date</span>
-<span class="co">  (let1 a (current-date)</span>
-<span class="co">  (let ((m (ref a &#39;month))</span>
-<span class="co">        (d (ref a &#39;day))</span>
-<span class="co">        (y (ref a &#39;year)))</span>
-<span class="co">  (let1 dd (mod (- (date-week-day a) 4) 7)</span>
-<span class="co">  (let1 d (- d dd)</span>
-<span class="co">  (when (&lt;= d 0)</span>
-<span class="co">    (dec! m)</span>
-<span class="co">    (set! d (+ d (ref &#39;(0 31 29 31 30 31 30 31 31 30 31 30 31) m)))</span>
-<span class="co">    (when (&lt;= m 0)</span>
-<span class="co">      (dec! y)))</span>
-<span class="co">  (format &quot;~a~2,&#39;0D~2,&#39;0D&quot;</span>
-<span class="co">          (substring (number-&gt;string y) 2 4) m d))))))</span></code></pre>
+(<span class="kw">define</span><span class="fu"> date</span>
+  (let1 a (current-date)
+  (<span class="kw">let</span> ((m (ref a &#39;month))
+        (d (ref a &#39;day))
+        (y (ref a &#39;year)))
+  (let1 dd (mod (<span class="kw">-</span> (date-week-day a) <span class="dv">4</span>) <span class="dv">7</span>)
+  (let1 d (<span class="kw">-</span> d dd)
+  (when (<span class="kw">&lt;=</span> d <span class="dv">0</span>)
+    (dec! m)
+    (set! d (<span class="kw">+</span> d (ref &#39;(<span class="dv">0</span> <span class="dv">31</span> <span class="dv">29</span> <span class="dv">31</span> <span class="dv">30</span> <span class="dv">31</span> <span class="dv">30</span> <span class="dv">31</span> <span class="dv">31</span> <span class="dv">30</span> <span class="dv">31</span> <span class="dv">30</span> <span class="dv">31</span>) m)))
+    (when (<span class="kw">&lt;=</span> m <span class="dv">0</span>)
+      (dec! y)))
+  (format <span class="st">&quot;~a~2,&#39;0D~2,&#39;0D&quot;</span>
+          (<span class="kw">substring</span> (<span class="kw">number-&gt;string</span> y) <span class="dv">2</span> <span class="dv">4</span>) m d))))))</code></pre>
 </body>
 </html>

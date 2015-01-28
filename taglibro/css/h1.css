@@ -61,3 +61,20 @@ blockquote {
   margin: 0;
 }
 
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+thead > tr > th {
+  border-bottom: 1px gray dotted;
+}
+
+tr.odd {
+  background-color: #f0f0f0;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 6px 13px;
+}

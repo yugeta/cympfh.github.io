@@ -44,13 +44,15 @@ function opener_initial() {
         }
         fr.src = url;
 
-        (function () {
+        (function (lk) {
+          var hoberClassName = 'article hober';
           var origin = lk.className;
-          lk.className = 'article hober';
-          setTimeout(function () {
+          if (origin === hoberClassName) return;
+          lk.className = hoberClassName;
+          setTimeout(function (lk) {
             lk.className = origin;
-          }, 52000);
-        }());
+          }, 50000, lk);
+        }(lk));
 
         return false;
       };

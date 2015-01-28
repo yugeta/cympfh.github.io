@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>Thu May 2 17:04:40 JST 2013</p>
+<h1 id="thu-may-2-170440-jst-2013">Thu May 2 17:04:40 JST 2013</h1>
 <p>In syntax-rules, we use pattern language. What the pattern language? I want to write ( x y -&gt; ...) rather than (lambda (x y) ...) also in scheme. So I write the following macro.</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(split ls)
   (<span class="kw">if</span> (<span class="kw">eq?</span> (<span class="kw">car</span> ls) &#39;-&gt;) (<span class="kw">values</span> &#39;() (<span class="kw">cdr</span> ls))
@@ -47,8 +47,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
     ((^ x ... -&gt; body ...) (<span class="kw">lambda</span> (x ...) body ...))))</code></pre>
 <p>Gauche says &quot;Bad ellipsis...&quot;</p>
 <p>I cannot beleave that pattern language is turing complete.</p>
-<h2 id="追記">追記</h2>
-<p>2014年 2月 16日 日曜日 10:53:43 JST</p>
+<h2 id="追記-2014年-2月-16日-日曜日-105343-jst">追記 (2014年 2月 16日 日曜日 10:53:43 JST)</h2>
 <p><code>...</code>というキーワードはリストの一番最後の要素としてしか置けない</p>
 </body>
 </html>

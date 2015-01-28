@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>Mon Jul 22 16:30:14 JST 2013</p>
+<h1 id="mon-jul-22-163014-jst-2013">Mon Jul 22 16:30:14 JST 2013</h1>
 <p>syntax-rules のキーワードは無くてもいいようなものにしか使えない 区切りとしては決して使えない</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">  (<span class="kw">define-syntax</span><span class="fu"> two-list</span>
     (<span class="kw">syntax-rules</span> (delminator)
@@ -56,8 +56,12 @@ gosh&gt; (two-list <span class="dv">1</span> <span class="dv">2</span> <span cla
 <span class="dv">3</span>
 gosh&gt; (<span class="kw">begin</span> <span class="dv">1</span> <span class="dv">2</span> a where (a <span class="dv">3</span>))
 <span class="dv">3</span></code></pre>
-<p>Haskellのwhere. <code>(begin a ... where (var val) ...)</code> というのはただ <code>(let* ((var val) ...) a ...)</code> に変換してる let*だから，where後で定義する変数は相互に参照できるわけではないので注意</p>
-<p>コードは以下の通り beginのオーバーロードになってる</p>
+<p>Haskellの <code>where</code></p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">begin</span> a ... where (var val) ...)</code></pre>
+<p>というのはただ</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">let*</span> ((var val) ...) a ...)</code></pre>
+<p>に変換してる. <code>let*</code> だから，where後で定義する変数は相互に参照できるわけではないので注意</p>
+<p>コードは以下の通り <code>begin</code> のオーバーロードになってる</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(use srfi<span class="dv">-1</span>)
 (<span class="kw">define-macro</span><span class="fu"> </span>(<span class="kw">begin</span> . body)
   (let1 idx (list-index (cut <span class="kw">equal?</span> &#39;where &lt;&gt;) body)

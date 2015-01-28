@@ -29,56 +29,52 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>2013年 3月 6日 水曜日 04:43:00 JST</p>
+<h1 id="年-3月-6日-水曜日-044300-jst">2013年 3月 6日 水曜日 04:43:00 JST</h1>
 <p>A sample code should not answer 7 because the character, 7 seems to see ?.</p>
 <hr>
 <p>R5RSを初めて読んだ。 call/ccが少しわからなくなった。 多値を返すためのvaluesをcall/ccで定義してて、なんで多値になるのか分からない。</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(<span class="kw">values</span> . things)
     (<span class="kw">call/cc</span> (<span class="kw">lambda</span> (cc) (apply cc things))) )</code></pre>
 <p>とあって、ためしに実験</p>
-<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">; gosh&gt; (define (balues . things) (call/cc (lambda (cont) (apply cont things))))</span>
-<span class="co">; balues</span>
-<span class="co">; gosh&gt; (balues 1 2 3)</span>
-<span class="co">; 1</span>
-<span class="co">; 2</span>
-<span class="co">; 3</span>
-<span class="co">; gosh&gt; (receive (a b c) (balues 1 2 3) (list c b a))</span>
-<span class="co">; (3 2 1)</span></code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> </span>(balues . things) (<span class="kw">call/cc</span> (<span class="kw">lambda</span> (cont) (apply cont things))))
+balues
+gosh&gt; (balues <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>)
+<span class="dv">1</span>
+<span class="dv">2</span>
+<span class="dv">3</span>
+gosh&gt; (receive (a b c) (balues <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>) (<span class="kw">list</span> c b a))
+(<span class="dv">3</span> <span class="dv">2</span> <span class="dv">1</span>)</code></pre>
 <p>できてる。なんで出来るのか分からない。 values手続きの定義本体のccは、大域脱出をするただのid関数だと思うんだけど。 じゃあ、もうそれでいいのかな。</p>
-<table>
-<col style="width: 4%" /><tbody>
-<tr class="odd">
-<td style="text-align: left;">dynamic-windで出てくるサンプルコードも果てしなく難しい。 意義は分かった。そのthunkがどのタイミングででも呼び出される前後には beforeとafterが呼び出される。それはいいんだけど</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">```scheme (define path '()) (define c #f) (define (add s) (push! path s))</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">(dynamic-wind (lambda () (add 'connect)) (lambda () (add (call/cc (lambda (c0) (set! c c0) 'talk1)))) (lambda () (add 'disconnect)) )</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">(c 'talk2) ```</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">これを読み込ませてREPLで実験</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">```scheme gosh&gt; path (disconnect talk2 connect disconnect talk1 connect) gosh&gt; c #<subr continuation> gosh&gt; (c 'talk-final)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">シェルが値を返しました 70 ```</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">なんか、エラーなのかよく分からないエラーが出る。</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">以上。</td>
-</tr>
-</tbody>
-</table>
-<p>2013年 3月 6日 水曜日 08:25:00 JST</p>
-<p>chooseマクロは http://www.shido.info/lisp/scheme_amb.html による。(ちょっと違う)</p>
-<p>問題は http://www.geocities.jp/m_hiroi/light/abcruby17.html にあった &gt; 出典：Leon Sterling, Ehud Shapiro (著), 松田利夫 (訳), 『Prolog の技芸』, 共立出版, 1988, (278頁より) の、もの。</p>
+<hr>
+<p>dynamic-windで出てくるサンプルコードも果てしなく難しい。 意義は分かった。そのthunkがどのタイミングででも呼び出される前後には beforeとafterが呼び出される。それはいいんだけど</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> path </span>&#39;())
+(<span class="kw">define</span><span class="fu"> c </span><span class="dv">#f</span>)
+ (<span class="kw">define</span><span class="fu"> </span>(add s) (push! path s))
+
+ (<span class="kw">dynamic-wind</span>
+     (<span class="kw">lambda</span> () (add &#39;connect))
+     (<span class="kw">lambda</span> ()
+         (add (<span class="kw">call/cc</span> (<span class="kw">lambda</span> (c0) (set! c c0) &#39;talk1))))
+     (<span class="kw">lambda</span> () (add &#39;disconnect)) )
+
+(c &#39;talk2)</code></pre>
+<p>これを読み込ませてREPLで実験</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; path
+(disconnect talk2 connect disconnect talk1 connect)
+gosh&gt; c
+#&lt;subr continuation&gt;
+gosh&gt; (c &#39;talk-final)
+
+シェルが値を返しました <span class="dv">70</span></code></pre>
+<p>なんか、エラーなのかよく分からないエラーが出る。</p>
+<p>以上。</p>
+<h1 id="年-3月-6日-水曜日-082500-jst">2013年 3月 6日 水曜日 08:25:00 JST</h1>
+<p>chooseマクロは</p>
+<p>http://www.shido.info/lisp/scheme_amb.html</p>
+<p>による。(ちょっと違う)</p>
+<p>問題は</p>
+<p>http://www.geocities.jp/m_hiroi/light/abcruby17.html</p>
+<p>にあった &gt; 出典：Leon Sterling, Ehud Shapiro (著), 松田利夫 (訳), 『Prolog の技芸』, 共立出版, 1988, (278頁より) の、もの。</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(fail) &#39;@)
 
 (<span class="kw">define-syntax</span><span class="fu"> choose</span>
