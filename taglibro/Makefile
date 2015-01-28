@@ -1,5 +1,8 @@
 all: md2html index summary_ filter_
 
+index2:
+	ls -1r */*/*.md.html | head -5 | xargs cat > r/c/index.html
+
 index:
 	sed "s/MD5/$$(git log | head -1 | cut -d' ' -f2)/" index.html.h > index.html
 	echo "<a class='article else' href=summary/index.html?$$(./script/rand)>summary</a>" >> index.html
