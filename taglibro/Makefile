@@ -1,4 +1,4 @@
-all: md2html index summary_ filter_
+all: md2html index summary_ filter_ index2
 
 index2:
 	ls -1r */*/*.md.html | head -5 | xargs cat > r/c/index.html
