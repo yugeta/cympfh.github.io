@@ -29,21 +29,22 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
+<h1 id="feb-14-2012">Feb 14 2012</h1>
 <p>この日付管理、ちょっと信用できなくなってきた</p>
 <p>一つ上の人の卒論発表会見に行った． あんな、誰でも自由に入って見聞きできるカンジなんだ． 日付と場所さえ、どこかから聞きつけられれば、部外者 でも行ける．修士論文とかは知らんけど．</p>
 <p>自分があの場所に立ってあんなこと発表するなんて 信じられないな．ムリだろうな．研究室次第だろうな とも思った．</p>
-<hr>
-<p>Maybeモナドをschemeで．</p>
+<h2 id="maybeモナドをschemeで">Maybeモナドをschemeで．</h2>
 <p><a href="http://d.hatena.ne.jp/kzk/20050902">Monad in Scheme (2) - moratorium</a> のパクリなんだけど、思い出しながらで書いたのであって、丸写しではないという 意味で、自分としては重要なので、</p>
 <p>/scheme/monad.scm.txt</p>
 <p>として残しておくのと、思い出すまでのスケッチも残しておこう． あんまり、他人が読んで面白いかは分からない．</p>
-<h1 id="目次">目次．</h1>
+<hr>
+<h2 id="目次">目次．</h2>
 <ul class="incremental">
 <li>私の持っているモナドに対する知識．</li>
 <li>実装 までのスケッチ</li>
 <li>遊んでみる</li>
 </ul>
-<h2 id="私の持っているモナドに対する知識">私の持っているモナドに対する知識．</h2>
+<h3 id="私の持っているモナドに対する知識">私の持っているモナドに対する知識．</h3>
 <p>Maybeモナドを構成するのは、return と &gt;&gt;= , あと最後に中身を出す為の M. あと失敗を表す為の fail と fail であるかを判定する述語 fail?.</p>
 <p>Mというのは、例えば (return 1) は1を何かで包んでいる．中身の1をむき出しに するもの．</p>
 <p>GHCiで実験してみると</p>
@@ -95,7 +96,7 @@ gosh&gt; (M ( (return <span class="dv">1</span>) &gt;&gt;= (^x (return <span cla
 <pre><code>gosh&gt; (M ( (return 1) &gt;&gt;= fail &gt;&gt;= (^x (return 3)) ))
 Nothing</code></pre>
 <p>つまり、failのあとに実行されるものはreturn の結果には影響を与えない． 始めの引数評価の時以外、評価されることもない．</p>
-<h2 id="実装-までのスケッチ">実装 までのスケッチ</h2>
+<h3 id="実装-までのスケッチ">実装 までのスケッチ</h3>
 <p>私が思い出すために、裏紙に書きまくったラムダ式を写すとともに、精一杯 何を考えてたのかを言葉にした．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(return x)</code></pre>
 <p>xを包んだものを返す．よくあるのは、ローカル変数として定義してやること．すなわち</p>
@@ -110,24 +111,20 @@ Nothing</code></pre>
     (m (<span class="kw">lambda</span> (x) x)))</code></pre>
 <p>簡単だ．</p>
 <p>そしたら、bindさえ書ければ、実質終わり． いきなり何を書いたらいいのか分からないので、こうなるべきだというベータ簡約の様子 を書いた．</p>
-<pre><code>((return 1) &gt;&gt;= (^x (return 2)))
- -&gt; (&gt;&gt;= 1 (list (^x (return 2))))
- -&gt; ((^x (return 2)) 1)
- -&gt; (return 2)</code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">((return <span class="dv">1</span>) &gt;&gt;= (^x (return <span class="dv">2</span>)))
+ -&gt; (&gt;&gt;= <span class="dv">1</span> (<span class="kw">list</span> (^x (return <span class="dv">2</span>))))
+ -&gt; ((^x (return <span class="dv">2</span>)) <span class="dv">1</span>)
+ -&gt; (return <span class="dv">2</span>)</code></pre>
 <p>この調子に、&gt;&gt;=をもうひとつ並べる</p>
-<pre><code>(return 1) &gt;&gt;= (^x (return 2)) &gt;&gt;= (^x (return 3))
- -&gt; (&gt;&gt;= 1 (list (^x (return 2)) &gt;&gt;= (^x (return 3))))
- -&gt; ((return 2) &gt;&gt;= (^x (return 3)))</code></pre>
-<blockquote>
-<blockquote>
-<p>= を中に置くために</p>
-</blockquote>
-</blockquote>
-<pre><code> (return 1) &gt;&gt;= ..</code></pre>
-<p>が</p>
-<pre><code>(&gt;&gt;= 1 ..)</code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(return <span class="dv">1</span>) &gt;&gt;= (^x (return <span class="dv">2</span>)) &gt;&gt;= (^x (return <span class="dv">3</span>))
+ -&gt; (&gt;&gt;= <span class="dv">1</span> (<span class="kw">list</span> (^x (return <span class="dv">2</span>)) &gt;&gt;= (^x (return <span class="dv">3</span>))))
+ -&gt; ((return <span class="dv">2</span>) &gt;&gt;= (^x (return <span class="dv">3</span>)))</code></pre>
+<p><code>&gt;&gt;=</code> を中置で記法するために</p>
+<p><code>(return 1) &gt;&gt;= ..</code> が <code>(&gt;&gt;= 1 ..)</code></p>
 <p>のようになって、そして</p>
-<p><code>scheme (&gt;&gt;= 1 ls)</code> は、 <code>scheme (let1 op (car ls)   (apply (op ls 1) ls))</code>scheme</p>
+<p><code>(&gt;&gt;= 1 ls)</code> は、</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(let1 op (<span class="kw">car</span> ls)
+  (apply (op ls <span class="dv">1</span>) ls))</code></pre>
 <p>となってほしい．returnは今まで1引数を取るようなラムダ式を返すことにしてたけど、 ここで (&gt;&gt;= ..)という複数の値を渡すことで&gt;&gt;=を実行させるので、書き換えが必要だ．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(return x)
     (<span class="kw">lambda</span> (f . rest) (f x rest)))</code></pre>
@@ -136,13 +133,11 @@ Nothing</code></pre>
     (apply
         ((<span class="kw">car</span> ls) x)
         (<span class="kw">cdr</span> ls)))</code></pre>
-<p>これで <code>(&gt;&gt;= 1 ((^x ..)))</code> は <code>(apply ((^x ..) 1) '())</code> となる． applyへの第二引数は残りの '(&gt;&gt;= (^x ...)) が入る予定だったが&gt;&gt;= 一つだけの 並びだと空になる．このときapplyはエラーを出す．null?で分岐が必要だった．</p>
+<p>これで <code>(&gt;&gt;= 1 ((^x ..)))</code> は <code>(apply ((^x ..) 1) '())</code> となる． applyへの第二引数は残りの <code>'(&gt;&gt;= (^x ...))</code> が入る予定だったが&gt;&gt;= 一つだけの 並びだと空になる．このときapplyはエラーを出す．null?で分岐が必要だった．</p>
 <p>私としては、思い出すべきことは、これでひと通り全て思い出せた．</p>
-<p>(fail)は(return 'Nothing)とするだけだし、 述語 (define fail? (pa$ equal 'Nothing)) を用意してやれば、 &gt;&gt;= の中で、まず (&gt;&gt;= x ls) の x について fail? して #t だったら(fail)を 返してやる．</p>
+<p><code>(fail)</code> は<code>(return 'Nothing)</code> とするだけだし、 述語 <code>(define fail? (pa$ equal 'Nothing))</code> を用意してやれば、 &gt;&gt;= の中で、まず <code>(&gt;&gt;= x ls)</code> の <code>x</code> について <code>fail?</code> して <code>#t</code> だったら <code>(fail)</code> を 返してやる．</p>
 <p>以上でできたことになる．</p>
-<ul class="incremental">
-<li>遊んでみる</li>
-</ul>
+<h3 id="遊んでみる">遊んでみる</h3>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; zero
 #&lt;closure (return return)<span class="kw">&gt;</span>
 gosh&gt; (M zero)

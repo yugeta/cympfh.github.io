@@ -1,0 +1,5 @@
+#!/bin/sh
+
+[ -f $1 ] || echo "specify markdown file which exists"
+[ -f $1 ] && vim $1 && make $1.html
+

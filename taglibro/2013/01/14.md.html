@@ -29,42 +29,39 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>1/14 This says &quot;More Use Me!&quot;</p>
+<h1 id="jan-14-2013">Jan 14 2013</h1>
+<h2 id="this-says-more-use-me">This says &quot;More Use Me!&quot;</h2>
 <p>お題: 「手を切断した人が、無いはずの手に痛みを感じるように」 答例: 無いはずの2013年に非日常を感じてる</p>
 <p>文体練習 三日ぶりに外に出ると雪が積もっていた もう夕方なのでずいぶん踏み荒らされているが私は 未踏の箇所を慎重に選んで歩く 湿気たかき氷の音がした 雪が靴に侵入して地面は濡れていた どうやら私は滑って頭を打ったようだ</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(f x) (* x <span class="dv">2</span>))</code></pre>
 <p>という手続きについて、以下を生成したい．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">lambda</span> (x) (f (f x)))</code></pre>
 <p>よくみればただの関数合成だけれど、それは置いておいて． cutを使って簡潔に表したい．</p>
-<pre><code>&gt;    (cut f (f &lt;&gt;))
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="kw">&gt;</span> (cut f (f &lt;&gt;))
 gosh&gt; f</code></pre>
 <p>としたいのだが、上手く関数適用できない．</p>
-<pre><code>&gt;    ((cut f (f &lt;&gt;)) 3)
-gosh&gt; *** ERROR: Compile Error: wrong number of arguments: #f requires 0, but got 1
-&quot;(stdin)&quot;:2:((cut f (f &lt;&gt;)) 3)
-
-Stack Trace:
-_______________________________________
-gosh&gt; </code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="kw">&gt;</span> ((cut f (f &lt;&gt;)) <span class="dv">3</span>)
+gosh&gt; *** ERROR: Compile Error: wrong number of arguments: <span class="dv">#f</span> requires <span class="dv">0</span>, but got <span class="dv">1</span>
+<span class="st">&quot;(stdin)&quot;</span>:<span class="dv">2</span>:((cut f (f &lt;&gt;)) <span class="dv">3</span>)</code></pre>
 <p>fに関数適用はできないよ、というメッセージに読める．</p>
 <p>試しに</p>
-<pre><code>    (disasm (cut f &lt;&gt;))
-gosh&gt; CLOSURE #&lt;closure #f&gt;
-main_code (name=#f, code=0x833e5d0, size=4, const=1, stack=4):
-args: #f
-     0 LREF0-PUSH               ; x
-     1 GREF-TAIL-CALL(1) #&lt;identifier user#f&gt;; (f x)
-     3 RET </code></pre>
-<p>xをとって、fを呼んで、返す．</p>
-<pre><code>(disasm (cut f (f &lt;&gt;)))
-gosh&gt; CLOSURE #&lt;closure #f&gt;
-main_code (name=#f, code=0x83c4dc0, size=9, const=3, stack=11):
-args: #f
-     0 PRE-CALL(1) 6
-     2 GREF-PUSH #&lt;identifier user#&lt;&gt;&gt;; &lt;&gt;
-     4 GREF-CALL(1) #&lt;identifier user#f&gt;; (f &lt;&gt;)
-     6 PUSH-GREF-TAIL-CALL(1) #&lt;identifier user#f&gt;; (f (f &lt;&gt;))
-     8 RET </code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="kw">&gt;</span> (disasm (cut f &lt;&gt;))
+CLOSURE #&lt;closure <span class="dv">#f</span>&gt;
+main_code (name=<span class="dv">#f</span>, code=<span class="dv">0x833e5d0</span>, size=<span class="dv">4</span>, const=<span class="dv">1</span>, stack=<span class="dv">4</span>):
+args: <span class="dv">#f</span>
+     <span class="dv">0</span> LREF0-PUSH               <span class="co">; x</span>
+     <span class="dv">1</span> GREF-TAIL-CALL(<span class="dv">1</span>) #&lt;identifier user<span class="dv">#f</span>&gt;<span class="co">; (f x)</span>
+     <span class="dv">3</span> RET </code></pre>
+<p><code>x</code> をとって、<code>f</code> を呼んで、返す．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="kw">&gt;</span> (disasm (cut f (f &lt;&gt;)))
+CLOSURE #&lt;closure <span class="dv">#f</span>&gt;
+main_code (name=<span class="dv">#f</span>, code=<span class="dv">0x83c4dc0</span>, size=<span class="dv">9</span>, const=<span class="dv">3</span>, stack=<span class="dv">11</span>):
+args: <span class="dv">#f</span>
+     <span class="dv">0</span> PRE-CALL(<span class="dv">1</span>) <span class="dv">6</span>
+     <span class="dv">2</span> GREF-PUSH #&lt;identifier user#&lt;&gt;&gt;<span class="co">; &lt;&gt;</span>
+     <span class="dv">4</span> GREF-CALL(<span class="dv">1</span>) #&lt;identifier user<span class="dv">#f</span>&gt;<span class="co">; (f &lt;&gt;)</span>
+     <span class="dv">6</span> PUSH-GREF-TAIL-CALL(<span class="dv">1</span>) #&lt;identifier user<span class="dv">#f</span>&gt;<span class="co">; (f (f &lt;&gt;))</span>
+     <span class="dv">8</span> RET </code></pre>
 <p>マクロによって&lt;&gt;を引数とするlambdaで囲まれるはずなのに、 &lt;&gt;がそのままIDとして生き残ってる．マクロそのものについての 勉強と、その後改めてcutの仕様を知るべきだ．</p>
 <hr>
 <p>恥ずかしいけれど、(use srfi-1)で、take, drop, iota, fold, fold-right が使えることを今日はじめてしった．composeもその中にあった．</p>

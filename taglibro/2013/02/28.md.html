@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>Thu Feb 28 01:59:35 JST 2013</p>
+<h1 id="thu-feb-28-015935-jst-2013">Thu Feb 28 01:59:35 JST 2013</h1>
 <p>F#のパイプライン演算子、関数合成演算子．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> </span>(&gt;&gt; f g) (.$ g f))
 gosh&gt; (<span class="kw">define</span><span class="fu"> </span>(sq x) (* x x))
@@ -57,7 +57,12 @@ gosh&gt; (g <span class="dv">3</span>)
 gosh&gt; (<span class="kw">define</span><span class="fu"> g </span>(&gt;&gt; inc sq inc))
 gosh&gt; (g <span class="dv">3</span>)
 <span class="dv">17</span></code></pre>
-<p>それより、ついつい <code>scheme gosh&gt; (define-syntax &gt;&gt; (syntax-rules ()   ((_ f g) (.$ g f))   ((_ f g ...) (&gt;&gt; (.$ g f) ...)) ))</code> と書いてしまう．まだまだ慣れが足りない． しかし、それでも何かしら定義は出来て、そうすると</p>
+<p>それより、ついつい</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define-syntax</span><span class="fu"> &gt;&gt;</span>
+(<span class="kw">syntax-rules</span> ()
+  ((_ f g) (.$ g f))
+  ((_ f g ...) (&gt;&gt; (.$ g f) ...)) ))</code></pre>
+<p>と書いてしまう．まだまだ慣れが足りない． しかし、それでも何かしら定義は出来て、そうすると</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> g </span>(&gt;&gt; inc sq inc))
 gosh&gt; (g <span class="dv">3</span>)
 <span class="dv">18</span></code></pre>
@@ -71,10 +76,14 @@ gosh&gt; (g <span class="dv">3</span>)
     ((_ x f g ...) (\&gt; (f x) g ...)) ))
 gosh&gt; (\&gt; <span class="dv">2</span> inc sq sq)
 <span class="dv">81</span></code></pre>
-<p>Schemeで|は使えない．へんちくりんな変数名を|で括るから． <code>scheme gosh&gt; (define |&quot;| 1) |&quot;| gosh&gt; |&quot;| 1</code></p>
+<p>Schemeで <code>|</code> は使えない．へんちくりんな変数名を <code>|</code> で括るから．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> </span>|<span class="st">&quot;| 1)</span>
+<span class="st">|&quot;</span>|
+gosh&gt; |<span class="st">&quot;|</span>
+<span class="st">1</span></code></pre>
 <p>Haskellみたいなの方が、コードが少なくなるのは知ってるんだよ． まあ、どうせ趣味で使うんだから、その時々で好きなの使えばいいんだ．</p>
 <p>もしかしてと思ってできたけど、.$は別に引数2つに限ってなかった． そうか、LISPのLISPたる所以は、引数はたいていいくつでもいいんだ． listをapplyしてるのが正しい形なんだから．</p>
-<p>つまり、+という演算子は、Haskell含めてたいていは二項演算子だけど、 LISPだと、(+ 1 2 3 ...) というのが当たり前</p>
+<p>つまり、+という演算子は、Haskell含めてたいていは二項演算子だけど、 LISPだと、 <code>(+ 1 2 3 ...)</code> というのが当たり前</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> h </span>(.$ sq sq inc))
 gosh&gt; (h <span class="dv">2</span>)
 <span class="dv">81</span>
@@ -88,10 +97,10 @@ gosh&gt; (<span class="kw">define</span><span class="fu"> </span>(\&gt; x . ls) 
 |\\&gt;|
 gosh&gt; (\&gt; <span class="dv">3</span> sq inc)
 <span class="dv">10</span></code></pre>
-<p>この&gt;は、&gt;&gt;が関数だからこそ定義できた．</p>
+<p>この <code>\&gt;</code> は、<code>&gt;&gt;</code> が関数だからこそ定義できた．</p>
 <p>define-syntaxは長くなるから嫌だな．define-macroってのもあるみたい だけど、引数の数でmatchさせるようには出来てないみたいだし、 正直に言えば、LISPのマクロはなにがそんなにすごいのか分かってないです． 引数の評価を遅らせる版の関数で、あとcase-lambdaみたいなことができる、 くらいにしか．</p>
 <hr>
-<p>Thu Feb 28 11:08:28 JST 2013</p>
+<h1 id="thu-feb-28-110828-jst-2013">Thu Feb 28 11:08:28 JST 2013</h1>
 <p>そうそう、学校の課題でGCを実装した．調べたりで構想ができるまでに 2日くらいかかったけれど、実際のコーディングは5時間程度で、デバグ まで出来た． 「世界初の記念すべきGCアルゴリズムはマークスイープGC[1]です． はじめて世に出てから半世紀近くが経過した今も、様々な処理系で 用いられている偉大なアルゴリズムです．」---(「ガベージコレクション のアルゴリズムと実装」中村成洋/相川光 共著 より)</p>
 <p>長さ2000くらいの配列を延々と確保させてそれをゴミにするような プログラムを動かす．初めはヒープの上に配列を上から作っていって、 残りが2000未満になったら、mark and sweep を行う．残り、というのは ヒープの限界 - ヒープレジスタ値 で計算する．mark sweepはヒープ上のゴミオブジェクトをゼロで塗りつぶす 作業．本当はフリーリストとして持っておくんだけど．でもこの作業の 後、ヒープレジスタ値は変わらない．だって、そうでしょう</p>
 <pre><code>         heap
@@ -127,9 +136,11 @@ limit +---------+</code></pre>
 <p>ほら、間に空白が空いただけで、reg_hは変わらない． だから、先の計算では、ヒープの残り容量は変わらないことになる． 従って、先ほど確保しようとしてGCを起こさせた配列確保を再び しようとすると、またGCを起こす．またmark and sweep する．地味に 時間がかかる．まるで使い物にならない．</p>
 <p>改良方法はいくらでも思いついたが、残念ながらヤル気が起きない． それよりも、コンパイラ自体を書きなおしたい．少なくともOCamlとかいう 言語以外で．</p>
 <hr>
-<p>Thu Feb 28 19:16:20 JST 2013</p>
+<h1 id="thu-feb-28-191620-jst-2013">Thu Feb 28 19:16:20 JST 2013</h1>
 <p>node.js は、というか V8 は、いつになったら、 javascript 1.7やそれより上に対応するんだろうな．</p>
-<p>title=&quot;Issue 890 - v8 - Support for Javascript 1.8 features - V8 JavaScript Engine - Google Project Hosting&quot; http://code.google.com/p/v8/issues/detail?id=890</p>
+<ul class="incremental">
+<li><a href="http://code.google.com/p/v8/issues/detail?id=890">Issue 890 - v8 - Support for Javascript 1.8 features - V8 JavaScript Engine - Google Project Hosting</a></li>
+</ul>
 <p>三年前のフォーラム記事．V8はJavaScriptじゃなくてECMAScriptに従う、と． ECMAScriptなんて、誰も知らないよ．</p>
 <p>ちょっと書き捨てるのには、SpiderMonkey を使うにしても、 node.js は捨てれないしな．</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> tarai(x,y,z){

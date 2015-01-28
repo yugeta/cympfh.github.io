@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>Mon Feb 25 13:46:11 JST 2013</p>
+<h1 id="mon-feb-25-134611-jst-2013">Mon Feb 25 13:46:11 JST 2013</h1>
 <h2 id="stalinの使い方">Stalinの使い方</h2>
 <pre class="sourceCode c"><code class="sourceCode c"><span class="co">// ta.c</span>
 <span class="dt">int</span> tarai(<span class="dt">int</span> x,<span class="dt">int</span> y,<span class="dt">int</span> z){
@@ -58,7 +58,7 @@ sys     0m0.000s
 
 $ stalin tarai.scm
 For now, you must specify -On because safe fixnum arithmetic is not <span class="kw">(</span>yet<span class="kw">)</span> implemented</code></pre>
-<p>何もオプション付けないと-Onはつけろと言われる．intのoverflowチェックで あると man stalin には書いてある．</p>
+<p>何もオプション付けないと <code>-On</code> はつけろと言われる．intのoverflowチェックで あると <code>man stalin</code> には書いてある．</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ stalin -On tarai.scm; <span class="kw">time</span> ./tarai
 13
 real    0m0.635s
@@ -70,8 +70,9 @@ sys     0m0.004s</code></pre>
 real    0m0.191s
 user    0m0.188s
 sys     0m0.000s</code></pre>
-<p>stalinはそもそもschemeソースコードをCのソースコードに翻訳するもので、 あとはcc、デフォルトではgccに投げるものらしい．-coptの後ろのオプションは gccへのオプションとして働く．</p>
-<p><code>bash $ stalin -On -k tarai.scm</code> とすると、翻訳されたCのソースコードが残って見ることができる．</p>
+<p>stalinはそもそもschemeソースコードをCのソースコードに翻訳するもので、 あとはcc、デフォルトではgccに投げるものらしい. <code>-copt</code> の後ろのオプションは gcc へのオプションとして働く．</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ stalin -On -k tarai.scm</code></pre>
+<p>とすると、翻訳されたCのソースコードが残って見ることができる．</p>
 <p>まあでも実際、StalinのSchemeは実用に耐えない．SRFIとかないし．</p>
 <hr>
 <p>たらい回し関数は、遅延評価でかなり計算が削減されて、</p>

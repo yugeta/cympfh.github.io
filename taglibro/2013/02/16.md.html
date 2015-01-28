@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>2012 2/16 (Sat.)</p>
+<h1 id="sat-feb-16-2012">Sat Feb 16 2012</h1>
 <p>無限リスト (遅延リスト) を用いた、フィボナッチ数列の計算．</p>
 <p>Haskell でのコード．あまりにも有名．</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">main <span class="fu">=</span> <span class="fu">print</span> <span class="fu">$</span> <span class="fu">take</span> <span class="dv">10</span> fib
@@ -40,7 +40,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 real    0m0.003s
 user    0m0.000s
 sys 0m0.000s</code></pre>
-<p>十分シンプル． fib!!0, fib!!1 までは、consによって与えられ、例えば fib!!2 は <code>haskell fib!!2 = head (zipWith (+) .. ..)        = (head fib) + (head $ tail fib)        = 0 + (head (1 : ..))        = 0 + 1</code> 何も問題ない．</p>
+<p>十分シンプル． <code>fib!!0</code>, <code>fib!!1</code> までは、<code>cons</code> によって与えられ、例えば <code>fib!!2</code> は</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">fib<span class="fu">!!</span><span class="dv">2</span> <span class="fu">=</span> <span class="fu">head</span> (<span class="fu">zipWith</span> (<span class="fu">+</span>) <span class="fu">..</span> <span class="fu">..</span>)
+       <span class="fu">=</span> (<span class="fu">head</span> fib) <span class="fu">+</span> (<span class="fu">head</span> <span class="fu">$</span> <span class="fu">tail</span> fib)
+       <span class="fu">=</span> <span class="dv">0</span> <span class="fu">+</span> (<span class="fu">head</span> (<span class="dv">1</span> <span class="fu">:</span> <span class="fu">..</span>))
+       <span class="fu">=</span> <span class="dv">0</span> <span class="fu">+</span> <span class="dv">1</span></code></pre>
+<p>何も問題ない．</p>
 <p>Scheme での実験．Gauche 0.9.3 には、プリミティブ型としてのlconsが あり、cdrにのみ、遅延が入るconsであり、しかもこれは、一度評価したら その値をメモしておく．</p>
 <p>上の Haskell でのコードをほとんどそのまま翻訳したもの．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(use gauche.lazy)
@@ -57,7 +62,9 @@ _______________________________________
   <span class="dv">1</span>  (take fib <span class="dv">10</span>)
         [unknown location]</code></pre>
 <p>などと実行時エラーを吐く． <code>(info 'lcons)</code> を見てると、そのまんま、このコードはバグを含んでいて、「不幸にも」 Gaucheはこれを計算できないのだと書いてある．</p>
-<p>即ち、<code>(lcons a b)</code>はbのみを遅延するが、それ自体を評価するときに aとbを計算してしまう． <code>scheme (lcons* a b c) ;; (lcons a (lcons b c))</code> ならば、まず a, b を計算する． cdr部の評価の時に、b, c を計算する．bは先の計算結果がメモされている．</p>
+<p>即ち、<code>(lcons a b)</code>は<code>b</code>のみを遅延するが、それ自体を評価するときに aとbを計算してしまう．</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(lcons* a b c) <span class="co">;; (lcons a (lcons b c))</span></code></pre>
+<p>ならば、まず <code>a</code>, <code>b</code> を計算する． cdr部の評価の時に、<code>b</code>, <code>c</code>c を計算する．bは先の計算結果がメモされている．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">define</span><span class="fu"> a </span>(lcons* (<span class="kw">display</span> <span class="st">&quot;car\n&quot;</span>) (<span class="kw">display</span> <span class="st">&quot;cadr\n&quot;</span>) (<span class="kw">display</span> <span class="st">&quot;caddr\n&quot;</span>)))
 <span class="kw">car</span>
 <span class="kw">cadr</span>
@@ -67,8 +74,8 @@ gosh&gt; (<span class="kw">car</span> a)
 gosh&gt; (<span class="kw">cadr</span> a)
 <span class="kw">caddr</span>
 #&lt;undef&gt;</code></pre>
-<p>だから問題なのは、fib!!1に相当する(cadr fib)の計算には、これはそもそも (car (cdr fib)) であり、(cdr fib) の計算とは、(cadr fib) 及び (cddr fib) である．だから fib!!1 の評価に fib!!2 の計算が伴い、そしてそれには(cdr fib) が必要である．よって無限の再帰が行われる．</p>
-<p>頭３つを用意して、またmapの計算を直してやれば、(Fib_nを計算するのに Fib<em>{n-2}とFib</em>{n-1}を用いることになるから)よくて．</p>
+<p>だから問題なのは、<code>fib!!1</code> に相当する <code>(cadr fib)</code> の計算には、これはそもそも <code>(car (cdr fib))</code> であり、 <code>(cdr fib)</code> の計算とは、<code>(cadr fib)</code> 及び <code>(cddr fib)</code> である．だから <code>fib!!1</code> の評価に <code>fib!!2</code> の計算が伴い、そしてそれには <code>(cdr fib)</code> が必要である．よって無限の再帰が行われる．</p>
+<p>頭3つを用意して、またmapの計算を直してやれば、 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>F</mi><mi>i</mi><msub><mi>b</mi><mi>n</mi></msub></mrow></math>を計算するのに, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>F</mi><mi>i</mi><msub><mi>b</mi><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow></msub></mrow></math>と <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>F</mi><mi>i</mi><msub><mi>b</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow></math> を用いることになるから) よくて．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(use gauche.lazy)
 (<span class="kw">define</span><span class="fu"> fib</span>
     ($ lcons* <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> $ lmap (cut $ <span class="kw">+</span> &lt;&gt; $ * &lt;&gt; <span class="dv">2</span>) fib $ <span class="kw">cdr</span> fib))
