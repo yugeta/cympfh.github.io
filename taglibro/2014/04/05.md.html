@@ -7,21 +7,40 @@
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>2014年 4月 5日 土曜日 03:10:11 JST</p>
-<h1 id="gnu-screen">GNU screen</h1>
-<h2 id="backtick-は遅延評価である">backtick は遅延評価である。</h2>
+<h1 id="年-4月-5日-土曜日-031011-jst">2014年 4月 5日 土曜日 03:10:11 JST</h1>
+<h2 id="gnu-screen">GNU screen</h2>
+<h3 id="backtick-は遅延評価である">backtick は遅延評価である。</h3>
 <p>必要に成るまで、実行しない。 すなわち、表示をしない限り、実行しない。</p>
-<h2 id="backtick-は-cron-の代替品ではない">backtick は cron の代替品ではない。</h2>
+<h3 id="backtick-は-cron-の代替品ではない">backtick は cron の代替品ではない。</h3>
 <p>cron使うの苦労した</p>
-<pre><code>$ crontab -l
+<pre class="sourceCode bash"><code class="sourceCode bash">$ crontab -l
 0 1,3,5,7,9,11,13,15,17,19,21,23 * * * /bin/sh /home/cympfh/path/it.sh
 
-$ cat /home/cympfh/path/it.sh
-#!/bin/sh
-/usr/local/bin/node ~/git/info/index.js &gt; ~/Dropbox/info.md</code></pre>
+$ <span class="kw">cat</span> /home/cympfh/path/it.sh
+<span class="co">#!/bin/sh</span>
+/usr/local/bin/node ~/git/info/index.js <span class="kw">&gt;</span> ~/Dropbox/info.md</code></pre>
 <p>できるだけ丁寧に、フルパスを与えてやることが重要である。</p>
 </body>
 </html>

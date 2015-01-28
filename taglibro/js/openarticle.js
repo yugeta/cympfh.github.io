@@ -49,7 +49,7 @@ function opener_initial() {
           lk.className = 'article hober';
           setTimeout(function () {
             lk.className = origin;
-          }, 22000);
+          }, 52000);
         }());
 
         return false;
