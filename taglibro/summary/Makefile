@@ -14,10 +14,6 @@ newest:
 random:
 	for md in ../*/*/*.md; do echo "$${RANDOM} $${md}"; done | sort -n | cut -d' ' -f2 > random.txt
 
-# get from the most popular 12 img
-#images:
-#	curl http://www.lgtm.in/ | grep -e '<img .* src="htt' | sed 's/^.*src="//g' | sed 's/".*$$//g' | grep -v akamai | grep -v amazon > images.txt
-
 # get 12 random
 images:
 	for i in `seq 1 12`; do curl -s http://www.lgtm.in/g | grep 'id="imageUrl"' | cut -d '"' -f4; done > images.txt

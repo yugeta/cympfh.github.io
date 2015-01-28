@@ -24,7 +24,9 @@ head = (filename, n) ->
     .split '\n'
     .slice 0, n
     .filter ((x) -> not not x)
-    .join '<br>'
+    .filter ((x) -> x isnt '===')
+    .filter ((x) -> x[0..3] isnt '```')
+    .join ''
 
 print = (image, page) ->
   log "<div class=page>"

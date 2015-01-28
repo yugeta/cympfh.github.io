@@ -8,8 +8,8 @@ a {
   text-decoration: none;
 }
 .page {
-  width: 170px;
-  height: 240px;
+  width: 180px;
+  height: 320px;
   border: 3px solid pink;
   margin: 5px;
   padding: 1px;
@@ -18,8 +18,8 @@ a {
   overflow: hidden;
 }
 .minititle {
-  width: 170px;
-  height: 200px;
+  width: 180px;
+  height: 280px;
   border: 3px solid #a0ff00;
   text-align: center;
   margin: 5px;
@@ -28,7 +28,7 @@ a {
   border-radius: 4px;
 }
 img.lgtm {
-  max-width: 168px;
+  max-width: 178px;
 }
 </style>
 <body>
