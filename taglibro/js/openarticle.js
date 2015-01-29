@@ -32,6 +32,8 @@ function opener_initial() {
   // restore setting
   restore();
 
+  var restore_hober = false;
+
   // update all links
   var ls = document.links;
   for (var i = 0; i < ls.length; ++i) {
@@ -48,10 +50,13 @@ function opener_initial() {
           var hoberClassName = 'article hober';
           var origin = lk.className;
           if (origin === hoberClassName) return;
+
+          if (restore_hober) restore_hober();
           lk.className = hoberClassName;
-          setTimeout(function (lk) {
+
+          restore_hober = function () {
             lk.className = origin;
-          }, 50000, lk);
+          };
         }(lk));
 
         return false;
