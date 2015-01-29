@@ -88,9 +88,11 @@ list = (<span class="kw">function</span>() {
     <span class="kw">return</span> _results;
   }
 })();</code></pre>
-<p>どうも、 <code>coffee list = (if i % 2 == 0 then true else (false for i in ar))</code></p>
+<p>どうも、</p>
+<pre class="coffee"><code>list = (if i % 2 == 0 then true else (false for i in ar))</code></pre>
 <p>と解釈されてる。</p>
-<p>じゃあ <code>coffee list = (if i % 2 == 0 then true else false) for i in ar</code></p>
+<p>じゃあ</p>
+<pre class="coffee"><code>list = (if i % 2 == 0 then true else false) for i in ar</code></pre>
 <p>とでもすればいいんだろうけれど、 LISP以外は括弧をダサいと考えなければいけないので、</p>
 <h3 id="閑話休題">閑話休題</h3>
 <p>純粋な for文は次の2パターンを持つ</p>
