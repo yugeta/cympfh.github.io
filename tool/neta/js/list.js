@@ -236,6 +236,7 @@ list = [
   "is_zero.jpeg",
   "is_zero_shinchoku.jpeg",
   "iXI2Lnu.jpg",
+  "JfDLCAa.jpg",
   "jinsei_quantum.jpg",
   "JQAzvoJ.jpg",
   "jr0wz5Y.jpg",
