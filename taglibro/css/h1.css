@@ -1,6 +1,7 @@
 @font-face {
-  font-family: "akuafont";
-  src: url("../../../../fonts/aquafont.ttf") format("truetype");
+  font-family: aqua;
+  /* src: local("aquafont"), url("http://cympfh.github.io/fonts/aquafont.ttf"); */
+  src: url("http://cympfh.github.io/fonts/aquafont.ttf");
 }
 
 body {
@@ -10,7 +11,7 @@ body {
   padding: 0;
   width: 42em;
   font-size: 16px;
-  font-family: 'akuafont', Consolas, 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
+  font-family: aqua, Consolas, 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
 }
 
 /* main title for a page */
