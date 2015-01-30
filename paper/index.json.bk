@@ -270,5 +270,10 @@
     "url": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.52.5331",
     "title": "Finding Minimal Generalizations for Unions of Pattern Languages and Its Application to Inductive Inference from Positive Data. (1994)",
     "id": "k-mmg"
+  },
+  {
+    "url": "http://www.cs.cmu.edu/~dpelleg/download/xmeans.pdf",
+    "title": "X-means: Extending K-means with Efficient Estimation of the Number of Clusters",
+    "id": "xmeans"
   }
 ]

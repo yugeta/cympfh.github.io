@@ -275,5 +275,10 @@
     "url": "http://www.cs.cmu.edu/~dpelleg/download/xmeans.pdf",
     "title": "X-means: Extending K-means with Efficient Estimation of the Number of Clusters",
     "id": "xmeans"
+  },
+  {
+    "url": "http://ilpubs.stanford.edu:8090/778/1/2006-13.pdf",
+    "title": "k-means++: The advantages of Careful Seeding",
+    "id": "kmeanspp"
   }
 ]
