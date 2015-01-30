@@ -30,18 +30,18 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </head>
 <body>
 <h1 id="年-7月-10日-木曜日-034605-jst">2014年 7月 10日 木曜日 03:46:05 JST</h1>
-<h1 id="リスト内包表記">リスト内包表記</h1>
+<h2 id="リスト内包表記">リスト内包表記</h2>
 <p>schemeでリスト内包表記は srfi-42. 一時期よく使ってたので 42 という番号は覚えてる．</p>
 <p>Haskellのリスト内包表記をスタンダートと思うなら， リスト内包表記とは次のような言語である．</p>
-<pre><code>List-comprehension ::= [ Expression | Patterns ]
-Patterns ::= Pattern | Pattern, Patterns
-Pattern ::= Var &lt;- List | let Var = Var | Predicate</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">ListComprehension</span> <span class="ot">::</span><span class="fu">=</span> [ <span class="dt">Expression</span> <span class="fu">|</span> <span class="dt">Patterns</span> ]
+<span class="dt">Patterns</span> <span class="ot">::</span><span class="fu">=</span> <span class="dt">Pattern</span> <span class="fu">|</span> <span class="dt">Pattern</span>, <span class="dt">Patterns</span>
+<span class="dt">Pattern</span> <span class="ot">::</span><span class="fu">=</span> <span class="dt">Var</span> <span class="ot">&lt;-</span> <span class="dt">List</span> <span class="fu">|</span> <span class="kw">let</span> <span class="dt">Var</span> <span class="fu">=</span> <span class="dt">Expression</span> <span class="fu">|</span> <span class="dt">Predicate</span></code></pre>
 <p>例えば</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">[(x,y,z) <span class="fu">|</span> x <span class="ot">&lt;-</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>], y <span class="ot">&lt;-</span> <span class="st">&quot;abc&quot;</span>, <span class="fu">odd</span> x, <span class="kw">let</span> z <span class="fu">=</span> (x,y)]</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">[(<span class="dv">1</span>,<span class="ch">&#39;a&#39;</span>,(<span class="dv">1</span>,<span class="ch">&#39;a&#39;</span>)),(<span class="dv">1</span>,<span class="ch">&#39;b&#39;</span>,(<span class="dv">1</span>,<span class="ch">&#39;b&#39;</span>)),(<span class="dv">1</span>,<span class="ch">&#39;c&#39;</span>,(<span class="dv">1</span>,<span class="ch">&#39;c&#39;</span>))]</code></pre>
 <p>と評価される．</p>
 <p><code>&lt;-</code> は <code>map</code> で表現される．<code>let</code>は<code>let</code>だろう．</p>
-<h1 id="リストもなど">リストもなど</h1>
+<h2 id="リストもなど">リストもなど</h2>
 <p>私は昔読んだ <a href="homepages.inf.ed.ac.uk/wadler/papers/monadscomb/monadscomb.ps">これ | Combining Monads</a> を思い出してた．</p>
 <p><a href="http://cympfh.github.io/study/monad.txt">メモ</a> と重複になるが <code>&lt;-</code> については次のように定義できて，</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">[u] <span class="fu">=</span> [u]
@@ -56,7 +56,7 @@ Pattern ::= Var &lt;- List | let Var = Var | Predicate</code></pre>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(filter (<span class="kw">lambda</span> (???) (test))
   (map (<span class="kw">lambda</span> (x) y) ls))</code></pre>
 <p>つまり <code>test</code> は何についての述語なのか分からない． というか，<code>filter</code> より外に <code>x</code> という項は出てこないからわかりようがない．</p>
-<h1 id="解決法">解決法</h1>
+<h2 id="解決法">解決法</h2>
 <p>モナドもなにもない，コードを書いた 先ほどの</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">[ y <span class="fu">|</span> x <span class="ot">&lt;-</span> ls, test]</code></pre>
 <p>を</p>
@@ -77,7 +77,7 @@ Pattern ::= Var &lt;- List | let Var = Var | Predicate</code></pre>
       xss))
     xsss))</code></pre>
 <p>破壊的代入 push! のおかげで Predicate は単にループをスルー (continue) すればいいだけになった．</p>
-<h1 id="コード">コード</h1>
+<h2 id="コード">コード</h2>
 <script src="https://gist.github.com/cympfh/47d8592c0912481e580a.js"></script>
 
 </body>

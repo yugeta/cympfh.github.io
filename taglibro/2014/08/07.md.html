@@ -30,36 +30,39 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </head>
 <body>
 <h1 id="年-8月-7日-木曜日-223038-jst">2014年 8月 7日 木曜日 22:30:38 JST</h1>
-<p>Coffee Script のメソッドチェーンが中置演算子っぽい．</p>
+<h2 id="coffee-script-のメソッドチェーンが中置演算子っぽい">Coffee Script のメソッドチェーンが中置演算子っぽい</h2>
 <p>javascriptの</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">obj</span>.<span class="fu">method</span>(arg)</code></pre>
 <p>をcoffeeでは</p>
-<pre class="coffee"><code>obj.method arg</code></pre>
-<p>と書くけど、</p>
-<pre class="coffee"><code>obj .method arg</code></pre>
-<p>と書いても全く同じだけど、中置っぽい． この演算子は常に右結合である．</p>
-<pre class="coffee"><code>{log} = console
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">obj</span>.<span class="fu">method</span> arg</code></pre>
+<p>と書くが、</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">obj .<span class="fu">method</span> arg</code></pre>
+<p>のようなスペースの挟み方は許されており、 中置演算子のように見える。 この演算子は常に右結合である。</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{<span class="kw">log</span>} = console
 
-Object::pair = (x) -&gt; [@valueOf(), x]
+<span class="dt">Object</span>::pair = (x) -&gt; [@valueOf(), x]
 
-log 0 .pair 1 .pair 2 .pair 3
-# =&gt; [ 0, [ 1, [ 2, 3 ] ] ]
-log (0 .pair 1) .pair 2 .pair 3
-# =&gt; [ [ 0, 1 ], [ 2, 3 ] ]
-log ((0 .pair 1) .pair 2) .pair 3
-# =&gt; [ [ [ 0, 1 ], 2 ], 3 ]</code></pre>
+<span class="kw">log</span> <span class="dv">0</span> .<span class="fu">pair</span> <span class="dv">1</span> .<span class="fu">pair</span> <span class="dv">2</span> .<span class="fu">pair</span> <span class="dv">3</span>
+# =&gt; [ <span class="dv">0</span>, [ <span class="dv">1</span>, [ <span class="dv">2</span>, <span class="dv">3</span> ] ] ]
+<span class="kw">log</span> (<span class="dv">0</span> .<span class="fu">pair</span> <span class="dv">1</span>) .<span class="fu">pair</span> <span class="dv">2</span> .<span class="fu">pair</span> <span class="dv">3</span>
+# =&gt; [ [ <span class="dv">0</span>, <span class="dv">1</span> ], [ <span class="dv">2</span>, <span class="dv">3</span> ] ]
+<span class="kw">log</span> ((<span class="dv">0</span> .<span class="fu">pair</span> <span class="dv">1</span>) .<span class="fu">pair</span> <span class="dv">2</span>) .<span class="fu">pair</span> <span class="dv">3</span>
+# =&gt; [ [ [ <span class="dv">0</span>, <span class="dv">1</span> ], <span class="dv">2</span> ], <span class="dv">3</span> ]</code></pre>
 <p>本来のメソッドチェーンは左結合であるべき</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">Object</span>.<span class="fu">prototype</span>.<span class="fu">pair</span> = <span class="kw">function</span>(x){ <span class="kw">return</span> [<span class="kw">this</span>.<span class="fu">valueOf</span>(), x] };
 <span class="kw">console</span>.<span class="fu">log</span>(<span class="dv">0</span> .<span class="fu">pair</span>(<span class="dv">1</span>) .<span class="fu">pair</span>(<span class="dv">2</span>) .<span class="fu">pair</span>(<span class="dv">3</span>))
 <span class="co">// =&gt; [ [ [ 0, 1 ], 2 ], 3 ]</span></code></pre>
-<p>これを coffee で再現するには、 結局 javascript と全く同様の括弧を補う必要があったけれど、 バージョン 1.7.0 からは、</p>
-<pre class="coffee"><code>x = 0 .pair 1
-      .pair 2
-      .pair 3
-log x
-# =&gt; [ [ [ 0, 1 ], 2 ], 3 ]</code></pre>
-<p>などと改行によって左結合にできるようになった．</p>
+<p>これを coffee で再現するには、 結局 javascript と全く同様に <code>0.pair(1).pair(2).pair(3)</code> と、 括弧を補う必要があったけれど、 Coffee Script ver. 1.7.0 からは、</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">x = <span class="dv">0</span> .<span class="fu">pair</span> <span class="dv">1</span>
+      .<span class="fu">pair</span> <span class="dv">2</span>
+      .<span class="fu">pair</span> <span class="dv">3</span>
+<span class="kw">log</span> x
+# =&gt; [ [ [ <span class="dv">0</span>, <span class="dv">1</span> ], <span class="dv">2</span> ], <span class="dv">3</span> ]</code></pre>
+<p>と改行によって左結合にできるようになった。</p>
 <p>それはそうと、</p>
-<p><code>coffee Number::cons = (ls) -&gt; [@valueOf()] .concat ls log 1 .cons [2 .. 10] .concat ( 10*i for i in [2..10]) # =&gt; [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ]</code> かっこいい．</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="dt">Number</span>::cons = (ls) -&gt; [@valueOf()] .<span class="fu">concat</span> ls
+<span class="kw">log</span> <span class="dv">1</span> .<span class="fu">cons</span> [<span class="dv">2</span> .. <span class="dv">10</span>] .<span class="fu">concat</span> ( <span class="dv">10</span>*i <span class="kw">for</span> i <span class="kw">in</span> [<span class="dv">2</span>..10])
+# =&gt; [ <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">100</span> ]</code></pre>
+<p>かっこいい。</p>
 </body>
 </html>
