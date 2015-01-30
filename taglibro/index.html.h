@@ -11,8 +11,7 @@
       <div class='article' id='article'><iframe id='fr' src="./summary/index.html"></iframe></div>
       <div class='dates'>
         <div>
-          <div id='check_iframe' style='cursor:pointer'>check to view on iframe</div>
-          <input type='text' value='filter' value='' id='q' style='border: 0px white solid;width:91%;'>
+          <input type='text' value='filter' value='' id='q' style='border: 0px white solid;width:91%;height:1.2em;'>
         </div>
         <div id='filtered'></div>
 
