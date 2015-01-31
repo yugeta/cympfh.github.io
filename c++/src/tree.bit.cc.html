@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/* BIT for v[0] .. v[N - 1]</span>
+<span class="co"> *</span>
+<span class="co"> * bit = BIT(N);</span>
+<span class="co"> *</span>
+<span class="co"> * bit.add(n, x) = { v[n] += x; }</span>
+<span class="co"> * bit.sum_up(n) = v[0] + v[1] + .. + v[n]</span>
+<span class="co"> *</span>
+<span class="co"> */</span>
+
+<span class="kw">struct</span> BIT {
+  <span class="dt">int</span> N;
+  <span class="dt">int</span> *ar;
+  BIT(<span class="dt">int</span> n) {
+    N = n;
+    ar = <span class="kw">new</span> <span class="dt">int</span>[n<span class="dv">+1</span>];
+    <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;n<span class="dv">+1</span>;ar[i++]=<span class="dv">0</span>);
+  }
+  ~BIT() {
+    <span class="kw">delete</span>[] ar;
+  }
+  <span class="dt">void</span> add(<span class="dt">int</span> idx, <span class="dt">int</span> w) {
+    <span class="kw">for</span> (<span class="dt">int</span> x = idx<span class="dv">+1</span>; x &lt;= N; x += x&amp;-x) {
+      ar[x] += w;
+    }
+  }
+  <span class="dt">int</span> sum_up(<span class="dt">int</span> idx) {
+    <span class="dt">int</span> ret = <span class="dv">0</span>;
+    <span class="kw">for</span> (<span class="dt">int</span> x = idx + <span class="dv">1</span>; x &gt; <span class="dv">0</span>; x -= x&amp;-x) {
+      ret += ar[x];
+    }
+    <span class="kw">return</span> ret;
+  }
+};
+
+<span class="dt">int</span> main() {
+  <span class="dt">auto</span> bit = BIT(<span class="dv">100</span>);
+  bit.add(<span class="dv">0</span>, <span class="dv">1</span>);
+  cout &lt;&lt; bit.sum_up(<span class="dv">0</span>) &lt;&lt; endl;
+  bit.add(<span class="dv">1</span>, <span class="dv">1</span>);
+  bit.add(<span class="dv">3</span>, <span class="dv">1</span>);
+  cout &lt;&lt; bit.sum_up(<span class="dv">0</span>) &lt;&lt; endl;
+  cout &lt;&lt; bit.sum_up(<span class="dv">2</span>) &lt;&lt; endl;
+  cout &lt;&lt; bit.sum_up(<span class="dv">3</span>) &lt;&lt; endl;
+  <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+</body>
+</html>
