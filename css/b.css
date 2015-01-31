@@ -1,7 +1,42 @@
-/* minimum common css */
+/* css for /index */
+
+@font-face {
+  font-family: aqua;
+  src: local("aquafont"), url("http://cympfh.github.io/fonts/aquafont.ttf");
+}
 
 a {
   color: #402020;
 }
 
+div#poster {
+  opacity: 1.0;
+  position: absolute;
+  transition-duration:1s;
+  transition-timing-function: ease-out;
+  top: 40%;
+  left: 40%;
+}
+
+div#poster > a.aimg > img {
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+div#cont {
+  font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+  font-size: 14px;
+  line-height: 1.2;
+  opacity: 0.0;
+  transition-duration:1.5s;
+  transition-property: opacity;
+  position: absolute;
+  left: -100%;
+  top: -100%;
+}
+
+div.hellfire {
+  font-size: 3em;
+  font-family: aqua;
+}
 
