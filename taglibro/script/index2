@@ -4,7 +4,7 @@ OUT=top.html
 
 cp script/index2.html $OUT
 
-for f in `ls -1r */*/*.md.html | head -20`; do
+for f in `ls -1r */*/*.md.html | head -30`; do
   cat $f | awk '/<body>/,/<.body>/' | sed 's/body/section/g' >> $OUT
 done
 
