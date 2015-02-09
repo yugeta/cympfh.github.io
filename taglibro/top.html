@@ -445,18 +445,18 @@ do ami</code></pre>
 <p>人間は気まぐれだから。<br>「猫は気まぐれ」だと意味が随分違うね。</p>
 <hr>
 <p>絶対昔読んだことのある本に書いてあったはずなのに、 何も覚えてない。 読み方が悪いのだろうか。 でも、大事そうなところだけ拾い読みして、 結果何も残らないような読み方は癖で治らないだろう。</p>
-<pre class="coffee"><code>stack = []
+<pre class="sourceCode haskell"><code class="sourceCode haskell">stack <span class="fu">=</span> []
 
-has_read (book) -&gt;
-  stack.push book if valuable book
+has_read (book) <span class="ot">-&gt;</span>
+  stack<span class="fu">.</span>push book <span class="kw">if</span> valuable book
 
-rec = -&gt;
-  book = stack.shift()
-  begin_read book, -&gt;
+rec <span class="fu">=</span> <span class="ot">-&gt;</span>
+  book <span class="fu">=</span> stack<span class="fu">.</span>shift()
+  begin_read book, <span class="ot">-&gt;</span>
     has_read book
-    do rec
+    <span class="kw">do</span> rec
 
-do rec</code></pre>
+<span class="kw">do</span> rec</code></pre>
 </section>
 <section>
 <h1 id="mon-nov-3-131630-jst-2014">Mon Nov 3 13:16:30 JST 2014</h1>
@@ -472,27 +472,27 @@ do rec</code></pre>
 <h1 id="mon-oct-27-070347-jst-2014">Mon Oct 27 07:03:47 JST 2014</h1>
 <h2 id="プロコンに向けた-makefile">プロコンに向けた Makefile</h2>
 <p>10分程で今書いたものなので使い勝手は分からない。</p>
-<pre class="make"><code>all: main.exe input_
-    ./main.exe &lt; input | tee out
+<pre class="sourceCode bash"><code class="sourceCode bash">all: main.exe input_
+    ./main.exe <span class="kw">&lt;</span> input <span class="kw">|</span> <span class="kw">tee</span> out
 
 main.exe: main.cc
-    g++ -o $@ -std=c++11 $^
+    g++ -o <span class="ot">$@</span> -std=c++11 $^
 
 input_:
-    xsel -bo | sed -e &#39;s/^\s*//g&#39; | sed -e &#39;s/\s*$$//g&#39; &gt; input
+    xsel -bo <span class="kw">|</span> <span class="kw">sed</span> -e <span class="st">&#39;s/^\s*//g&#39;</span> <span class="kw">|</span> <span class="kw">sed</span> -e <span class="st">&#39;s/\s*$$//g&#39;</span> <span class="kw">&gt;</span> input
 
 test: main.exe
-    @for i in cases/*.in; do \
-        ./main.exe &lt; $$i &gt; /tmp/out; \
-        cmp -s /tmp/out $${i%in}out; \
-        RETVAL=$$?; \
-        if [  $$RETVAL -eq 1 ]; then \
-        /bin/echo -e &#39;\e[31m&#39;$$i&#39;\e[m&#39;; \
-        diff /tmp/out $${i%in}out; \
-        exit 1; \
-        fi; \
-        done; \
-        /bin/echo -e &#39;\e[34mpassed!\e[m&#39;
+    @for i <span class="kw">in</span> cases/*.in; <span class="kw">do</span> <span class="kw">\</span>
+        ./main.exe <span class="kw">&lt;</span> <span class="ot">$$</span>i <span class="kw">&gt;</span> /tmp/out; <span class="kw">\</span>
+        <span class="kw">cmp</span> -s /tmp/out <span class="ot">$$</span><span class="dt">{i%in}</span>out; <span class="kw">\</span>
+        <span class="ot">RETVAL=$$</span>?; <span class="kw">\</span>
+        <span class="kw">if </span>[  <span class="ot">$$</span>RETVAL -eq 1 ]; <span class="kw">then</span> <span class="kw">\</span>
+        /bin/echo -e <span class="st">&#39;\e[31m&#39;</span><span class="ot">$$</span>i<span class="st">&#39;\e[m&#39;</span>; <span class="kw">\</span>
+        <span class="kw">diff</span> /tmp/out <span class="ot">$$</span><span class="dt">{i%in}</span>out; <span class="kw">\</span>
+        <span class="kw">exit</span> 1; <span class="kw">\</span>
+        <span class="kw">fi</span>; <span class="kw">\</span>
+        <span class="kw">done</span>; <span class="kw">\</span>
+        /bin/echo -e <span class="st">&#39;\e[34mpassed!\e[m&#39;</span>
 
 
 clean:
@@ -520,31 +520,31 @@ clean:
 <p>よくわかんないんだけど、 アニメ公式アカウント関連ばっかりフォローすると、 胡散臭いアカウントに大量にフォローされる。</p>
 <p>&quot;@{anime title}fan&quot; というIDで何かの宣伝しつつ、 特定の作品の画像を貼るみたいな、 明らかに同じ人たちが作っていて、 &quot;@sarbantfan&quot; なんかを見ると、 怪しいurlを貼るわけでもなく、 怪しい商品の宣伝をするわけもないし。</p>
 <p>それはともかく、 はじめは一人ひとりスパム報告してたんだけど、 ちょっと忘れてたらもうweb上でそれをやるには面倒すぎる量になってた。 目方で量ると、フォロワ160人のほとんど半分がスパムだった。</p>
-<pre class="sh"><code>$ twurl accounts
+<pre class="sourceCode bash"><code class="sourceCode bash">$ twurl accounts
 ampeloss
   qnLRwkeo8zFjhIDfgG0F8Q
 cympfh
-  qnLRwkeo8zFjhIDfgG0F8Q (default)
+  qnLRwkeo8zFjhIDfgG0F8Q <span class="kw">(</span>default<span class="kw">)</span>
 unddich
   qnLRwkeo8zFjhIDfgG0F8Q</code></pre>
 <p>jsonなので, <a href="http://stedolan.github.io/jq/">jq</a> も使う。</p>
 <p>フォロワの取得 (max 200 at a time)</p>
-<pre class="sh"><code>$ twurl -X GET /1.1/followers/list.json?count=200 | jq -r &#39;.users[].screen_name&#39; &gt; /tmp/ids</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ twurl -X GET /1.1/followers/list.json?<span class="ot">count=</span>200 <span class="kw">|</span> jq -r <span class="st">&#39;.users[].screen_name&#39;</span> <span class="kw">&gt;</span> /tmp/ids</code></pre>
 <p>スパムしたい方がそうでないより少ないとして、</p>
-<pre class="sh"><code>$ cp /tmp/ids /tmp/ids0
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cp</span> /tmp/ids /tmp/ids0
 $ vim /tmp/ids
-(スパムしたいアカウントの行を消す)
-$ diff /tmp/ids0 /tmp/ids | grep &#39;^&lt;&#39; | sed &#39;s/^..//g&#39; &gt; /tmp/list</code></pre>
+<span class="kw">(</span>スパムしたいアカウントの行を消す<span class="kw">)</span>
+$ <span class="kw">diff</span> /tmp/ids0 /tmp/ids <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&#39;^&lt;&#39;</span> <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/^..//g&#39;</span> <span class="kw">&gt;</span> /tmp/list</code></pre>
 <p><code>/tmp/list</code> が最終的に消したい人たち.<br>漏れがあると嫌なので、スパムの数を数えておいて、 予め、頭の中で引き算しておく。</p>
-<pre class="sh"><code>$ wc -l /tmp/list
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">wc</span> -l /tmp/list
 81 /tmp/list</code></pre>
 <p>これに対して /users/report_spam を叩きたいんだけど、 他同様、使用制限があるらしい。 でも、 https://dev.twitter.com/rest/public/rate-limits には載っていない。 素敵だ。</p>
 <p>素敵なことは無視しよう。</p>
-<pre class="sh"><code>$ cat /tmp/list | xargs -i twurl -X POST -d screen_name={} /1.1/users/report_spam.json</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> /tmp/list <span class="kw">|</span> <span class="kw">xargs</span> -i twurl -X POST -d <span class="ot">screen_name=</span><span class="dt">{}</span> /1.1/users/report_spam.json</code></pre>
 <p>すぐに、 <code>javascript {&quot;errors&quot;:[{&quot;code&quot;:205,&quot;message&quot;:&quot;You are over the limit for spam reports.&quot;}]}</code> を返してきた。 ほとんど一度に、このAPIを叩けるのは 65 回らしい。</p>
 <p>1 window は 15分らしいので、</p>
-<pre class="sh"><code>$ tail -n `expr 81 - 65` /tmp/list &gt; /tmp/list_rest
-$ sleep 15m &amp;&amp; cat /tmp/list_rest | xargs -i twurl -X POST -d screen_name={} /1.1/users/report_spam.json</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">tail</span> -n <span class="kw">`expr</span> 81 - 65<span class="kw">`</span> /tmp/list <span class="kw">&gt;</span> /tmp/list_rest
+$ <span class="kw">sleep</span> 15m <span class="kw">&amp;&amp;</span> <span class="kw">cat</span> /tmp/list_rest <span class="kw">|</span> <span class="kw">xargs</span> -i twurl -X POST -d <span class="ot">screen_name=</span><span class="dt">{}</span> /1.1/users/report_spam.json</code></pre>
 <p>として寝ます。<br>おやすみなさい。</p>
 </section>
 <section>
@@ -565,29 +565,29 @@ $ sleep 15m &amp;&amp; cat /tmp/list_rest | xargs -i twurl -X POST -d screen_nam
 </ul>
 <p>まったく、APIの名前が紛らわしい。 <code>Write</code> という名前も、<code>WriteUtf8</code> という名前も。</p>
 <p>今回、私が新しく学んだAPIについてのみ書く。</p>
-<h1 id="型チェック">型チェック</h1>
+<h3 id="型チェック">型チェック</h3>
 <pre class="sourceCode cpp"><code class="sourceCode cpp">v8::Value::IsString()
 
 <span class="co">// Arguments&amp; args</span>
 args[<span class="dv">0</span>]-&gt;IsString();</code></pre>
-<h1 id="v8string-へのキャスト-objecttostring">v8::String へのキャスト (Object#toString)</h1>
+<h3 id="v8string-へのキャスト-objecttostring">v8::String へのキャスト (Object#toString)</h3>
 <pre class="sourceCode cpp"><code class="sourceCode cpp">v8::Value::ToString()
 
 <span class="co">// Arguments&amp; args</span>
 Local&lt;String&gt; str = args[<span class="dv">0</span>]-&gt;ToString();</code></pre>
-<h1 id="文字列長さの取得-stringlength">文字列長さの取得 (String#length)</h1>
+<h3 id="文字列長さの取得-stringlength">文字列長さの取得 (String#length)</h3>
 <pre class="sourceCode cpp"><code class="sourceCode cpp">v8::Value::Length()
 
 <span class="co">// Arguments&amp; args</span>
 <span class="dt">int</span> n = args[<span class="dv">0</span>]-&gt;Length();</code></pre>
 <p>変換をする前に、 <code>String#length</code> で長さを取得する必要がある。</p>
-<h1 id="c-プリミティブ型へのキャスト">c++ プリミティブ型へのキャスト</h1>
+<h3 id="c-プリミティブ型へのキャスト">c++ プリミティブ型へのキャスト</h3>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">// Local&lt;String&gt; str</span>
 <span class="dt">int</span> n = str-&gt;Length();
 <span class="dt">uint16_t</span> s[n];
 str-&gt;Write(s);</code></pre>
 <p><code>Write</code> はいわゆる <code>sprinf</code> である。 また、<code>WriteAscii</code> と、 <code>WriteUtf8</code> もあるが、 今は使いどきではない。</p>
-<h1 id="c-プリミティブ型から-javascript-文字列へのキャスト">c++ プリミティブ型から javascript 文字列へのキャスト</h1>
+<h3 id="c-プリミティブ型から-javascript-文字列へのキャスト">c++ プリミティブ型から javascript 文字列へのキャスト</h3>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">uint16_t</span> s[<span class="dv">14</span>];
 <span class="co">// assign into s[0] to s[12]</span>
 s[<span class="dv">13</span>] = <span class="dv">0</span>; <span class="co">// last must be &#39;\n&#39;</span>
@@ -1006,4 +1006,4 @@ exec i3</code></pre>
 </figure>
 <p>ugly class</p>
 </section>
-<a href='./index.html'>▷ read more</a>
+<a href='./'>▷ read more</a>

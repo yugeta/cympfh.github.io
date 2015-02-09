@@ -7,6 +7,25 @@
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
@@ -16,17 +35,17 @@
 <p>人間は気まぐれだから。<br>「猫は気まぐれ」だと意味が随分違うね。</p>
 <hr>
 <p>絶対昔読んだことのある本に書いてあったはずなのに、 何も覚えてない。 読み方が悪いのだろうか。 でも、大事そうなところだけ拾い読みして、 結果何も残らないような読み方は癖で治らないだろう。</p>
-<pre class="coffee"><code>stack = []
+<pre class="sourceCode haskell"><code class="sourceCode haskell">stack <span class="fu">=</span> []
 
-has_read (book) -&gt;
-  stack.push book if valuable book
+has_read (book) <span class="ot">-&gt;</span>
+  stack<span class="fu">.</span>push book <span class="kw">if</span> valuable book
 
-rec = -&gt;
-  book = stack.shift()
-  begin_read book, -&gt;
+rec <span class="fu">=</span> <span class="ot">-&gt;</span>
+  book <span class="fu">=</span> stack<span class="fu">.</span>shift()
+  begin_read book, <span class="ot">-&gt;</span>
     has_read book
-    do rec
+    <span class="kw">do</span> rec
 
-do rec</code></pre>
+<span class="kw">do</span> rec</code></pre>
 </body>
 </html>

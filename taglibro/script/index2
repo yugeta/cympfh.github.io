@@ -10,4 +10,4 @@ done
 
 sed -i -e 's#"../../#"#g' $OUT
 
-echo "<a href='./index.html'>▷ read more</a>" >> $OUT
+echo "<a href='./'>▷ read more</a>" >> $OUT
