@@ -3,6 +3,11 @@
   src: local("aquafont"), url("http://cympfh.github.io/fonts/aquafont.ttf");
 }
 
+@font-face {
+  font-family: eufm;
+  src: local("eufm10"), url("http://cympfh.github.io/fonts/eufm.ttf");
+}
+
 body {
   color: #201010;
   background-color: white;
@@ -17,7 +22,7 @@ body {
 h1 {
   border-bottom: 1px black dotted;
   text-align: right;
-  font-family: 'eufm10', 'aquafont', Meiryo, メイリオ, serif;
+  font-family: eufm, Meiryo, メイリオ, serif;
   font-size: 15px;
 }
 
