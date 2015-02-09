@@ -1,0 +1,13 @@
+#!/bin/sh
+
+OUT=top.html
+
+cp script/index2.html $OUT
+
+for f in `ls -1r */*/*.md.html | head -20`; do
+  cat $f | awk '/<body>/,/<.body>/' | sed 's/body/section/g' >> $OUT
+done
+
+sed -i -e 's#"../../#"#g' $OUT
+
+echo "<a href='./index.html'>▷ read more</a>" >> $OUT

@@ -18,9 +18,18 @@ div#poster {
   left: 40%;
 }
 
-div#poster > a.aimg > img {
+div#poster > div.icons {
+  border-bottom: 1px #d7d7d7 solid;
+}
+
+div.icons > a.aimg > img {
   margin-bottom: 15px;
   cursor: pointer;
+}
+
+a.shortcut {
+  color: #d4d4d4;
+  text-decoration: underline;
 }
 
 div#cont {
