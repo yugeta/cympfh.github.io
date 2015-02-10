@@ -5,6 +5,7 @@ albums/step
 albums/tsukasa-record
 albums/xxNONOWAxx
 albums/gentoo
+anime/2000
 anime/200x
 anime/2010
 anime/2011
