@@ -1,3 +1,4 @@
+test.pls
 fav.pls
 albums/demba_b
 albums/step
