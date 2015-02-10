@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>Sun Jul 28 15:39:14 JST 2013</p>
+<h1 id="sun-jul-28-153914-jst-2013">Sun Jul 28 15:39:14 JST 2013</h1>
 <p>Gaucheでは positive? _ つかうより &gt; _ 0 の方がいいよという話</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(use srfi<span class="dv">-1</span>)
 (<span class="kw">for-each</span>
@@ -43,8 +43,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   (iota <span class="dv">10000000</span>))</code></pre>
 <p>焼き鈍し法やってて， positive?って名前長いからゼロとの大小比較に書き換えたら地味に速くなった</p>
 <p>てっきり R5RS で定義されてるくらいのプリミティブな手続きだから 最適化されてるものだと思ったけど別にそうでもないんだね</p>
-<h2 id="追記">追記</h2>
-<p>2013年 8月 24日 土曜日 21:25:44 JST</p>
+<h2 id="追記-2013年-8月-24日-土曜日-212544-jst">追記 (2013年 8月 24日 土曜日 21:25:44 JST)</h2>
 <p>positive?より&gt;のほうが早い場合もあるけど，そうでない場合もあった</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(time (<span class="kw">for-each</span> (^i (<span class="kw">if</span> (<span class="kw">positive?</span> <span class="dv">1</span>) &#39;true &#39;false)) (iota *N*)))
 <span class="co">; real   0.155</span>

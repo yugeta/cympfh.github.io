@@ -1,10 +1,11 @@
+# Nov 2013
 
 長く使いたいのでメモしておこう．
 Giant の Escape R3.
 
-> http://dounokouno.com/2010/11/20/giant-escape-r3-のタイヤとチューブを交換した/
-> quote
-> 
+`http://dounokouno.com/2010/11/20/giant-escape-r3-のタイヤとチューブを交換した/`
+からの引用
+
 > 11月
 > 20
 > GIANT ESCAPE R3 のタイヤとチューブを交換した
@@ -159,5 +160,4 @@ Giant の Escape R3.
 > 
 > 23C良いわー。
 > 23Cに交換して正解だわー。 
->
-> unquote
+

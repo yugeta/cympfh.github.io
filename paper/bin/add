@@ -25,7 +25,7 @@ echo $ID >> $TMP
 
 if [ "_${MEMO}" == "_y" ]; then
   MEMOFILE="./memo/${ID}.md"
-  [ -f $MEMOFILE ] || echo "# ${TITLE}" > $MEMOFILE
+  [ -f $MEMOFILE ] || echo "% ${TITLE}" > $MEMOFILE
   vim $MEMOFILE
 else
   echo unread >> $TMP

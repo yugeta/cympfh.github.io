@@ -29,8 +29,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>Sun Jul 14 20:27:00 JST 2013</p>
-<h1 id="疑問点">疑問点</h1>
+<h1 id="sun-jul-14-202700-jst-2013">Sun Jul 14 20:27:00 JST 2013</h1>
+<h2 id="疑問点">疑問点</h2>
 <p>あたかも継続を返すように名前付きletは返せないのか なんでエラーが出ず下のコードは動いてしまうのか</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(hoge)
   (<span class="kw">let</span> loop ((i <span class="dv">0</span>))
@@ -43,8 +43,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (receive (j next) (hoge) (<span class="kw">force</span> next))
 <span class="dv">3</span></code></pre>
 <p>あれ？ ここは多値が帰ってきて欲しいのだけれど？？？？</p>
-<h2 id="追記">追記</h2>
-<p>Tue Aug 6 10:53:06 JST 2013</p>
+<h2 id="追記-tue-aug-6-105306-jst-2013">追記 (Tue Aug 6 10:53:06 JST 2013)</h2>
 <p>名前付きletの名前を返すことは，確かに再帰手続きを返すことに等しい</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (<span class="kw">let</span> rec ((x -<span class="dv">1</span>))
   (<span class="kw">cond</span> [(<span class="kw">&lt;</span> x <span class="dv">0</span>) rec]

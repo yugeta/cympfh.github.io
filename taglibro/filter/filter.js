@@ -24,7 +24,7 @@ function display(lst) {
         return;
       }
       var fname = xs[0] + '/' + xs[1] + '/' + xs[2];
-      LI.innerHTML = "<a href='" + fname + ".md.html'>" + fname + "</a>";
+      LI.innerHTML = "<a style='float: none !important' href='" + fname + ".md.html'>" + fname + "</a>";
       OL.appendChild(LI);
     });
   }

@@ -29,7 +29,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<h1 id="英和辞書">英和辞書．</h1>
+<h1 id="may-15-2014">May 15 2014</h1>
+<h2 id="英和辞書">英和辞書．</h2>
 <p>英和辞書のデータをどこかから持ってくる．</p>
 <p>私のデータは</p>
 <pre><code>&lt;datum&gt; ::= &lt;line&gt; | &lt;datum&gt;
@@ -38,7 +39,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 &lt;description&gt; ::= 『猫』;(ライオン,トラ,ヒョウなどの)ネコ科の動物 | ...</code></pre>
 <p>みたいに、タブ区切りになってる．</p>
 <p>こっから目的の英単語を探すだけだから <code>grep コマンド</code>でも使えばいいけど、 <code>look コマンド</code> は二分探索をしてくれるという噂があるのでそちらを使う． だから予め、英和辞書のデータをソートしておく．</p>
-<h2 id="bash">bash</h2>
+<h3 id="bash">bash</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
 
 <span class="kw">function</span><span class="fu"> ej()</span> <span class="kw">{</span>
@@ -48,7 +49,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   look -f <span class="ot">$1</span> ~/Dropbox/txt/EngJa <span class="kw">|</span> <span class="kw">sed</span> <span class="st">&#39;s/\t /\n  /; s/ \/ /\n  /g&#39;</span>
 <span class="kw">}</span></code></pre>
 <p><code>ej</code>は英単語の完全一致、<code>ej2</code>は前方一致をする．スペルが怪しいものを探すときに使うことにする．</p>
-<h2 id="vim">vim</h2>
+<h3 id="vim">vim</h3>
 <pre class="vim"><code>&quot; look-up English-Japanese dictionary
 
 fun! g:lookup(word, suff)

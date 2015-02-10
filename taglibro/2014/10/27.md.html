@@ -7,33 +7,52 @@
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
 <h1 id="mon-oct-27-070347-jst-2014">Mon Oct 27 07:03:47 JST 2014</h1>
 <h2 id="プロコンに向けた-makefile">プロコンに向けた Makefile</h2>
 <p>10分程で今書いたものなので使い勝手は分からない。</p>
-<pre class="make"><code>all: main.exe input_
-    ./main.exe &lt; input | tee out
+<pre class="sourceCode bash"><code class="sourceCode bash">all: main.exe input_
+    ./main.exe <span class="kw">&lt;</span> input <span class="kw">|</span> <span class="kw">tee</span> out
 
 main.exe: main.cc
-    g++ -o $@ -std=c++11 $^
+    g++ -o <span class="ot">$@</span> -std=c++11 $^
 
 input_:
-    xsel -bo | sed -e &#39;s/^\s*//g&#39; | sed -e &#39;s/\s*$$//g&#39; &gt; input
+    xsel -bo <span class="kw">|</span> <span class="kw">sed</span> -e <span class="st">&#39;s/^\s*//g&#39;</span> <span class="kw">|</span> <span class="kw">sed</span> -e <span class="st">&#39;s/\s*$$//g&#39;</span> <span class="kw">&gt;</span> input
 
 test: main.exe
-    @for i in cases/*.in; do \
-        ./main.exe &lt; $$i &gt; /tmp/out; \
-        cmp -s /tmp/out $${i%in}out; \
-        RETVAL=$$?; \
-        if [  $$RETVAL -eq 1 ]; then \
-        /bin/echo -e &#39;\e[31m&#39;$$i&#39;\e[m&#39;; \
-        diff /tmp/out $${i%in}out; \
-        exit 1; \
-        fi; \
-        done; \
-        /bin/echo -e &#39;\e[34mpassed!\e[m&#39;
+    @for i <span class="kw">in</span> cases/*.in; <span class="kw">do</span> <span class="kw">\</span>
+        ./main.exe <span class="kw">&lt;</span> <span class="ot">$$</span>i <span class="kw">&gt;</span> /tmp/out; <span class="kw">\</span>
+        <span class="kw">cmp</span> -s /tmp/out <span class="ot">$$</span><span class="dt">{i%in}</span>out; <span class="kw">\</span>
+        <span class="ot">RETVAL=$$</span>?; <span class="kw">\</span>
+        <span class="kw">if </span>[  <span class="ot">$$</span>RETVAL -eq 1 ]; <span class="kw">then</span> <span class="kw">\</span>
+        /bin/echo -e <span class="st">&#39;\e[31m&#39;</span><span class="ot">$$</span>i<span class="st">&#39;\e[m&#39;</span>; <span class="kw">\</span>
+        <span class="kw">diff</span> /tmp/out <span class="ot">$$</span><span class="dt">{i%in}</span>out; <span class="kw">\</span>
+        <span class="kw">exit</span> 1; <span class="kw">\</span>
+        <span class="kw">fi</span>; <span class="kw">\</span>
+        <span class="kw">done</span>; <span class="kw">\</span>
+        /bin/echo -e <span class="st">&#39;\e[34mpassed!\e[m&#39;</span>
 
 
 clean:

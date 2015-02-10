@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>Sat Mar 2 15:16:05 JST 2013</p>
+<h1 id="sat-mar-2-151605-jst-2013">Sat Mar 2 15:16:05 JST 2013</h1>
 <p>この前のやつ． lconsはcdrのみを遅延させるのに対して、util.streamで定義されてる stream-consは、carもcdrも遅延させる．そうすると、なんか上手く いくようになるみたい．</p>
 <p><a href="http://practical-scheme.net/gauche/man/gauche-refj_184.html">Gauche ユーザリファレンス: 11.58 util.stream - ストリームライブラリ</a></p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (use util.stream)
@@ -37,7 +37,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 gosh&gt; (<span class="kw">define</span><span class="fu"> fib </span>(stream-cons <span class="dv">0</span> (stream-cons <span class="dv">1</span> (stream-map <span class="kw">+</span> (stream-cdr fib) fib))))
 fib
 gosh&gt; (stream-&gt;list (stream-take fib <span class="dv">10</span>))                                      (<span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">5</span> <span class="dv">8</span> <span class="dv">13</span> <span class="dv">21</span> <span class="dv">34</span>)</code></pre>
-<p>2013年 3月 2日 土曜日 20:48:14 JST</p>
+<h1 id="年-3月-2日-土曜日-204814-jst">2013年 3月 2日 土曜日 20:48:14 JST</h1>
 <p>On Lisp は、殊、継続についてはSchemeのコードも載せててくれる。 やっぱりSchemeはいいなって思う。 非決定性計算については Scheme による choose, fail 関数も載ってた。 マクロじゃないんだね。 せっかくだからそのコードを書き写した。</p>
 <blockquote>
 <p>本に載ってるコードをそのまま載せちゃうのって問題ないのかな。 著作権がどうとか。引用ということに出来ればいいだろうけど。</p>

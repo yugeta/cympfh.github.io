@@ -29,6 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
+<h1 id="dec-2012">Dec 2012</h1>
 <p>考えてみりゃ、関数型だなんて、しかもF#だなんて、 そんな簡単にかける言語で処理まで速いなんて夢を 見過ぎなんだ．</p>
 <pre class="sourceCode fsharp"><code class="sourceCode fsharp">//<span class="co"> test.fs</span>
 <span class="ot">open</span> System
@@ -47,7 +48,23 @@ code > span.er { color: #ff0000; font-weight: bold; }
 //<span class="co"> user 0m0.012s</span>
 //<span class="co"> sys  0m0.004s</span></code></pre>
 <p>出力はしてないけどちゃんと計算してるらしい． fsharpcには三種類ほど最適化オプションが用意 されているが、入れても入れなくてもタイムは 変わらなかったので、全く効果がないか、何も 指定しなければ自動的にオンになるかだ．</p>
-<p><code>c++ // test.cpp #include &lt;cstdio&gt; int fibsub(int a, int b, int i) {     if (i==0) return a;     else return fibsub(b,a+b,i-1); } int fib(int i) {     return fibsub(0,1,i); } main() {     for (int i=0;i&lt;100;++i) fib(40);     return 0; } // /usr/lib/gcc/i686-linux-gnu/4.7/lto-wrapper // real 0m0.002s // user 0m0.000s // sys  0m0.000s</code></p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">// test.cpp</span>
+<span class="ot">#include &lt;cstdio&gt;</span>
+<span class="dt">int</span> fibsub(<span class="dt">int</span> a, <span class="dt">int</span> b, <span class="dt">int</span> i) {
+    <span class="kw">if</span> (i==<span class="dv">0</span>) <span class="kw">return</span> a;
+    <span class="kw">else</span> <span class="kw">return</span> fibsub(b,a+b,i<span class="dv">-1</span>);
+}
+<span class="dt">int</span> fib(<span class="dt">int</span> i) {
+    <span class="kw">return</span> fibsub(<span class="dv">0</span>,<span class="dv">1</span>,i);
+}
+main() {
+    <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;<span class="dv">100</span>;++i) fib(<span class="dv">40</span>);
+    <span class="kw">return</span> <span class="dv">0</span>;
+}
+<span class="co">// /usr/lib/gcc/i686-linux-gnu/4.7/lto-wrapper</span>
+<span class="co">// real 0m0.002s</span>
+<span class="co">// user 0m0.000s</span>
+<span class="co">// sys  0m0.000s</span></code></pre>
 <p>素晴らしい．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme"><span class="co">; test.scm</span>
 (<span class="kw">define</span><span class="fu"> </span>(fib i)
@@ -63,10 +80,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="co">; user  0m0.008s</span>
 <span class="co">; sys   0m0.004s</span></code></pre>
 <p>F#をコンパイルしたより速い． そういうこともあるかもしれない．</p>
-<pre><code>; stalin でのコンパイル
-; real  0m0.001s
-; user  0m0.000s
-; sys   0m0.000s</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># stalin でのコンパイル</span>
+real    0m0.001s
+user    0m0.000s
+sys 0m0.000s</code></pre>
 <p>バカみたいに速い．本当に計算されてるのか、つまり計算結果は 捨ててるのでもしかして除去されてるのではないかと毎回display させてみると、時間は二倍になってC++とやっと並んだ．</p>
 <p>スクリプトとしてそのまま動かしても速いし、 Schemeで書くことにしよう．</p>
 </body>

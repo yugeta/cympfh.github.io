@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>2014年 3月 9日 日曜日 18:32:02 JST</p>
+<h1 id="年-3月-9日-日曜日-183202-jst">2014年 3月 9日 日曜日 18:32:02 JST</h1>
 <p>関数型プログラミング言語Haskell Part25<br>http://toro.2ch.net/test/read.cgi/tech/1393313450/</p>
 <blockquote>
 <p>11 名前：デフォルトの名無しさん [sage]： 2014/02/25(火) 20:10:26.83<br>Data.Function.fix 関数は何のためにあるのでしょうか。<br>どう使うのでしょうか。</p>
@@ -37,7 +37,6 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>12 名前：デフォルトの名無しさん [sage]： 2014/02/25(火) 20:17:14.12<br>再帰する関数を、それ自身には再帰的定義を含まずに定義するために使う。<br>Yコンビネータのようなもの（ないし、そのもの）。</p>
 <p>13 名前：デフォルトの名無しさん []： 2014/02/25(火) 20:17:35.74<br>&gt;&gt;11<br>ループを書きたいけどletやwhereを書くのすら面倒なときに使う<br>flip fix (0::Int) $ i -&gt; do<br>　putStrLn $ &quot;total &quot; ++ show i<br>　n &lt;- readLn<br>　if n &gt;= 0 then loop $! n + i else return ()</p>
 </blockquote>
-<hr>
 <p>上のを改めて引用</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">flip</span> fix (<span class="dv">0</span><span class="ot">::</span><span class="dt">Int</span>) <span class="fu">$</span> \loop i <span class="ot">-&gt;</span> <span class="kw">do</span>
   <span class="fu">putStrLn</span> <span class="fu">$</span> <span class="st">&quot;total &quot;</span> <span class="fu">++</span> <span class="fu">show</span> i

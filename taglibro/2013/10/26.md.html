@@ -29,8 +29,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>Sat Oct 26 14:25:10 JST 2013</p>
-<h1 id="node.js-oauth-だけでtwitter認証">node.js + oauth だけでTwitter認証</h1>
+<h1 id="sat-oct-26-142510-jst-2013">Sat Oct 26 14:25:10 JST 2013</h1>
+<h2 id="node.js-oauth-だけでtwitter認証">node.js + oauth だけでTwitter認証</h2>
 <p>ログインが可能なTwitterアカウント と，<br>Twitterクライアントと呼ばれる単位の (consumer_key, consumer_secret) とから<br>アカウントのクライアントに対する</p>
 <pre><code>(access_token_key, access_token_secre)</code></pre>
 <p>これを取得するまで． その4つを一回取得できれば，もうメモしといて未来永劫どうとでも使える</p>
@@ -39,8 +39,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 /usr/local/lib/node_modules/</code></pre>
 <p>このサイトのソースコードを大いに参照しました．<br>わかってしまえば，そのまんまなのに，随分長いことできなかったから．<br>http://d.hatena.ne.jp/sugyan/20110105/1294157289</p>
 <p>いやほんとは，ずっと前にも同じプログラムは書いたのだけど，例のnpm はデフォルトでその場にディレクトリ作って そこにモジュール保存するとかしらなくて，ディレクトリがごちゃごちゃしてたから一緒に間違えて削除しちゃったの</p>
-<hr>
-<h1 id="作り方">作り方</h1>
+<h2 id="作り方">作り方</h2>
 <p>まずサーバを作ります サーバは簡単に作れることで http://nodejs.org/ にも載ってるわけですけど，実際的には express モジュールなんかを使います</p>
 <pre><code>$ sudo npm install -g express</code></pre>
 <p>モジュールだけでなく，expressコマンドも一緒に入ります．</p>
@@ -98,9 +97,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
          });
      }
  });</code></pre>
-<p>はい，これで ブラウザで http://127.0.0.1:3000/signin/twitter に言ってごちゃごちゃすると 欲しかったものが得られます</p>
+<p>はい，これで ブラウザで <code>http://127.0.0.1:3000/signin/twitter</code> に言ってごちゃごちゃすると 欲しかったものが得られます</p>
 <p>dev.twitter.com の方で，アプリケーションのコールバックurlを登録するけど，あれ関係ないよね？</p>
 <hr>
-<p>Author : 枚方 (Hirakata) Contact: cympfh<code>at</code>gmail<code>dot</code>com</p>
+<p>Author : 枚方 (Hirakata)<br>e-mail: cympfh@gmail.com</p>
 </body>
 </html>

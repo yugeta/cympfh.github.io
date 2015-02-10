@@ -1,0 +1,37 @@
+/* css for resume */
+
+body {
+  font-size: 14px;
+}
+
+section {
+  width: 390px;
+  border: 1px solid black;
+  padding: 15px 10px;
+}
+
+hr {
+  left-margin: 0px;
+  width: 200px;
+  height: 0px;
+  border: 0px black solid;
+}
+
+a {
+  color: #300;
+}
+
+table {
+  font-size: 13px;
+}
+
+b {
+  font-size: 15px;
+  text-decoration: underline;
+}
+
+dl { margin: 0; }
+dd {
+  margin: 0;
+  margin-left: 10px;
+}

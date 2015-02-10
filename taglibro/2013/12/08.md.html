@@ -29,45 +29,73 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
+<h1 id="dec-08-2013">Dec 08 2013</h1>
 <p>つい30分前まで6時間眠っていたというのに<br>体を横にして布団を体の上から被せるだけで簡単に眠れる<br>横にして布団を体の上から被せなければ寝ないのかもしれないが<br>それでも眠りたいのだから仕方がなかった<br>ベッドに向かう途中<br>僕は伯父さんに寝てばかりなのが恥ずかしくて冗談を言ってみた<br> 睡眠を売る仕事があるとしたら，僕はかなり真面目な労働者ですね<br>伯父さんは一言も発さずに笑った</p>
 <p>私が完全に眠りに落ちた後<br>私はこんな夢を見ていた<br>夢を見ていたというのは完全に眠りに落ちたという他ならぬ証拠だ<br>伯父さんは私の見る夢をパイプに繋いで取り出そうとしてる<br>パイプの先は見えないけれど<br>SFかなんかにありがちで如何にもという機械でないのはきっとだ<br>夢は高く売れるから大事に取り出したいけれど<br>どうしてもパイプの繋ぎ目から夢が漏れ<br>夢を覗き見てしまう<br> こんな日にまで，こんな夢を見なくたっていいだろうに<br>でも実はこのことは私が目が覚めてから考えたことなので<br>果たして夢と見れるのか分からない</p>
-<h1 id="snlp-chapter7---確認したことと疑問にもったことのメモ">SNLP Chapter7 - 確認したことと疑問にもったことのメモ</h1>
+<h2 id="snlp-chapter7---確認したことと疑問にもったことのメモ">SNLP Chapter7 - 確認したことと疑問にもったことのメモ</h2>
 <blockquote>
 <p>Brown et al. 1991b Flip-Flop algorithm An information-theoretic approach</p>
 </blockquote>
 <p>意味を複数持つような&quot;曖昧語&quot;の意味(sense)をどう解釈するかのアルゴリズム</p>
 <p>Brownさんはどこの人か知らないけど この人はフランス語の文を英語文に自動翻訳することを用例として このアルゴリズムを考案してる</p>
-<p>w というフランス語の単語は</p>
-<pre><code>ts = {t1, t2, t3 ... tN}</code></pre>
-<p>というN個の意味を持つ．但しtはtranslateのtなので意味ではなくて 翻訳，と言ったほうが良いかもしれない</p>
-<p>どの意味であるかの指標の値をindicatorと呼ぶ．indicatorというのは 具体的には w が動詞ならその目的語がこれこれである(ならば1，でなければ0) だとか，wのすぐ左の語が数値であるか，とか，wを含む文の時制が現在である だとか</p>
+<p><code>w</code> というフランス語の単語は</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>t</mi><mi>s</mi><mo>=</mo><mo stretchy="false">{</mo><msub><mi>t</mi><mn>1</mn></msub><mo>,</mo><msub><mi>t</mi><mn>2</mn></msub><mo>,</mo><msub><mi>t</mi><mn>3</mn></msub><mo>.</mo><mo>.</mo><mo>.</mo><msub><mi>t</mi><mi>N</mi></msub><mo stretchy="false">}</mo></mrow></math></p>
+<p>というN個の意味を持つ．但し <code>t</code> はtranslateの <code>t</code> なので意味ではなくて 翻訳，と言ったほうが良いかもしれない</p>
+<p>どの意味であるかの指標の値をindicatorと呼ぶ．indicatorというのは 具体的には <code>w</code> が動詞ならその目的語がこれこれである(ならば1，でなければ0) だとか，<code>w</code> のすぐ左の語が数値であるか，とか，<code>w</code> を含む文の時制が現在である だとか</p>
 <p>複数考えられるindicatorの値を</p>
-<pre><code>xs = {x1, x2 ... xM}</code></pre>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>x</mi><mi>s</mi><mo>=</mo><mo stretchy="false">{</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>.</mo><mo>.</mo><mo>.</mo><msub><mi>x</mi><mi>M</mi></msub><mo stretchy="false">}</mo></mrow></math></p>
 <p>とする</p>
-<p>indicatorというのはwに対して自分で用意しないといけないみたい 自分で用意する時点でもう，個別のアルゴリズムが書けると思うんだけど</p>
-<p>Flip-Flopアルゴリズムは tsを2つに分割して，つまりwの解釈を二通りに 分割して，それぞれに対応するようにxsを2つに分割するためのもの</p>
-<pre><code>ts -&gt; P1, P2
-xs -&gt; Q1, Q2</code></pre>
-<p>と分割できたら， w に対して indicator x がQ1にゾクしてたらP1の意味 と判別する</p>
+<p>indicatorというのは <code>w</code> に対して自分で用意しないといけないみたい 自分で用意する時点でもう，個別のアルゴリズムが書けると思うんだけど</p>
+<p>Flip-Flopアルゴリズムは <code>ts</code> を2つに分割して，つまり <code>w</code> の解釈を二通りに 分割して，それぞれに対応するように <code>xs</code> を2つに分割するためのもの</p>
+<ul class="incremental">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>t</mi><mi>s</mi><mo>↦</mo><msub><mi>P</mi><mn>1</mn></msub><mo>,</mo><msub><mi>P</mi><mn>2</mn></msub></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>x</mi><mi>s</mi><mo>↦</mo><msub><mi>Q</mi><mn>1</mn></msub><mo>,</mo><msub><mi>Q</mi><mn>2</mn></msub></mrow></math></li>
+</ul>
+<p>と分割できたら， <code>w</code> に対して indicator <code>x</code> が <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>Q</mi><mn>1</mn></msub></mrow></math> に属してたら <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mn>1</mn></msub></mrow></math> の意味 と判別する</p>
 <p>で，その分割をどうするか 訓練データの中で相互情報量</p>
-<pre><code>I(P; Q) = I({P1,P2}, {Q1,Q2})</code></pre>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>I</mi><mo stretchy="false">(</mo><mi>P</mi><mo>;</mo><mi>Q</mi><mo stretchy="false">)</mo><mo>=</mo><mi>I</mi><mo stretchy="false">(</mo><mo stretchy="false">{</mo><msub><mi>P</mi><mn>1</mn></msub><mo>,</mo><msub><mi>P</mi><mn>2</mn></msub><mo stretchy="false">}</mo><mo>,</mo><mo stretchy="false">{</mo><msub><mi>Q</mi><mn>1</mn></msub><mo>,</mo><msub><mi>Q</mi><mn>2</mn></msub><mo stretchy="false">}</mo><mo stretchy="false">)</mo></mrow></math></p>
 <p>を最大となるような分割を探索する</p>
 <h2 id="例">例</h2>
-<p>ある訓練データの中で曖昧語 w について 次の4つが1つずつ，見つけられた</p>
-<p>|indicator | sense | |:--------:|:-----:| | x | a | | x | b | | y | b | | z | d |</p>
+<p>ある訓練データの中で曖昧語 <code>w</code> について 次の4つが1つずつ，見つけられた</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">indicator</th>
+<th style="text-align: right;">sense</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">x</td>
+<td style="text-align: right;">a</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">x</td>
+<td style="text-align: right;">b</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">y</td>
+<td style="text-align: right;">b</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">z</td>
+<td style="text-align: right;">d</td>
+</tr>
+</tbody>
+</table>
 <p>確率は単純に割合だとすることにして</p>
-<pre><code>Pr(x,a) = .25
-Pr(x,b) = .25
-Pr(y,b) = .25
-Pr(z,d) = .25
-
-Pr(x) = 0.5
-Pr(y) = .25
-Pr(z) = .25
-
-Pr(a) = .25
-Pr(b) = 0.5
-pr(d) = .25</code></pre>
+<ul class="incremental">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><mo>.</mo><mn>25</mn></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>b</mi><mo stretchy="false">)</mo><mo>=</mo><mo>.</mo><mn>25</mn></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>y</mi><mo>,</mo><mi>b</mi><mo stretchy="false">)</mo><mo>=</mo><mo>.</mo><mn>25</mn></mrow></math></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>z</mi><mo>,</mo><mi>d</mi><mo stretchy="false">)</mo><mo>=</mo><mo>.</mo><mn>25</mn></mrow></math></p></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn><mo>.</mo><mn>5</mn></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo><mo>=</mo><mo>.</mo><mn>25</mn></mrow></math></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>=</mo><mo>.</mo><mn>25</mn></mrow></math></p></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><mo>.</mo><mn>25</mn></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mi>r</mi><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn><mo>.</mo><mn>5</mn></mrow></math></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi><mi>r</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo><mo>=</mo><mo>.</mo><mn>25</mn></mrow></math></p></li>
+</ul>
 <p>ということになる</p>
 <p>相互情報量は次のように求められる</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> I (p1, p2, q1, q2) {
@@ -126,12 +154,11 @@ pr(d) = .25</code></pre>
 <span class="co">// 0.21576155433883565</span>
 <span class="co">// 0.34657359027997264</span></code></pre>
 <p>というわけで</p>
-<pre><code>P1 = {x,y}, P2 = {z}
-Q1 = {a,b}, Q2 = {d}</code></pre>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mn>1</mn></msub><mo>=</mo><mo stretchy="false">{</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">}</mo><mo>,</mo><msub><mi>P</mi><mn>2</mn></msub><mo>=</mo><mo stretchy="false">{</mo><mi>z</mi><mo stretchy="false">}</mo></mrow></math> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>Q</mi><mn>1</mn></msub><mo>=</mo><mo stretchy="false">{</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">}</mo><mo>,</mo><msub><mi>Q</mi><mn>2</mn></msub><mo>=</mo><mo stretchy="false">{</mo><mi>d</mi><mo stretchy="false">}</mo></mrow></math></p>
 <p>が情報量を最大とさせる</p>
-<p>で疑問点として 式の対称性から P1とP2を入れ替えてもI(P;Q)の値は変わらない</p>
-<pre><code>Q1-&gt;P1, Q2-&gt;P2</code></pre>
-<p>という曖昧解消のアルゴリズムに一番大切なトコロなのに P1とP2が入れ替わったら真逆になっちゃうじゃんか</p>
+<p>で疑問点として 式の対称性から <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mn>1</mn></msub></mrow></math> と <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mn>2</mn></msub></mrow></math> を入れ替えても <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>I</mi><mo stretchy="false">(</mo><mi>P</mi><mo>;</mo><mi>Q</mi><mo stretchy="false">)</mo></mrow></math> の値は変わらない</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>Q</mi><mn>1</mn></msub><mo>↦</mo><msub><mi>P</mi><mn>1</mn></msub><mo>,</mo><msub><mi>Q</mi><mn>2</mn></msub><mo>↦</mo><msub><mi>P</mi><mn>2</mn></msub></mrow></math></p>
+<p>という曖昧解消のアルゴリズムに一番大切なトコロなのに <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mn>1</mn></msub></mrow></math> と<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mn>2</mn></msub></mrow></math> が入れ替わったら真逆になっちゃうじゃんか</p>
 <p>どっか読み落としたのかな</p>
 </body>
 </html>

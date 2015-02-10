@@ -1,4 +1,7 @@
-all: md2html index summary_ filter_
+all: md2html index summary_ filter_ index2
+
+index2:
+	sh script/index2
 
 index:
 	sed "s/MD5/$$(git log | head -1 | cut -d' ' -f2)/" index.html.h > index.html

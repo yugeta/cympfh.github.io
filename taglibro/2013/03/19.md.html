@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>2013年 3月 19日 火曜日 00:26:09 JST</p>
+<h1 id="年-3月-19日-火曜日-002609-jst">2013年 3月 19日 火曜日 00:26:09 JST</h1>
 <p>これは一度ちょっと試したかった。 つまり、最大値、最小値を集めるのに、forで回して</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> maxi = -<span class="dv">1</span>; <span class="co">// 数列には-1より大きいものしかないとする</span>
 <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="kw">array</span>.<span class="fu">length</span>; ++i) {
@@ -44,9 +44,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 (use srfi<span class="dv">-27</span>)
 (<span class="kw">for-each</span> (^i (print (random-integer <span class="dv">100</span>))) (iota <span class="dv">10000</span>))</code></pre>
 <p>一万個の、0以上100未満の数列を作る。</p>
-<ul class="incremental">
-<li>max, min 関数使うver</li>
-</ul>
+<h3 id="max-min-関数使うver">max, min 関数使うver</h3>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> maxi = <span class="dv">0</span>,
     mini = Infinity;
 
@@ -64,9 +62,7 @@ require(<span class="st">&quot;fs&quot;</span>).<span class="fu">readFileSync</s
 real    0m0.114s
 user    0m0.088s
 sys     0m0.016s</code></pre>
-<ul class="incremental">
-<li>if 使うver</li>
-</ul>
+<h3 id="if-使うver">if 使うver</h3>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> maxi = <span class="dv">0</span>,
     mini = Infinity;
 

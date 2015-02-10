@@ -29,9 +29,13 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
+<h1 id="dec-2012">Dec 2012</h1>
 <p>一限に出席するために学校に泊まってるのに、<br>それでも出席できないようになってしまった．</p>
 <p>お金が振り込まれてた．<br>キモチが随分軽くなった．天まで届きそうだ</p>
-<p>http://karetta.jp/book-node/gauche-hacks/007051<br>schemeで、C言語のprintfに相当するformatでは&quot;~a&quot;なんていうのが<br>&quot;%A&quot;に相当するらしい．なんだか可愛い．それよりも関数型で<br>文字列フォーマットというのはどうやって実現してるんだろう．</p>
+<ul class="incremental">
+<li><code>http://karetta.jp/book-node/gauche-hacks/007051</code></li>
+</ul>
+<p>schemeで、C言語のprintfに相当する <code>format</code> では <code>&quot;~a&quot;</code> なんていうのが<br>&quot;%A&quot;に相当するらしい．なんだか可愛い．それよりも関数型で<br>文字列フォーマットというのはどうやって実現してるんだろう．</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; (format <span class="st">&quot;~a ~a ~a&quot;</span> <span class="dv">1</span> <span class="dv">2</span>)
 *** ERROR: too few arguments for format string: <span class="st">&quot;~a ~a ~a&quot;</span></code></pre>
 </body>

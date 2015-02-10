@@ -29,11 +29,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p><a href="http://www.vim.org/scripts/script.php?script_id=2226">vimwiki</a> という2008年からのプラグイン 未だに vba で配布されてるタイプの vimプラグイン</p>
+<h1 id="apr-21-2014">Apr 21 2014</h1>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=2226">vimwiki</a> という2008年からのプラグイン, 未だに vba で配布されてるタイプの vimプラグイン</p>
 <p>wiki記法なるものに親しみはないので できれば markdownで書きたい</p>
-<p>http://nanasi.jp/articles/vim/vimwiki/vimwiki_vim_syntax.html</p>
+<ul class="incremental">
+<li>http://nanasi.jp/articles/vim/vimwiki/vimwiki_vim_syntax.html</li>
+</ul>
 <p>に１ページで説明された少ない文法だけで充分ではありそうなのでしばらく使ってみる</p>
-<pre><code>Bundle &quot;vimwiki&quot;</code></pre>
+<pre class="vim"><code>Bundle &quot;vimwiki&quot;</code></pre>
 <p>最低限 私には次のように書き換えた おそらくどこかで設定するんだろうけど 本体を書き換える方が早い</p>
 <p>(元ファイルが無いので diff の出力を載せるという手法ができない また 手で diff の出力を再現させる自信もない)</p>
 <pre class="sourceCode diff"><code class="sourceCode diff">@ftplugin/vimwiki.vim l409
@@ -45,7 +48,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>前から必要に感じていた 論文の読んだ文献もこれで管理しよう</p>
 <hr>
 <p>どうせもう開発も止まってるし 今の変更を加えたのを自分で持っとくことにした 自分でっていうかGithubで</p>
-<p>https://github.com/cympfh/vimwiki</p>
+<ul class="incremental">
+<li>https://github.com/cympfh/vimwiki</li>
+</ul>
 <pre class="vim"><code>Bundle &quot;cympfh/vimwiki&quot;
 let g:vimwiki_list = [{&#39;path&#39;: &#39;~/Dropbox/wiki&#39;, &#39;path_html&#39;: &#39;~/Dropbox/wiki/html/&#39;}]</code></pre>
 <hr>

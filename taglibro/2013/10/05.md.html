@@ -7,19 +7,46 @@
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>Sat Oct 5 23:07:03 JST 2013</p>
-<p>本日のAtCoder難しかった http://arc015.contest.atcoder.jp/standings</p>
+<h2 id="sat-oct-5-230703-jst-2013">Sat Oct 5 23:07:03 JST 2013</h2>
+<p>本日のAtCoder難しかった</p>
+<p>http://arc015.contest.atcoder.jp/standings</p>
 <p>ABはいつも解けるのはいいけど，Cがかすりもしなかった</p>
 <p>で，テンプレートとしてprototypeを追加しまくってると， よくあるあの for-in の問題があって，今まで偶然にも本番中に衝突はしなかったけれど いつやってしまってもおかしくないのでこんなのを追加</p>
-<p>function forEach(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(x,o[x]); } function forIn(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(x); } function forOf(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(o[x]); }</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> forEach(o,f){ <span class="kw">for</span> (<span class="kw">var</span> x <span class="kw">in</span> o) <span class="kw">if</span> (<span class="kw">o</span>.<span class="fu">hasOwnProperty</span>(x)) f(x,o[x]); }
+<span class="kw">function</span> forIn(o,f){ <span class="kw">for</span> (<span class="kw">var</span> x <span class="kw">in</span> o) <span class="kw">if</span> (<span class="kw">o</span>.<span class="fu">hasOwnProperty</span>(x)) f(x); }
+<span class="kw">function</span> forOf(o,f){ <span class="kw">for</span> (<span class="kw">var</span> x <span class="kw">in</span> o) <span class="kw">if</span> (<span class="kw">o</span>.<span class="fu">hasOwnProperty</span>(x)) f(o[x]); }</code></pre>
 <p>構文を追加出来ない以上，構文の {} の中身を関数で渡すしかない Scheme の for-each方式だ 逆にSchemeは構文が追加できるんだからそういうのがSRFIにあってもいいのにな</p>
-<p>(for-each i in ls body ...) って方が見やすいのに．CommonLispっぽくてイヤなのかな</p>
-<p>forOf({&quot;cympfh&quot; : 132, &quot;hoge&quot; : 42, &quot;ampeloss&quot; : 92 }, function(x) { console.log(x); });</p>
-<p>inoremap <c-f> function としてるの捗る</p>
-<p>--- 加筆 Tue Oct 8 17:49:37 JST 2013</p>
-<p>forEach関数は ls.forEach と被ってるし引数の順序逆だしなので消します</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">for-each</span> i in ls
+  body ...)</code></pre>
+<p>って方が見やすいのに．CommonLispっぽくてイヤなのかな</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">forOf({<span class="st">&quot;cympfh&quot;</span> : <span class="dv">132</span>, <span class="st">&quot;hoge&quot;</span> : <span class="dv">42</span>, <span class="st">&quot;ampeloss&quot;</span> : <span class="dv">92</span> }, <span class="kw">function</span>(x) {
+  <span class="kw">console</span>.<span class="fu">log</span>(x);
+});</code></pre>
+<pre class="vim"><code>inoremap &lt;c-f&gt; function</code></pre>
+<p>としてるの捗る</p>
+<h2 id="追記-tue-oct-8-174937-jst-2013">追記 (Tue Oct 8 17:49:37 JST 2013)</h2>
+<p>forEach関数は <code>ls.forEach</code> と被ってるし引数の順序逆だしなので消します</p>
 </body>
 </html>

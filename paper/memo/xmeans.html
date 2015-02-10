@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>x-means法</title>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/m.css">
+</head>
+<body>
+<header>
+<h1 class="title">x-means法</h1>
+</header>
+<h2 id="参考">参考</h2>
+<ul class="incremental">
+<li>論文; http://www.cs.cmu.edu/~dpelleg/download/xmeans.pdf</li>
+<li>記事; <a href="http://d.hatena.ne.jp/kaiseh/20090628/1246223266">適切なクラスタ数を推定するX-means法 - kaisehのブログ</a></li>
+<li>さらなる拡張の論文: http://www.rd.dnc.ac.jp/~tunenori/doc/xmeans_euc.pdf</li>
+<li><a href="http://ja.wikipedia.org/wiki/Kd%E6%9C%A8">kd木 - Wikipedia</a></li>
+</ul>
+<h2 id="intro">Intro</h2>
+<p>k-means法ってゆうクラスタリング手法がある。 これは使う側がクラスタ数 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>k</mi></mrow></math> を決めないといけないために、 曰く、 <code>it scales poorly computationally</code> である。</p>
+<p>x-means法では再帰的に <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>2</mn></mrow></math>-means をやっていって、 Bayesian Information Criterion (BIC) (または Akaike ... (AIC)) といった情報量基準を以って再帰を停止する。 したがって、クラスタ数の推定も同時に行う。</p>
+<p>/// 曰く、BICは自然世界に則していて、かつ計算も速いと。</p>
+<p>また、論文の実装では、 multiresolution <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>k</mi></mrow></math>d-tree (k次元木) を用い、ノードに統計量を持つことで、 全体の計算量を大幅に削減したとある。</p>
+<h2 id="notation">notation</h2>
+<ul class="incremental">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi></mrow></math> 次元点の集合 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>D</mi></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>R</mi><mo>=</mo><mo stretchy="false">∣</mo><mi>D</mi><mo stretchy="false">∣</mo></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>D</mi></mrow></math>を<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">{</mo><msub><mi>D</mi><mi>i</mi></msub><mo stretchy="false">}</mo></mrow></math>に分割する (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>.</mo><mo>.</mo><mi>K</mi></mrow></math>)</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>R</mi><mi>i</mi></msub><mo>=</mo><mo stretchy="false">∣</mo><msub><mi>D</mi><mi>i</mi></msub><mo stretchy="false">∣</mo></mrow></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>D</mi><mi>i</mi></msub></mrow></math> の重心を <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>μ</mi><mi>i</mi></msub></mrow></math> と書く</li>
+</ul>
+<h2 id="bic">BIC</h2>
+<p>再帰の停止条件にBICなる情報量基準を用いる。 これは、大きいほどクラスタリング精度が上がっているような量になっている。</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>D</mi></mrow></math> に対してのモデル (分割のしかた) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>M</mi></mrow></math> の BIC は近似的に次の式で求める。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>B</mi><mi>I</mi><mi>C</mi><mo stretchy="false">(</mo><mi>M</mi><mo stretchy="false">)</mo><mo>=</mo><mi>I</mi><mo stretchy="false">(</mo><mi>D</mi><mo stretchy="false">)</mo><mo>−</mo><mi>p</mi><mo>/</mo><mn>2</mn><mo>⋅</mo><mi>log</mi><mo stretchy="false">(</mo><mi>R</mi><mo stretchy="false">)</mo></mrow></math></p>
+<p>ここで、説明してないのは <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>I</mi></mrow></math>であるが、 これは 正規分布を<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>p</mi></mrow></math>変量の正規分布を仮定した時の 対数尤度である。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>I</mi><mo stretchy="false">(</mo><mi>D</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>x</mi><mo>∈</mo><mi>D</mi></mrow></munder><mi>P</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><msub><mi>D</mi><mi>i</mi></msub></munder><munder><mo>∑</mo><mrow><mi>x</mi><mo>∈</mo><msub><mi>D</mi><mi>i</mi></msub></mrow></munder><mo>−</mo><mi>log</mi><mo stretchy="false">(</mo><msqrt><mrow><mn>2</mn><mi>π</mi></mrow></msqrt><msup><mi>σ</mi><mi>p</mi></msup><mo stretchy="false">)</mo><mo>−</mo><mfrac><mn>1</mn><mrow><mn>2</mn><msup><mi>σ</mi><mn>2</mn></msup></mrow></mfrac><mo stretchy="false">∣</mo><mi>x</mi><mo>−</mo><msub><mi>μ</mi><mi>i</mi></msub><msup><mo stretchy="false">∣</mo><mn>2</mn></msup><mo>+</mo><mi>log</mi><mfrac><msub><mi>R</mi><mi>i</mi></msub><mi>R</mi></mfrac></mrow></math></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>σ</mi></mrow></math> は全体の分散 (the variance under the identical spherical Gaussian assumption) であるが、</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>σ</mi><mn>2</mn></msup><mo>=</mo><mfrac><mn>1</mn><mrow><mi>R</mi><mo>−</mo><mi>K</mi></mrow></mfrac><munder><mo>∑</mo><msub><mi>D</mi><mi>i</mi></msub></munder><munder><mo>∑</mo><mrow><mi>x</mi><mo>∈</mo><msub><mi>D</mi><mi>i</mi></msub></mrow></munder><mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><msub><mi>μ</mi><mi>i</mi></msub><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></math></p>
+<p>である。これで計算できることになった。</p>
+<p>分割前のBICを持っておいて、分割した後のBICとを比較し、 大きくなるなら、その分割をして、 再帰的に分割を試みる。 そうでないなら分割せずに停める。</p>
+<p>つまり、1つのクラスタ<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>C</mi></mrow></math>があって、それを2-meansで<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">{</mo><msub><mi>C</mi><mn>1</mn></msub><mo>,</mo><msub><mi>C</mi><mn>2</mn></msub><mo stretchy="false">}</mo></mrow></math>に分割する。<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>B</mi><mi>I</mi><mi>C</mi><mo stretchy="false">(</mo><mo stretchy="false">{</mo><mi>C</mi><mo stretchy="false">}</mo><mo stretchy="false">)</mo></mrow></math>と<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>B</mi><mi>I</mi><mi>C</mi><mo stretchy="false">(</mo><mo stretchy="false">{</mo><msub><mi>C</mi><mn>1</mn></msub><mo>,</mo><msub><mi>C</mi><mn>2</mn></msub><mo stretchy="false">}</mo><mo stretchy="false">)</mo></mrow></math>との大小を比較する。 分割したら、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>C</mi><mn>1</mn></msub></mrow></math>に対して、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>B</mi><mi>I</mi><mi>C</mi><mo stretchy="false">(</mo><mo stretchy="false">{</mo><msub><mi>C</mi><mn>1</mn></msub><mo stretchy="false">}</mo><mo stretchy="false">)</mo></mrow></math>を計算する必要がある。</p>
+</body>
+</html>

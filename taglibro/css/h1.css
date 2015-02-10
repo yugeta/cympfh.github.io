@@ -1,3 +1,13 @@
+@font-face {
+  font-family: aqua;
+  src: local("aquafont"), url("http://cympfh.github.io/fonts/aquafont.ttf");
+}
+
+@font-face {
+  font-family: eufm;
+  src: local("eufm10"), url("http://cympfh.github.io/fonts/eufm.ttf");
+}
+
 body {
   color: #201010;
   background-color: white;
@@ -5,8 +15,37 @@ body {
   padding: 0;
   width: 42em;
   font-size: 16px;
-  font-family: Consolas, 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
+  font-family: aqua, Consolas, 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
 }
+
+/* main title for a page */
+h1 {
+  border-bottom: 1px black dotted;
+  text-align: right;
+  font-family: eufm, Meiryo, メイリオ, serif;
+  font-size: 15px;
+}
+
+h2 {
+  border-bottom: 1px black dotted;
+  font-family: 'Consolas', Meiryo, メイリオ, serif;
+}
+
+/* in a page */
+
+a {
+  color: #600;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+img {
+  max-width: 670px;
+}
+
+p {
+}
+
 code {
   font-family: Consolas,"Liberation Mono",Courier,monospace;
   margin-left: 3px;
@@ -15,6 +54,7 @@ code {
   background-color: #fff9f9;
   border: 1px solid orange;
 }
+
 pre code {
   display: block;
   padding: 3px;
@@ -25,22 +65,26 @@ pre code {
 }
 
 blockquote {
-  background-color: #fffcfc;
-  border-top: 1px solid #0f0f0f;
-  border-bottom: 1px solid #0f0f0f;
-  border-left: 11px solid #1f0f0f;
+  background-color: #f0f0f0;
+  padding: 3px;
   padding-left: 12px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin-left: 0;
+  margin: 0;
 }
 
-a {
-  color: #600;
-  font-weight: bold;
-  font-size: 17px;
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
 }
 
-img {
-  max-width: 670px;
+thead > tr > th {
+  border-bottom: 1px gray dotted;
+}
+
+tr.odd {
+  background-color: #f0f0f0;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 6px 13px;
 }

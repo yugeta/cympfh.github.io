@@ -29,7 +29,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<p>2013年 3月 4日 月曜日 21:53:06 JST</p>
+<h1 id="年-3月-4日-月曜日-215306-jst">2013年 3月 4日 月曜日 21:53:06 JST</h1>
 <p>最近になってマクロ書くことを覚えた。</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define-syntax</span><span class="fu"> for</span>
     (<span class="kw">syntax-rules</span> (where in)
@@ -50,14 +50,15 @@ gosh&gt; (for (* i i) where i in (iota <span class="dv">10</span>) (<span class=
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define-syntax</span><span class="fu"> pipe</span>
     (<span class="kw">syntax-rules</span> (&gt;&gt;)
         ((_ x &gt;&gt; f) (f x))
-        ((_ x &gt;&gt; f &gt;&gt; g ...) (pipe (f x) &gt;&gt; g ...)) ))
-
-<span class="co">; gosh&gt; </span>
-<span class="co">; (pipe 10</span>
-<span class="co">;   &gt;&gt; iota</span>
-<span class="co">;   &gt;&gt; (pa$ filter odd?)</span>
-<span class="co">;   &gt;&gt; (pa$ map (^x (* x x))) )</span>
-<span class="co">; (1 9 25 49 81)</span></code></pre>
-<p>普通なら <code>(map (^x (* x x)) (filter odd? (iota 10)))</code> って書いて、右から、というかカッコの内側を目で捕捉して、そこから外側へ 読んでいかないといけない。 カッコの外側が、ただ左に向かってるからまだいいものの、左にも右にも 広がってたりしたら絶望的だ。まあ、あんまりそういうのは無いか。 とくに例も思いつかないし。</p>
+        ((_ x &gt;&gt; f &gt;&gt; g ...) (pipe (f x) &gt;&gt; g ...)) ))</code></pre>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">gosh&gt; 
+(pipe <span class="dv">10</span>
+  &gt;&gt; iota
+  &gt;&gt; (pa$ filter <span class="kw">odd?</span>)
+  &gt;&gt; (pa$ map (^x (* x x))) )
+(<span class="dv">1</span> <span class="dv">9</span> <span class="dv">25</span> <span class="dv">49</span> <span class="dv">81</span>)</code></pre>
+<p>普通なら</p>
+<pre class="sourceCode scheme"><code class="sourceCode scheme">(map (^x (* x x)) (filter <span class="kw">odd?</span> (iota <span class="dv">10</span>)))</code></pre>
+<p>って書いて、右から、というかカッコの内側を目で捕捉して、そこから外側へ 読んでいかないといけない。 カッコの外側が、ただ左に向かってるからまだいいものの、左にも右にも 広がってたりしたら絶望的だ。まあ、あんまりそういうのは無いか。 とくに例も思いつかないし。</p>
 </body>
 </html>

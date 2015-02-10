@@ -29,7 +29,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
   <link rel="stylesheet" href="../../css/h1.css">
 </head>
 <body>
-<h1 id="libsvm-の-memo">libsvm の memo</h1>
+<h1 id="feb-22-2014">Feb 22 2014</h1>
+<h2 id="libsvm-の-memo">libsvm の memo</h2>
 <p>参考; http://www.okuma.nuee.nagoya-u.ac.jp/~sakaguti/wiki/index.php?LibSVM</p>
 <h2 id="テストデータ形式">テストデータ形式</h2>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// test.js</span>
@@ -99,9 +100,7 @@ Cross Validation Accuracy = 99%</code></pre>
            , t
            , <span class="kw">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="ch">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="ch">&#39; &#39;</span>));
 }</code></pre>
-<ul class="incremental">
-<li>線形</li>
-</ul>
+<h3 id="線形">線形</h3>
 <pre><code>$ svm-train -t 0 -v 10 train.scale
 
 (前略)
@@ -112,9 +111,7 @@ obj = -59.094108, rho = 0.338879
 nSV = 65, nBSV = 53
 Total nSV = 65
 Cross Validation Accuracy = 61%</code></pre>
-<ul class="incremental">
-<li>多項式</li>
-</ul>
+<h3 id="多項式">多項式</h3>
 <pre><code>$ svm-train -t 1 -v 10 train.scale
 
 (前略)
@@ -125,9 +122,7 @@ obj = -43.537098, rho = 0.154695
 nSV = 81, nBSV = 40
 Total nSV = 81
 Cross Validation Accuracy = 41%</code></pre>
-<ul class="incremental">
-<li>RBF</li>
-</ul>
+<h3 id="rbf">RBF</h3>
 <pre><code>$ svm-train -t 1 -v 10 train.scale
 
 (前略)
@@ -152,8 +147,25 @@ Cross Validation Accuracy = 59%</code></pre>
            , <span class="kw">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="ch">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="ch">&#39; &#39;</span>));
 }</code></pre>
 <p>入力は10だけど初めの２つだけで答えは実は決まってる。</p>
-<p>| -t | 0 | 1 | 2 | |:--:|----:|----:|----:| | Ac.| 52% | 62% | 82% |</p>
-<p>パラメタのいじり方はわかってないので -t と -v 10 以外のオプション以外はつけてない。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">-t</th>
+<th style="text-align: right;">0</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: right;">2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Ac.</td>
+<td style="text-align: right;">52%</td>
+<td style="text-align: center;">62%</td>
+<td style="text-align: right;">82%</td>
+</tr>
+</tbody>
+</table>
+<p>パラメタのいじり方はわかってないので <code>-t</code> と <code>-v 10</code> 以外のオプション以外はつけてない。</p>
 <h2 id="入力を倍-1">入力を倍</h2>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="dv">100</span>; ++i) {
   <span class="kw">var</span> a = [];
@@ -167,7 +179,24 @@ Cross Validation Accuracy = 59%</code></pre>
            , <span class="kw">a</span>.<span class="fu">map</span>(<span class="kw">function</span>(x, i){<span class="kw">return</span> i+<span class="ch">&#39;:&#39;</span>+x}).<span class="fu">join</span>(<span class="ch">&#39; &#39;</span>));
 }</code></pre>
 <p>入力の数は倍だけど、やはり最初の２つだけで答えは決まる。</p>
-<p>| -t | 0 | 1 | 2 | |:--:|----:|----:|----:| | Ac.| 49% | 45% | 70% |</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">-t</th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ac.</td>
+<td style="text-align: right;">49%</td>
+<td style="text-align: right;">45%</td>
+<td style="text-align: right;">70%</td>
+</tr>
+</tbody>
+</table>
 <h2 id="section"></h2>
 <p>期待してたような数字は出なかったのだけど、 あとSVMは入力次元がどんなに大きくてもうまい事取捨してくれるとか聞いた気がするんだけど、 けどけど、 パラメタのイジリ方勉強しないとだ。</p>
 <h3 id="分かった">分かった</h3>
