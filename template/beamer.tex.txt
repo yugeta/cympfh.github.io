@@ -1,0 +1,42 @@
+\documentclass[12pt, dvipdfmx, default, cjk]{beamer}
+\usetheme{Antibes}
+\usecolortheme{beaver}
+\usefonttheme{structurebold}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[page, number]
+%\useinnertheme{rectangles}
+%\useoutertheme{smoothbars}
+
+% \mathversion{bold}
+
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, cite, url}
+
+%%%
+
+\title{TITLE}
+\subtitle{SUBTITLE}
+\author[cympfh]{Hirakata}
+\institute[CS]{Univ. of Tokyo, CS}
+\date{\today}
+
+\begin{document}
+
+\section{Chapter. 12}
+
+\begin{frame} \titlepage \end{frame}
+\begin{frame} \tableofcontents \end{frame}
+
+\subsection{SUBSECTION}
+
+\begin{frame}
+
+  \begin{itemize}
+    \item<1-> one
+    \item<2-> two
+    \item<3-> three
+    \item<1-2> and this is shown between 1 and 2
+  \end{itemize}
+\end{frame}
+
+\end{document}
