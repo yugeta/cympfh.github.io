@@ -52,3 +52,14 @@ div.hellfire {
   font-family: aqua;
 }
 
+dt {
+  font-weight: bold;
+}
+
+dt:before {
+  content: "◇";
+}
+
+dd {
+  padding-left: 1em;
+}

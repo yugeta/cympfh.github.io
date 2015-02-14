@@ -5,6 +5,7 @@ index:
 	echo "<pre>" >> index.html
 	./fortune >> index.html
 	echo "</pre>" >> index.html
+	cat index.html.t  >> index.html
 
 # lsしてindexにするだけ
 pres: template.pre
