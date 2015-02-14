@@ -33,7 +33,6 @@ a.shortcut {
 }
 
 div#cont {
-  font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
   font-size: 14px;
   line-height: 1.2;
   opacity: 0.0;
@@ -42,6 +41,10 @@ div#cont {
   position: absolute;
   left: -100%;
   top: -100%;
+}
+
+pre {
+  font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
 }
 
 div.hellfire {
