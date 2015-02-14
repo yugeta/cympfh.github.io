@@ -1,3 +1,3 @@
 
 index.html: index.md
-	pandoc -s --css ../css/b.css -i $^ -o $@
+	pandoc -s --css ../css/m.css -i $^ -o $@
