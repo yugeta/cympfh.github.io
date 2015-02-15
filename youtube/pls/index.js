@@ -7,6 +7,7 @@ albums/xxNONOWAxx
 albums/gentoo
 anime/2000
 anime/200x
+anime/2005
 anime/2010
 anime/2011
 anime/2012
