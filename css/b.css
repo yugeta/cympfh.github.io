@@ -33,7 +33,6 @@ a.shortcut {
 }
 
 div#cont {
-  font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
   font-size: 14px;
   line-height: 1.2;
   opacity: 0.0;
@@ -44,8 +43,23 @@ div#cont {
   top: -100%;
 }
 
+pre {
+  font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+}
+
 div.hellfire {
   font-size: 3em;
   font-family: aqua;
 }
 
+dt {
+  font-weight: bold;
+}
+
+dt:before {
+  content: "◇";
+}
+
+dd {
+  padding-left: 1em;
+}
