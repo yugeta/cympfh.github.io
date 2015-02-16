@@ -356,6 +356,7 @@ desktop
 ###
 起動
 ```
+bash
 sudo
 /
 etc
