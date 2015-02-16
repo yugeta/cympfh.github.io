@@ -39,7 +39,6 @@ function scrollevent() {
     Cont.style.top = '34%';
     Cont.style.display = 'table';
     var r = (scrolled - 10) / (600 - 10);
-    document.title = [scrolled, r];
     r = Math.pow(r, 0.8);
     Cont.style.opacity = Math.min(1, Math.max(0, r));
   } else {
