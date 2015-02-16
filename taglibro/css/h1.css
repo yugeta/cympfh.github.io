@@ -1,6 +1,6 @@
 @font-face {
   font-family: aqua;
-  src: local("aquafont"), local("APJapanesefontT"), url("http://cympfh.github.io/fonts/aquafont.ttf");
+  src: local("APJapanesefontT"), local("aquafont"), url("http://cympfh.github.io/fonts/aquafont.ttf");
 }
 
 @font-face {
