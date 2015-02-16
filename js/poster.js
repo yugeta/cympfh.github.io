@@ -38,7 +38,7 @@ function scrollevent() {
     Cont.style.left = '37%';
     Cont.style.top = '34%';
     Cont.style.display = 'table';
-    var r = (scrolled - 10) / (600 - 10);
+    var r = (scrolled - 10) / (500 - 10);
     r = Math.pow(r, 0.8);
     Cont.style.opacity = Math.min(1, Math.max(0, r));
   } else {
