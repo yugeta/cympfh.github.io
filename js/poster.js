@@ -28,3 +28,23 @@ function nekome() {
   }
 }
 
+function scrollevent() {
+  var scrolled =
+    document.documentElement.scrollTop ||
+    document.body.scrollTop;
+  var Cont = document.getElementById('cont');
+
+  if (scrolled > 10) {
+    Cont.style.left = '37%';
+    Cont.style.top = '34%';
+    Cont.style.display = 'table';
+    var r = (scrolled - 10) / (600 - 10);
+    document.title = [scrolled, r];
+    r = Math.pow(r, 0.8);
+    Cont.style.opacity = Math.min(1, Math.max(0, r));
+  } else {
+    Cont.style.left = '40%';
+    Cont.style.top = '40%';
+    Cont.style.display = 'none';
+  }
+}
