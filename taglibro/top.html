@@ -52,7 +52,7 @@
     <h1 class='toptitle'><a href='./'>cympfh/taglibro</a></h1>
 <section>
 <h1 id="mon-feb-16-211214-jst-2015">Mon Feb 16 21:12:14 JST 2015</h1>
-<h2 id="walkman-nw-a15-を買った">WALKMAN NW-A15 を買った</h2>
+<h2 id="walkman-nw-a10-を買った">WALKMAN NW-A10 を買った</h2>
 <p>NW-E003 を、私がたしか高校生の頃に買ってずっと使ってたから、もう、7,8年使ってることになる。 (ほんとは間1年くらい、NW-Z1070使ってたけどすぐ壊れた) ちょっと調べると、</p>
 <blockquote>
 <p>発売日：2006年 6月10日</p>
@@ -111,10 +111,10 @@
 <h3 id="私の理想">私の理想</h3>
 <ul class="incremental">
 <li>Androidではない</li>
-<li>十分な容量</li>
+<li>十分な容量 (microSD等の外部ストレージがあれば良し)</li>
 <li>ハイレゾなんかに対応しなくていいから安くしろ</li>
 </ul>
-<p>妥協として、ハイレゾに対応してはいるが、Aシリーズにした。 microSDが使えるというのが大変に大きい。 SONYとしては、内部ストレージの大きさで値段差を付けて、それで大きい容量のやつで 儲けたいはずなのに。</p>
+<p>妥協として、ハイレゾに対応してはいるが、NW-A10の32GBであるところのNW-A16にした。 microSDが使えるというのが大変に大きい。 SONYとしては、内部ストレージの大きさで値段差を付けて、それで大きい容量のやつで 儲けたいはずなのに。</p>
 <h2 id="ファイル転送tips">ファイル転送Tips</h2>
 <p>音楽ファイルとして読みに行くディレクトリは</p>
 <pre><code>/MUSIC
@@ -136,10 +136,16 @@ id3tag -s たいとる -A アルバムの名前 -a アーティストの名前 �
 id3info 音楽ファイル.mp3</code></pre>
 <p>このコマンドでは、ジャケット画像 (art-work picture) の付与ができなくて、</p>
 <p>そうだ、今時の walkman はジャケット画像を何かと表示したがるのに、 それがないとwalkmanのロゴが表示されるだけで寂しい。 てゆうか、ジャケットだけから選択するシーンでは、ただwalkmanのロゴだけが並んで、 何のアルバムなのか分からなくて困る。</p>
-<p><code>eyeD3</code> コマンドは、上のコマンドと同様に、ID3タグの操作と確認ができる。 そしてジャケット画像の付与や除去ができる。 ならば、<code>id3lib</code>は不要で良さそうなのに、残念なこと日本語が使えなかった。</p>
+<figure>
+<img src="img/150216b.png"><figcaption></figcaption>
+</figure>
+<p><code>eyeD3</code> コマンドは、 <code>id3tag</code> と同様に、ID3タグの操作と確認ができる。 そしてジャケット画像の付与や除去ができる。 ならば、<code>id3lib</code>は不要で良さそうなのに、残念なこと日本語が使えなかった。</p>
 <p>あんまり嬉しくない使い方だけど、テキスト情報は、<code>id3tag</code> で、 ジャケット画像は <code>eyeD3</code> を使うことにしよう。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># A.mp3 に、B.jpg をジャケット画像として使う</span>
 eyeD3 --add-image=B.jpg:FRONT_COVER A.mp3</code></pre>
+<figure>
+<img src="img/150216a.png"><figcaption></figcaption>
+</figure>
 </section>
 <section>
 <h1 id="tue-feb-10-060332-jst-2015">Tue Feb 10 06:03:32 JST 2015</h1>

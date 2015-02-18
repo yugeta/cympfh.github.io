@@ -114,9 +114,15 @@ id3tag -s たいとる -A アルバムの名前 -a アーティストの名前 �
 id3info 音楽ファイル.mp3</code></pre>
 <p>このコマンドでは、ジャケット画像 (art-work picture) の付与ができなくて、</p>
 <p>そうだ、今時の walkman はジャケット画像を何かと表示したがるのに、 それがないとwalkmanのロゴが表示されるだけで寂しい。 てゆうか、ジャケットだけから選択するシーンでは、ただwalkmanのロゴだけが並んで、 何のアルバムなのか分からなくて困る。</p>
-<p><code>eyeD3</code> コマンドは、上のコマンドと同様に、ID3タグの操作と確認ができる。 そしてジャケット画像の付与や除去ができる。 ならば、<code>id3lib</code>は不要で良さそうなのに、残念なこと日本語が使えなかった。</p>
+<figure>
+<img src="../../img/150216b.png"><figcaption></figcaption>
+</figure>
+<p><code>eyeD3</code> コマンドは、 <code>id3tag</code> と同様に、ID3タグの操作と確認ができる。 そしてジャケット画像の付与や除去ができる。 ならば、<code>id3lib</code>は不要で良さそうなのに、残念なこと日本語が使えなかった。</p>
 <p>あんまり嬉しくない使い方だけど、テキスト情報は、<code>id3tag</code> で、 ジャケット画像は <code>eyeD3</code> を使うことにしよう。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># A.mp3 に、B.jpg をジャケット画像として使う</span>
 eyeD3 --add-image=B.jpg:FRONT_COVER A.mp3</code></pre>
+<figure>
+<img src="../../img/150216a.png"><figcaption></figcaption>
+</figure>
 </body>
 </html>
