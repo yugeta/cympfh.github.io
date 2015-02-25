@@ -280,5 +280,10 @@
     "url": "http://ilpubs.stanford.edu:8090/778/1/2006-13.pdf",
     "title": "k-means++: The advantages of Careful Seeding",
     "id": "kmeanspp"
+  },
+  {
+    "url": "http://dl.acm.org/citation.cfm?id=312647",
+    "title": "A re-examination of text categorization methods",
+    "id": "re-examination-of-tc"
   }
 ]

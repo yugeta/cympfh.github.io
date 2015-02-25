@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>A re-examination of text categorization methods (1999)</title>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/m.css">
+</head>
+<body>
+<header>
+<h1 class="title">A re-examination of text categorization methods (1999)</h1>
+</header>
+<p>次の5つの分類器によって テキスト分類(TC)する実験が世の中に散在してる。 (<a href="http://dl.acm.org/citation.cfm?id=649721">Text Categorization with Suport Vector Machines</a>, 1998)</p>
+<ul class="incremental">
+<li>SVM</li>
+<li>kNN</li>
+<li>LLSF</li>
+<li>NNet</li>
+<li>NB</li>
+</ul>
+<p>コーパスが違ったり、統計量検定が無かったりなので、一回綺麗に実験し直そうというもの。</p>
+<p>コーパスとして、 <code>reuters-21578</code> を使おう (1999時代のニュースタンダードらしい)</p>
+<p>指標として、F値のmacro平均とmicro平均との2つを使う。</p>
+<p>また、手法ごとの有意な差を図るのに、<code>{micro,macro}-{s,t}検定</code> をする。</p>
+<h2 id="結論">結論</h2>
+<pre><code>{SVM, kNN} &gt; LLSF &gt; NNet &gt;&gt; NB</code></pre>
+<p>trainingデータをちょっとずつ追加していくあのグラフでは、macroはあれだけど、 microはみんな、1.0に漸近していた。</p>
+</body>
+</html>
