@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Text Categorization with Suport Vector Machines: Learning with Many Relevant Features</title>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../css/m.css">
+</head>
+<body>
+<header>
+<h1 class="title">Text Categorization with Suport Vector Machines: Learning with Many Relevant Features</h1>
+</header>
+<p>svmでTCします。</p>
+<ol class="incremental" type="1">
+<li>語の出現回数を数える
+<ul class="incremental">
+<li>3未満のものは消す</li>
+<li>stop-words は消す</li>
+</ul></li>
+<li>この時点で、10,000次元かそれ以上になる。 これは過学習の原因でもあるから、[11]的手法に拠って、 情報量基準で、素性のいくつかを捨てる</li>
+<li><code>idf</code>を用いてスケーリングし直す。今回は <code>tfc</code> なる量を使う (意味不明)</li>
+<li>文ごとの長さの違いを無くす (abstract) ために、素性ベクトルを正規化する</li>
+</ol>
+</body>
+</html>

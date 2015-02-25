@@ -285,5 +285,10 @@
     "url": "http://dl.acm.org/citation.cfm?id=312647",
     "title": "A re-examination of text categorization methods",
     "id": "re-examination-of-tc"
+  },
+  {
+    "url": "http://dl.acm.org/citation.cfm?id=649721",
+    "title": "Text Categorization with Suport Vector Machines: Learning with Many Relevant Features",
+    "id": "tc-with-svm"
   }
 ]
