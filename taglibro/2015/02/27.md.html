@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../../css/h1.css">
+</head>
+<body>
+<h1 id="fri-feb-27-131024-jst-2015">Fri Feb 27 13:10:24 JST 2015</h1>
+<p>インターンシップの経験をブログに書くことが要請されているらしいので下書きをここに書こう。</p>
+<h1 id="express-v.4.12.0-を用いた簡易サーバ"><a href="https://www.npmjs.com/package/express">express v.4.12.0</a> を用いた簡易サーバ</h1>
+<p>以下はミドルウェア(後述)を用いずに, <code>/</code> への POST を読んで, ヘッダを含めて受け取ったデータをそのまま返す</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">express <span class="fu">=</span> require <span class="ch">&#39;express&#39;</span>
+
+app <span class="fu">=</span> express()
+
+app<span class="fu">.</span>post <span class="ch">&#39;/&#39;</span>, (req, res) <span class="ot">-&gt;</span>
+  buf <span class="fu">=</span> <span class="ch">&#39;&#39;</span>
+  req<span class="fu">.</span>on <span class="ch">&#39;data&#39;</span>, (chunk) <span class="ot">-&gt;</span>
+    buf <span class="fu">+=</span> chunk
+  req<span class="fu">.</span>on <span class="ch">&#39;end&#39;</span>, <span class="ot">-&gt;</span>
+    res<span class="fu">.</span>end buf
+
+app<span class="fu">.</span>listen <span class="dv">3030</span>, (<span class="ot">-&gt;</span>)</code></pre>
+<p>上コードを実行する間に、 curlコマンドを用いてリクエストを飛ばす。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> test.txt
+<span class="kw">HOGEHOGE</span>
+
+$ <span class="kw">cat</span> test.txt <span class="kw">|</span> <span class="kw">curl</span> -X POST -F <span class="st">&#39;hoge=&lt;-&#39;</span> localhost:3030
+<span class="kw">--------------------------5aea96f7715e317d</span>
+<span class="kw">Content-Disposition</span>: form-data<span class="kw">;</span> <span class="ot">name=</span><span class="st">&quot;hoge&quot;</span>
+
+<span class="kw">HOGEHOGE</span>
+
+<span class="kw">--------------------------5aea96f7715e317d--</span>
+
+$ <span class="kw">cat</span> test.txt <span class="kw">|</span> <span class="kw">curl</span> -X POST -F <span class="st">&#39;hoge=@-&#39;</span> localhost:3030
+<span class="kw">--------------------------38e51e446a7b05f6</span>
+<span class="kw">Content-Disposition</span>: form-data<span class="kw">;</span> <span class="ot">name=</span><span class="st">&quot;hoge&quot;</span>; <span class="ot">filename=</span><span class="st">&quot;-&quot;</span>
+<span class="kw">Content-Type</span>: application/octet-stream
+
+<span class="kw">HOGEHOGE</span>
+
+<span class="kw">--------------------------38e51e446a7b05f6--</span>
+
+$ <span class="kw">curl</span> -X POST -d hoge=fuga localhost:3030
+<span class="ot">hoge=</span>fuga
+
+$ <span class="kw">curl</span> -X POST -d name=cympfh -d pwd=koregacympfhnopwd localhost:3030
+<span class="ot">name=</span>cympfh<span class="kw">&amp;</span><span class="ot">pwd=</span>koregacympfhnopwd</code></pre>
+<h1 id="ミドルウェアであるところの-body-parser-v.1.12.0-を噛ませる">ミドルウェアであるところの <a href="https://www.npmjs.com/package/body-parser">body-parser v.1.12.0</a> を噛ませる</h1>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">express <span class="fu">=</span> require <span class="ch">&#39;express&#39;</span>
+bodyParser <span class="fu">=</span> require <span class="ch">&#39;body-parser&#39;</span>
+
+app <span class="fu">=</span> express()
+app<span class="fu">.</span>use bodyParser<span class="fu">.</span>urlencoded { extended<span class="fu">:</span> false }
+app<span class="fu">.</span>use bodyParser<span class="fu">.</span>json()
+
+app<span class="fu">.</span>post <span class="ch">&#39;/&#39;</span>, (req, res) <span class="ot">-&gt;</span>
+  res<span class="fu">.</span>json req<span class="fu">.</span>body
+
+app<span class="fu">.</span>listen <span class="dv">3030</span>, (<span class="ot">-&gt;</span>)</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">curl</span> -X POST -d name=cympfh -d pwd=koregacympfhnopwd localhost:3030
+<span class="dt">{&quot;name&quot;:&quot;cympfh&quot;,&quot;pwd&quot;:&quot;koregacympfhnopwd&quot;}</span><span class="kw">%</span></code></pre>
+<p>-F で送ったデータはどうやって受け取るんだろう</p>
+<h1 id="非同期的処理">非同期的処理</h1>
+<p>nodeで動かすとはつまり非同期的処理を湯水のように行うこと</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">express <span class="fu">=</span> require <span class="ch">&#39;express&#39;</span>
+bodyParser <span class="fu">=</span> require <span class="ch">&#39;body-parser&#39;</span>
+
+app <span class="fu">=</span> express()
+app<span class="fu">.</span>use bodyParser<span class="fu">.</span>urlencoded { extended<span class="fu">:</span> false }
+app<span class="fu">.</span>use bodyParser<span class="fu">.</span>json()
+
+asyncFn <span class="fu">=</span> (cont) <span class="ot">-&gt;</span>
+  setTimeout (<span class="ot">-&gt;</span> cont { ok<span class="fu">:</span> <span class="ch">&#39;ok&#39;</span> }), <span class="dv">2000</span>
+
+app<span class="fu">.</span>post <span class="ch">&#39;/&#39;</span>, (req, res) <span class="ot">-&gt;</span>
+  asyncFn (<span class="kw">data</span>) <span class="ot">-&gt;</span>
+    res<span class="fu">.</span>json <span class="kw">data</span>
+
+app<span class="fu">.</span>listen <span class="dv">3030</span>, (<span class="ot">-&gt;</span>)</code></pre>
+<p>さて、η-変換とは、<code>(lambda (x) (f x))</code> と <code>f</code> が等価であることをいう。<br />CoffeeScript ないし JavaScript ではどうか。</p>
+<pre class="sourceCode python"><code class="sourceCode python">express = require <span class="st">&#39;express&#39;</span>
+bodyParser = require <span class="st">&#39;body-parser&#39;</span>
+
+app = express()
+app.use bodyParser.urlencoded { extended: false }
+app.use bodyParser.json()
+
+asyncFn = (cont) -&gt;
+  setTimeout (-&gt; cont { ok: <span class="st">&#39;ok&#39;</span> }), <span class="dv">2000</span>
+
+app.post <span class="st">&#39;/&#39;</span>, (req, res) -&gt;
+  asyncFn res.json <span class="co"># i found a bug here</span>
+
+app.listen <span class="dv">3030</span>, (-&gt;)</code></pre>
+<p>これを実行する間に適切なPOSTを投げると、 これは次のようなエラーを吐いて死ぬ。</p>
+<pre><code>/usr/local/lib/node_modules/express/lib/response.js:226
+  var replacer = app.get(&#39;json replacer&#39;);
+                     ^
+TypeError: Cannot call method &#39;get&#39; of undefined
+  at json (/usr/local/lib/node_modules/express/lib/response.js:226:22)
+  at [object Object]._onTimeout (/Users/cympfh/test/test.coffee:9:18)
+  at Timer.listOnTimeout [as ontimeout] (timers.js:112:15)</code></pre>
+<p>最終発表の日、<br />私がのんびり会場に着いて、<br />鯖が何も返してこないとメンバに指摘され、<br />いやいやログをみるとこんなエラーだったから、<br />問題の箇所を見つけるに相当の苦労を要した。 (わかってくれるでしょう?)</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">asyncFn <span class="fu">=</span> (res) <span class="ot">-&gt;</span>
+  setTimeout (<span class="ot">-&gt;</span> res<span class="fu">.</span>json { ok<span class="fu">:</span> <span class="ch">&#39;ok&#39;</span> }), <span class="dv">2000</span>
+
+app<span class="fu">.</span>post <span class="ch">&#39;/&#39;</span>, (req, res) <span class="ot">-&gt;</span>
+  asyncFn res</code></pre>
+<p>これはうまく動く。 もしかしたら、 <code>res.json</code>はresというオブジェクトのメソッドを読んで それはダイナミックスコープなのか？</p>
+<pre class="sourceCode python"><code class="sourceCode python">Obj =
+  i: <span class="dv">1</span>
+  read: -&gt; @i
+
+console.warn Obj.read() <span class="co"># 1</span>
+
+async = (fn) -&gt;
+  setTimeout (-&gt; console.warn fn()), <span class="dv">2000</span>
+async Obj.read <span class="co"># undefined</span></code></pre>
+<h3 id="世界が平和でありますように">世界が平和でありますように。</h3>
+</body>
+</html>

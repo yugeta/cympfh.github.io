@@ -20,6 +20,7 @@ newest = newest[0 .. n]
 random = random[0 .. m]
 
 head = (filename, n) ->
+  console.warn filename
   fs.readFileSync filename, 'utf8'
     .split '\n'
     .slice 0, n

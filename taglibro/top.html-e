@@ -301,14 +301,14 @@ id3info 音楽ファイル.mp3</code></pre>
 <p>ただし、このコマンドでは<br>ジャケット画像 (art-work picture) の付与ができない</p>
 <p>そうだ、今時の walkman はジャケット画像を何かと表示したがるのに、<br>それがないとwalkmanのロゴが表示されるだけで寂しい。<br>てゆうか、<br>ジャケットの画像だけからアルバムを選択するシーンがあって、<br>ジャケット画像を付けてないと、ただwalkmanのロゴだけが並んで、<br>何のアルバムなのか分からなくて困る。</p>
 <figure>
-<img src="img/150216b.png"><figcaption></figcaption>
+<img src="../../img/150216b.png"><figcaption></figcaption>
 </figure>
 <p><code>eyeD3</code> コマンドは、 <code>id3tag</code> と同様に、ID3タグの操作と確認ができる。<br>そしてジャケット画像の付与や除去ができる。<br>じゃあ、<code>id3lib</code>は不要で良さそうなのに、<br>残念なこと日本語が使えなかった。</p>
 <p>あんまり嬉しくない使い方だけど、<br>テキスト情報は、<code>id3tag</code> で、<br>ジャケット画像は <code>eyeD3</code> を使うことにしよう。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># A.mp3 に、B.jpg をジャケット画像として使う</span>
 eyeD3 --add-image=B.jpg:FRONT_COVER A.mp3</code></pre>
 <figure>
-<img src="img/150216a.png"><figcaption></figcaption>
+<img src="../../img/150216a.png"><figcaption></figcaption>
 </figure>
 </section>
 <section>
@@ -346,16 +346,16 @@ eyeD3 --add-image=B.jpg:FRONT_COVER A.mp3</code></pre>
 <p><code>i3wm</code> -&gt; <code>terminator (特にこだわりなし)</code> -&gt; <code>zsh</code> -&gt; <code>gnu screen</code> -&gt; <code>vim</code></p>
 <p>可愛さをアピールするチャンスはいくらでもある</p>
 <figure>
-<img src="img/150129a.png"><figcaption></figcaption>
+<img src="../../img/150129a.png"><figcaption></figcaption>
 </figure>
 <p>水色系で可愛いを目指した<br>黒を背景なのを前提にしているのでピンク色はなんか汚く見えた</p>
 <p><em>N.B.</em><br>ターミナルの背景を半透明にして、<code>feh</code>で壁紙画像を出してるのだけど、<br>キャプチャだとなんだか汚く見える問題</p>
 <figure>
-<img src="img/150129b.png"><figcaption></figcaption>
+<img src="../../img/150129b.png"><figcaption></figcaption>
 </figure>
 <p>vim は黄色。水色とマッチしてない<br>これは解決すべき問題</p>
 <figure>
-<img src="img/150129c.png"><figcaption></figcaption>
+<img src="../../img/150129c.png"><figcaption></figcaption>
 </figure>
 <p>ノーマルモードと挿入モードでハイライトが変わる</p>
 <hr>
@@ -428,12 +428,12 @@ gpg -a --export <span class="ot">$KEY</span> <span class="kw">|</span> <span cla
 <p>github pages に <code>CNAME</code> を置いた時点では、<code>hoge.github.io</code> に行くと CNAME に書いた url に飛ばされるだけになる。 DNSの設定が本当に反映されるまでに少しタイムラグがあって、(本当にその設定が正しいのかも分からないのに) 多少手間取ったけど。</p>
 <p>私の場合はお名前.comという一部で評判の良くないところを使ってるので、そのwebサイトの上で設定を以下のように行った。 こういうwebサービスは名称や使ってる言葉がころころ変わったりして、 役に立つかわからないけれども、以下のように。</p>
 <figure>
-<img src="img/150107.png"><figcaption></figcaption>
+<img src="../../img/150107.png"><figcaption></figcaption>
 </figure>
 <p>下の2つを私が追加したのであって、このVALUEには、先に上げた2つ目の<a href="https://help.github.com/articles/tips-for-configuring-an-a-record-with-your-dns-provider/">ページ</a> に載っているIPアドレスを指定している。 このIPも、去年に一度変更があったらしいので、 もしかしたら将来も、チェックする必要が出てくるかもしれない。</p>
 <p>github pages の<a href="https://github.com/alice-lips/alice-lips.github.io/settings">設定のページ</a> の方でも以下のメッセージが登場するようになる。</p>
 <figure>
-<img src="img/150107b.png"><figcaption></figcaption>
+<img src="../../img/150107b.png"><figcaption></figcaption>
 </figure>
 <p>IPアドレスが変更するなどの警告も、ここに出るようである。</p>
 </section>
@@ -676,7 +676,7 @@ do ami</code></pre>
 <p>そのメッセージそのままググると、 &quot;僕はAsunderが好きだな&quot; という、解決策が載ってた。</p>
 <p>直接の解決策じゃなくて、 別のソフトを紹介するだけという 先ほどと同じパターンだ。</p>
 <figure>
-<img src="img/141129.png"><figcaption></figcaption>
+<img src="../../img/141129.png"><figcaption></figcaption>
 </figure>
 <p>オプションでmp3を選択すると、 <code>lame</code>が見つからない、と怒られたので</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> apt-get <span class="kw">install</span> lame</code></pre>
@@ -1170,8 +1170,7 @@ exec i3</code></pre>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// コマンドライン引数一個目をそのまま吐く</span>
 <span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">process</span>.<span class="fu">argv</span>[<span class="dv">2</span>]);</code></pre>
 <figure>
-<img src="img/141011.png"><figcaption></figcaption>
+<img src="../../img/141011.png"><figcaption></figcaption>
 </figure>
 <p>どちらも、２つ目のような結果になるものだと、 勘違いしてた．</p>
 </section>
-<a href='./'>▷ read more</a>
