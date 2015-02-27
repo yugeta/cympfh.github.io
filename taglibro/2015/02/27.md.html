@@ -33,7 +33,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <body>
 <h1 id="fri-feb-27-131024-jst-2015">Fri Feb 27 13:10:24 JST 2015</h1>
 <p>インターンシップの経験をブログに書くことが要請されているらしいので下書きをここに書こう。</p>
-<h1 id="express-v.4.12.0-を用いた簡易サーバ"><a href="https://www.npmjs.com/package/express">express v.4.12.0</a> を用いた簡易サーバ</h1>
+<h2 id="express-v.4.12.0-を用いた簡易サーバ"><a href="https://www.npmjs.com/package/express">express v.4.12.0</a> を用いた簡易サーバ</h2>
 <p>以下はミドルウェア(後述)を用いずに, <code>/</code> への POST を読んで, ヘッダを含めて受け取ったデータをそのまま返す</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">express <span class="fu">=</span> require <span class="ch">&#39;express&#39;</span>
 
@@ -73,7 +73,7 @@ $ <span class="kw">curl</span> -X POST -d hoge=fuga localhost:3030
 
 $ <span class="kw">curl</span> -X POST -d name=cympfh -d pwd=koregacympfhnopwd localhost:3030
 <span class="ot">name=</span>cympfh<span class="kw">&amp;</span><span class="ot">pwd=</span>koregacympfhnopwd</code></pre>
-<h1 id="ミドルウェアであるところの-body-parser-v.1.12.0-を噛ませる">ミドルウェアであるところの <a href="https://www.npmjs.com/package/body-parser">body-parser v.1.12.0</a> を噛ませる</h1>
+<h2 id="ミドルウェアであるところの-body-parser-v.1.12.0-を噛ませる">ミドルウェアであるところの <a href="https://www.npmjs.com/package/body-parser">body-parser v.1.12.0</a> を噛ませる</h2>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">express <span class="fu">=</span> require <span class="ch">&#39;express&#39;</span>
 bodyParser <span class="fu">=</span> require <span class="ch">&#39;body-parser&#39;</span>
 
@@ -88,7 +88,7 @@ app<span class="fu">.</span>listen <span class="dv">3030</span>, (<span class="o
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">curl</span> -X POST -d name=cympfh -d pwd=koregacympfhnopwd localhost:3030
 <span class="dt">{&quot;name&quot;:&quot;cympfh&quot;,&quot;pwd&quot;:&quot;koregacympfhnopwd&quot;}</span><span class="kw">%</span></code></pre>
 <p>-F で送ったデータはどうやって受け取るんだろう</p>
-<h1 id="非同期的処理">非同期的処理</h1>
+<h2 id="非同期的処理">非同期的処理</h2>
 <p>nodeで動かすとはつまり非同期的処理を湯水のように行うこと</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">express <span class="fu">=</span> require <span class="ch">&#39;express&#39;</span>
 bodyParser <span class="fu">=</span> require <span class="ch">&#39;body-parser&#39;</span>
