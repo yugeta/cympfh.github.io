@@ -51,9 +51,16 @@
   <body>
     <h1 class='toptitle'><a href='./'>cympfh/taglibro</a></h1>
 <section>
+<h1 id="tue-mar-3-142026-jst-2015">Tue Mar 3 14:20:26 JST 2015</h1>
+<figure>
+<img src="img/150303.png"><figcaption></figcaption>
+</figure>
+<h3 id="能力のない人間ほどやりたがりであること">能力のない人間ほど「やりたがり」であること</h3>
+</section>
+<section>
 <h1 id="fri-feb-27-131024-jst-2015">Fri Feb 27 13:10:24 JST 2015</h1>
 <p>インターンシップの経験をブログに書くことが要請されているらしいので下書きをここに書こう。</p>
-<h1 id="express-v.4.12.0-を用いた簡易サーバ"><a href="https://www.npmjs.com/package/express">express v.4.12.0</a> を用いた簡易サーバ</h1>
+<h2 id="express-v.4.12.0-を用いた簡易サーバ"><a href="https://www.npmjs.com/package/express">express v.4.12.0</a> を用いた簡易サーバ</h2>
 <p>以下はミドルウェア(後述)を用いずに, <code>/</code> への POST を読んで, ヘッダを含めて受け取ったデータをそのまま返す</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">express <span class="fu">=</span> require <span class="ch">&#39;express&#39;</span>
 
@@ -93,7 +100,7 @@ $ <span class="kw">curl</span> -X POST -d hoge=fuga localhost:3030
 
 $ <span class="kw">curl</span> -X POST -d name=cympfh -d pwd=koregacympfhnopwd localhost:3030
 <span class="ot">name=</span>cympfh<span class="kw">&amp;</span><span class="ot">pwd=</span>koregacympfhnopwd</code></pre>
-<h1 id="ミドルウェアであるところの-section-parser-v.1.12.0-を噛ませる">ミドルウェアであるところの <a href="https://www.npmjs.com/package/section-parser">section-parser v.1.12.0</a> を噛ませる</h1>
+<h2 id="ミドルウェアであるところの-section-parser-v.1.12.0-を噛ませる">ミドルウェアであるところの <a href="https://www.npmjs.com/package/section-parser">section-parser v.1.12.0</a> を噛ませる</h2>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">express <span class="fu">=</span> require <span class="ch">&#39;express&#39;</span>
 sectionParser <span class="fu">=</span> require <span class="ch">&#39;section-parser&#39;</span>
 
@@ -108,7 +115,7 @@ app<span class="fu">.</span>listen <span class="dv">3030</span>, (<span class="o
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">curl</span> -X POST -d name=cympfh -d pwd=koregacympfhnopwd localhost:3030
 <span class="dt">{&quot;name&quot;:&quot;cympfh&quot;,&quot;pwd&quot;:&quot;koregacympfhnopwd&quot;}</span><span class="kw">%</span></code></pre>
 <p>-F で送ったデータはどうやって受け取るんだろう</p>
-<h1 id="非同期的処理">非同期的処理</h1>
+<h2 id="非同期的処理">非同期的処理</h2>
 <p>nodeで動かすとはつまり非同期的処理を湯水のように行うこと</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">express <span class="fu">=</span> require <span class="ch">&#39;express&#39;</span>
 sectionParser <span class="fu">=</span> require <span class="ch">&#39;section-parser&#39;</span>
@@ -1163,15 +1170,5 @@ exec i3</code></pre>
 <blockquote>
 <p>できるのは流れてきたものを見るだけ。パチンコと何ら変わらない時間潰しのツールになっています。<br><a href="http://engineer.typemag.jp/article/techlion18">「みんなジョブズに騙されている」増井俊之教授が進歩の止まったコンピュータのUIを問い直す【TechLIONレポ】 - エンジニアtype</a> より</p>
 </blockquote>
-</section>
-<section>
-<h1 id="年-10月-11日-土曜日-062454-jst">2014年 10月 11日 土曜日 06:24:54 JST</h1>
-<p>twurlってゆー、Rubyで書かれたCLIのTwitterクライアント があって、 それが改行を含む投稿ができなくて困ってた． 具体的には &quot;&quot; を &quot;\n&quot;</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// コマンドライン引数一個目をそのまま吐く</span>
-<span class="kw">console</span>.<span class="fu">log</span>(<span class="kw">process</span>.<span class="fu">argv</span>[<span class="dv">2</span>]);</code></pre>
-<figure>
-<img src="img/141011.png"><figcaption></figcaption>
-</figure>
-<p>どちらも、２つ目のような結果になるものだと、 勘違いしてた．</p>
 </section>
 <a href='./'>▷ read more</a>
