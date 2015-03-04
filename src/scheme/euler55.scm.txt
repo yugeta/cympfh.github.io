@@ -1,0 +1,24 @@
+(define-syntax >>
+  (syntax-rules ()
+    ((_ x) x)
+    ((_ x f) (f x))
+    ((_ x f g ...) (>> (f x) g ...)) ))
+
+(use srfi-13)
+(define (rev n)
+  (>> n number->string string-reverse string->number))
+(define (rev-and-add n)
+  (+ n (rev n)))
+(define (parin? n)
+  (= n (rev n)))
+
+(define (lychrel? n)
+  (let loop ((n n) (i 49))
+    (if (zero? i) #t
+      (let1 n+ (rev-and-add n)
+      (if (parin? n+) #f (loop n+ (- i 1)))))))
+
+(let loop ((i 1) (count 0))
+  (if (>= i 10000) (format #t "it is ~a\n" count)
+      (loop (+ i 1) (+ count (if (lychrel? i) 1 0)))))
+

@@ -1,0 +1,63 @@
+; Aitken加速のテスト
+;
+; 数列 a_n は
+; a_n = Sum [ 1/i/i for i in 2**n]
+; であり、これはn -> infinity である値に収束する．
+; これを求めるプログラムである．
+; 関数 (a n) はただその定義通りのもの．
+; n > 2 についての (a n) は (a (- n 1)) を利用して
+; 求めることができるはずで、table というグローバル変数
+; には、部分情報としてこれを持つ．メモ化である．
+; 
+; (accelled_a k n) は、(a n)をk段階、Aitken加速する
+; ものである．(= k 0)の時、それはただの(a n)である．
+
+(define table '())
+(define (assoc2 n k table)
+    (if (assoc k table) (assoc n (assoc k table)) #f))
+
+; original seq a_n
+(define (a n)
+    (define (a-sub ac i n)
+        (if (> i n) ac
+            (a-sub (+ ac (/ 1 i i)) (+ i 1) n)))
+    (if (<= n 0) 1.0
+        (if (assoc2 n 0 table) (cdr (assoc2 n 0 table))
+            (let* ((n* (- n 1))
+                   (ret (exact->inexact
+                          (a-sub(a n*)(+ 1 (expt 2 n*))(expt 2 n)))))
+                (set! table (cons (cons n (cons 0 ret)) table))
+                ret))))
+
+; seq, a^k made by a^(k-1) and a^(k-2),  and a^0 means a
+(define (accelled_a k n)
+  (let ((result (assoc2 n k table)))
+    (cond (result (cddr result))
+          ((<= k 0) (a n))
+          (else (let* ((k* (- k 1))
+                      (ret (- (accelled_a k* n)
+                       (/ (expt (- (accelled_a k* n) (accelled_a k* (- n 1)) ) 2)
+                          (+ (accelled_a k* n) (* (- 2) (accelled_a k* (- n 1)) (accelled_a k* (- n 2))))))))
+                     (set! table (cons (cons n (cons k ret)) table))
+                     ret)))))
+
+(define (relative_err a x)
+    (/ (abs (- a x)) a)) ; a is truth
+
+(define (plot)
+    (let* ((pi (* 4 (atan 1)))
+          (truth (/ (* pi pi) 6)))
+        (define (print-line k)
+            (define (print-point n)
+                (let ((y (accelled_a k n)))
+                    (if (< 8 n)
+                        (if (= k 4)
+                            (begin (display n)(display " ")(display (relative_err truth y))(newline)(display "ans is ")(display y)(newline))
+                            (newline))
+                        (begin (display n)(display " ")(display (relative_err truth y))(newline) (print-point (+ n 1))))))
+            (display "# a^ ")(display k)(newline)
+            (print-point (* k 2))
+            (if (>= k 4) (newline) (print-line (+ k 1))))
+        (print-line 0)))
+
+(plot)

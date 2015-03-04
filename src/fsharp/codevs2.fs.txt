@@ -1,0 +1,223 @@
+open System;;
+open System.IO;;
+
+let rnd = new Random(99)
+let out = new StreamWriter("./output")
+
+let [|width; height; T; S; N|] =
+    Console.ReadLine().Split([|' '|]) |> Array.map int;;
+
+let target_score = 2421219
+let max_count = 100
+let diff_i = 100
+let diff_c = (float (max_count*diff_i) / 1000.0) |> ceil |> int
+
+let mutable max_eff = 0
+let mutable most_eff_cm : (int*int) list = []
+let mutable most_eff_cm_len : int = 0
+
+let mutable max_sc = 0
+let mutable max_cm : (int*int) list = []
+
+let blks : int [] [] [] =
+    [|for i in 1 .. N do
+        yield [|for j in 1 .. T do
+                let arr = Console.ReadLine().Split([|' '|]) in
+                yield arr |> Array.map int |]
+        Console.ReadLine() |> ignore |]
+
+let fld : int [] [] =
+    Array.init (height+T) (fun _ -> Array.init width (fun _ -> 0))
+let fld_bk : int [] [] =
+    Array.init (height+T) (fun _ -> Array.init width (fun _ -> 0))
+
+let save () =
+    for x in 0 .. T+height-1 do
+        for y in 0 .. width-1 do
+            fld_bk.[x].[y] <- fld.[x].[y]
+let restore () =
+    for x in 0 .. T+height-1 do
+        for y in 0 .. width-1 do
+            fld.[x].[y] <- fld_bk.[x].[y]
+let initial () =
+    for x in 0 .. T+height-1 do
+        for y in 0 .. width-1 do
+            fld.[x].[y] <- 0
+            fld_bk.[x].[y] <- 0
+
+let lowest11 () =
+    let rec lowest11' i j =
+        if i < 0 then 20
+        elif j >= width then lowest11' (i-1) 0
+        elif fld.[i].[j] = 11 then i
+        else lowest11' i (j+1) in
+    lowest11' (height+T-1) 0
+
+let drop_and_elim () =
+    let rec srch_less i j =
+        if i < 0 then None
+        else if fld.[i].[j] <> 0 then Some(i)
+        else srch_less (i-1) j in
+
+    let drop () =
+        for x in height+T-1 .. -1 .. 0 do
+            for y in 0 .. width-1 do
+                if fld.[x].[y] = 0 then
+                    let x' = srch_less (x-1) y in
+                    if Option.isSome x' then
+                        fld.[x].[y] <- fld.[Option.get x'].[y]
+                        fld.[Option.get x'].[y] <- 0
+
+    let gather () =
+        let rec walk i j di dj ac ls =
+            if i<0 || i > height+T-1 || j < 0 || j >= width then [] else
+                let ls' = (i,j)::ls in
+                let ac' = ac + fld.[i].[j] in
+                if ac' = 10 then ls'
+                else if ac = ac' then []
+                else if ac' > 10 then []
+                else walk (i+di) (j+dj) di dj ac' ls'
+        in
+        [ for x in 0 .. height+T-1 do
+            for y in 0 .. width-1 do
+                let ls = walk x y (-1) (-1) 0 [] in
+                if List.length ls > 0 then yield ls
+                let ls = walk x y (-1) 0 0 [] in
+                if List.length ls > 0 then yield ls
+                let ls = walk x y (-1) 1 0 [] in
+                if List.length ls > 0 then yield ls
+                let ls = walk x y 0 1 0 [] in
+                if List.length ls > 0 then yield ls ]
+
+    let rec calc C E =
+        pown 2 (min 30 C - 1) * (max 1 (C-29)) * E
+
+    let rec sub C =
+        drop ()
+        let cells = List.concat <| gather ()
+        let E = List.length cells
+        printfn "E is %d" E
+        for (x,y) in cells do
+            fld.[x].[y] <- 0
+        if E = 0 then 0
+        else (calc C E) + (sub (C+1)) in
+
+    let gameover () =
+        [ for y in 0 .. width-1 do
+            yield fld.[T].[y] ] |> List.sum > 0
+
+    let sc = sub 1 in
+    if gameover () then None else Some(sc)
+
+let simm i bl (pos,rot) =
+    let blk : int list list =
+        [for x in 0 .. T-1 ->
+            [for y in 0 .. T-1 do
+                if rot = 0 then yield blks.[i].[x].[y]
+                else if rot = 1 then yield blks.[i].[T-1-y].[x]
+                else if rot = 3 then yield blks.[i].[y].[T-1-x]
+                else yield blks.[i].[T-1-x].[T-1-y] ]]
+    // out of field
+    let s =
+        [ for x in 0 .. T-1 do
+            for y in List.concat [[0 .. -1-pos];[-pos+width .. T-1]] do
+                yield blk.[x].[y] ] |> List.sum
+    if s > 0 then (None, (pos, rot)) else
+        save ()
+        // put
+        for x in 0 .. height+T-1 do
+            for y in 0 .. width-1 do
+                if pos<=y && y<pos+T && x<T then
+                    fld.[x].[y] <- blk.[x].[y-pos]
+
+        let score_opt = drop_and_elim () in
+        (if bl then restore ());
+        (score_opt, (pos,rot))
+
+let step i =
+    let cand =
+        [for x in -T+1 .. width-1 do
+            for rot in 0 .. 3 -> (x,rot)]
+        |> List.map (simm i true)
+        |> List.filter (fun (o, _) -> Option.isSome o)
+        |> List.map (fun (o,a) -> (Option.get o, a))
+        |> List.sort
+    let cand_rev = List.rev cand
+    if List.length cand = 0 then
+        // for k in fld do printfn "%A" k;
+        // printfn "gameover!!";
+        (-1, (5,0))
+    else
+        let max_cand = cand_rev |> List.head |> fst
+        if max_cand > 15000 then
+            cand_rev |> List.head
+        elif max_cand < 200 ||
+                rnd.Next(100) < (400-100*(lowest11 ()))/3 then
+            cand |> List.head
+        elif rnd.Next(200) < 1 then
+            cand_rev |> List.head
+        else
+            cand |> List.head
+
+let rec main i comm score count =
+    if i >= N then
+        (comm, score)
+    else
+        // search
+        let (pos, rot) =
+            match most_eff_cm with
+            | [] ->  let (got, (pos,rot)) = step i in (pos, rot)
+            | x::xs -> most_eff_cm <- xs; x
+
+        let (got, (pos, rot)) =
+            simm i false (pos, rot)
+            |> (fun (o, a) ->
+                    ((if Option.isSome o then Option.get o else -1), a))
+        // update fld
+        let comm' = (pos, rot) :: comm
+        let score' = score + got
+        if i > 10 then
+            let eff' =
+                score' * score' * (if (count % max_count)/diff_c >= i/diff_i then 1000000 else 1)
+            if max_eff < eff' then
+                max_eff <- eff'
+                most_eff_cm <- List.rev comm'
+                most_eff_cm_len <- List.length comm'
+        main (i+1) comm' score' count
+
+let output ls =
+    let rec output' ls c =
+        match ls, c with
+        | _, 0 -> ()
+        | [], c ->
+            let (pos, rot) = (rnd.Next(10), rnd.Next(4)) in
+            printfn "%d %d" pos rot; output' [] (c-1)
+        | ((pos, rot)::xs), c ->
+            printfn "%d %d" pos rot; output' xs (c-1)
+    in
+    output' ls N
+
+let rec main_loop count =
+    initial ()
+    let (comm,sc) = main 0 [] 0 count
+    if max_sc < sc then
+        max_cm <- comm
+        max_sc <- sc
+    out.Write(sprintf "%d: %d %d -- len=%d\n" count sc max_sc most_eff_cm_len)
+    out.Flush()
+    let date = DateTime.Now in
+    if sc > target_score || date.Hour < 1(*count > max_count*) then
+        out.Write("send the command led "+string max_sc+" point.\n")
+        List.rev max_cm |> output
+    else
+        if rnd.Next(100) < 20 then
+            out.Write("taika.\n")
+            out.Flush()
+            most_eff_cm <- Seq.take (List.length most_eff_cm_len * 7/10) most_eff_cm
+        main_loop (count+1)
+
+out.Write("test3.fs\n")
+main_loop 0
+out.Write("END")
+out.Close()
+(* set ft=fsharp *)

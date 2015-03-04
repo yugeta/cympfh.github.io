@@ -1,0 +1,86 @@
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2498
+
+print=console.log;
+line=require("fs").readFileSync("/dev/stdin","utf-8").split("\n")[0]
+Array.prototype.rotate = function(n) {
+  return this.slice(n, this.length).concat(this.slice(0, n));
+}
+
+y = "y"; g = "g"; r = "r";
+b = "b"; o = "o"; w = "w";
+A = [y, g ,r]; B = [y, r, b];
+C = [y, b, o]; D = [y, o, g];
+E = [w, b, r]; F = [w, r, g];
+G = [w, g, o]; H = [w, o, b];
+cube = [A,B,C,D,E,F,G,H];
+
+for (var i=0; i<line.length; ++i)
+  operate(line[i])
+
+print(".."+cube[5][1]+cube[4][2]+"....");
+print(".."+cube[0][2]+cube[1][1]+"....");
+print(cube[5][2]
+  +cube[0][1]+cube[0][0]
+  +cube[1][0]+cube[1][2]
+  +cube[4][1]+cube[4][0]
+  +cube[5][0]);
+print(cube[6][1]
+  +cube[3][2]+cube[3][0]
+  +cube[2][0]+cube[2][1]
+  +cube[7][2]+cube[7][0]
+  +cube[6][0]);
+print(".."+cube[3][1]+cube[2][2]+"....");
+print(".."+cube[6][2]+cube[7][1]+"....");
+
+// where
+
+function operate(ch) {
+  if (ch == "R") {
+    var tmp = cube[1];
+    cube[1] = cube[2].rotate(2);
+    cube[2] = cube[7].rotate(1);
+    cube[7] = cube[4].rotate(2);
+    cube[4] = tmp.rotate(1);
+    return;
+  }
+  else if (ch == "L") {
+    var tmp = cube[3];
+    cube[3] = cube[0].rotate(2);
+    cube[0] = cube[5].rotate(1);
+    cube[5] = cube[6].rotate(2);
+    cube[6] = tmp.rotate(1);
+    return;
+  }
+  else if (ch == "F") {
+    var tmp = cube[0];
+    cube[0] = cube[3];
+    cube[3] = cube[2];
+    cube[2] = cube[1];
+    cube[1] = tmp;
+    return;
+  }
+  else if (ch == "B") {
+    var tmp = cube[4];
+    cube[4] = cube[7];
+    cube[7] = cube[6];
+    cube[6] = cube[5];
+    cube[5] = tmp;
+    return;
+  }
+  else if (ch == "U") {
+    var tmp = cube[0];
+    cube[0] = cube[1].rotate(2);
+    cube[1] = cube[4].rotate(1);
+    cube[4] = cube[5].rotate(2);
+    cube[5] = tmp.rotate(1);
+    return;
+  }
+  else {
+    var tmp = cube[6];
+    cube[6] = cube[7].rotate(2);
+    cube[7] = cube[2].rotate(1);
+    cube[2] = cube[3].rotate(2);
+    cube[3] = tmp.rotate(1);
+    return;
+  }
+}

@@ -1,0 +1,31 @@
+(*
+    昨日これ書いたのに消えてた．Dropbox信用できなくなった．
+    8queens pazzle です．en.wikipediaみたら解法そのまま
+    書いてあった．
+ *)
+let rec sel ls cand =
+    match ls with
+    | [] -> cand
+    | x::xs ->
+        let len = List.length ls in
+        cand
+            |> List.filter ((<>) x)
+            |> List.filter ((<>) (x+len))
+            |> List.filter ((<>) (x-len))
+            |> sel xs
+in
+
+let rec main lss =
+    if List.head lss |> List.length >= 8 then lss else
+        let lss' = [for ls in lss do
+                        let cand = sel ls [1..8] in
+                        for x in cand do
+                            yield (ls@[x])
+                   ] in
+        main lss'
+
+in
+let ans = main [[]] in
+printfn "answers are %d, and they are ..\n%A" <| List.length ans <| ans
+
+(* vim: set ft=fsharp *)

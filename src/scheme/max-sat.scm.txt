@@ -1,0 +1,189 @@
+;;; MAX-SAT
+
+; contains N variables
+; 変数は整数の 1 ~ N で表現する
+; (not n) を -n と負数にする
+
+; contains M clauses
+; clause C[i] with its weight w[i] (0 <= i < M)
+
+; each clause
+; C[i] := or x[1] x[2] .. x[mi] (-N <= x[j] <= -1 or 1 <= x[j] <= N)
+
+; 変数割り当てとは
+; 整数 1 ~ N に対して {true, false} を対応付ける
+; 2^N 通りの内の 1 通りのこと
+
+; define of score
+; 変数割り当て X に対して、スコアとは
+; score[X] := sum [w[i] | C[i] holds]
+
+; MAX-SAT とは、scoreを最大にするような X を見つける問題であった
+
+; $ gosh ./%.scm << EOT
+; N
+; w[1] x[1,1] x[1,2] .. x[1,m1]
+; w[2] x[2,1] x[2,2] .. x[2,m2]
+; :
+; w[M] x[M,1] x[M,2] .. x[M,mM]
+; EOT
+
+;;
+
+; で、これをランダム割り当て、山登り、焼き鈍し、遺伝的アルゴリズムで
+; それぞれ解いて結果(score)を比較する
+; 比較が目的なので変数割り当てはは出力せず、スコアのみである
+
+(use srfi-1)
+(use srfi-13)
+(use srfi-26)
+(use srfi-27)
+
+(define *N* (string->number (read-line))) ; the number of vars
+(define *weights* #f)
+(define *clauses* #f)
+(define *M* #f) ; length of *weights* or *clauses*
+
+;; read
+(let loop ((w '()) (c '()))
+  (let1 ln (read-line)
+  (if (eof-object? ln)
+      (begin
+        (set! *weights* (reverse w))
+        (set! *clauses* (reverse c))
+        (set! *M* (length w)))
+      (let1 xs (map string->number (string-tokenize ln))
+        (loop (cons (car xs) w)
+              (cons (cdr xs) c))))))
+
+(define (random-assign)
+  (list->vector (map (lambda (i) (zero? (random-integer 2))) (iota *N*))))
+
+;; assign => total score (sum of weights)
+(define (score x)
+  (let loop ((cls *clauses*) (ws *weights*) (ac 0))
+    (if (null? ws) ac
+        (let rec ((c (car cls)))
+          (if (null? c) (loop (cdr cls) (cdr ws) ac)
+              (let* ((v (car c))
+                     (bit (if (> v 0) (vector-ref x (- v 1))
+                                      (not (vector-ref x (- -1 v))))))
+              (if bit (loop (cdr cls) (cdr ws) (+ ac (car ws)))
+                      (rec (cdr c)))))))))
+
+
+;; 手法1. ただのランダムな割り当て．そのスコアを返す
+(define (just-random) (score (random-assign)))
+
+;; 手法2. 山登り
+(define (hill-climbing)
+
+  (define x (random-assign)) ; initial value
+
+  (let loop ((j 0) (sc (score x)) (cx 0))
+    (if (>= cx *N*) sc
+        (begin
+          (set! (vector-ref x j) (not (vector-ref x j))) ; swap j-th variable (true <-> false)
+          (let ((sc+ (score x))
+                (j+ (modulo (+ 1 j) *N*)))
+          (if (> sc+ sc)
+              (loop j+ sc+ 0) ; after the swap, up the score (keep the j-th)
+              (begin
+                (set! (vector-ref x j) (not (vector-ref x j))) ; otherwise, restore the j-th
+                (loop j+ sc (+ cx 1)))))))))
+
+
+;; 手法3. 焼き鈍し
+(define (simulated-annealing)
+
+  (define x (random-assign)) ; initial value
+  (define max-time 2000)     ; loop times
+
+  ;; 変数を変えてみる前後のスコア(sc), time(ループが何回目か)で、
+  ;; 変数を変えるための確率
+  (define (probably sc sc+ time) ; probability of transition
+    (let1 d-sc (- sc+ sc)
+    (if (> d-sc 0) 1 (exp (* d-sc time (/ max-time))))))
+    ; スコアが上がるときは、確率 1 で動く
+    ; スコアが下がるときでも、下がる量が少ない程、timeが小さい程、確率は 1 に近い数になる (0より大きいことが大切)
+
+  (let loop ((time 1) (sc (score x)) (max-sc 0))
+    (if (> time max-time) max-sc
+        (let* ((j (random-integer *N*))
+               (b (vector-ref x j)))
+        (begin
+          (set! (vector-ref x j) (not b))
+          (let ((sc+ (score x))
+                (time+ (+ time 1)))
+          (if (< (random-real) (probably sc sc+ time))
+              (begin ; keep the value of j-th after swapping
+                (loop time+ sc+ (max max-sc sc+)))
+              (begin
+                (set! (vector-ref x j) b) ; restore the j-th
+                (loop time+ sc max-sc)) )))))))
+
+;; 手法4. 遺伝的アルゴリズム
+(define (genetic-algorithm)
+
+  ;; 変数割り当て自体を一つの遺伝子とする
+  (define *L* 30) ; プールには30の遺伝子があるのを基準とする
+  (define pool (map (lambda _
+      (let1 x (random-assign)
+      (cons x (score x))))
+    (iota *L*)))
+
+  ; プールから一様確率で選んだ2つを二点交叉して新しい遺伝子を作る
+  (define (make-child)
+    (let1 len (length pool)
+    (let* ((i (random-integer len))
+           (j (modulo (+ i (random-integer (- len 1)) 1) len))
+           (m1 (car (list-ref pool i)))
+           (m2 (car (list-ref pool j)))
+           (i (random-integer *N*))
+           (j (modulo (+ i (random-integer (- *N* 1)) 1) len)))
+      (list->vector
+        (map (lambda (k)
+            (vector-ref (if (< (min i j) k (max i j)) m1 m2) k))
+          (iota *N*))))))
+
+  ; プールからスコアの最も低いような遺伝子を取り除いたプールを返す
+  (define (delete-worst)
+    (let loop ((cand (car pool)) (ac '()) (ls (cdr pool)))
+      (if (null? ls) ac
+          (if (< (cdr cand) (cdar ls))
+              (loop cand (cons (car ls) ac) (cdr ls))
+              (loop (car ls) (cons cand ac) (cdr ls)) ))))
+
+  ; (make-child)を破壊的に追加
+  (define (add-child!)
+    (let1 c (make-child)
+    (when (< (random-real) 0.2)
+      (for-each (^i
+          (let1 idx (random-integer *N*)
+          (set! (vector-ref c idx) (random-integer 2))))
+        (iota (random-integer 5))))
+    (set! pool (cons (cons c (score c)) pool))))
+
+  ; (delete-worst)によってプールを破壊的に上書き
+  (define (elite!) (set! pool (delete-worst)))
+
+  ; 「20回、子供作って、20回、スコアの悪いのを捨てる」を50回繰り返す
+  (for-each (lambda (i)
+      (for-each (lambda (j) (add-child!)) (iota 20))
+      (for-each (lambda (j) (elite!)) (iota 20)) )
+    (iota 50))
+
+  ; プールから最も良いスコアを返す
+  (apply max (map cdr pool)))
+
+;;; main
+
+(define-syntax test
+  (syntax-rules ()
+    ((_ algo) (begin (display (time (algo))) (newline)))))
+
+(random-source-randomize! default-random-source)
+(test just-random)
+(test hill-climbing)
+(test simulated-annealing)
+(test genetic-algorithm)

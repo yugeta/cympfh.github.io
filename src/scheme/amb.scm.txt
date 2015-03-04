@@ -1,0 +1,34 @@
+; 前の、choose-fail.scm.txt に対して、
+; これでいいんじゃない？って思うんだけど
+; 
+; というか、前のは唐突に (fail) させると
+; gosh> (fail)
+; *** IO-CLOSED-ERROR: I/O attempted on closed port: #<iport(closed) ./amb2.scm 0x8cc9700>
+; とかいうエラーだすし。
+; これは出さないよ。
+
+; gosh> (load "./amb.scm")
+; #t
+; gosh> (let ((a (choose 1 2 3)) (b (choose 2 3 4)) (c (choose 3 4 5)))
+; (if (= (+ (* a a) (* b b)) (* c c)) (list a b c) (fail)) )
+; (3 4 5)
+
+; gosh> (let ((a (choose 1 2 3 5)) (b (choose 2 3 4 12)) (c (choose 13 3 4 5)))
+; (if (= (+ (* a a) (* b b)) (* c c)) (list a b c) (fail)) )
+; (3 4 5)
+; gosh> (fail)
+; (5 12 13)
+
+(define *paths* '())
+(define fail #f)
+
+(define (choose . choices)
+    (call/cc (lambda (cc)
+        (set! *paths* (append *paths*
+            (map (lambda (p) (lambda () (cc p))) choices)))
+        (fail))))
+
+(define (fail)
+    (call/cc (lambda (cc)
+        (if (null? *paths*) (cc '@)
+            ((pop! *paths*))))))

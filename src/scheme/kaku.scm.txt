@@ -1,0 +1,103 @@
+(use srfi-1)
+(load "./solve-linear-equation.scm")
+
+;; u0 として与えた u(x,t=0) を初期状態に拡散方程式を三通りで解く
+;; 初期状態をフーリエ展開すれば解析的に簡単に解けるものであることに注意
+;; 手法について詳しくは kaku.pdf を参照
+
+(define *PI* 3.141592653589793)
+(define *kappa* 2)
+(define *MAX-t* 0.10001)
+
+; (define *dt* (/ *MAX-t* (read)))
+; (define N 11)
+; (define *dx* (/ (- N 1)))
+
+; (define *dt* 0.001)
+; (define N (read))
+; (define *dx* (/ (- N 1)))
+
+(define N 11)
+(define *dx* 0.1)
+(define *dt* 0.001)
+
+(define N/2 (inexact->exact (ceiling (/ N 2))))
+(define r (/ (* *kappa* *dt*) *dx* *dx*))
+
+; total list-ref
+(define (~ u idx)
+  (if (or (< idx 0) (>= idx (length u))) 0 (list-ref u idx)))
+
+; inner prod
+(define (inner* a b) (apply + (map * a b)))
+
+; bound condition
+(define (bound ls)
+  (cons 0 (append (drop-right (cdr ls) 1) '(0))))
+
+; forward Euler
+(define (forward u)
+  (define (next x)
+    (+ (~ u x) (* r (+ (~ u (+ x 1)) (* -2 (~ u x)) (~ u (- x 1)) ))))
+  (bound (map next (iota (length u)))))
+
+; backward Euler
+(define backward
+  (let ((A
+    (map (lambda (i)
+       (map (lambda (j)
+        (cond ((= i j) (+ (* 2 r) 1))
+              ((= (abs (- i j)) 1) (- r))
+              (else 0)))
+       (iota N)))
+     (iota N)) ))
+  (lambda (u)
+    (bound (solve A u))) ))
+
+; Crank-Nicolson method
+(define crank
+  (let ((A(map (lambda (i)
+               (map (lambda (j)
+                (cond ((= i j) (+ r 1))
+                      ((= (abs (- i j)) 1) (/ (- r) 2))
+                      (else 0)))
+               (iota N)))
+             (iota N)) )
+        (B(map (lambda (i)
+               (map (lambda (j)
+                (cond ((= i j) (- 1 r))
+                      ((= (abs (- i j)) 1) (/ r 2))
+                      (else 0)))
+               (iota N)))
+             (iota N)) ))
+  (lambda (u)
+    (bound (solve A (map (cut inner* <> u) B)))) ))
+
+;; main
+(begin
+  (define (u0 x) (sin (* *PI* x)))
+  (define init (map (lambda (i) (u0 (* i *dx*))) (iota N)))
+  (define (exact x t)
+          (* (u0 x) (exp (- (* *kappa* *PI* *PI* t)))))
+
+  (define (solve/method method)
+    (let loop ((cx 0) (u init))
+      (if (< (* cx *dt*) *MAX-t*)
+          (loop (+ cx 1) (method u)) u)))
+
+  (let ((u-f (solve/method forward))
+        (u-b (solve/method backward))
+        (u-n (solve/method crank))
+        (u-e (map (lambda (i) (exact (* *dx* i) *MAX-t*)) (iota N))))
+
+  (let ((m-f (list-ref u-f N/2))
+        (m-b (list-ref u-b N/2))
+        (m-n (list-ref u-n N/2))
+        (m-e (list-ref u-e N/2)))
+
+  (format #t "~a ~a ~a ~a ~a\n"
+    (exact->inexact *dt*) r
+    (abs (/ (- m-f m-e) m-e))
+    (abs (/ (- m-b m-e) m-e))
+    (abs (/ (- m-n m-e) m-e)))
+  )))

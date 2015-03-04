@@ -1,0 +1,30 @@
+; -title="Monad in Scheme (2) - moratorium"
+; http://d.hatena.ne.jp/kzk/20050902
+
+; この記事で見たものを思い出しながら書いた．
+; 丸写しではない、というのが最大のポイント．
+
+; ../blog/h032.txt にメモあり
+
+(define (return x)
+    (lambda (f . rest) (f x rest)))
+
+(define (fail . _) (return 'Nothing))
+(define (fail? x)  (equal? 'Nothing x))
+
+(define zero (return 0))
+(define one  (return 1))
+
+(define (succ x) (return (+ x 1)))
+(define (pred x) (return (- x 1)))
+
+(define (>>= x ls)
+    (if (fail? x) (fail)
+        (if (null? (cdr ls)) ((car ls) x)
+            (apply ((car ls) x) (cdr ls)) )))
+
+(define (M m)
+    (define (f x _) x)
+    (m f))
+
+; vim: set ft=scheme:

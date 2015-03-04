@@ -1,0 +1,37 @@
+(use util.match)
+
+(define (>>> . fs)
+    (apply compose (reverse fs)))
+
+(define (-> x . fs)
+    ((apply >>> fs) x))
+
+(define (&&& f g)
+    (lambda (x) (list (f x) (g x))))
+
+(define (*** f g)
+    (match-lambda [(x y) (list(f x)(g y))] ))
+
+(define (id x) x)
+(define (first f) (*** f id))
+(define (second g) (*** id g))
+
+(define (app ls)((car ls)(cadr ls)))
+
+; by here
+
+; util
+
+(define (succ x) (+ x 1))
+(define (pred x) (- x 1))
+(define (sq x) (* x x))
+(define (const x) (lambda (_) x))
+
+; work like this
+;
+; gosh> ((>>> (&&& succ pred) (*** sq sq)) 4)
+; (25 9)
+; gosh> ((>>> (&&& succ pred) (*** sq sq) (first (^x (pa$ + x)))) 4)
+; (#<closure (pa$ pa$)> 9)
+; gosh> ((>>> (&&& succ pred) (*** sq sq) (first (cut pa$ + <>)) app) 4)
+; 34

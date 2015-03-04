@@ -1,0 +1,102 @@
+;; いつか役立つその日の為にambオペレータとその周り、ファイナル
+
+(define (fail) #f)
+(define-syntax amb
+  (syntax-rules ()
+    ((_) (fail))
+    ((_ a) a)
+    ((_ a b ...)
+      (let1 fail0 fail
+      (let/cc cc
+        (set! fail (lambda () (set! fail fail0) (cc (amb b ...))))
+        (cc a)))) ))
+
+;; utility
+
+; pred or fail
+(define (assert pred) (or pred (amb)))
+
+; see the example below
+(define-macro (assert-vars vars . bodys)
+  `(if (or ,@(map (cut list 'not <>) vars)) #f
+       (begin ,@bodys)))
+
+; infinity amb
+(define (int-from n) (amb n (int-from (+ n 1))))
+(define (int-down n) (amb n (int-from (- n 1))))
+
+; iota-list->amb
+(define (amb-iota n :optional (b 0) (s 1))
+  (if (zero? n) (amb)
+      (amb b (amb-iota (- n 1) (+ b s) s))))
+
+; (amb a b c) => (list a b c)
+(define-macro (amb->list a)
+  `(let1 ls '()
+   (let ((x ,a)) (when x (push! ls x)) (fail))
+   (reverse ls)))
+
+; (list a b c) => (amb a b c)
+(define (list->amb ls)
+  (if (null? ls) #f
+      (amb (car ls) (list->amb (cdr ls)))))
+
+; (sublist '(a b c)) => (amb '(a b c) '(a b) '(a c) '(b c) ...)
+(define (sublist ls)
+  (if (null? ls) '()
+      (amb (cons (car ls) (sublist (cdr ls)))
+           (sublist (cdr ls)))))
+
+;; examples
+
+; [3..7] [10..13] から倍数関係を見つける
+
+; (assert a) などとしても 最後になると通って
+; (a #f) (b #f) の状態で (modulo b a) を計算しようとしてエラーを出す
+; (assert-vars (a b) bodys ...) は以下のように使う
+
+(define (solve)
+  (let ((a (amb-iota 5 3))
+        (b (amb-iota 4 10)))
+    (assert-vars (a b)
+    (assert (zero? (modulo b a)))
+    (cons a b))))
+   
+; gosh> (amb->list (solve))
+; ((3 . 12) (4 . 12) (5 . 10) (6 . 12))
+
+
+; [1,4,3,6,5,3,2,1] からいくつか数字を取ってきて総和が偶数であるような
+; ものを非決定的に取り出す． その最大値を計算する
+
+; なんでこちらは assert-vars が必要ないか．なんでだろう？
+
+; amb->list の使い方を示す例である
+
+(define (solve2)
+  (define array '(1 4 3 6 5 3 2 1))
+  (define (dfs)
+    (let* ((ls (sublist array))
+           (sum (apply + ls)))
+      (assert (even? sum))
+      sum))
+  (apply max (amb->list (dfs))))
+
+
+; ただDFSで書くと次のように多少長くなる．ambはこれを少しでも短く
+; 慣れればきっとそちらのほうが直観的になるだろうというライブラリである
+
+;; ordinary DFS for solve2
+(define (solve2.)
+  (define array '(1 4 3 6 5 3 2 1))
+  (define ans 0)
+  (define (dfs sum idx)
+    (if (= idx (length array))
+        (when (even? sum) (set! ans (max ans sum)))
+        (begin
+          (dfs sum (+ idx 1))
+          (dfs (+ sum (list-ref array idx)) (+ idx 1)) )))
+  (dfs 0 0)
+  ans)
+
+; vim:set ft=scheme:

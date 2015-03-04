@@ -1,0 +1,11 @@
+function delay (fun) {
+  var args = [].slice.call(arguments).slice(1);
+  return { thunk : 'thunk', fun : fun, args : args };
+}
+
+function force(thunk) {
+  if (thunk.thunk !== 'thunk') throw "THIS ISNT THUNK";
+  if (thunk.value !== undefined) return thunk.value;
+  thunk.value = thunk.fun.apply(null, thunk.args);
+  return thunk.value;
+}

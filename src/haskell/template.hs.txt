@@ -1,0 +1,25 @@
+import Data.List
+import Data.Char
+import Data.Maybe
+import Data.Tuple
+import Debug.Trace
+import System.Random
+import Control.Arrow
+import Foreign.Marshal.Array
+import qualified Data.ByteString.Char8 as B
+
+debug x = trace (show x) x
+(|>) x f = f x; infixl 1 |>
+(||>) mx f = mx >>= (return . f); infixl 1 ||>
+ref = (!!)
+
+readInt = fst.fromJust.B.readInt
+toDigit n = chr (48 + n)
+
+main = do
+  ls <- getContents ||> lines
+  n  <- head ls |> readIO :: IO Int
+  n
+		|> print
+
+-- vim: set ft=haskell:

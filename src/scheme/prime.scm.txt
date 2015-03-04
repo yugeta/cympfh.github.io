@@ -1,0 +1,94 @@
+; open http://www.saoyagi2.net/integer/prime.html
+
+;; ISPRIME --------------------------------------------------
+(define (isprime n)
+    (define (modeq0 n m) (= 0 (modulo n m)))
+    (define (for i skip)
+        (if (< (* i i) n)
+            (if (modeq0 n i) #f
+                (for (+ i (car skip))
+                    (append (cdr skip) (list (car skip)))))
+            #t))
+
+    (cond ((<= n 1) #f)
+          ((or (= n 2) (= n 3) (= n 5)) #t)
+          ((or (modeq0 n 2) (modeq0 n 3) (modeq0 n 5)) #f)
+          (else
+            (for 7 '(4 2 4 2 4 6 2 6)))))
+
+; (display (isprime 11111111))
+; $ time gosh prime.scm
+; #f
+; 
+; real    0m0.025s
+; user    0m0.004s
+; sys     0m0.008s
+
+
+;; ELATOS SIEVE ----------------------------------------------
+
+(use srfi-1)
+(define-syntax /= (syntax-rules() ((_ a b) (not (= a b)))))
+(define (elatos upper) ; non-tail call
+    (define (loop ls)
+        (if (null? ls) '()
+            (cons (car ls)
+                (loop
+                      (filter (lambda (x) (/= 0 (modulo x (car ls))))
+                              (cdr ls)) ))))
+    (loop (iota (- upper 1) 2)))
+
+; (elatos 11111111)
+; Received too many signals before processing them.  Exitting for the emergency...
+; 
+; real    0m39.007s
+; user    0m31.762s
+; sys     0m0.884s
+
+
+(define (elatos upper) ; tail call
+    (define (loop ls ret)
+        (if (null? ls)
+            (reverse ret)
+            (loop
+                (filter (lambda (x) (/= 0 (modulo x (car ls)))) (cdr ls))
+                (cons (car ls) ret))))
+    (loop (iota (- upper 1) 2) '()))
+
+; (elatos 11111111)
+; gosh: "unhandled-signal-error": unhandled signal 2 (SIGINT)
+; 
+; real    1m52.875s
+; user    1m52.455s
+; sys     0m0.244s
+
+(define (elatos/vector upper)
+    (define len (+ upper 1))
+    ;; vector is array. (ref memo i) == #t => i is prime.
+    (define memo (make-vector len #t))
+
+    ; sieve on memo
+    (let loop ((i 2))
+        (if (< i len)
+            (begin
+                (if (ref memo i)
+                    (let loop2 ((j (+ i i)))
+                        (if (< j len)
+                            (begin
+                                (set! (ref memo j) #f)
+                                (loop2 (+ i j))))))
+                (loop (+ i 1)))))
+
+    ; make list from memo
+    (let loop2 ((i 2) (ac '()))
+        (if (< i len)
+            (loop2 (+ i 1) (if (ref memo i) (cons i ac) ac))
+            (reverse ac))))
+
+; (display (take (reverse (elatos/vector 11111111))10))
+; $ time gosh prime.scm
+; (11111101 11111099 11111083 11111069 11111053 11111039 11110999 11110963 11110943 11110937)
+; 
+; real    0m25.174s
+; user    0m25.054s
+; sys     0m0.056s

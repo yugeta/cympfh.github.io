@@ -1,0 +1,45 @@
+(*
+    8-queen pazzle
+
+    8x8上にクイーンを8つ置く．
+    R・バード著「関数プログラミング」にあったのを思い出しつつ
+    書いた．同じ行にはひとつしかクイーンが無いのは自明で、
+    ということは1行にちょうど1つだけあることになる．
+    それを利用したデータ構造を用いる．つまり、0行目から順に、
+    クイーンが何列目にあるか、というリストを一つの候補とし、
+    複数の候補をリストによって持っておき、それをmainに渡す．
+
+    0..i行目までの候補からi+1行目の候補を列挙して(sel)それを
+    候補の後ろに付け足したもの(1つ以上の候補になる)を
+    新たに0..i+1行目までの候補とし、また再帰的にmainに渡す．
+    初めは0..(-1)行目までの候補として[[]]を渡している．
+*)
+open System;;
+
+module List =
+    (* lsからxを除いたリストls'を返す．
+       lsには高々１つのxしか含まれていないと決めてる *)
+    let rec diff x = function
+    | [] -> []
+    | y::ys when x=y -> diff x ys
+    | y::ys -> y::diff x ys
+
+let rec sel ls cand =
+    match ls with
+    | [] -> cand
+    | x::xs ->
+        let len = List.length ls in
+        cand |> List.diff x |> List.diff (x-len) |> List.diff (x+len)
+        |> sel xs
+
+let rec main lss =
+    match lss with
+    | ls::lss when List.length ls = 8 -> lss
+    | _ -> [for ls in lss do
+                let cand = sel ls [0..7] in
+                for x in cand -> ls @ [x]]
+            |> main
+
+let ls = [[]] in
+printfn "%A" <| main ls
+(* vim:set ft=fs: *)

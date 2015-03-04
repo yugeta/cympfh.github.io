@@ -1,0 +1,61 @@
+(use srfi-1)
+
+; lambda-term to SKI
+
+; detail for /study/SKI.txt
+
+;; important three propositions
+; (lambda (x) x) => I
+; (lambda (x) M) => (K M) ;; when x is not in (FV M)
+; (lambda (x) (M N)) => (S (lambda (x) M) (lambda (x) N))
+
+(define (FV M)
+    (cond ((symbol? M) (list M))
+          ((equal? (car M) 'lambda)
+                (lset-difference eq? (FV (third M)) (second M)))
+          (else (apply lset-union eq? (map FV M))) ))
+
+; gosh> (FV '((lambda(x) y) (lambda (x y z) (x z (y z)))))
+; (y)
+
+; pre-process
+(define (curry M)
+    (cond ((symbol? M) M)
+          ((eq? (car M) 'lambda)
+                (let ((args (second M)) (body ($ curry $ third M)))
+                (fold-right (^(arg N) `(lambda (,arg) ,N)) body args)))
+          (map curry M)))
+
+; gosh> (curry '(lambda (x y z) ((x z) (y z))))
+; (lambda (x) (lambda (y) (lambda (z) ((x z) (y z)))))
+
+(define (lambda->SKI M)
+    (define (lambda? M) (eq? (car M) 'lambda))
+    (cond ((symbol? M) M)
+          ((null? M) '())
+          ((and (pair? M) (null? (cdr M))) (lambda->SKI (car M)))
+          ((lambda? M)
+            (let ((arg  ($ car $ second M))
+                  (body (third M)) )
+            (cond ((eq? arg body) 'I)
+                  ((memv arg (FV body))
+                    (if (lambda? body)
+                        (lambda->SKI `(lambda (,arg) ,(lambda->SKI body)))
+                        (lambda->SKI
+                            `(S (lambda (,arg) ,($ lambda->SKI $ drop-right body 1))
+                                (lambda (,arg) ,($ lambda->SKI $ last body)))) ))
+                  (else `(K ,(lambda->SKI body))) )))
+          (else (map lambda->SKI M)) ))
+
+; curryは複数引数を一引数に分割するもの．Scheme的には意味は違ってしまうけど．
+; 一引数のみに先に変換してしまえば、lambda->SKIは割とラク．
+
+; gosh> (lambda->SKI (curry '(lambda (x y z) (x z (y z)))))
+; (S (S (K S) (S (K K) (S (K S) (S (S (K S) (S (K K) I)) (K I))))) (K (S (S (K S) (S (K K) I)) (K I))))
+;
+; K コンビネータそのものを、SKIで表そうと変換した結果．．．
+
+; gosh> (lambda->SKI (curry '(lambda (f x y) (f y x))))
+; (S (S (K S) (S (K K) (S (K S) (S (S (K S) (S (K K) I)) (K I))))) (K (S (K K) I)))
+;
+; これは所謂 flip 関数

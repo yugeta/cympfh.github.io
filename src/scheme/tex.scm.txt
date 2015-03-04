@@ -1,0 +1,82 @@
+(define-syntax tex
+    (syntax-rules ()
+        ((tex x ...) (map display (list x ...)))))
+;;;;
+
+(define (x-append . args) (apply string-append (map x->string args)))
+(define (x-join ls del) (string-join (map x->string ls) del))
+
+; keyword name => \name
+(define (keyword name)
+    (x-append "\\" name " "))
+(define yen keyword)
+
+; keyword/option name option => \name[option]
+(define (keyword/option name option)
+    (x-append "\\" name "[" option "]"))
+
+; tag name hoge hige => \name{hoge hige}
+(define (tag name . args)
+    (let1 contents (x-join args " ")
+    (x-append "\\" name "{" contents "}")))
+
+(define (tag2 name arg1 arg2)
+    (x-append "\\" name "{" arg1 "}{" arg2 "}"))
+
+; \name[option]{hoge hare}
+(define (tag/option name option . args)
+    (let1 contents (x-join args " ")
+    (x-append "\\" name "[" option "]" "{" contents "}")))
+
+; env name hoge hige => \begin{name} hoge hige \end{name}
+(define (env name . args)
+    (let1 contents (x-join args "\n")
+    (x-append "\\begin{" name "}\n" contents "\n\\end{" name "}\n")))
+
+(define (eqn . args)
+    (let1 contents (x-join args " ")
+    (x-append "\\[ " contents " \\]")))
+
+(define ($ . args)
+    (let1 contents (x-join args " ")
+    (x-append " $" contents "$ ")))
+
+;;;;
+(define (yyen) "\\\\")
+
+(define (jsarticle) (tag 'documentclass 'jsarticle))
+(define (jsarticle . args)
+    (if (zero? (length args))
+        (tag 'documentclass 'jsarticle)
+        (let1 options (x-join args " ")
+            (tag/option 'documentclass options 'jsarticle))))
+
+(define (usepackage . args)
+    (let1 contents (x-join args ",")
+    (tag 'usepackage contents)))
+
+(define (title . args) (apply tag 'title args))
+(define (author . args) (apply tag 'author args))
+(define (date . args) (apply tag 'date args))
+(define (thanks . args) (apply tag 'thanks args))
+
+(define (frac a b) (tag2 'frac a b))
+
+(define (maketitle) (keyword 'maketitle))
+(define (newline) (keyword 'newline))
+
+(define (document . args) (apply env 'document args))
+(define (enumerate . args) (apply env 'enumerate args))
+(define (eqnarray . args) (apply env 'eqnarray args))
+(define (eqnarray* . args) (apply env 'eqnarray* args))
+
+(define (item . args)
+    (if (equal? (car args) #t)
+        (apply x-append (keyword/option 'item (cadr args)) "\n" (cddr args))
+        (apply x-append (keyword 'item) "\n" args)))
+
+;;; keywords
+(define (in) (keyword 'in))
+(define (subset) (keyword 'subset))
+(define (forall) (keyword 'forall))
+(define (exists) (keyword 'exists))

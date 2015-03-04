@@ -1,0 +1,44 @@
+;;; "true" non-deterministic calc by """On Lisp"""
+
+; this choose defined as function.
+; ordinary, that defined as macro.
+
+(define *paths* ())
+(define failsym '@)
+(define fail ())
+
+(define (choose choices)
+    (call/cc
+        (lambda (cc)
+            (set! *paths* (append *paths*
+                                  (map (lambda (choice)
+                                            (lambda () (cc choice)) )
+                                       choices)))
+            (fail))))
+
+(call/cc (lambda (cc)
+    (set! fail (lambda ()
+        (if (null? *paths*) (cc failsym)
+            (let ((p1 (car *paths*)))
+                (set! *paths* (cdr *paths*))
+                (p1) ))))))
+
+;;; by here
+
+(define-syntax amb ; I used to this more
+    (syntax-rules ()
+        ((_) (fail))
+        ((_ a)   a)
+        ((_ a b ...) (choose '(a b ...)))))
+
+(let ((a (amb 6 7 8))
+      (b (amb 2 3 4))
+      (c (amb 2 4 6)))
+(if (= (* (- a b) (- c b)) 20) ;; i think (7, 2, 6)
+    (display #`",a ,b ,c\n")
+    (fail)))
+
+;; work on nest ???
+; (let ((a (amb 1 (amb 3 4) 5)))
+; (if (even? a) (display #`",a\n") (fail)))
+; => gosh: "error": integer required, but got (amb 3 4)

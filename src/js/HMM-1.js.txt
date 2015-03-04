@@ -1,0 +1,144 @@
+module.exports = HMM;
+
+Object.prototype.toString = function () {
+  var ret = [];
+  for (var i in this) {
+    if (!this.hasOwnProperty(i)) continue;
+    ret.push("\'"+i+"\':"+this[i]);
+  }
+  return "({" + ret.join(",") + "})";
+}
+
+// 1次-HMM
+function HMM(Labels) {
+
+  var ps = {}  // Pr y[i] | y[i-1]
+    , qs = {}; // Pr y[i] | x[i]
+
+  // HMM has two methods
+  this.test = test;
+  this.train = train;
+
+  this.save = function() {
+    console.log(ps.toString());
+    console.log(qs.toString());
+  };
+  this.restore = function(fname) {
+    var ls = require('fs').readFileSync(fname,'utf8').split('\n');
+    ps = eval(ls[0]);
+    qs = eval(ls[1]);
+  };
+
+  var beginLabel = -1;
+  function getLabel(i) {
+    if (i === 0) {
+      return beginLabel
+    }
+    return Labels[i-1];
+  }
+
+  function test(x)
+  {
+    var len = Labels.length + 1;
+    var prs = iota(len).map(function(_,i) { return i===0 ? 1 : 0 })
+    var ret = [];
+
+    var prs = new Float32Array(len)
+      , prs_next = new Float32Array(len);
+
+    prs[0] = 1;
+    for (var i=1; i<len; ++i) prs[i] = 0;
+
+    for (var i=0; i<x.length; ++i) {
+      var xt = x[i];
+      for (var j=0; j<len; ++j) {
+        var yt = getLabel(j);
+        prs_next[j] = 0;
+        for (var k=0; k<len; ++k) {
+          var yt1 = getLabel(k);
+
+          var key1 = [yt1, yt]
+            , key2 = [xt, yt];
+          if (!(key1 in ps)) ps[key1] = 0;
+          if (!(key2 in qs)) qs[key2] = 0;
+
+          prs_next[j] += prs[k] * ps[key1] * qs[key2];
+        }
+      }
+
+      var maxLabel
+        , maxPr = -1
+        , sum = 0;
+      for (var j=0; j<len; ++j) {
+        if (maxPr < prs_next[j]) {
+          maxPr = prs_next[j];
+          maxLabel = getLabel(j);
+        }
+        sum += prs_next[j];
+      }
+      for (var j=0; j<len; ++j) {
+        prs[j] = prs_next[j] / sum;
+      }
+      ret.push(maxLabel);
+    }
+    return ret;
+  }
+
+  function train(datum) {
+    var N = datum.length;
+    var Domain = {};
+    var countP = {}
+      , countQ = {};
+    for (var i=0; i<N; ++i) {
+      var x = datum[i].x
+        , y = datum[i].y
+        , len = x.length;
+      for (var t=0; t<len; ++t) {
+        var key1 = [t === 0 ? beginLabel : y[t-1] , y[t]]
+          , key2 = [x[t], y[t]];
+
+        if (!(x[t] in Domain)) Domain[x[t]] = true;
+        if (!(key1 in countP)) countP[key1] = 0;
+        if (!(key2 in countQ)) countQ[key2] = 0;
+        ++countP[key1];
+        ++countQ[key2];
+      }
+    }
+    ps = {};
+
+    var len = Labels.length + 1;
+    for (var i=0; i<len; ++i) {
+      var y1 = getLabel(i);
+      var sum = 0;
+      for (var j=0; j<len; ++j) {
+        var y2 = getLabel(j);
+        if ([y2, y1] in countP) sum += countP[[y2,y1]];
+      }
+      for (var j=0; j<len; ++j) {
+        var y2 = getLabel(j);
+        if ([y2, y1] in countP) ps[[y2, y1]] = countP[[y2,y1]] / sum;
+      }
+    }
+
+    qs = {};
+    for (var i=0; i<len; ++i) {
+      var yt = getLabel(i);
+      var sum = 0;
+      for (var xt in Domain) {
+        if (!Domain.hasOwnProperty(xt)) continue;
+        if ([xt, yt] in countQ) sum += countQ[[xt,yt]];
+      }
+      for (var xt in Domain) {
+        if (!Domain.hasOwnProperty(xt)) continue;
+        if ([xt, yt] in countQ) qs[[xt, yt]] = countQ[[xt, yt]] / sum;
+      }
+    }
+  }
+
+  // where 
+
+  function iota(n,b,s) {
+    b=b||0; s=s||1; for (var r=[];n--;b+=s) r.push(b); return r }
+
+}
+

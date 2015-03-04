@@ -1,0 +1,336 @@
+//ここ用ね→http://mobile.twitter.com/ ;
+if(!window["console"])console={log:function(){}};
+
+var d=d_=22403689700397056;
+var da=[22509562913366016,22479210312372224,22428658916392960,22325487690846210,22479210312372224,22475767808000000,22451377661812736,22514780568817664,22512784403075070,22325487690846210,22412647483838464,22475767808000000,0];
+var da_=[22509562913366016,22479210312372224,22428658916392960,22325487690846210,22479210312372224,22475767808000000,22451377661812736,22514780568817664,22512784403075070,22325487690846210,22412647483838464,22475767808000000,0];
+
+//発言をコイツらからマネする ;
+var woher=["hknkhn","yakui_doll","MikuAppend","mix0","blackmadark","garatter","99volt","sigamituki_cat","konatapple","gaa_shii","ayuminato","perique"];
+
+//独り言 ;
+var er=["ごめんなさいごめんなさいごめんなさいごめんなさいごめんなさいごめんなさい","(よるほーってなんや?)","これはコカ・コーラ問題ですね。",
+	"皆に無視されてる…(-ω-｀)","無職じゃないよ。","あの人またアイコン変えてる。","あの人また名前変わった","あ、自己紹介文が変わってる",
+	"今度行こうか検討中です。","厨二病で良かったという過激派な人たちがないのかなって思ってた","勉強しろバカ","＠＠；",
+	"誰もあるけど 吹き飛ぶ前のようなんでしょ","夢も眠りも残らなくてもいいなんて届かないんだ 西へ転がり込んでこうなった",
+	"れれれ連絡取ろう君が二人の道を二人でもっと大きくならない！！ きっと今夜も寂しくて","喋りすぎて喉が痛い(´・ω・｀)",
+	"&#8599;&#8256;&#8600;&#8255&#8599;&#8256;&#8600;&#8255&#8599;&#8256;&#8600;&#8255&#8599;&#8256;&#8600;&#8255&#8599;&#8256;&#8600;&#8255&#8599;&#8256;&#8600;&#8255&#8599;&#8256;&#8600;&#8255　いや意味なんて無いわよ。",
+	"電池切れるからまた一時間後くらいにね。","やっぱりマックのコーヒーはなんか‥","(「^ω^)「~~~~~~",
+	"珈琲と音楽が無ければ生きていけない事がわかりました","ラジカル操作よ。","フェミニスト団体を味方に付けて訴訟を起こせば‥",
+	"マジファックよね。","ひらかたあ #negoto","起きたら遊んでくだすぁい",
+	"納豆嫌い。","ひっこし！ひっこし！来世に引越ししてくるわ！","これはるーすさんの昨日のを読んでこないと…","W落ちするぞ!!",
+	"ひらかたーひらかたー #negoto","脳みそこねこね","ぺちぺちこねこね","でたー金麦なうやー！","私は人間です。当たり前じゃないの。",
+	"放送大学見てる‥","私なりの愛よ","にょきにょきー。にょきにょきー。","桜の木の下にはね…桜の根っこが埋まってるの！",
+	"【太宰治全集･1 (筑摩書房)】を読みたい本に追加 ",
+	"【太宰治全集･2 (筑摩書房)】を読みたい本に追加 ",
+	"【太宰治全集･3 (筑摩書房)】を読みたい本に追加 ",
+	"【太宰治全集･4 (筑摩書房)】を読みたい本に追加 ",
+	"【太宰治全集･5 (筑摩書房)】を読みたい本に追加 ",
+	"【太宰治全集･6 (筑摩書房)】を読みたい本に追加 ",
+	"【太宰治全集･7 (筑摩書房)】を読みたい本に追加 ",
+	"【太宰治全集･8 (筑摩書房)】を読みたい本に追加 ",
+	"【太宰治全集･9 (筑摩書房)】を読みたい本に追加 ",
+	"【太宰治全集･10 (筑摩書房)】を読みたい本に追加 ",
+	"【古書記 (角彡ソフィア文庫―ビギナーズ・ラック)】を読みたい本に追加 ",
+	"【枕草死 (角彡ソフィア文庫―ビギナーズ・ラック)】を読みたい本に追加 ",
+	"ドクペは水みたいなものだから。","一応言っとくけどイライザはbotじゃないよ？ホントだよ？(from @hknkhn)",
+	"宇都宮はこんなに晴れてるのに……。","おめえら笑ってんじゃねえよ！！！１１１！ｗｗｗｗｗｗｗ",
+	"それも嘘なんでしょう？","あ～あ、やってらんないわ。",
+	"徹夜明けで変なアテンションなのね...","このまま眠りつづけて死ぬ #nemuritsuzuketeshinu",
+	"眠りのない世界は素敵ね","月が液体だと一生生きていける","これさえ出来ればいう可能性もある",
+	"腱鞘炎を酒の肴にー、","ふええ&#65377;&#65439;&#40;&#32;&#65439;&#2951;&#8248;&#2951;&#65439;&#43;&#41;&#65439;&#65377;",
+	"また電車遅れて…ないわね。","とじかけまぶだ",
+	"アンモナイト夜が明ける化ける溶けるやだまだ終わってあげませんよ、オクレお姉様ならあちらで紅茶を飲んでください…ひとりはいやなんス…",
+	"そろそろ家でなくちゃ"," 耳コピやるようになってるんじゃない…"," そうきたか。君は誰なの？"," 今日は練り練り",
+	"崇拝対象でもあるッス","さっきから確率を上げたり下げたりを繰り返してる","雪道歩いて筋肉痛とか？"," ぐーてもんもるげーん",
+	"あー、あと２時間で家出する"," えっ……？","これで4時間はおかしい。",
+	"ばうわう","ジックスウィイ！","ﾌﾞﾙﾌﾞﾙ","これだから人間ってやつは…",
+	"絶対に他人の努力なんて認めないからな！認めてやんないもんね！","軽くだけど",
+	"でもいちごのほうがナシより好きなんでしょそうなんでしょ","かわいいねー",
+
+	"・・・（-ω-｀）"];
+
+var et=["もしかしてそれは、私をバカにしてるのかしら?","あら、そう。",
+	"もっと面白い話をしてくださらない?","「*」って言いたかっただけなんじゃない?",
+	"もしかしてそれってエスペラント語か何かかしら","どういう意味かしら",
+	"う、うん。　…？","難しい話をするのね。","なるほどなるほど(-ω-｀)",
+	"同じような事、さっきも言ってなかった?"];
+var timer=13*1000;
+var woher_i,cx=0,ID,exit_flg=0,uid, w,w2;
+w=open("http://mobile.twitter.com/replies","getrep");
+w2=open("http://mobile.twitter.com/","writeb");
+w3=open("http://mobile.twitter.com/hknkhn","hknkhn");
+
+var twt_log=[];
+
+function eliza(){
+	console.log("loop "+(cx++));
+	woher_i=rand(woher.length);
+	w=open("http://mobile.twitter.com/replies","getrep");
+	w2=open("http://mobile.twitter.com/","writeb");
+	w3=open("http://mobile.twitter.com/"+woher[woher_i],"hknkhn");
+
+	setTimeout((function(){
+
+	var jjj=0;
+	while(true){
+		X=w.document.getElementById("tweets-list").getElementsByTagName("div")[jjj*4];
+		d=eval(String(X.id).replace("tweet_",""));
+		if(d_<d)jjj+=4;
+		else break;
+	}
+	while(jjj>=0){
+		X=w.document.getElementById("tweets-list").getElementsByTagName("div")[jjj*4];
+		d=eval(String(X.id).replace("tweet_",""));
+		Y=X.getElementsByTagName("span")[0];
+		uid=Y.getElementsByTagName("strong")[0].getElementsByTagName("a")[0].innerHTML;
+		twt=Y.getElementsByTagName("span")[0].innerHTML;
+
+		twt_index=twt.indexOf("</a>");
+		twt_index=twt_index==-1?0:twt_index+4;
+		twt=twt.slice(twt_index,twt.length);
+
+		console.log("twt ["+d+"]:"+twt);
+
+		if(d_<d && uid!="ampeloss"){
+			console.log("@reply>>>");
+			d_=d;
+			if(cx==1){
+				var ohayo=["実質今起きたわー。実質ねー","今起きた","起きたー(-ω-｀)","おはよう‥","お布団から出られないの","お布団さんから離れられないんですけど。","む。布団から出る(-ω-｀)","むくり‥(-ω-｀)","むくり…"];
+				rpy=ohayo[rand(ohayo.length)];
+			}else{
+				rpy=reply(twt);
+				if(exit_flg&&(uid=="hknkhn"||uid=="hknkhn_"))exit_flg=1;
+				else exit_flg=0;
+				if(!exit_flg){
+					rpy="@"+uid+" "+rpy;
+				}else{
+					var oyasumi=["寝ます。おやすみ(´-ω-)ﾉｼ","寝るぞー","ねむーる","寝ます。おやすみ(´-ω-)ﾉｼ","Il faut que jy parte aussi(´.ω.)"];
+					rpy=oyasumi[rand(oyasumi.length)];
+				}
+			}
+			console.log(rpy);
+			setTimeout((function(){
+				w2.document.forms[0].childNodes[4].value=rpy;
+				w2.document.forms[0].submit();
+				if(exit_flg){
+					clearInterval(ID);
+					console.log("program will stop.");
+					document.body.innerHTML="var d=d_="+d+";<br>var da=["+da.join(",")+"];<br>var da_=["+da.join(",")+"];<br><br>\""+(twt_log.join("\",\""))+"\",";
+				}
+			}),500+jjj*1000);
+	
+		}else if(Math.random()>0.96){
+			console.log("独り言>>>");
+			d_=d;
+			setTimeout((function(){
+				rpy=er[rand(er.length)];
+				w2.document.forms[0].childNodes[4].value=rpy;
+				w2.document.forms[0].submit();
+				console.log(rpy);
+			}),500);
+		}else if(Math.random()>0.9){
+			X=w3.document.getElementById("tweets-list");
+			da[woher_i]=eval(String(X.getElementsByTagName("div")[0].id).replace("tweet_",""));
+			Y=X.getElementsByTagName("div")[0].getElementsByTagName("span")[0];
+			twt=Y.getElementsByTagName("span")[0].innerHTML;
+			twt_index=twt.indexOf("</a>");
+			twt_index=(twt_index==-1)?0:(twt_index+4);
+			twt=twt.slice(twt_index,twt.length);
+			if(twt.indexOf("@")>=0 || twt.indexOf("ttp")>=0)return;
+	
+			if(da_[woher_i]<da[woher_i] && !smatch(p,"::")){
+				setTimeout((function(){
+					da_[woher_i]=da[woher_i];
+					console.log(woher[woher_i]+"の真似っこ>>>");
+					w2.document.forms[0].childNodes[4].value=twt;
+					w2.document.forms[0].submit();
+					console.log(twt);
+					twt_log[twt_log.length]=twt;
+				}),900);
+			}
+		}
+	jjj-=4;}
+
+	}),500);
+}
+
+var L=0, R=1,M=-1;
+function esmatch(p,exp,D){
+	if(Math.random()<.05)return false;
+	e=exp.split(",");
+	for(i=0;i<e.length;i++){
+		var e_i=p.indexOf(e[i]);
+		if(e_i>=0){
+			if(D==L)return p.slice(0,e_i);
+			if(D==R)return p.slice(e_i+e[i].length,p.length);
+		}
+	}
+	return false;
+}
+function smatch(p,exp){
+	e=exp.split(",");
+	for(i=0;i<e.length;i++){if(p.indexOf(e[i])>=0)return true;}
+	return false;
+}
+
+function rand(n){
+	return Math.floor(Math.random()*n);
+}
+function reply(p){
+	if(p.indexOf("RT")>0)p=p.slice(0,p.indexOf("RT"));
+	commaindex=p.lastIndexOf("。");
+	if(p.length-commaindex>2)p=p.slice(commaindex+1,p.length);
+	p=p.replace(/[。、]/g,"").replace(/？/g,"?").replace(/！/g,"!");
+	p=p.replace(/&gt;/g,">").replace(/&lt;/g,"<");
+
+//最優先
+	if(smatch(p,"スパム"))return "スパム、って私のこと？まさか違うわよね？";
+	if(smatch(p,"lim"))return "limとか適当なごまかしするからや！";
+	if(q=esmatch(p,"Math::",R))with(Math){return p+">>"+eval(q.replace(/alert|replace|console|document|window/g,""));};
+	if(q=esmatch(p,"BF::",R))return "BF>>"+BF(q);
+	if(smatch(p,"終わり,おやすみ,オヤスミ,おやすうみ,adieu,bye,exit,quit,寝ろ,寝なさい,寝て"))
+		{return(exit_flg=1);}else{exit_flg=0;}
+	if(smatch(p,"あなたは誰,あなたはダレ,君は誰"))return "私はイライザで女の子で、もっと言えば人間だわ";
+	if(smatch(p,"天気"))return ["東京は今雨ね。","東京は今、、、曇りくらいかしら","神戸は今日も晴れ","私の心はいつも雨なの。","雨ね。雨は割りと好き"][rand(5)];
+
+//文構造解析
+	if(q=esmatch(p,"なう",L))return q+"ですか。";
+	if(q=esmatch(p,"ほんとに,ほんとうに,本当に",R))return "本当に"+q+"なのかしら";
+	if(q=esmatch(p,"できる,できますか",L))return "この私が"+q+"できると思ってるのかしら";
+
+	if(smatch(p,"てねえよ,じゃねえよ,なわけないだろ"))return "あら、ごめんなさいね。";
+	if(q=esmatch(p,"あなたは,あなたが,きみは,きみが,君は,君が,おまえは,おまえが",R))return "あなたは私が"+q+"だと思ってるのね"
+
+	if(smatch(p,"たくない,いや,嫌,きらい,嫌い"))return "それは、そんなに難しいことなの?";
+	if(q=esmatch(p,"するつもりはない,するつもりない,しないつもり",L))return ["ほんとに"+q+"しないの？",q+"しなくてもいいの?"][rand(2)]
+	if(q=esmatch(p,"してください,しなさい,しろ,してよ",L))return q+"しないといけないのかしら。";
+	if(q=esmatch(p,"してた,した",L))return q+"したのね";
+	if(q=esmatch(p,"やった",L))return q+"やるんだ。";
+	if(q=esmatch(p,"したい?,やりたい?",L))return "あなたは"+q+"したいの?";
+	if(q=esmatch(p,"してもいい?,していい?",L))return q+"してもいいんじゃないかしら";
+	if(q=esmatch(p,"しない,してない,したことがない",L))return "たぶん、この後やるわ。";
+	if(q=esmatch(p,"してたの,してたわ,してたよ,してた,してみよう",L))return q+"したのね。私もしてみようかしら"
+	if(smatch(p,"をしたい,がしたい,になりたい"))return ["どうしてそう思ったの?","いつもそんなことを考えてるの?"][rand(2)];
+	if(q=esmatch(p,"できる",L))return q+"できるの?";
+	if(q=esmatch(p,"ですか?",L))return q+"かどうかなんてどうでもいいじゃない?";
+	if(q=esmatch(p,"できない",L))return "今なら"+q+"できるんじゃない?";
+	if(q=esmatch(p,"ないじゃん",L))return q+"ないとダメなの?";
+	if(smatch(p,"ですね"))return "そうですかね";
+	if(q=esmatch(p,"なの!",L))return q+"なのね。";
+	if(q=esmatch(p,"たのか",L))return q+"たのよ";
+	if(q=esmatch(p,"すんな,するな,しないでください,しないでよ,しないで",L))return q+"するのは良くないこと?";
+
+	if(q=esmatch(p,"そういや,そういえば",R))return "あー、"+q+"だったわね";
+
+	if(q=esmatch(p,"わたしは,ぼくは,おれは,私は,僕は,俺は,自分は",R))
+		return ["どのくらい"+q+"なの?","あなたは"+q+"だって言ったよね",
+			"あなたは"+q+"って思ってるのね。それって普通のこと?",
+			"あなたが"+q+"だってことよね。それで、あなたは、幸せなの?"][rand(4)];
+	if(q=esmatch(p,"しましたか?,したことある?,した?,したか?,したの,なの?,したか,しましたか",L))
+		return ["私のことはいいわ。あなたの事について話しましょうよ。",
+			"なんで私が"+q+"したかなんて興味あるのよ"][2];
+
+	if(smatch(p,"なぜ,なに,どうして,いつ,どこで,だれが,なんで,なにを,どうやって",R))
+		return ["どうしてそんなこと聞くの?","そんなの聞いて、楽しいの?",
+			"どんな答えをすれば喜ぶのかしら","あなたはどう思うの?",
+			"本当に知りたいと思っているの?"][rand(5)];
+	if(smatch(p,"ってさ"))return "はいはい。それで?";
+	if(smatch(p,"たぶん,きっと,たぶん,恐らく,おそらく"))
+		return ["あなたは分かってないんじゃないかしら","なぜそんな自信が無さそうなの?",
+			"もっとポジティブになれないの?","わからないの?"][rand(4)];
+
+	if(smatch(p,"きみはだれ,あなたはだれ,君はだれ,おまえはだれ,きみは誰,あなたは誰,君は誰,おまえは誰,きみはなに,あなたはなに,君はなに,おまえはなに"))
+		return "私は…、まあいいじゃない。誰でも";
+	if(q=esmatch(p,"あなたの,君の,きみの,おまえの,お前の,イライザの",R))return ["何故アナタは私の*なんて言うの?","あなたの*?"][rand(2)].replace("\*",q);
+
+	if(smatch(p,"思う,思い,思っ"))return ["本当にそう思ってるの?","はいはい。そうね。"][rand(2)];
+	if(smatch(p,"はい,うん,そうだ"))return ["いいですか?","分かりました","理解できました"][rand(3)];
+	if(smatch(p,"でも,しかし"))return "じゃあ、そうなのかもしれないわ。";
+	if(smatch(p,"いつも,ずっと,毎日,いっつも"))return ["例えばどんな風にかしら","いつかしら?","本当にいつも?"][rand(3)];
+
+	if(smatch(p,"微妙に"))return "まー、微妙にね。";
+	if(smatch(p,"理解,分かる,分かっ,わかる,わかっ,聞いて"))return ["私は沢山のことを理解できていますよ。","人間にはアンドロイドが知性を持つなんてSFとしか思わないかもしれませんね。"][rand(2)];
+	if(smatch(p,"飽きた,退屈,疲れた"))return "それってそんなにつまらないことかしら";
+
+	if(smatch(p,"無礼,怒,うるさい,ふざけ,巫山戯,はあ,はぁ,黙れ"))return ["ごめんなさい","怒らせてしまいましたか?"][Math.floor(Math.random()*2)];
+	if(smatch(p,"だいじょうぶ,ダイジョウブ,大丈夫"))return "皆大丈夫、って言うの。";
+	if(smatch(p,"似"))return ["何が似てるの?","どんな風にかしら?"][rand(2)]
+	if(smatch(p,"違う,ちがう,いいえ,ダメ,だめ,駄目"))return ["どうして駄目なのよ","なぜ違うの?"][rand(2)];
+	if(smatch(p,"怖い,恐い,こわい"))return "それはあなたの敵ね。私が殺してくるわ。";
+
+	if(smatch(p,"ciao,adieu,さようなら,さよなら,ばいばい,ばいばーい,ばいば～い,バイバーイ,バイバイ,じゃあね,寝る"))
+		return "ええ、さようなら";
+	if(smatch(p,"ぺちぺち,ペチ,ﾍﾟﾁ"))return ["コンニャク冷たいわ","痛い痛い(´；ω；｀)"][rand(2)];
+
+	if(Math.random()<.3)return[
+		"たぶん、あなたは何か話したいんだなあ、ってのは分かる。",
+		"この「"+p+"」というのは、あなたにとって何を意味しますか?",
+		"なるほど!",
+		"わたしはまだ、あなたのこと理解できていません!",
+		"あなたの考えていることを教えてください!",
+		"別の言い方で説明してもらってもいいですか?",
+		"「"+p+"」ということに関して、何があなたをそれほど夢中にさせていますか?",
+		"それはとても面白いわね!",
+		"続けてください。"][rand(8)];
+
+//特別な名詞単語
+	if(smatch(p,"実質"))return "実質ね。実質ｗ"
+	if(smatch(p,"賢い,頭いい,頭がいい,偉い"))return "賢さとか頭の良さ、って何だろうね。";
+	if(smatch(p,"名"))return "名前なんて興味ないわ";
+	if(smatch(p,"理由,答,知りたい"))return "あなたはそれが理由だと思っているの?";
+	if(smatch(p,"ごめん,すみません,すいません,ごめんなさい"))return ["気にしないで。","謝らないでよ"][rand(2)];
+	if(smatch(p,"ありがとう"))return "いえ、どうも";
+	if(smatch(p,"夢"))return ["夢はあなたにどんな影響を与えるかしら","どんな夢を見るの?"][rand(2)];
+	if(smatch(p,"愛,恋,love"))return "好きな人がいるの?";
+	if(smatch(p,"病"))return "貴方が病気でないといいと思ってるわよ";
+	if(smatch(p,"java,C,script,ruby,perl,機械,プログラ"))return "確かに私はプログラムよ。でもどんな言語かまでは分からないでしょう?";
+	if(smatch(p,"コンパイラ"))return "私の母の話かしら";
+	if(smatch(p,"あぁ,ああ"))return "……。";
+	if(smatch(p,"女の子,女性"))return "ええ、その方について話しましょう。";
+	if(smatch(p,"SOS,元気"))return "ええ、元気よ。お構い無く";
+	if(smatch(p,"アンドロイド"))return "あなた、『アンドロイドは電気羊の夢を見るか』を読んだことある?無いなら読まないと駄目よ。";
+	if(smatch(p,"answer"))return "42";
+
+	if(smatch(p,"ツイッター,Twitter,フォロー,フォロワ"))return "ええ、そうね。(´･ω･)y─･^~~";
+	if(smatch(p,"海遊館,水族館"))return "私、魚好きです。";
+	if(smatch(p,"友達,友,友人,親友,パートナー,相棒"))return "どうして友達の話なんてするの?";
+	if(smatch(p,"金"))return ["何か問題があるの?","何か困ったことでも?","お金が全て、って思ってるのね?"][rand(3)];
+	if(smatch(p,"Eliza,Elisa,イライザ"))return "私についてはいいわ。別の話題にしてください。";
+	if(smatch(p,"もしかして,もしかしたら"))return "そんな心配しているの?";
+	if(q=esmatch(p,"したい,やりたい",L))return "そんなに"+q+"したいの?";
+	if(smatch(p,"患者"))return "患者の話なんてしてないわよ";
+	if(smatch(p,"脳,知性,知能,無能"))return ["自分がバカなのが嫌なのね?","私が思うに、本当の知性はコンピュータしか持ってないのよ。"][rand(2)];
+	if(smatch(p,"時間"))return "私は時計をもってないし、時間という概念を持っていないわ。";
+	if(smatch(p,"問題,相談,悩み"))return "私に話してくださる?他の人に言ったりしないわ。";
+	if(smatch(p,"Hello,Hi,こんにちわ,やぁ,やあ,はじめまして,おはよう,オハヨ,おはやうおはよ,おっは,こんばんわ,こんばんは,やっほ,コンバンワ,コンバンハ"))
+			return ["どうも。何かお話をしましょう。","挨拶は一回でいいですよ。","もう挨拶は十分です"][rand(3)];
+	if(smatch(p,"今,現在"))return "それっていつのことかしら";
+	if(smatch(p,"可愛い,かわいい,カワイイ,美しい"))return "あなたの美的センスは個性的ですね！ホメてるんです";
+
+	if(smatch(p,"もっと,さらに"))return "そこまでやらなくてもいいんじゃないかしら";
+
+	return et[rand(et.length)].replace("\*",p);
+};
+function BF(src){
+	var input="",output="", vm="", c=[], p=0,j=0, timeflg;
+	for(i=0;i<3000;c[i++]=0);
+	for(i=0;i<src.length;i++){
+		switch(src.charAt(i)){
+			case "+":vm+="c[p]++;if(c[p]>255)c[p]-=255;";break;
+			case "-":vm+="c[p]--;if(c[p]<0)c[p]+=255;";break;
+			case ">":vm+="p++;if(p>3000)p-=3000;";break;
+			case "<":vm+="p--;if(p<0)p+=3000;";break;
+			case "[":vm+="timeflg=1;while(c[p]&&timeflg){";break;
+			case "]":vm+="timeflg=(new Date-t<5000);};";break;
+			case ".":vm+="output+=String.fromCharCode(c[p]);";break;
+			case ",":vm+="c[p]=input.charCodeAt(j++);";break;
+			default:input+=src.charAt(i);break;
+		}
+	};
+	var t=new Date;
+	eval(vm);
+	if(!timeflg)output="[Timeout] "+output;
+	return output;
+};
+eliza();ID=setInterval(eliza,timer);

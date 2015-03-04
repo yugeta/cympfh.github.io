@@ -1,0 +1,13 @@
+; Project Euler 52
+
+(define (same-digit? . xs)
+  (define (eq-ls ls)
+    (if (< (length ls) 2) #t
+        (and (equal? (car ls) (cadr ls)) (eq-ls (cdr ls)))))
+  (eq-ls
+    (map (.$ sort string->list number->string) xs)))
+
+(let loop ((i 1))
+  (if (apply same-digit? (map (pa$ * i) '(1 2 3 4 5 6)))
+      (format #t "~a\n" i)
+      (loop (+ i 1))))

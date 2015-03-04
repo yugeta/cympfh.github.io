@@ -1,0 +1,82 @@
+; life game
+;
+; hash table を使う練習として。
+; フィールドはトーラス。
+; 他のルールは普通。
+
+(use srfi-1)
+(use srfi-27)
+
+(define *width* 50)
+(define *height* 20)
+
+(define *table* (make-hash-table 'equal?))
+(define (table-put i j)
+    (let ((i (modulo i *height*))
+          (j (modulo j *width*)))
+    (hash-table-put! *table* (cons i j) #t)))
+(define (table-get i j)
+    (let ((i (modulo i *height*))
+          (j (modulo j *width*)))
+    (hash-table-get *table* (cons i j) #f)))
+(define (table-rm i j)
+    (let ((i (modulo i *height*))
+          (j (modulo j *width*)))
+    (hash-table-put! *table* (cons i j) #f)))
+
+;; initial *table*
+(for-each (lambda (i)
+    (for-each (lambda (j)
+        (when ;(and (< (random-integer *width*) j)
+              ;     (< (random-integer *height*) i) )
+              (or (zero? i) (zero? j))
+            (table-put i j)) )
+        (iota *width*)) )
+    (iota *height*))
+
+(define (display-table)
+    (newline)
+    (for-each (lambda (i)
+        (for-each (lambda (j)
+            (cond ((table-get i j) (write-char #\*))
+                  (else            (write-char #\space))))
+            (iota *width*))
+        (newline))
+        (iota *height*))
+    (write '>>>))
+
+(define (update)
+    (let1 next
+            (map (lambda (i)
+                (map (lambda (j) 
+                    (let1 n (+ (if (table-get (- i 1) (- j 1)) 1 0)
+                               (if (table-get (- i 1) j) 1 0)
+                               (if (table-get (- i 1) (+ j 1)) 1 0)
+                               (if (table-get i (- j 1)) 1 0)
+                               (if (table-get i (+ j 1)) 1 0)
+                               (if (table-get (+ i 1) (- j 1)) 1 0)
+                               (if (table-get (+ i 1) j) 1 0)
+                               (if (table-get (+ i 1) (+ j 1)) 1 0) )
+                    (case n
+                        ((3) #t)
+                        ((2) (table-get i j))
+                        (else #f)) ))
+                    (iota *width*)) )
+                (iota *height*))
+    (for-each (lambda (i)
+        (for-each (lambda (j)
+            (if (ref (ref next i) j)
+                (table-put i j)
+                (table-rm i j)))
+            (iota *width*)))
+        (iota *height*)) ))
+
+(define (repl)
+    (update)
+    (display-table)
+    (let1 line (read-line)
+    (cond ((equal? line "quit") 'exit-life-game)
+          ((equal? line "") (repl))
+          (else
+            (for-each (lambda (_) (update)) (iota (string->number line)))
+            (repl))) ))

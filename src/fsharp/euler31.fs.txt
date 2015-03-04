@@ -1,0 +1,30 @@
+(*
+  my answer to:
+  http://projecteuler.net/problem=31
+ *)
+open System
+open System.Numerics
+
+let rest = 200 in
+[for h in 0 .. rest/200 do
+    let rest = rest - h * 200 in
+    for i in 0 .. rest/100 do
+        let rest = rest - i * 100 in
+        for j in 0 .. rest/50 do
+            let rest = rest - j * 50 in
+            for k in 0 .. rest/20 do
+                let rest = rest - k * 20 in
+                for l in 0 .. rest/10 do
+                    let rest = rest - l * 10 in
+                    for m in 0 .. rest/5 do
+                        let rest = rest - m * 5 in
+                        for n in 0 .. rest/2 do
+                            let rest = rest - n * 2 in
+                            if rest >= 0 then yield 1]
+|> List.length
+|> printfn "%A"
+
+(*
+  this for-nest should recursed like this...
+  http://d.hatena.ne.jp/rst76/20080407/1207576616
+  *)

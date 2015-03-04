@@ -1,0 +1,38 @@
+const
+  HIRA = 0,
+  KANA = 1,
+  CHIN = 2,
+  ALPH = 3,
+  NUMB = 4,
+  SYM1 = 10,
+  SYM2 = 20,
+  OTHR = 5;
+
+var test = function (c) {
+  const p_hira = /[ぁ-ん　]/
+      , p_kana = /[ァ-ヴｧ-ﾝーﾞﾟ]/
+      , p_chin = /[亜-熙一-龠]/ /* 姑息 */
+      , p_alph = /[a-zA-Z ]/
+      , p_numb = /[0-9]/
+      , p_sym1 = /[!\"\#\$\%\^'\(\)~=~:;|`{@`\[\{\}\]\.\,\?\</>\\_\-]/
+      , p_sym2 = /[！？（）｛｝ー〜・。、：；／＼]/
+      ;
+  return p_hira.test(c) ? HIRA
+       : p_kana.test(c) ? KANA
+       : p_chin.test(c) ? CHIN
+       : p_alph.test(c) ? ALPH
+       : p_numb.test(c) ? NUMB
+       : p_sym1.test(c) ? SYM1
+       : p_sym2.test(c) ? SYM2
+       :                  OTHR;
+};
+
+exports.jc = {
+  HIRA : HIRA,
+  KANA : KANA,
+  CHIN : CHIN,
+  ALPH : ALPH,
+  NUMB : NUMB,
+  OTHR : OTHR,
+  test : test
+};

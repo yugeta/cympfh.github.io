@@ -1,0 +1,57 @@
+/*
+http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2400
+
+#692812 Solution for 2400: You Are the Judge by cympfh
+
+Judge: 4/4 	JavaScript 	CPU: 00.05 sec 	Memory: 14784 [KB] 	Length: 2493 [B] 	2013-06-19 23:19 	2013-06-19 23:19
+
+*/
+print=console.log;
+ls=require("fs").readFileSync("/dev/stdin","utf-8").split("\n");ls.length--
+String.prototype.int = function(c){ return this.split(c||" ").map(int)}
+function int(s){return +s}
+
+function solve (T, P, ls) {
+  var tms = [];
+  for (var i=0; i<T; ++i) {
+    tms[i] = [];
+    for (var j=0; j<P; ++j) tms[i][j] = 0; // wrong count
+    tms[i].solved_count = 0;
+    tms[i].penalty = 0;
+  }
+  for (var i=0; i<ls.length; ++i) {
+    var b = ls[i].split(" ");
+    var tid = b[0] - 1, pid = b[1] - 1, time = +b[2];
+
+    if (b[3] == "WRONG") {
+      tms[tid][pid]++;
+    } else {
+      tms[tid].solved_count++;
+      tms[tid].penalty += tms[tid][pid] * 1200 + time;
+    }
+  }
+  tms.map(function(t,i){
+            return {id:i+1, solved_count:t.solved_count,
+                    penalty:t.penalty}})
+     .sort(function(a,b){
+        if (b.solved_count != a.solved_count)
+          return b.solved_count - a.solved_count;
+        else if (b.penalty != a.penalty) return a.penalty - b.penalty;
+        else return a.id - b.id;
+     })
+     .forEach(function(t) {
+       print(t.id, t.solved_count, t.penalty);
+     });
+}
+
+(function main() {
+  for (var k = 0;;) {
+    var a = ls[k].int(),
+        T = a[0],
+        P = a[1],
+        n = a[2];
+    if (T == 0 && P == 0 && n == 0) break;
+    solve(T, P, ls.slice(k+1, k+n+1));
+    k += n+1;
+  }
+})();

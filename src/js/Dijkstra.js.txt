@@ -1,0 +1,76 @@
+/*
+ *  Dijkstra
+ *
+ * 「ダイクストラ法（最短経路問題）」
+ * http://www.deqnotes.net/acmicpc/dijkstra/
+ * より
+ *
+ * sample input
+6
+0 4
+0 1 5
+0 2 4
+0 3 2
+1 2 2
+1 4 6
+2 3 3
+2 5 2
+3 5 6
+4 5 4
+
+(number of vertexs)
+(start) (goal)
+(a vertex of the edge) (else vertex) (cost)
+...
+ */
+
+print = console.log;
+input = require("fs").readFileSync("/dev/stdin","utf-8");
+ls = input.split("\n"); ls.length -= 1;
+
+var s, g, edge=[], n;
+
+n = +ls[0]; // number of vertex
+
+(function(a){ // start and goal
+    s = +a[0];
+    g = +a[1];
+})(ls[1].split(" "));
+
+for (var i=2; i<ls.length; ++i)
+    (function(a){ // edge
+        edge.push({u:+a[0],v:+a[1],d:+a[2]});
+    })(ls[i].split(" "));
+
+var decide = [0], // decide[vertex u] = the distance from start to u
+    undecide = [0]; // dojo
+
+// return vertexs in undecide, where can go from only decide
+// () -> [(vertex, distance from start via u)]
+function from () {
+    var ret = [];
+    for (u in decide)
+        for (k in edge) {
+            e = edge[k];
+            if (e.u==u && !(e.v in decide) && ret.indexOf(e.v)==-1)
+                ret.push({v:e.v, d:e.d + decide[u]});
+            if (e.v==u && !(e.u in decide) && ret.indexOf(e.u)==-1)
+                ret.push({v:e.u, d:e.d + decide[u]});
+        }
+    return ret;
+}
+
+// main
+for (var to; to=from(), to.length > 0; ) {
+    var d_min = index = null;
+    for (i in to) {
+        var p  = to[i];
+        if (!(p.v in undecide) || undecide[p.v] > p.d)
+            undecide[p.v] = p.d;
+        if (!d_min || d_min > p.d)
+            d_min = p.d, index = p.v;
+    }
+    if (index == null) break;
+    decide[index] = d_min;
+}
+print(decide);

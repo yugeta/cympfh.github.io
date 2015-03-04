@@ -1,0 +1,22 @@
+(*
+    answer to http://projecteuler.net/problem=38
+*)
+let conprod m n =
+    let rec conprod' i ac =
+        if i > n then ac
+            else conprod' (i+1) (ac + (string (m*i)))
+    conprod' 1 ""
+
+let isPandigital str =
+    if String.length str <> 9 then false
+        elif Set.ofSeq str |> Set.count <> 9 then false
+            elif Seq.exists (fun c -> c='0') str then false
+                else true
+
+let problem38 =
+    [for i in 2 .. 9 do
+        for x in pown 10 (9/i - 1) .. pown 10 (9/i) do
+            let c = conprod x i in
+            if isPandigital c then yield int c]
+    |> List.max
+    |> printfn "%A"

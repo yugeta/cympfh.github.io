@@ -1,0 +1,29 @@
+let MIN = -999
+let MAX = 999
+
+let isPrime n =
+    if n < 2 then false
+        else List.length [for i in 2 .. n-1 do if n%i=0 then yield i] = 0
+
+let itsCycle a b =
+    let f = (fun n -> n*n + a*n + b) in
+    let rec itsCycle' i =
+        if isPrime (f i) then itsCycle' (i+1) else i
+    itsCycle' 0
+
+[for a in MIN .. MAX do
+ for b in MIN .. MAX do
+     if isPrime b && isPrime (a+b+1) then
+         yield (itsCycle a b, a*b)]
+|> List.max
+|> printfn "%A"
+
+(* result
+$ time mono test.exe
+(71, ......)
+
+real	1m45.616s
+user	1m44.840s
+sys	0m0.880s
+
+*)

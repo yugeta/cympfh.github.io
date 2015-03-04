@@ -1,0 +1,58 @@
+// Axiom
+var zero = function(s,z) {
+    return z;
+};
+var succ = function(u) {
+    return function(s,z) {
+        return s(u(s,z));
+    }
+};
+
+// Thm
+var add = function(u, v) {
+    return u(succ, v);
+};
+var mul = function(u, v) {
+    return u(function(w) { return add(w,v) }, zero);
+};
+var pow = function(u, v) {
+    return v(function(w) {
+        return mul(w, u);
+        }, succ(zero));
+};
+var pow2 = function(u, v) {
+    var v_curry = function(s) {
+        return function(z) {
+            return v(s,z);
+        }
+    }
+    return u(v_curry,zero);
+}
+
+function display(u) {
+    var n = u(function(x){return x+1}, 0)
+    var str = u(function(s){return "("+s+") + 1"}, "0");
+    print(n + " = " + str);
+}
+
+cons = function(x,y) {
+    return function(f) {
+        return f(x,y);
+    }
+};
+car = function(pair) {
+    return pair(function(x,y){return x});
+};
+cdr = function(pair) {
+    return pair(function(x,y){return y});
+};
+
+(function(){
+    one = succ(zero);
+    two = succ(one);
+    three = succ(two);
+    eight = pow(two, three);
+    eight2 = pow2(two,three);
+    display(eight);
+    display(eight2);
+})();

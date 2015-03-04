@@ -1,0 +1,170 @@
+/*
+ * 優先度付待ち行列
+ * 
+ * 値を半順序集合とし、根に近いほど値が小さくなるような二分木を構成する．
+ * 今回は単純に値を演算(<), (>)で比較している．数値くらいであることを前提にしてる．
+ * 構造を保ちつつ、待ち行列に値を加える#addと最小要素を取り出す#popを実装した．
+ * #addは単純．#popが手こずった
+ *
+ * #isLeafとか#child_countとかは必要を感じて後から作ったから
+ * それよりも前で使うべき箇所があったかもしれない
+ */
+
+function Tree(val,a,b) {
+    /*
+     * new Tree(val [,left [,right]])
+     *     := a node has val with left (and right) as children or no child
+     * child being undefined behaves just a Leaf
+     */
+    this.val = val;
+    this.left = a;
+    this.right = b;
+}
+
+tp = Tree.prototype;
+tp.print = function() { // for debug
+    function print_sub(t) {
+        if (t == undefined || t.val == undefined) return "(Leaf)";
+        else return "(" + t.val + " " + print_sub(t.left) + " " + print_sub(t.right) + ")";
+    }
+    var str = print_sub(this, 0);
+    console.log(str);
+}
+
+tp.isLeaf = function() {
+    return (this.left == undefined && this.right == undefined) || this.val == undefined;
+}
+tp.child_count = function() {
+    return (this.left == undefined ? 0 : 1) + (this.right == undefined ? 0 : 1);
+}
+
+tp.add = function(val) {
+    /*
+     * 一旦木の一番下につけて、順序が保たれるまでノードの値を交換する．
+     * add_at_last()では一番下まで辿って値を追加するが、その
+     * 辿ったルートをrouteに記憶しておき、swap_until()で使う．
+     */
+    if (this.val == undefined) {
+        this.val = val;
+        return this;
+    }
+
+    var route = [];
+    function add_at_last(t) {
+        route.push(t);
+        if (t.val == undefined) { t.val = val; }
+        else if (t.left == undefined) { t.left = new Tree(val); route.push(t.left); }
+        else if (t.right == undefined) { t.right = new Tree(val); route.push(t.right); }
+        else {
+            add_at_last(Math.random() < .5 ? t.left : t.right);
+            // ズルい
+        }
+    }
+    add_at_last(this);
+
+    function swap_until() {
+        if (route.length < 2) return;
+        var child = route.pop(),
+            par = route.pop();
+        if (child.val < par.val) {
+            var c = child.val;
+            child.val = par.val;
+            par.val = c;
+            route.push(par);
+            swap_until();
+        }
+    }
+    swap_until();
+    return this;
+}
+
+tp.pop = function() {
+    /*
+     * 最小要素、即ち根の値を取り出す．
+     * 取り出すとは値を返すことと、それを持っていた節を削除した
+     * ような木に構成しなおすこと
+
+     * 根が最小要素を持つので、その値を返す為に覚えておいて削除する．
+     * 空になった根には末葉から持ってきたものを埋め、
+     * (単に根の値を上書きするだけで良いが)
+     * 最後に値の逆転が治るまで交換を繰り返す
+     */
+    var ret = this.val;
+    if (this.isLeaf()) {
+        this.val = undefined;
+        return ret;
+    }
+
+    function remove_last(t) {
+        if (t.left != undefined && t.left.isLeaf()) {
+            var val = t.left.val;
+            t.left = undefined; // remove. wait for garbage collect
+            return val;
+        }
+        else if (t.right != undefined && t.right.isLeaf()) {
+            var val = t.right.val;
+            t.right = undefined;
+            return val;
+        }
+        else {
+            return t.right == undefined ? remove_last(t.left) :
+                   t.left == undefined ? remove_last(t.right) :
+                   Math.random() < .5 ? remove_last(t.left) :
+                                        remove_last(t.right);
+        }
+    }
+    this.val = remove_last(this);
+
+    function swap_until(t) {
+        if (t == undefined || t.isLeaf()) return;
+
+        if (t.child_count() == 2) {
+            var v1 = t.left.val,
+                v2 = t.right.val,
+                vl = t.val;
+            if (v1 < v2) {
+                t.val = v1;
+                t.left.val = vl;
+                swap_until(t.left);
+            } else {
+                t.val = v2;
+                t.right.val = vl;
+                swap_until(t.right);
+            }
+        } else {
+            var child = t.right == undefined ? t.left : t.right;
+            if (t.val > child.val) {
+                var cv = child.val;
+                child.val = t.val;
+                t.val = cv;
+                swap_until(child);
+            }
+        }
+    }
+    swap_until(this);
+
+    return ret;
+}
+
+// sample code
+var a = new Tree();
+a.add(10);
+a.add(20);
+a.add(30);
+a.print();
+
+a.add(15)
+ .add(35)
+ .add(25)
+ .print();
+
+console.log(a.pop() + " was popped.");
+a.print();
+
+var b = new Tree(1, new Tree(2, new Tree(3)), new Tree(4));
+b.print();
+console.log(b.pop() + " was popped.");
+console.log(b.pop() + " was popped.");
+console.log(b.pop() + " was popped.");
+console.log(b.pop() + " was popped.");
+b.print();

@@ -1,0 +1,351 @@
+/*
+    UNIX用のシェルプログラム
+    昔学校の課題として書かされたもの
+    もう動く原理は分からないし怖いのでこんなのは動かしたくない
+ */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+// 標準のファイルディスクリプタ
+#define STDIN 0
+#define STDOUT 1
+#define STDERR 2
+
+typedef struct process_ {
+	char **args;
+	char *infile;
+	char *outfile;
+	int outmode; //0->TRUNC, 1->APPEND
+    int pipe; // 直前のプロセスからのパイプなら非ゼロ
+    struct process_ *next;
+} process;
+
+//str.slice(a,b)
+char*slice(char*str,int a,int b) {
+    char*str2=calloc(sizeof(char),b-a+1);
+    str2[b-a]='\0';
+    for(--b;b>=a;--b)str2[b-a]=str[b];
+    return str2;
+}
+
+// wordsの書き下し (debug)
+void print_words(char**words) {
+    int i;
+    for (i=0; words[i]!=NULL;++i) {
+        printf("# %s\n", words[i]);
+    }
+}
+// prcの書き下し (debug)
+void print_prc(process *prc) {
+    int i;
+    while (prc != NULL) {
+        printf("args = ");
+        for (i=0;prc->args[i];++i) printf("%s; ",prc->args[i]);
+        printf("\n");
+        printf("infile = %s\n", prc->infile);
+        printf("outfile = %s (%s)\n",
+            prc->outfile,
+            (prc->outmode?"APPEND" : "TRUNC"));
+        printf("pipe? %d\n", prc->pipe);
+        prc = prc->next;
+    }
+}
+
+process* parse(char*line) {
+    int cur, s, word_cur, arg_cur;
+    char **words = calloc(sizeof(char*), strlen(line));
+    process *prc, *cur_prc;
+    words[0] = NULL;
+
+    // 字句解析
+    // wordsに単語を代入していく
+    word_cur = 0;
+    for (cur = 0; cur < strlen(line); ++cur) {
+#if false
+        printf("| char %d - %c\n", cur, line[cur]);
+#endif
+        if (line[cur] == '\"') {
+            s = cur + 1;
+            for (++cur; line[cur] != '\"'; ++cur) {
+                if (line[cur] == '\0') {
+                    perror("double-quotation syntax error");
+                    return NULL;
+                }
+            }
+            words[word_cur] = slice(line, s, cur);
+            words[++word_cur] = NULL;
+        }
+        else if (line[cur] != ' ' &&
+                 line[cur] != '>' &&
+                 line[cur] != '<' &&
+                 line[cur] != '|' &&
+                 line[cur] != ';' &&
+                 line[cur] != '&') { //何も無い文字
+            s = cur;
+            while (line[cur] != ' ' &&
+                    line[cur] != '>' &&
+                    line[cur] != '<' &&
+                    line[cur] != '|' &&
+                    line[cur] != ';' &&
+                    line[cur] != '&') {
+                if (line[cur] == '\0') break;
+                ++cur;
+            }
+            words[word_cur] = slice(line, s, cur);
+            words[++word_cur] = NULL;
+            --cur;
+        }
+        else if (line[cur] == ' ') {
+            while(line[++cur] == ' ') {
+                if (line[cur] == '\0') break;
+            }
+            --cur;
+        }
+        else if (line[cur] == '>' && line[cur+1] == '>'){
+            words[word_cur] = slice(line, cur, cur+2);
+            words[++word_cur] = NULL;
+            ++cur;
+        }
+        else if (line[cur] == ' ' ||
+                line[cur] == '>' ||
+                line[cur] == '<' ||
+                line[cur] == '|' ||
+                line[cur] == ';' ||
+                line[cur] == '&') {
+            words[word_cur] = slice(line, cur, cur+1);
+            words[++word_cur] = NULL;
+        }
+        else {
+            //unreachable
+        }
+    }
+#if false
+    puts("words");
+    print_words(words);
+    puts("");
+#endif
+
+    // wordsを構造体に代入してく
+    prc = calloc(sizeof(process), 1);
+    prc->args = calloc(sizeof(char*), cur);
+    prc->args[0] = NULL;
+    prc->infile = calloc(sizeof(char), strlen(line));
+    prc->outfile = calloc(sizeof(char), strlen(line));
+    prc->pipe = 0;
+    prc->next = NULL;
+    cur_prc = prc;
+    arg_cur = 0;
+    for (cur = 0; words[cur]; ++cur) {
+#if false
+        printf("# prc %d - %s\n", cur, words[cur]);
+#endif
+        if (!strcmp(words[cur], "<")) {
+            ++cur;
+            strcpy(cur_prc->infile, words[cur]);
+        }
+        else if (!strcmp(words[cur], ">")) {
+            ++cur;
+            strcpy(cur_prc->outfile, words[cur]);
+            cur_prc->outmode = 0;
+        }
+        else if (!strcmp(words[cur], ">>")) {
+            ++cur;
+            strcpy(cur_prc->outfile, words[cur]);
+            cur_prc->outmode = 1;
+        }
+        else if (!strcmp(words[cur], ";")) {
+            if (!words[cur+1]) break;
+
+            cur_prc->next = calloc(sizeof(process), 1);
+            cur_prc = cur_prc->next;
+            cur_prc->args = calloc(sizeof(char*), cur);
+            cur_prc->args[0] = NULL;
+            cur_prc->infile = calloc(sizeof(char), strlen(line));
+            cur_prc->outfile = calloc(sizeof(char), strlen(line));
+            cur_prc->next = NULL;
+            cur_prc->pipe = 0;
+            arg_cur = 0;
+        }
+        else if (!strcmp(words[cur], "|")) {
+            cur_prc->next = calloc(sizeof(process), 1);
+            if (!words[cur+1]) break; //本来なら更に入力を受け付ける所だが今はそんな機能を豪華にしている場合ではない
+
+            cur_prc = cur_prc->next;
+            cur_prc->args = calloc(sizeof(char*), cur);
+            cur_prc->args[0] = NULL;
+            cur_prc->infile = calloc(sizeof(char), strlen(line));
+            cur_prc->outfile = calloc(sizeof(char), strlen(line));
+            cur_prc->next = NULL;
+            cur_prc->pipe = 1;
+            arg_cur = 0;
+        }
+        else {
+            cur_prc->args[arg_cur] = calloc(sizeof(char), strlen(words[cur]));
+            strcpy(cur_prc->args[arg_cur], words[cur]);
+            cur_prc->args[++arg_cur] = NULL;
+        }
+    }
+
+#if false
+    puts("prc");
+    print_prc(prc);
+    puts("");
+#endif
+
+    // words開放
+    for (cur = 0; words[cur]; ++cur) {
+        free(words[cur]);
+    }
+    free(words);
+
+    return prc;
+}
+
+int exec_prcs(process *prc, char**envp) {
+    int s, i, j,
+        status, fd,
+        pd, pds[2];
+    char path[64], *head;
+    pid_t pid;
+
+    // find path
+    for (i=0; ; ++i) {
+        if (envp[i][0] == 'P' &&
+            envp[i][1] == 'A' &&
+            envp[i][2] == 'T' &&
+            envp[i][3] == 'H') break;
+    }
+
+    pd = 0; //パイプで直前から来るもの
+    while (prc) {
+
+        //find path
+        sprintf(path,"/%s", prc->args[0]); //絶対パス?
+        if (access(path, 0) != 0) {
+            for(s=0;envp[i][s]!='=';++s);
+            for (;;) {
+                for(j=s+1;envp[i][j]!=':'&&envp[i][j]!='\0';++j);
+                head = slice(envp[i], s+1, j);
+
+                // 相対パス?
+                sprintf(path,"%s/%s", head, prc->args[0]);
+                if (access(path, 0) == 0) break;
+                s = j;
+                if (envp[i][j] == '\0') {
+                    perror(NULL);
+                    return 1;
+                }
+            }
+        }
+
+        //printf("### execv %s\n", path);
+
+        // 必要なら次プロセスに投げる用のパイプ作ってからフォーク
+        pds[0] = 0;
+        if (prc->next && prc->next->pipe) {
+            if (pipe(pds) < 0) {
+                perror("pipe");
+                return 1;
+            }
+        }
+
+        pid = fork();
+        if (pid < 0) {
+            perror("fork");
+        }
+        else if (pid > 0) { // parent
+            if (pds[0]) {
+                close(pds[1]);
+            }
+            //waitpid(pid, &status, 0);
+            if (prc->next == NULL) { //一番最後のプロセス
+                wait(&status);
+            }
+            if (status) {
+                // 非ゼロだったら報告
+                printf("process end (status = %d)\n", status);
+            }
+            if (pds[0]) {
+                pd = pds[0]; //次回はココから読ませる
+            }
+            prc = prc->next;
+        }
+        else { // child
+            if (pds[0]) {
+                close(pds[0]);
+            }
+            if (prc->infile[0]) {
+                //printf("redirect : in = %d\n", prc->infile[0]);
+                fd = open(prc->infile, O_RDONLY);
+                if (fd < 0) {
+                    perror("infile");
+                    exit(1);
+                }
+                if (dup2(fd, STDIN) < 0) {
+                    perror("dup2(redirect, stdin)");
+                    exit(1);
+                }
+            } else if (prc->pipe) {
+                //printf("pipe from %d instead of STDIN", pd);
+                dup2(pd, STDIN);
+            }
+            if (prc->outfile[0]) {
+                fd = open(prc->outfile, O_WRONLY|O_CREAT|
+                    (prc->outmode?O_APPEND:O_TRUNC),
+                    S_IRWXU|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH); //rwxrw-rw-
+                if (fd < 0) {
+                    perror("outfile");
+                    exit(1);
+                }
+                if (dup2(fd, STDOUT) < 0) {
+                    perror("dup2(redirect, stdout)");
+                    exit(1);
+                }
+            }
+            else if(prc->next && prc->next->pipe) {
+                if (dup2(pds[1], STDOUT) < 0) {
+                    perror("dup2(pipe, stdout)");
+                    exit(1);
+                }
+            }
+
+            execve(path, prc->args, envp);
+            exit(1);
+        }
+    }
+    return 0;
+}
+
+// callocしたやつ全部開放
+void delete(process *prc) {
+    int i;
+    if (prc == NULL) return;
+    for (i=0; prc->args[i]; ++i) {
+        free(prc->args[i]);
+    }
+    free(prc->args);
+    free(prc->infile);
+    free(prc->outfile);
+    delete(prc->next);
+    free(prc);
+}
+
+int main(int argc, char**argv, char**envp){
+    char line[256];
+    process *prc;
+    for (;printf("hash> ") , strcmp(gets(line), "exit");) {
+        prc = parse(line);
+        if (exec_prcs(prc, envp)){
+            perror("exec error");
+        }
+        delete(prc);
+    }
+    return 0;
+}
+// :vim set ft=c:

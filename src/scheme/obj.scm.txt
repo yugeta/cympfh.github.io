@@ -1,0 +1,42 @@
+; マクロでクラスもどき
+
+(define-syntax object
+  (syntax-rules ()
+    ((_ (a b) ...)
+      (let ((a b) ...)
+        (case-lambda
+          ((key)
+            (case key ((a) a) ...))
+          ((key val)
+            (case key ((a) (set! a val)) ...)) )))))
+
+; gosh> (define X (object (x 0) (y 0) (z 0)))
+; X
+; gosh> (X 'z)
+; 0
+; gosh> (X 'y)
+; 0
+; gosh> (X 'y 9)
+; 9
+; gosh> (X 'y)
+; 9
+; gosh> (X 'x)
+; 0
+
+; ほんとは
+;     (object x 0 y 0)
+; ってできるようにしたいんだけど、マクロの中の ... がよく分からない。
+; 高度にパターンマッチングしてくれてるのは分かるんだけど
+
+; case-lambda使うのをさぼって、ゲッターとセッターを返すとして
+; gosh> (define-values (X X-set!) (object (x 0) (y 0)))
+; #<undef>
+; gosh> (X 'x)
+; 0
+; gosh> (X-set! 'x 9)
+; 9
+; gosh> (X 'x)
+; 9
+; gosh> (X 'y)
+; 0
+; ってのも考えてた。これはそんなに悪くないと思った。

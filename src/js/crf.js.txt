@@ -1,0 +1,185 @@
+/* Linear-chain の CRF (Conditional Random Field)
+ * 
+ * 使い方は一番下 */
+
+Number.prototype.exp = function() { return Math.exp(this) };
+Array.prototype.sum = function() {
+  return this.reduce(function(x,y) { return x+y }) };
+function iota(n,b,s) {
+  b = b||0; s = s||1;
+  for (var ret=[], i=0; i<n; ++i) ret.push(b+i*s);
+  return ret }
+
+/* Linear-Chain CRF */
+function CRF(Y, Phi) {
+
+  this.Theta = randArray(Phi.length);
+  this.train = train;
+  this.test  = predict;
+
+  function randArray(n) {
+    return iota(n,-10);
+  }
+
+  // argmax[y] Pr(y|x;Theta)
+  function predict(x)
+  {
+    var Theta = this.Theta
+      , len = x.length
+      , y = [];
+
+    for (var i=0; i<len; ++i) {
+      var maxy, maxp = -Infinity;
+      for (var j=0; j<Y.length; ++j) {
+        var p = nOfPr(x, y[y.length-1], Y[j], y.length);
+        if (maxp < p) {
+          maxp = p;
+          maxy = Y[j];
+        }
+      }
+      y = y.concat(maxy);
+    }
+    return y;
+
+    function nOfPr(x, y_t_1, y_t, t) {
+      var ret =
+        Phi.map(function(p, i){ return p(x,y_t_1,y_t,t) * Theta[i] })
+        .sum();
+
+      return ret;
+    }
+  }
+
+  // N-times do train2 with decreasing nu
+  function train(datum, N)
+  {
+    process.stderr.write("training");
+    for (var cx=1; cx<=N; ++cx) {
+      train2.call(this, datum, 1/Math.sqrt(cx));
+      if (cx % Math.floor(N / 10) === 0)
+        process.stderr.write(".");
+    }
+    process.stderr.write("\n");
+    // console.log("Theta", this.Theta);
+  }
+  function train2(datum, nu)
+  {
+    var Theta = this.Theta
+      , N  = datum.length
+      ;
+    for (var j=0; j<Theta.length; ++j)
+      Theta[j] += nu * dLdtheta(j);
+
+    // for (var j=0; j<Theta.length; ++j)
+    //   console.log(dLdtheta(j))
+
+    // where
+    function dLdtheta(j) {
+      var fj = Phi[j];
+
+      var sum1 =
+        iota(N)
+        .map(function(i) {
+          var x = datum[i].x
+            , y = datum[i].y
+            , T = x.length;
+          return iota(T-1, 1)
+            .map(function(t) { return fj(x, y[t-1], y[t], t) })
+            .sum()
+        })
+        .sum();
+
+      var sum2 =
+        iota(N)
+        .map(function(i) {
+          var x = datum[i].x
+            , T = x.length;
+          return iota(T-1, 1)
+            .map(function(t) { return sum3(i, t) })
+            .sum()
+        })
+        .sum();
+
+        function sum3(i, t) {
+          var x = datum[i].x
+            , y = datum[i].y;
+          var ns = []
+            , fs = [];
+          for (var u=0; u<Y.length; ++u)
+            for (var v=0; v<Y.length; ++v) {
+              var yt1 = Y[u]
+                , yt  = Y[v];
+
+              ns.push(
+                iota(Phi.length)
+                .map(function(j) {
+                  return Phi[j](x, yt1, yt, t)
+                })
+                .sum()
+                .exp()
+              );
+
+              fs.push( fj(x, yt1, yt, t) );
+            }
+
+          var nsum = ns.sum();
+          return ns.map(function(n, i) { return n * fs[i] / nsum }).sum()
+        }
+
+      return sum1 - sum2;
+    }
+  }
+
+}
+
+// 使う例
+(function () {
+
+  /* 素性テンプレートの配列
+   *
+   * 入力全体(配列) x
+   * 出力yの今見てる一つ前の成分 yt1
+   *        今見てる成分         yt
+   * 今見てる成分のindex         t
+   *
+   * 0か1かを返すこと
+   */
+  var Phi = [
+      function (x, yt1, yt, t) { return x[t] === yt ? 1 : 0 }
+    , function (x, yt1, yt, t) { return x[t-1] === yt ? 1 : 0 }
+    , function (x, yt1, yt, t) { return x[t+1] === yt ? 1 : 0 }
+    , function (x, yt1, yt, t) { return x[t-2] === yt ? 1 : 0 }
+    , function (x, yt1, yt, t) { return x[t+2] === yt ? 1 : 0 }
+  ];
+
+  // 出力の成分のcodomain (label) を[0,1] にして
+  // Phiの元でのCRFを生成
+  var t = new CRF([0, 1], Phi);
+
+  // 学習用のデータ
+  var datum = [
+      { x : [1,1,1,1]
+      , y : [1,1,1,1] }
+    , { x : [1,1,0,0,0,1,1,1,1,0,0,0]
+      , y : [1,0,0,0,0,0,1,1,0,0,0,0] }
+    , { x : [1,1,1,0,0,0,0,1,1]
+      , y : [1,1,0,0,0,0,0,0,1] }
+    , { x : [1,1,1,0,0,0,1,1,1]
+      , y : [1,1,0,0,0,0,0,1,1] }
+    , { x : [1,1,1,0,0,0,1,1,1,1]
+      , y : [1,1,0,0,0,0,0,1,1,1] }
+    , { x : [0,0,0,1,1,1,1,0,0]
+      , y : [0,0,0,0,1,1,0,0,0] }
+    , { x : [1,0,0,1,1,1,1,0,0]
+      , y : [0,0,0,0,1,1,0,0,0] }
+    , { x : [0,0,0,1,1,1,1,0,1]
+      , y : [0,0,0,0,1,1,0,0,0] }
+  ];
+
+  // 5回ループで訓練 (コレ以上やっても効果ない)
+  t.train(datum, 5);
+
+  // テスト
+  var x = [1,1,0,1,1,1,0,0,1,1,1,0,1,1,1];
+  console.log(x+"\n"+t.test(x))
+})();

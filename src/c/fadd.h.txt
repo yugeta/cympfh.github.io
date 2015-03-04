@@ -1,0 +1,5 @@
+int slice(int,int,int);
+int fadd(int,int);
+int fadd2(int,int,int,int,int,int);
+int int2float(int,int,int);
+int find_top(int,int);

@@ -1,0 +1,66 @@
+print=console.log;
+//ls=require("fs").readFileSync("/dev/stdin","utf-8").split("\n");ls.length--
+
+op = Object.prototype;
+op.toString = function(){
+  var s=[];
+  for(var i in this)if(this.hasOwnProperty(i))s=s.concat(i+":"+this[i]);
+  return "{"+s.join(",")+"}" };
+op.trace = function(x){
+  process.stderr.write((x?(x+": "):"")+this+"\n"); return this };
+
+sp = String.prototype;
+sp.int = function(c){ return this.split(c||" ").map(int)};
+sp.count = function(sub){
+  for (var c=i=0;i>=0;i=this.indexOf(sub,i+1),++c); return c };
+
+ap = Array.prototype;
+ap.toString = function(){ return "["+this.join(",")+"]" };
+ap.max = function(){ return Math.max.apply(null, this) };
+ap.min = function(){ return Math.min.apply(null, this) };
+ap.sum = function(){ return this.reduce(add) };
+ap.prod = function(){return this.reduce(mul) };
+ap.copy = function(){ return this.map(id) };
+ap.rotate = function(n){
+  return this.slice(n||1,this.length).concat(this.slice(0,n||1)) };
+ap.shuffle = function(){
+  return this.map(function(x){return [Math.random(),x]})
+             .sort(function(a,b){return a[0]-b[0]})
+             .map(function(x){return x[1]}) };
+ap.permutation = function(){
+  if (this.length == 0) return [];
+  if (this.length == 1) return [this];
+  var ret=[], ar=this, i=0;
+  for (; i<ar.length; ++i)
+    ret=ret.concat(ar.slice(0, i)
+           .concat(ar.slice(i+1, ar.length))
+           .permutation()
+           .map(function(p){ return p.concat(ar[i]) }))
+  return ret };
+ap.flatten = function(){
+  for (var i=0,r=[]; i<this.length; ++i) r=r.concat(this[i]); return r };
+ap.nub = function() {
+  for (var r=[],u=[],v,i=0; i<this.length; ++i)
+    if (!((v=this[i]) in u)) r=r.concat(v),u[v]=true; return r; }
+
+function forEach(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(x,o[x]); }
+function forIn(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(x); }
+function forOf(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(o[x]); }
+
+function iota(n,b,s){ b=b||0; s=s||1; for (var r=[];n--;b+=s) r.push(b); return r }
+function int(s){return +s}
+function add(a,b){return a+b}
+function mul(a,b){return a*b}
+function sub(a,b){return a-b}
+function bus(a,b){return b-a}
+function id(x){return x}
+function sq(x){return x*x}
+
+(function main() {
+
+iota(3).permutation()
+.trace()
+
+})();
+
+// vim: set ft=javascript:

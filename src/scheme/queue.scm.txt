@@ -1,0 +1,29 @@
+; 名前忘れたけど，平均したらそれなりに計算量の少ない，リストによるキューの実装
+
+(define (make-queue) '(()))
+(define (queue-pop q)
+  (let ((tail (car q)) (head (cdr q)))
+  (if (null? tail)
+      (if (null? head) (values #f q)
+          (let1 t (reverse head) (values (car t) (cons (cdr t) '()))))
+      (values (car tail) (cons (cdr tail) head)))))
+(define (queue-push q x)
+  (cons (car q) (cons x (cdr q))))
+
+(define-macro (queue-pop! q)
+  `(receive (x p) (queue-pop ,q) (set! ,q p) x))
+(define-macro (queue-push! q x)
+  `(let1 p (queue-push ,q ,x) (set! ,q p) p))
+
+; (define a (make-queue))
+; (queue-push! a 1)
+; (queue-push! a 2)
+; (queue-push! a 3)
+; (queue-pop! a) ; 1
+; (queue-push! a 4)
+; (queue-pop! a) ; 2
+; (queue-pop! a) ; 3
+; (queue-pop! a) ; 4
+; (queue-pop! a) ; #f
+; (queue-push! a 5)
+; (queue-pop! a) ; 5

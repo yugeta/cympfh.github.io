@@ -1,0 +1,73 @@
+{-
+  https://codeiq.jp/ace/stakemura/q486
+  への解答です
+
+  問題の要約
+
+  三角分布とは 3つのパラメータa,b,cで定まる
+
+  AとBはそれぞれの三角分布を持っており，
+    triA = tri 61 100 85
+    triB = tri 75 97 82
+  です．
+
+  この分布によってそれぞれのスコアがランダムに決まります．
+  それぞれが相手のスコアより高くある確率を，モンテカルロ法で求める問題
+-}
+
+import Data.List
+import Data.Char
+import Data.Maybe
+import Control.Monad
+import Debug.Trace
+import System.Random
+
+debug x = trace (show x) x
+(|>) x f = f x; infixl 1 |>
+(||>) x f = x >>= (return.f); infixl 1 ||>
+
+-- 分布のパラメータと 一様ランダムな [0.0, 1.0] を入れると，スコアを出す
+-- Wikipedia にある累積の逆関数
+tri :: Double -> Double -> Double -> Double -> Double
+tri a b c p =
+  if p <= pc then
+    sqrt $ (b-a) * (c-a) * p
+  else
+    sqrt $ (b-a) * (b-c) * (1-p)
+  where
+    pc = (c-a) / (b-a)
+
+-- パラメータを部分適用
+triA = tri 61 100 85
+triB = tri 75 97 82
+
+-- 分布を入れたら乱数を用いてスコアを出す
+score f = do
+  g <- newStdGen
+  g |> next |> fst |> (`mod` 20)
+    |> fromIntegral
+    |> (/ 19)
+    |> f
+    |> return
+
+-- 分布を部分適用
+scoreA = score triA
+scoreB = score triB
+
+-- scoreAとscoreBを乱数を用いて比較
+battle = do
+  a <- scoreA
+  b <- scoreB
+  return (a > b) -- i believe that (a != b)
+
+-- m 回，battle して A の勝った回数をカウント，適当に出力
+main = do
+  f <- forM [1..m] $ \_ -> battle
+  f |> filter id
+    |> length
+    |> fromIntegral
+    |> (/ m)
+    |> (\x -> let z = x*100 in putStrLn $ show z ++ " " ++ show (100.0 - z))
+
+  where
+   m = 10000

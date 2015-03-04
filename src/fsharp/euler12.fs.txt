@@ -1,0 +1,33 @@
+// answer to the problem 12 of Euler Projcet
+open System
+
+let main =
+    // nの約数の数
+    let rec num_of_factor n =
+        let rec num_of_factor' a ac =
+            if n % a = 0 then
+                let x = a
+                let y = n/a
+                if x = y then
+                    ac + 1
+                elif x > y then
+                    ac
+                else
+                    num_of_factor' (a+1) (ac+2)
+            else
+                num_of_factor' (a+1) ac
+        num_of_factor' 1 0
+
+    // n = 1, 3, 6, ..を順にチェック
+    let countup N =
+        let rec countup' n ac =
+            let num_of_factor_of_n = num_of_factor ac in
+                if num_of_factor_of_n > N then
+                    printfn "num_of_factor of %d is %d." ac num_of_factor_of_n
+                else
+                    countup' (n+1) (ac+n)
+        countup' 0 0
+
+    Console.ReadLine()
+    |> Int32.Parse
+    |> countup 

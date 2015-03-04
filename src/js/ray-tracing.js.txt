@@ -1,0 +1,109 @@
+/* ray tracing
+ * 
+ * 僅かな知識しかないけどレイトレーシングみたいなものを
+ * 表面で光を100%反射させる球
+ * 背景は，上が青と白の縦縞で，下面が赤と黒の横縞
+ */
+
+print = console.log;
+function sq(x){return x*x}
+function add(x,y){return x+y}
+function int(x){return (+x)|0}
+
+function Point(x,y,z) {
+  this.x = x; this.y = y; this.z = z;
+}
+function Vector(p1, p2) {
+  this.begin = p1;
+  this.end = p2;
+  this.dx = this.end.x - this.begin.x;
+  this.dy = this.end.y - this.begin.y;
+  this.dz = this.end.z - this.begin.z;
+  this.abs = Math.sqrt([this.dx,this.dy,this.dz].map(sq).reduce(add));
+
+  this.sub = function(u) {
+    return new Vector(this.begin
+                    , new Point(this.end.x - u.dx
+                              , this.end.y - u.dy
+                              , this.end.z - u.dz))
+  }
+
+  this.mul = function(n) {
+    return new Vector(this.begin
+                    , new Point(this.end.x + this.dx * n
+                              , this.end.y + this.dy * n
+                              , this.end.z + this.dz * n));
+  }
+
+  this.norm = function(n) {
+    n = n || 1;
+    return new Vector(this.begin
+                    , new Point(this.begin.x + this.dx * n / this.abs
+                              , this.begin.y + this.dy * n / this.abs
+                              , this.begin.z + this.dz * n / this.abs))
+  }
+
+  // update!
+  this.run = function() {
+    this.begin = this.end;
+    this.end = new Point(this.end.x + this.dx
+                       , this.end.y + this.dy
+                       , this.end.z + this.dz);
+  }
+}
+function innerdot(u, v) {
+  return u.dx*v.dx + u.dy*v.dy + u.dz*v.dz
+}
+function distance(p, q) {
+  return Math.sqrt([p.x-q.x, p.y-q.y, p.z-q.z].map(sq).reduce(add))
+}
+
+function startRun(v) {
+  return run(v, 1, 0)
+}
+function run(v, I, cx) {
+
+  const center = new Point(0.5, 0.5, 1);
+
+  if (cx > 1000) return [0,0,0];
+  if (I < 0.01) return [0,0,0]
+  var p = v.end;
+
+  if (Math.abs(p.z) > 10) {
+    var c = 255*I;
+    if (p.y < 0) {
+      return Math.sin(p.x*3+1) < 0.0 ? [0,0,c] : [c,c,c];
+    } else {
+      return Math.sin(p.y*3) < -0.4 ? [c,0,0] : [0,0,0];
+    }
+  }
+
+  if (distance(center, p) < 0.4) {
+    var v2 = v.norm(); // 入射
+    var u = (new Vector(center, p)).norm();
+    var f = Math.abs(innerdot(u, v2));
+    var v3 = u.mul(2*f).sub(v); // 反射
+    v3.run();
+    var a = run(v3.norm(0.1), I, cx+1);
+    return [a[0], a[1], a[2]]
+  }
+
+  v.run();
+  return run(v, I, cx+1)
+
+}
+
+function main() {
+  const width = height = 512
+  const eye = new Point(0.5, 0.5, -1);
+  print("P3");
+  print(height, width)
+  print(255)
+  for (var i=0; i<height; ++i)
+    for (var j=0; j<width; ++j)
+      print(
+        startRun((new Vector(eye, new Point(j/width, i/height, 0)))
+                 .norm(0.1)).map(int).join(" "))
+}
+
+main();

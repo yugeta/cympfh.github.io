@@ -1,0 +1,76 @@
+/*
+ * 配列は参照渡しだから、元を破壊しないようにすることにした
+ */
+function BubbleSort(arr) {
+    var n = arr.length,
+        ret = [];
+    for (var i=0;i<n;++i) ret[i] = arr[i];
+    for (var i=0; i<n-1; ++i)
+        for (var j=n-1; j>i; --j)
+            if (ret[j] < ret[j-1]) {
+                var c = ret[j];
+                ret[j] = ret[j-1];
+                ret[j-1] = c;
+            }
+    return ret;
+}
+
+function Select(arr) {
+    var ret = [],
+        ar = [],
+        n = arr.length;
+
+    for (var i=0;i<n;++i) ar[i] = arr[i];
+    for (var i=0;i<n;++i) {
+        var m = Math.min.apply(null, ar);
+        ret[i] = m;
+        ar.splice(ar.indexOf(m), 1);
+    }
+    return ret;
+}
+
+function Quick(arr) {
+    if (arr.length < 2) return arr;
+    var pivot = arr[Math.floor(arr.length/2)];
+    return Quick(arr.filter(function(x){return x < pivot}))
+           .concat(arr.filter(function(x){return x == pivot}))
+           .concat(Quick(arr.filter(function(x){return x > pivot})));
+}
+
+function Merge(arr) {
+    var n = arr.length;
+    if (n < 2) return arr;
+    var ls1 = Merge(arr.slice(0, n/2)),
+        ls2 = Merge(arr.slice(n/2, n));
+    var ret = [];
+    for (;ls1.length>0&&ls2.length;)
+        ret.push(ls1[0]<ls2[0] ? ls1.shift() : ls2.shift());
+    if (ls1.length > 0) ret = ret.concat(ls1);
+    if (ls2.length > 0) ret = ret.concat(ls2);
+    return ret;
+}
+
+function Backet(arr, range) {
+    var backet = [];
+    for (var i in range) backet[range[i]] = 0;
+    for (var i in arr) backet[arr[i]] += 1;
+
+    var ret = [];
+    for (var i in backet)
+        for (var j=0;j<backet[i];++j) ret.push(i);
+    return ret;
+}
+
+// sample code
+a = (function (n) {
+    var ret = [];
+    for (var i=0;i<n;++i) ret[i] = Math.floor(Math.random()*n);
+    return ret;
+})(10);
+console.log("source : ", a);
+console.log("bubble : ", BubbleSort(a));
+console.log("select : ", Select(a));
+console.log("quick  : ", Quick(a));
+console.log("merge  : ", Merge(a));
+console.log("backet : ", Backet(a, [0,1,2,3,4,5,6,7,8,9]));
+

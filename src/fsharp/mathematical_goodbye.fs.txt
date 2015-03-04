@@ -1,0 +1,28 @@
+(*
+    笑わない数学者からの挑戦状
+    http://r27.jp/quiz/mathematical-goodbye/
+
+    全然関係ない調べ物をしていたら上のものを
+    見つけたので解いてみた．「解く」というのが
+    全探索すること、と自分の中で同義になっているのが
+    面白い．
+
+    森博嗣ってラノベ作家じゃなかったの？こんなのも
+    考える人なんだね
+*)
+
+// choose n elements from ls
+let rec perm (ls :'a list) (n :int) :'a list list =
+    if n = 0 then [[]]
+        else
+          [for x in ls do
+            for xs in perm (ls |> List.filter (fun a -> a<>x)) (n-1) do
+              yield x::xs]
+
+for [a;b;c;d;e] in perm [1 ..15] 5 do
+    if [a; b; c; d; e
+        a+b; b+c; c+d; d+e; e+a
+        a+b+c; b+c+d; c+d+e; d+e+a; e+a+b
+        a+b+c+d; b+c+d+e; c+d+e+a; d+e+a+b; e+a+b+c
+        a+b+c+d+e] |> List.sort = [1..21] then
+            printfn "%A" (a,b,c,d,e)

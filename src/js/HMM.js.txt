@@ -1,0 +1,119 @@
+/*
+ * 内部状態が2つ {0, 1} の n 次-HMM
+ *
+ * 任意の型 a
+ * type State = 0 | 1 (内部状態のこと)
+ *
+ * ([a] , [State]) を以って train で学習して，
+ * [a] -> [State] という関数 test を為すような
+ *
+ * 遷移確率のテーブル A を構成する
+ *
+ * 使い方は最後の方
+ *
+ */
+
+function HMM(n) {
+
+  // 遷移確率のテーブル
+  var A = [];
+
+  // HMM has two methods
+  this.test = test;
+  this.train = train;
+
+  // 入力ベクトル (str : [a]) から 内部状態の遷移を配列にしたものを出力にする
+  function test(str) {
+    var sub = iota(n+1).map(function(){return 0});
+    var ret = [];
+    
+    var ps = [1, 0];
+    for (var i=0, len=str.length; i<len; ++i) {
+      sub.shift();
+      sub.push(str[i]);
+
+      var key0 = [0, sub]
+        , key1 = [1, sub];
+
+      if (!(key0 in A)) A[key0] = .5;
+      if (!(key1 in A)) A[key1] = .5;
+
+      ps = nextPs(ps, key0, key1);
+      ret.push(ps[0] > ps[1] ? 0 : 1);
+    }
+    return ret;
+  }
+
+  // 入力ベクトル (str : [a]) と，内部状態の遷移を配列にした strT を教師データ
+  // として学習する
+  function train(str, strT) {
+    var sub = iota(n+1).map(function(){return 0});
+    var ret = [];
+    
+    var ps = [1, 0];
+    for (var i=0, len=str.length; i<len; ++i) {
+      sub.shift();
+      sub.push(str[i]);
+
+      var key0 = [0, sub]
+        , key1 = [1, sub];
+
+      if (!(key0 in A)) A[key0] = .5;
+      if (!(key1 in A)) A[key1] = .5;
+
+      var ps2 = nextPs(ps, key0, key1);
+      if (strT[i] === 0 && ps2[0] < 0.51) {
+        var delta = 0.51 - ps2[0];
+        A[key0] += delta;
+        A[key1] -= delta;
+      } else if (strT[i] === 1 && ps[1] < 0.51) {
+        var delta = 0.51 - ps2[1];
+        A[key0] -= delta;
+        A[key1] += delta;
+      }
+      ps = nextPs(ps, key0, key1);
+      /*
+      // これは酷い…上のように直した
+      while (ps2 = nextPs(ps, key0, key1), (ps2[0] > ps2[1] ? 0 : 1) !== strT[i]) {
+        A[key0] = Math.min(Math.max(A[key0] + rnd(), 0), 1);
+        A[key1] = Math.min(Math.max(A[key1] + rnd(), 0), 1);
+      }
+      ps = ps2;
+      */
+    }
+
+    // where
+    function rnd(){ return (Math.random() - .5) / 10 }
+  }
+
+  // where 
+
+  function nextPs(ps, key0, key1) {
+    var p0 = ps[0] // probability of state = 0
+      , p1 = ps[1] //                state = 1
+      , p00 = A[key0] //             state 0 into 0
+      , p11 = A[key1];//             state 1 into 1
+    return [ p0 * p00 + p1 * (1 - p11) , p1 * p11 + p0 * (1 - p00) ];
+  }
+
+  function iota(n,b,s){ b=b||0; s=s||1; for (var r=[];n--;b+=s) r.push(b); return r }
+
+}
+
+// 使う例
+
+// 入力 [{0,1}] がそのまま そのまま出力になることを期待
+var id = new HMM(1);
+id.train([0,1,0,0,1,0,1,1,1,0,1,0]
+       , [0,1,0,0,1,0,1,1,1,0,1,0]);
+console.log(
+  id.test([0,1,0,0,0,1])
+  );
+
+// 入力 [{0,1}] の反転が出力になることを期待する
+var xor = new HMM(1);
+xor.train([0,1,0,0,1,0,1,1,1,0,1,0]
+        , [1,0,1,1,0,1,0,0,0,1,0,1]);
+console.log(
+  xor.test([0,0,1,0,1,0])
+  );

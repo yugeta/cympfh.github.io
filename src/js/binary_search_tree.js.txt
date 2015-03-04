@@ -1,0 +1,104 @@
+/*
+ * 二分探索木
+ *
+ * #add
+ * #delete
+ * #contains
+ */
+
+function Tree(val, l, r) {
+    this.val = val;
+    this.left = l;
+    this.right = r;
+}
+tp = Tree.prototype;
+tp.print = function (){
+    print_sub = function(tr) {
+        if (tr == undefined) return "(Leaf)";
+        else return "("+tr.val + " " +
+                    (print_sub(tr.left)) + " " + 
+                    (print_sub(tr.right)) + ")";
+    }
+    console.log(print_sub(this));
+}
+
+tp.add = function(val) {
+    if (this.val == undefined) {
+        this.val = val;
+        return this;
+    }
+    if (this.val == val) {
+        return this;
+    } else if (this.val > val) {
+        if (this.left == undefined) this.left = new Tree(val);
+        else this.left.add(val);
+        return this;
+    } else {
+        if (this.right == undefined) this.right = new Tree(val);
+        else this.right.add(val);
+        return this;
+    }
+};
+
+tp.delete = function(val) {
+    if (this.val == undefined) return this; // not found
+
+    if (this.val == val) {
+        var find_min_delete_it = function(tr) {
+            if (this.left == undefined) return undefined;
+            if (this.left.left == undefined) {
+                var ret = this.left.val;
+                this.left = this.left.right;
+                return ret;
+            }
+        };
+
+        if (this.right.left == undefined) {
+            this.val = this.right.val;
+            this.right = this.right.right;
+        }
+        else {
+            var min = find_min_delete_it(this.right);
+            this.val = min;
+        }
+
+        return this;
+
+    } else if (this.val < val) {
+        if (this.right == undefined) return this; // not found
+        else this.right.delete(val);
+        return this;
+
+    } else {
+        if (this.left == undefined) return this; // not found
+        else this.left.delete(val);
+        return this;
+    }
+    return this;
+};
+
+tp.contains = function(val) {
+    function contains_sub (tr) {
+        if (tr == undefined) return false;
+        else if (tr.val == val) return true;
+        else return contains_sub(tr.val < val ? tr.right : tr.left);
+    }
+    return contains_sub(this);
+};
+
+// sample
+a = new Tree()
+    .add(2)
+    .add(1)
+    .add(3)
+    .delete(2);
+a.print();
+console.log("a contains 1? : " + a.contains(1));
+console.log("a contains 2? : " + a.contains(2));
+
+a.add(10)
+ .add(9)
+ .add(11)
+ .delete(10)
+ .print();
+

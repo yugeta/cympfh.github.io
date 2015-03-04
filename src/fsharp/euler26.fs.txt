@@ -1,0 +1,28 @@
+(*
+    my answer to Euler 26
+    http://projecteuler.net/problem=26
+*)
+
+// I dont know method like this in F#
+let indexOf ls (n:int) =
+    let rec index' ls i =
+        match ls with
+        | [] -> -1
+        | x::xs -> if x=n then i else index' xs (i+1)
+    index' ls 0
+
+let cycle n =
+    let rec tentimes m = if m >= n then m else tentimes (m*10)
+    let rec cycle' m ac =
+        if m = 0 then 0
+            else let i = indexOf ac m in
+                    if i > -1 then i+1
+                          else cycle' ((tentimes m) % n) (m::ac)
+    cycle' 1 []
+
+let _ =
+    [1 .. 999]
+    |> List.map (fun n -> (cycle n , n))
+    |> List.max
+    |> (fun (c,n) -> n)
+    |> printfn "%d"

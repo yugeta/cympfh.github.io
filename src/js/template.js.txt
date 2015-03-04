@@ -1,0 +1,35 @@
+print=console.log;
+//ls=require("fs").readFileSync("/dev/stdin","utf-8").split("\n");ls.length--
+
+op = Object.prototype;
+op.toString = function(){
+  var s=[];
+  for(var i in this)if(this.hasOwnProperty(i))s=s.concat(i+":"+this[i]);
+  return "{"+s.join(",")+"}" };
+op.trace = function(x){
+  process.stderr.write((x?(x+": "):"")+this+"\n"); return this };
+
+ap = Array.prototype;
+ap.toString = function(){ return "["+this.join(",")+"]" };
+ap.max = function(){ return Math.max.apply(null, this) };
+ap.min = function(){ return Math.min.apply(null, this) };
+ap.sum = function(){ return this.reduce(add) };
+ap.prod = function(){return this.reduce(mul) };
+ap.copy = function(){ return this.map(id) };
+
+function forIn(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(x); }
+function forOf(o,f){ for (var x in o) if (o.hasOwnProperty(x)) f(o[x]); }
+
+function iota(n,b,s){ b=b||0; s=s||1; for (var r=[];n--;b+=s) r.push(b); return r }
+function add(a,b){return a+b}
+function mul(a,b){return a*b}
+function sub(a,b){return a-b}
+function bus(a,b){return b-a}
+function id(x){return x}
+
+(function main() {
+
+
+})();
+
+// vim: set ft=javascript:

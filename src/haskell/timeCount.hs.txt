@@ -1,0 +1,26 @@
+import System.Time
+
+main = do
+  putStrLn "ready?"
+  getLine
+  d <- getClockTime
+  next d
+
+  where
+    next d0 = do
+      getLine
+      d <- getClockTime
+      printDiff $ diffClockTimes d d0
+      d <- getClockTime
+      next d
+
+    printDiff dif =
+      putStrLn $ show ds'' ++ " + " ++ show dp' ++ " e-12"
+      where
+        dh = tdHour dif
+        dm = tdMin dif
+        ds = tdSec dif
+        dp = tdPicosec dif
+        ds' = if dp < 0 then ds'-1   else ds
+        dp' = if dp < 0 then dp + 1000000000000 else dp
+        ds'' = (dh*24 + dm) * 60 + ds
