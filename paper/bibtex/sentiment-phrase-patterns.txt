@@ -1,0 +1,9 @@
+@inproceedings{fei2004sentiment,
+  title={Sentiment classification using phrase patterns},
+  author={Fei, Zhongchao and Liu, Jian and Wu, Gengfeng},
+  booktitle={Computer and Information Technology, 2004. CIT'04. The Fourth International Conference on},
+  pages={1147--1152},
+  year={2004},
+  organization={IEEE}
+}
+
