@@ -47,6 +47,7 @@ phrase pattern もまた、word の列 `[w1, w2 .. w[m]]` とする。
 これが、先の文にマッチするとは、sub sequence になっていること。
 
 i.e.
+
 ```haskell
 sentence = [u1, u2 .. u[n]]
 pattern = [w1, w2 .. w[m]]
@@ -62,15 +63,17 @@ forall i. w[i] == u[j[i]]
 word class としては、POSとかpolarity とかを使い制限しない。
 word `w` の class として(文脈に依存して) `{c1 .. cn}` があるとき、
 
-```
+```haskell
 w -> {w, c1 .. cn}
 ```
+
 という拡張を考える。
 文と、phrase pattern ともに、この拡張を適用できる。
 また、マッチすることの定義は、
 最後の `==` を、 `subset` にする。
 
 i.e.
+
 ```haskell
 sentence = [u1, u2 .. u[n]]
 pattern = [w1, w2 .. w[m]]
@@ -120,6 +123,7 @@ def PrefixSpan(D, rho, f):
 `match_freq` はマッチする回数。
 
 `append` および `assemble` はパターンとトークンから新しいパターンを作る。
+
 ```python
 def append(rho, a):
   return rho.append({a})
@@ -173,11 +177,13 @@ def Project(D, rho):
 変数`X`はあるパターンがマッチするかどうか(`X=0,1`) とすると、
 
 定義通りには、
+
 ```haskell
 I X Y = sum [ sum [ (p x y) * log ((p x y) / (p x) / (p y))  | y <- [1..K] ] | x <- [0,1] ]
 ```
 
 次のように書き換えると、計算しよい。 (計算効率をおとさない)
+
 ```haskell
 p_given x y -- probability of x given y
 I X Y = sum [ sum [ (p_given x y) * (p y) * log ((p_given x y) / p_x) | y <- [1..K] ] | x <- [0,1] ]
@@ -187,9 +193,11 @@ I X Y = sum [ sum [ (p_given x y) * (p y) * log ((p_given x y) / p_x) | y <- [1.
 
 で、えっと、あるパターン `p` について の、`X`に対して
 そのパターンを拡張した時のそれを `XE`と書くと、
-```
+
+```python
 p(XE=1|y) <= p(X=1|y)
 ```
+
 が当然なりたつ。
 したがって、相互情報量の上限
 ```
@@ -222,6 +230,7 @@ def ExtendedPrefixSpan(D, rho, Theta):
 ## Lemma
 
 canonical form of a word のこと。
+
 ```haskell
 {go, goes, going, went gone} -> go
 ```
@@ -266,9 +275,10 @@ under GNU GPL
 自己申告で個人情報送ると即座にダウンロードできる。
 [Subjectivity Lexicon | MPQA](http://mpqa.cs.pitt.edu/lexicons/subj_lexicon/)
 
-```
+```haskell
 (word, POS) -> class
 ```
+
 8222 (word,POS) 登録されてる。
 
 ```
@@ -397,10 +407,12 @@ Speech role は、REFでもASRでも十分な結果が得られている．
 manualは利用ならば、それが最強
 
 Wikipedia English pages alignmentについてのパターンとして、
+
 ```
 i ALIGNMENT MODAL
 a POSITIVE #idea
 ```
+
 とか．
 
 あ、そうそう．英語のパターンの場合は、

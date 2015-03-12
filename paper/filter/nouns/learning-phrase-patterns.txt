@@ -269,6 +269,7 @@ cn
 }`
 とき
 ```
+haskell
 w
 ->
 {
@@ -1024,6 +1025,7 @@ X
 XE
 `
 ```
+python
 p
 (
 XE
@@ -1330,6 +1332,7 @@ _
 lexicon
 /)
 ```
+haskell
 (
 word
 ,

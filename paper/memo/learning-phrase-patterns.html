@@ -1,11 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -25,7 +28,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="stylesheet" href="../../css/m.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/m.css">
 </head>
 <body>
 <h1 id="learning-phrase-patterns-for-text-classification">Learning Phrase Patterns for Text Classification</h1>
@@ -48,12 +51,24 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>普通パターンと言う場合の素のやつと、拡張バージョンのパターンの定義と、 パターンが文にマッチする、の定義を述べる。</p>
 <h3 id="素-phrase-pattern">素 phrase pattern</h3>
 <p>文をwordの列 <code>[u1, u2 .. u[n]]</code> とみなすのと全く同様に、 phrase pattern もまた、word の列 <code>[w1, w2 .. w[m]]</code> とする。 これが、先の文にマッチするとは、sub sequence になっていること。</p>
-<p>i.e. <code>haskell sentence = [u1, u2 .. u[n]] pattern = [w1, w2 .. w[m]] n &gt;= m exist j = [j1, j2 .. j[m]] i1 &lt; i2 =&gt; j[i1] &lt; j[i2] forall i. w[i] == u[j[i]]</code></p>
+<p>i.e.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sentence <span class="fu">=</span> [u1, u2 <span class="fu">..</span> u[n]]
+pattern <span class="fu">=</span> [w1, w2 <span class="fu">..</span> w[m]]
+n <span class="fu">&gt;=</span> m
+exist j <span class="fu">=</span> [j1, j2 <span class="fu">..</span> j[m]]
+i1 <span class="fu">&lt;</span> i2 <span class="ot">=&gt;</span> j[i1] <span class="fu">&lt;</span> j[i2]
+forall i<span class="fu">.</span> w[i] <span class="fu">==</span> u[j[i]]</code></pre>
 <h3 id="extend">extend</h3>
 <p>語の列でなく、word class も利用したい。 word class としては、POSとかpolarity とかを使い制限しない。 word <code>w</code> の class として(文脈に依存して) <code>{c1 .. cn}</code> があるとき、</p>
-<pre><code>w -&gt; {w, c1 .. cn}</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">w <span class="ot">-&gt;</span> {w, c1 <span class="fu">..</span> cn}</code></pre>
 <p>という拡張を考える。 文と、phrase pattern ともに、この拡張を適用できる。 また、マッチすることの定義は、 最後の <code>==</code> を、 <code>subset</code> にする。</p>
-<p>i.e. <code>haskell sentence = [u1, u2 .. u[n]] pattern = [w1, w2 .. w[m]] n &gt;= m exist j = [j1, j2 .. j[m]] i1 &lt; i2 =&gt; j[i1] &lt; j[i2] forall i. w[i] `subset` u[j[i]]</code></p>
+<p>i.e.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sentence <span class="fu">=</span> [u1, u2 <span class="fu">..</span> u[n]]
+pattern <span class="fu">=</span> [w1, w2 <span class="fu">..</span> w[m]]
+n <span class="fu">&gt;=</span> m
+exist j <span class="fu">=</span> [j1, j2 <span class="fu">..</span> j[m]]
+i1 <span class="fu">&lt;</span> i2 <span class="ot">=&gt;</span> j[i1] <span class="fu">&lt;</span> j[i2]
+forall i<span class="fu">.</span> w[i] <span class="ot">`subset`</span> u[j[i]]</code></pre>
 <h2 id="learning">learning</h2>
 <p>拡張バージョンの phrase pattern を学習するアルゴリズムを一つ挙げる。 他には CloSpan っていうのもある。</p>
 <h3 id="prefixspan-pei-han-2001">PrefixSpan (Pei, Han+, 2001)</h3>
@@ -79,8 +94,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <span class="st">  return P</span></code></pre>
 <p><code>match_freq</code> はマッチする回数。</p>
-<p><code>append</code> および <code>assemble</code> はパターンとトークンから新しいパターンを作る。 ```python def append(rho, a): return rho.append({a})</p>
-<p>def assemble(rho, a): init = rho[0:-1] last = rho[-1] return init.append(last.union({a})) ```</p>
+<p><code>append</code> および <code>assemble</code> はパターンとトークンから新しいパターンを作る。</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> append(rho, a):
+  <span class="kw">return</span> rho.append({a})
+
+<span class="kw">def</span> assemble(rho, a):
+  init = rho[<span class="dv">0</span>:-<span class="dv">1</span>]
+  last = rho[-<span class="dv">1</span>]
+  <span class="kw">return</span> init.append(last.union({a}))</code></pre>
 <p>言い直すと、</p>
 <p>パターン <code>[{w1,c1..c1} .. {wn,cn..cn}]</code> に <code>s</code> をつけたす方法として、</p>
 <ul class="incremental">
@@ -100,16 +121,25 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2 id="尺度">尺度</h2>
 <p>先のアルゴリズムでは、頻度という尺度で、 パターンを採択するか決めていたが、 相互情報量のほうがいいだろう。</p>
 <p>コーパスD に、クラス <code>Y = 1, 2 .. K</code> があって、 変数<code>X</code>はあるパターンがマッチするかどうか(<code>X=0,1</code>) とすると、</p>
-<p>定義通りには、 <code>haskell I X Y = sum [ sum [ (p x y) * log ((p x y) / (p x) / (p y))  | y &lt;- [1..K] ] | x &lt;- [0,1] ]</code></p>
-<p>次のように書き換えると、計算しよい。 (計算効率をおとさない) <code>haskell p_given x y -- probability of x given y I X Y = sum [ sum [ (p_given x y) * (p y) * log ((p_given x y) / p_x) | y &lt;- [1..K] ] | x &lt;- [0,1] ]   where     p_x = sum [ p_given x y' * p y' | y' &lt;- [1 .. K] ]</code></p>
-<p>で、えっと、あるパターン <code>p</code> について の、<code>X</code>に対して そのパターンを拡張した時のそれを <code>XE</code>と書くと、 <code>p(XE=1|y) &lt;= p(X=1|y)</code> が当然なりたつ。 したがって、相互情報量の上限 <code>sup_E I(XE;Y)</code> が存在する。 (まじで？？？)</p>
+<p>定義通りには、</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">I</span> <span class="dt">X</span> <span class="dt">Y</span> <span class="fu">=</span> sum [ sum [ (p x y) <span class="fu">*</span> log ((p x y) <span class="fu">/</span> (p x) <span class="fu">/</span> (p y))  <span class="fu">|</span> y <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="fu">..</span><span class="dt">K</span>] ] <span class="fu">|</span> x <span class="ot">&lt;-</span> [<span class="dv">0</span>,<span class="dv">1</span>] ]</code></pre>
+<p>次のように書き換えると、計算しよい。 (計算効率をおとさない)</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">p_given x y <span class="co">-- probability of x given y</span>
+<span class="dt">I</span> <span class="dt">X</span> <span class="dt">Y</span> <span class="fu">=</span> sum [ sum [ (p_given x y) <span class="fu">*</span> (p y) <span class="fu">*</span> log ((p_given x y) <span class="fu">/</span> p_x) <span class="fu">|</span> y <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="fu">..</span><span class="dt">K</span>] ] <span class="fu">|</span> x <span class="ot">&lt;-</span> [<span class="dv">0</span>,<span class="dv">1</span>] ]
+  <span class="kw">where</span>
+    p_x <span class="fu">=</span> sum [ p_given x y&#39; <span class="fu">*</span> p y&#39; <span class="fu">|</span> y&#39; <span class="ot">&lt;-</span> [<span class="dv">1</span> <span class="fu">..</span> <span class="dt">K</span>] ]</code></pre>
+<p>で、えっと、あるパターン <code>p</code> について の、<code>X</code>に対して そのパターンを拡張した時のそれを <code>XE</code>と書くと、</p>
+<pre class="sourceCode python"><code class="sourceCode python">p(XE=<span class="dv">1</span>|y) &lt;= p(X=<span class="dv">1</span>|y)</code></pre>
+<p>が当然なりたつ。 したがって、相互情報量の上限</p>
+<pre><code>sup_E I(XE;Y)</code></pre>
+<p>が存在する。 (まじで？？？)</p>
 <p>改訂版のアルゴリズム <code>ExtendedPrefixSpan</code></p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> ExtendedPrefixSpan(D, rho, Theta):
   P = []
 
   for_each t in D:
     rho<span class="st">&#39; = rho.append(t)</span>
-<span class="st">    rho&#39;</span> の相互情<span class="dv">報</span>量 が閾値以上なら、
+<span class="st">    rho&#39;</span> の相互情報量 が閾値以上なら、
       P = P.append(rho<span class="st">&#39;)</span>
 
 <span class="st">    else 上限が閾値を超えるなら</span>
@@ -120,7 +150,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="st">  return P</span></code></pre>
 <h1 id="word-classes">Word Classes</h1>
 <h2 id="lemma">Lemma</h2>
-<p>canonical form of a word のこと。 <code>haskell {go, goes, going, went gone} -&gt; go</code></p>
+<p>canonical form of a word のこと。</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">{go, goes, going, went gone} <span class="ot">-&gt;</span> go</code></pre>
 <p>NLTK WordNet lemmatizer を使う</p>
 <h2 id="word-shape">Word shape</h2>
 <p>大文字の使われ方。 全部大文字になってるか、最初だけか、ドットで連結した大文字（つまり省略形）か。</p>
@@ -136,7 +167,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2 id="mpqa-subjectivity-lexicon">MPQA subjectivity lexicon</h2>
 <p>under GNU GPL</p>
 <p>自己申告で個人情報送ると即座にダウンロードできる。 <a href="http://mpqa.cs.pitt.edu/lexicons/subj_lexicon/">Subjectivity Lexicon | MPQA</a></p>
-<pre><code>(word, POS) -&gt; class</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">(word, <span class="dt">POS</span>) <span class="ot">-&gt;</span> <span class="kw">class</span></code></pre>
 <p>8222 (word,POS) 登録されてる。</p>
 <pre><code>type=weaksubj len=1 word1=dominate pos1=verb stemmed1=y priorpolarity=negative</code></pre>
 <h2 id="manual">manual</h2>
@@ -195,7 +226,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Table IIからVIIは、baseline (with only n-gram) と、pattern (with each class) との比較．</p>
 <p>Speech role は、REFでもASRでも十分な結果が得られている． つまり、頑強である．</p>
 <p>manualは利用ならば、それが最強</p>
-<p>Wikipedia English pages alignmentについてのパターンとして、 <code>i ALIGNMENT MODAL a POSITIVE #idea</code> とか．</p>
+<p>Wikipedia English pages alignmentについてのパターンとして、</p>
+<pre><code>i ALIGNMENT MODAL
+a POSITIVE #idea</code></pre>
+<p>とか．</p>
 <p>あ、そうそう．英語のパターンの場合は、 ２つのトークンが連続で出現してなくてもマッチするわけだけど、 上のように<code>#</code>というのは、連続であることを意味するらしい． 初めからそうすればいいのにね．</p>
 </body>
 </html>
