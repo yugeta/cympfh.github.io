@@ -24,13 +24,13 @@
 MeCab本体のインストールを行う
 
 ```bash
-$ mecab-0.996 $ ./configure --with-charset=utf8 --enable-utf8-only
+$ ./configure --with-charset=utf8 --enable-utf8-only
 $ sudo make install
 ```
 
 辞書がない状態でmecabを起動するとこうなる
 
-```bash
+```
 $ mecab
 param.cpp(69) [ifs] no such file or directory: /usr/local/lib/mecab/dic/ipadic/dicrc
 ```

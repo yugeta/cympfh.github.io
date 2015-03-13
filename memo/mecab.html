@@ -40,11 +40,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>の2つをダウンロードする<br />数字(バージョン) は 2015/03/14 現在の最新<br />また、Windowsにはバイナリ (*.exe) が用意されている<br />以下、LinuxまたはMacOSで文字コードをUTF-8に縛って利用するためのビルド方法を書く</p>
 <h3 id="cd-mecab-0.996">cd mecab-0.996</h3>
 <p>MeCab本体のインストールを行う</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ mecab-0.996 $ ./configure --with-charset=utf8 --enable-utf8-only
+<pre class="sourceCode bash"><code class="sourceCode bash">$ ./configure --with-charset=utf8 --enable-utf8-only
 $ <span class="kw">sudo</span> <span class="kw">make</span> <span class="kw">install</span></code></pre>
 <p>辞書がない状態でmecabを起動するとこうなる</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ mecab
-param.cpp<span class="kw">(</span>69<span class="kw">)</span> [ifs] no such <span class="kw">file</span> or directory: /usr/local/lib/mecab/dic/ipadic/dicrc</code></pre>
+<pre><code>$ mecab
+param.cpp(69) [ifs] no such file or directory: /usr/local/lib/mecab/dic/ipadic/dicrc</code></pre>
 <h3 id="cd-mecab-ipadic-2.7.0-20070801">cd mecab-ipadic-2.7.0-20070801</h3>
 <p>次にMeCabで利用するための辞書をインストールする</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ ./configure --with-charset=utf8
