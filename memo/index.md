@@ -9,4 +9,5 @@
 - [mplayer](mplayer.html)
 - [i3](i3.html)
 - [debian](debian.html)
+- [mecab](mecab.html)
 
