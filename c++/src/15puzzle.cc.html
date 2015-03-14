@@ -70,47 +70,42 @@ ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt
 vector&lt;vector&lt;<span class="dt">int</span>&gt; &gt; step(vector&lt;<span class="dt">int</span>&gt;&amp;s) {
   vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt; ret;
   rep (idx, area) {
-    <span class="kw">if</span> (s[idx] == <span class="dv">0</span>) {
-      <span class="co">// trace(s);</span>
-      <span class="dt">int</span> i = idx / w;
-      <span class="dt">int</span> j = idx % w;
-      <span class="kw">if</span> (i &gt; <span class="dv">0</span>) {
-        <span class="co">// trace(&quot;up&quot;);</span>
-        vector&lt;<span class="dt">int</span>&gt; t(area);
-        rep (i, area) t[i] = s[i];
-        t[idx] = t[idx - w];
-        t[idx - w] = <span class="dv">0</span>;
-        ret.push_back(t);
-      }
-      <span class="kw">if</span> (i &lt; h<span class="dv">-1</span>) {
-        vector&lt;<span class="dt">int</span>&gt; t(area);
-        rep (i, area) t[i] = s[i];
-        t[idx] = t[idx + w];
-        t[idx + w] = <span class="dv">0</span>;
-        ret.push_back(t);
-      }
-      <span class="kw">if</span> (j &gt; <span class="dv">0</span>) {
-        <span class="co">// trace(&quot;left&quot;);</span>
-        vector&lt;<span class="dt">int</span>&gt; t(area);
-        rep (i, area) t[i] = s[i];
-        t[idx] = t[idx - <span class="dv">1</span>];
-        t[idx - <span class="dv">1</span>] = <span class="dv">0</span>;
-        ret.push_back(t);
-      }
-      <span class="kw">if</span> (j &lt; w<span class="dv">-1</span>) {
-        <span class="co">// trace(&quot;right&quot;);</span>
-        vector&lt;<span class="dt">int</span>&gt; t(area);
-        rep (i, area) t[i] = s[i];
-        t[idx] = t[idx + <span class="dv">1</span>];
-        t[idx + <span class="dv">1</span>] = <span class="dv">0</span>;
-        ret.push_back(t);
-      }
+    <span class="kw">if</span> (s[idx] != <span class="dv">0</span>) <span class="kw">continue</span>;
+    <span class="dt">int</span> i = idx / w;
+    <span class="dt">int</span> j = idx % w;
+    <span class="kw">if</span> (i &gt; <span class="dv">0</span>) {
+      <span class="co">// trace(&quot;up&quot;);</span>
+      <span class="dt">auto</span> t = s;
+      swap(t[idx], t[idx - w]);
+      ret.push_back(t);
+    }
+    <span class="kw">if</span> (i &lt; h<span class="dv">-1</span>) {
+      <span class="dt">auto</span> t = s;
+      swap(t[idx], t[idx + w]);
+      ret.push_back(t);
+    }
+    <span class="kw">if</span> (j &gt; <span class="dv">0</span>) {
+      <span class="co">// trace(&quot;left&quot;);</span>
+      <span class="dt">auto</span> t = s;
+      swap(t[idx], t[idx - <span class="dv">1</span>]);
+      ret.push_back(t);
+    }
+    <span class="kw">if</span> (j &lt; w<span class="dv">-1</span>) {
+      <span class="co">// trace(&quot;right&quot;);</span>
+      <span class="dt">auto</span> t = s;
+      swap(t[idx], t[idx + <span class="dv">1</span>]);
+      ret.push_back(t);
     }
   }
   <span class="kw">return</span> ret;
 }
 
+<span class="co">// 板の状態を vector&lt;int&gt; で持つ</span>
+
+<span class="co">// スタートからその状態までの最小手数</span>
 map&lt;vector&lt;<span class="dt">int</span>&gt;, <span class="dt">int</span>&gt; table;
+
+<span class="co">// ゴールからその状態までの最小手数</span>
 map&lt;vector&lt;<span class="dt">int</span>&gt;, <span class="dt">int</span>&gt; r_table;
 
 <span class="dt">int</span> main() {
@@ -118,35 +113,33 @@ map&lt;vector&lt;<span class="dt">int</span>&gt;, <span class="dt">int</span>&gt
   ios::sync_with_stdio(<span class="dv">0</span>);
   cout.setf(ios::fixed);
   cout.precision(<span class="dv">10</span>);
+
+  <span class="co">// 入力</span>
   cin &gt;&gt; h &gt;&gt; w;
   area = h * w;
 
   vector&lt;<span class="dt">int</span>&gt; s(area);
   rep (i, area) cin &gt;&gt; s[i];
+
+  <span class="co">// ゴールの状態はこう</span>
   vector&lt;<span class="dt">int</span>&gt; g(area);
   rep (i, area) g[i] = (i + <span class="dv">1</span>) % area;
 
+  <span class="co">// 双方向から幅優先するだけ</span>
   queue&lt;tuple&lt;<span class="dt">int</span>, vector&lt;<span class="dt">int</span>&gt;, <span class="dt">bool</span>&gt;&gt; q;
-  q.push(make_tuple(<span class="dv">0</span>, s, <span class="kw">true</span>));
-  q.push(make_tuple(<span class="dv">0</span>, g, <span class="kw">false</span>));
+  q.push(make_tuple(<span class="dv">0</span>, s, <span class="kw">true</span>)); <span class="co">// true はスタートから</span>
+  q.push(make_tuple(<span class="dv">0</span>, g, <span class="kw">false</span>)); <span class="co">// false はゴールから</span>
   table[s] = <span class="dv">0</span>;
   r_table[g] = <span class="dv">0</span>;
 
   <span class="dt">int</span> ans = -<span class="dv">1</span>;
-  <span class="dt">int</span> cx = <span class="dv">0</span>;
+
   <span class="kw">while</span> (!q.empty()) {
     <span class="dt">auto</span> tup = q.front(); q.pop();
     <span class="dt">int</span> depth = get&lt;<span class="dv">0</span>&gt;(tup);
     <span class="dt">auto</span>&amp;s = get&lt;<span class="dv">1</span>&gt;(tup);
     <span class="dt">bool</span> dir = get&lt;<span class="dv">2</span>&gt;(tup);
     <span class="kw">if</span> (depth &gt; <span class="dv">12</span>) <span class="kw">continue</span>;
-
-    <span class="co">/*</span>
-<span class="co">    if (cx++ % 100 == 0) {</span>
-<span class="co">      trace(depth);</span>
-<span class="co">      trace(dir);trace(s);</span>
-<span class="co">    }</span>
-<span class="co">    */</span>
 
     <span class="kw">if</span> (dir) {
       <span class="kw">if</span> (r_table.count(s) &gt; <span class="dv">0</span>) {

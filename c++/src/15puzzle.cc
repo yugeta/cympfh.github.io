@@ -42,47 +42,42 @@ int area;
 vector<vector<int> > step(vector<int>&s) {
   vector<vector<int>> ret;
   rep (idx, area) {
-    if (s[idx] == 0) {
-      // trace(s);
-      int i = idx / w;
-      int j = idx % w;
-      if (i > 0) {
-        // trace("up");
-        vector<int> t(area);
-        rep (i, area) t[i] = s[i];
-        t[idx] = t[idx - w];
-        t[idx - w] = 0;
-        ret.push_back(t);
-      }
-      if (i < h-1) {
-        vector<int> t(area);
-        rep (i, area) t[i] = s[i];
-        t[idx] = t[idx + w];
-        t[idx + w] = 0;
-        ret.push_back(t);
-      }
-      if (j > 0) {
-        // trace("left");
-        vector<int> t(area);
-        rep (i, area) t[i] = s[i];
-        t[idx] = t[idx - 1];
-        t[idx - 1] = 0;
-        ret.push_back(t);
-      }
-      if (j < w-1) {
-        // trace("right");
-        vector<int> t(area);
-        rep (i, area) t[i] = s[i];
-        t[idx] = t[idx + 1];
-        t[idx + 1] = 0;
-        ret.push_back(t);
-      }
+    if (s[idx] != 0) continue;
+    int i = idx / w;
+    int j = idx % w;
+    if (i > 0) {
+      // trace("up");
+      auto t = s;
+      swap(t[idx], t[idx - w]);
+      ret.push_back(t);
+    }
+    if (i < h-1) {
+      auto t = s;
+      swap(t[idx], t[idx + w]);
+      ret.push_back(t);
+    }
+    if (j > 0) {
+      // trace("left");
+      auto t = s;
+      swap(t[idx], t[idx - 1]);
+      ret.push_back(t);
+    }
+    if (j < w-1) {
+      // trace("right");
+      auto t = s;
+      swap(t[idx], t[idx + 1]);
+      ret.push_back(t);
     }
   }
   return ret;
 }
 
+// 板の状態を vector<int> で持つ
+
+// スタートからその状態までの最小手数
 map<vector<int>, int> table;
+
+// ゴールからその状態までの最小手数
 map<vector<int>, int> r_table;
 
 int main() {
@@ -90,35 +85,33 @@ int main() {
   ios::sync_with_stdio(0);
   cout.setf(ios::fixed);
   cout.precision(10);
+
+  // 入力
   cin >> h >> w;
   area = h * w;
 
   vector<int> s(area);
   rep (i, area) cin >> s[i];
+
+  // ゴールの状態はこう
   vector<int> g(area);
   rep (i, area) g[i] = (i + 1) % area;
 
+  // 双方向から幅優先するだけ
   queue<tuple<int, vector<int>, bool>> q;
-  q.push(make_tuple(0, s, true));
-  q.push(make_tuple(0, g, false));
+  q.push(make_tuple(0, s, true)); // true はスタートから
+  q.push(make_tuple(0, g, false)); // false はゴールから
   table[s] = 0;
   r_table[g] = 0;
 
   int ans = -1;
-  int cx = 0;
+
   while (!q.empty()) {
     auto tup = q.front(); q.pop();
     int depth = get<0>(tup);
     auto&s = get<1>(tup);
     bool dir = get<2>(tup);
     if (depth > 12) continue;
-
-    /*
-    if (cx++ % 100 == 0) {
-      trace(depth);
-      trace(dir);trace(s);
-    }
-    */
 
     if (dir) {
       if (r_table.count(s) > 0) {
