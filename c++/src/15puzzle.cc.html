@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/*</span>
+<span class="co"> * (W * H - 1) パズル (a.k.a 15パズル)</span>
+<span class="co"> * を解く最小手数を求めます</span>
+<span class="co"> *</span>
+<span class="co"> * これは</span>
+<span class="co"> * http://indeednow-quala.contest.atcoder.jp/tasks/indeednow_2015_quala_4</span>
+<span class="co"> * の解答です</span>
+<span class="co"> *</span>
+<span class="co"> * 24手数以内であることが保証されており、</span>
+<span class="co"> * この解答は双方向探索を行います</span>
+<span class="co"> *</span>
+<span class="co"> */</span>
+
+<span class="ot">#include &lt;bits/stdc++.h&gt;</span>
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="ot">#define rep(i,n) for(int i=0;i&lt;(n);++i)</span>
+<span class="ot">#define loop for(;;)</span>
+<span class="ot">#define trace(var) cerr&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;#var&lt;&lt;&quot; = &quot;&lt;&lt;var&lt;&lt;endl;</span>
+<span class="dt">const</span> <span class="dt">double</span> PI = acos(-<span class="dv">1</span>);
+
+<span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt;
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S,T&gt; p) {
+  os &lt;&lt; &#39;(&#39; &lt;&lt; p.first &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; p.second &lt;&lt; &#39;)&#39;;
+  <span class="kw">return</span> os;
+}
+
+<span class="kw">template</span>&lt;<span class="kw">class</span> T&gt;
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt;T&gt; v) {
+  <span class="kw">if</span> (v.size() == <span class="dv">0</span>) {
+    os &lt;&lt; <span class="st">&quot;(empty)&quot;</span>;
+    <span class="kw">return</span> os;
+  }
+  os &lt;&lt; v[<span class="dv">0</span>];
+  <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">1</span>, len=v.size(); i&lt;len; ++i) os &lt;&lt; &#39; &#39; &lt;&lt; v[i];
+  <span class="kw">return</span> os;
+}
+
+<span class="dt">int</span> h, w;
+<span class="dt">int</span> area;
+
+vector&lt;vector&lt;<span class="dt">int</span>&gt; &gt; step(vector&lt;<span class="dt">int</span>&gt;&amp;s) {
+  vector&lt;vector&lt;<span class="dt">int</span>&gt;&gt; ret;
+  rep (idx, area) {
+    <span class="kw">if</span> (s[idx] == <span class="dv">0</span>) {
+      <span class="co">// trace(s);</span>
+      <span class="dt">int</span> i = idx / w;
+      <span class="dt">int</span> j = idx % w;
+      <span class="kw">if</span> (i &gt; <span class="dv">0</span>) {
+        <span class="co">// trace(&quot;up&quot;);</span>
+        vector&lt;<span class="dt">int</span>&gt; t(area);
+        rep (i, area) t[i] = s[i];
+        t[idx] = t[idx - w];
+        t[idx - w] = <span class="dv">0</span>;
+        ret.push_back(t);
+      }
+      <span class="kw">if</span> (i &lt; h<span class="dv">-1</span>) {
+        vector&lt;<span class="dt">int</span>&gt; t(area);
+        rep (i, area) t[i] = s[i];
+        t[idx] = t[idx + w];
+        t[idx + w] = <span class="dv">0</span>;
+        ret.push_back(t);
+      }
+      <span class="kw">if</span> (j &gt; <span class="dv">0</span>) {
+        <span class="co">// trace(&quot;left&quot;);</span>
+        vector&lt;<span class="dt">int</span>&gt; t(area);
+        rep (i, area) t[i] = s[i];
+        t[idx] = t[idx - <span class="dv">1</span>];
+        t[idx - <span class="dv">1</span>] = <span class="dv">0</span>;
+        ret.push_back(t);
+      }
+      <span class="kw">if</span> (j &lt; w<span class="dv">-1</span>) {
+        <span class="co">// trace(&quot;right&quot;);</span>
+        vector&lt;<span class="dt">int</span>&gt; t(area);
+        rep (i, area) t[i] = s[i];
+        t[idx] = t[idx + <span class="dv">1</span>];
+        t[idx + <span class="dv">1</span>] = <span class="dv">0</span>;
+        ret.push_back(t);
+      }
+    }
+  }
+  <span class="kw">return</span> ret;
+}
+
+map&lt;vector&lt;<span class="dt">int</span>&gt;, <span class="dt">int</span>&gt; table;
+map&lt;vector&lt;<span class="dt">int</span>&gt;, <span class="dt">int</span>&gt; r_table;
+
+<span class="dt">int</span> main() {
+  cin.tie(<span class="dv">0</span>);
+  ios::sync_with_stdio(<span class="dv">0</span>);
+  cout.setf(ios::fixed);
+  cout.precision(<span class="dv">10</span>);
+  cin &gt;&gt; h &gt;&gt; w;
+  area = h * w;
+
+  vector&lt;<span class="dt">int</span>&gt; s(area);
+  rep (i, area) cin &gt;&gt; s[i];
+  vector&lt;<span class="dt">int</span>&gt; g(area);
+  rep (i, area) g[i] = (i + <span class="dv">1</span>) % area;
+
+  queue&lt;tuple&lt;<span class="dt">int</span>, vector&lt;<span class="dt">int</span>&gt;, <span class="dt">bool</span>&gt;&gt; q;
+  q.push(make_tuple(<span class="dv">0</span>, s, <span class="kw">true</span>));
+  q.push(make_tuple(<span class="dv">0</span>, g, <span class="kw">false</span>));
+  table[s] = <span class="dv">0</span>;
+  r_table[g] = <span class="dv">0</span>;
+
+  <span class="dt">int</span> ans = -<span class="dv">1</span>;
+  <span class="dt">int</span> cx = <span class="dv">0</span>;
+  <span class="kw">while</span> (!q.empty()) {
+    <span class="dt">auto</span> tup = q.front(); q.pop();
+    <span class="dt">int</span> depth = get&lt;<span class="dv">0</span>&gt;(tup);
+    <span class="dt">auto</span>&amp;s = get&lt;<span class="dv">1</span>&gt;(tup);
+    <span class="dt">bool</span> dir = get&lt;<span class="dv">2</span>&gt;(tup);
+    <span class="kw">if</span> (depth &gt; <span class="dv">12</span>) <span class="kw">continue</span>;
+
+    <span class="co">/*</span>
+<span class="co">    if (cx++ % 100 == 0) {</span>
+<span class="co">      trace(depth);</span>
+<span class="co">      trace(dir);trace(s);</span>
+<span class="co">    }</span>
+<span class="co">    */</span>
+
+    <span class="kw">if</span> (dir) {
+      <span class="kw">if</span> (r_table.count(s) &gt; <span class="dv">0</span>) {
+        ans = depth + r_table[s];
+        <span class="kw">break</span>;
+      }
+    } <span class="kw">else</span> {
+      <span class="kw">if</span> (table.count(s) &gt; <span class="dv">0</span>) {
+        ans = depth + table[s];
+        <span class="kw">break</span>;
+      }
+    }
+
+    <span class="dt">auto</span> ss = step(s);
+    <span class="kw">for</span> (<span class="dt">auto</span>&amp;s: ss) {
+      <span class="kw">if</span> (dir) {
+        <span class="kw">if</span> (table.count(s) &gt; <span class="dv">0</span>) <span class="kw">continue</span>;
+        table[s] = depth + <span class="dv">1</span>;
+      }
+      <span class="kw">if</span> (<span class="kw">not</span> dir) {
+        <span class="kw">if</span> (r_table.count(s) &gt; <span class="dv">0</span>) <span class="kw">continue</span>;
+        r_table[s] = depth + <span class="dv">1</span>;
+      }
+      q.push(make_tuple(depth + <span class="dv">1</span>, s, dir));
+    }
+  }
+  cout &lt;&lt; ans &lt;&lt; endl;
+  <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+<span class="co">/*</span>
+<span class="co"> * 入力例1</span>
+<span class="co">3 3</span>
+<span class="co">1 0 2</span>
+<span class="co">4 5 3</span>
+<span class="co">7 8 6</span>
+
+<span class="co">ゴールとなる状態は</span>
+
+<span class="co">1 2 3</span>
+<span class="co">4 5 6</span>
+<span class="co">7 8 0</span>
+
+<span class="co">であるので、解答は</span>
+
+<span class="co">3</span>
+
+<span class="co">*/</span>
+
+<span class="co">/*</span>
+<span class="co"> * 入力例2</span>
+<span class="co">3 5</span>
+<span class="co">6 1 2 8 5</span>
+<span class="co">7 0 4 3 10</span>
+<span class="co">11 12 13 9 14</span>
+
+<span class="co">解答は</span>
+
+<span class="co">12</span>
+
+<span class="co">*/</span></code></pre>
+</body>
+</html>

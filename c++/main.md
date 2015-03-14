@@ -109,5 +109,6 @@
 - [bit count](src/bit.count.cc.html)
 - [K-平均法](src/misc.kmeans.cc.html)
 - [Pascal's Triangle](src/misc.pascal_triangle.cc.html)
+- [W * H - 1 パズル (aka 15パズル)](src/15puzzle.cc.html)
 
 # [テスト環境](memo/test.html)
