@@ -110,6 +110,29 @@ fs<span class="fu">.</span>exists conf<span class="fu">.</span>srcfile, (bl) <sp
     console<span class="fu">.</span>log event
     <span class="kw">do</span> emit</code></pre>
 <p>別途、監視対象のファイルと、それをどう処理するかを書いた設定ファイルを用意する<br />ファイル名は兎も角、処理は関数で書くしかないので<br />実用上、CoffeeScriptかJavaScriptで書くしかない<br />従って、設定ファイルは実際はモジュールである</p>
+<h3 id="markdown.coffee">markdown.coffee</h3>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">fs <span class="fu">=</span> require <span class="ch">&#39;fs&#39;</span>
+{exec} <span class="fu">=</span> require <span class="ch">&#39;child_process&#39;</span>
+
+srcfile <span class="fu">=</span> <span class="ch">&#39;./test.md&#39;</span>
+
+compile <span class="fu">=</span> (cont) <span class="ot">-&gt;</span>
+  exec <span class="st">&quot;pandoc -s -t html5 -i #{srcfile} -o test.html&quot;</span>, (err) <span class="ot">-&gt;</span>
+    console<span class="fu">.</span>warn err <span class="kw">if</span> err
+    fs<span class="fu">.</span>readFile <span class="ch">&#39;./test.html&#39;</span>, <span class="ch">&#39;utf8&#39;</span>, (err, <span class="kw">data</span>) <span class="ot">-&gt;</span>
+      throw err <span class="kw">if</span> err
+      cont false, <span class="kw">data</span>
+
+<span class="kw">module</span><span class="fu">.</span>exports <span class="fu">=</span>
+  srcfile<span class="fu">:</span> srcfile
+  compile<span class="fu">:</span> compile</code></pre>
+<ul class="incremental">
+<li>srcfile に監視対象のファイル名を定義する</li>
+<li>変更があった時の処理を継続を取る手続きの形で定義する (compile)
+<ul class="incremental">
+<li>継続の第一引数はエラーで、第二引数に、htmlとして解釈可能な文字列</li>
+</ul></li>
+</ul>
 <h3 id="gnuplot.coffee">gnuplot.coffee</h3>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">{exec} <span class="fu">=</span> require <span class="ch">&#39;child_process&#39;</span>
 
