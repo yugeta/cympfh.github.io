@@ -29,40 +29,38 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;bits/stdc++.h&gt;</span>
 <span class="kw">using</span> <span class="kw">namespace</span> std;
 
-<span class="ot">#define iota(i,n,b,s) for(int i=int(b);i!=int((b)+(s)*(n));i+=(s))</span>
-<span class="ot">#define range(i,n,m) iota(i,(((n)&gt;(m))?((n)-(m)):((m)-(n))),(n),((n)&gt;(m)?-1:1))</span>
-<span class="ot">#define rep(i,n) iota(i,(n),0,1)</span>
+<span class="ot">#define rep(i,n) for(int i=0;i&lt;(n);++i)</span>
 <span class="ot">#define loop for(;;)</span>
-
-<span class="ot">#define INF (1e9)</span>
-<span class="ot">#define EPS (1e-9)</span>
-<span class="ot">#define cons(a,b) (make_pair(a,b))</span>
-<span class="ot">#define car(a) (a.first)</span>
-<span class="ot">#define cdr(a) (a.second)</span>
-<span class="ot">#define cadr(a) (car(cdr(a)))</span>
-<span class="ot">#define cddr(a) (cdr(cdr(a)))</span>
-<span class="ot">#define all(a) a.begin(), a.end()</span>
+<span class="ot">#define inf (1e9)</span>
+<span class="ot">#define eps (1e-9)</span>
 <span class="ot">#define trace(var) cerr&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;#var&lt;&lt;&quot; = &quot;&lt;&lt;var&lt;&lt;endl;</span>
-
 <span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> Integer;
 <span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">double</span> Real;
-<span class="kw">typedef</span> vector&lt;<span class="dt">int</span>&gt; vi;
-<span class="kw">typedef</span> vector&lt;string&gt; vs;
-<span class="kw">typedef</span> map&lt;string,<span class="dt">int</span>&gt; Dictionary;
 <span class="kw">typedef</span> pair&lt;Real, Real&gt; P; <span class="co">// Point</span>
 <span class="kw">typedef</span> pair&lt;P, P&gt; L; <span class="co">// segment or line</span>
 <span class="dt">const</span> Real PI = acos(-<span class="dv">1</span>);
 
-<span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt;
-ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, pair&lt;S,T&gt; p) {
-  os &lt;&lt; &#39;(&#39; &lt;&lt; car(p) &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; cdr(p) &lt;&lt; &#39;)&#39;;
+<span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt; <span class="kw">inline</span>
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp;os, pair&lt;S,T&gt; p) {
+  os &lt;&lt; &#39;(&#39; &lt;&lt; p.first &lt;&lt; <span class="st">&quot;, &quot;</span> &lt;&lt; p.second &lt;&lt; &#39;)&#39;;
   <span class="kw">return</span> os;
 }
-<span class="kw">template</span>&lt;<span class="kw">class</span> T&gt;
-ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt;T&gt; v) {
+
+<span class="kw">template</span>&lt;<span class="kw">class</span> T&gt; <span class="kw">inline</span>
+ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp;os, vector&lt;T&gt; v) {
+  <span class="kw">if</span> (v.size() == <span class="dv">0</span>) {
+    os &lt;&lt; <span class="st">&quot;(empty)&quot;</span>;
+    <span class="kw">return</span> os;
+  }
   os &lt;&lt; v[<span class="dv">0</span>];
   <span class="kw">for</span> (<span class="dt">int</span> i=<span class="dv">1</span>, len=v.size(); i&lt;len; ++i) os &lt;&lt; &#39; &#39; &lt;&lt; v[i];
   <span class="kw">return</span> os;
+}
+
+<span class="kw">template</span>&lt;<span class="kw">class</span> T&gt; <span class="kw">inline</span>
+istream&amp; <span class="kw">operator</span>&gt;&gt;(istream&amp;is, vector&lt;T&gt;&amp;v) {
+  rep (i, v.size()) is &gt;&gt; v[i];
+  <span class="kw">return</span> is;
 }
 
 <span class="dt">int</span> dx[] = { -<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span> };
@@ -70,56 +68,56 @@ ostream&amp; <span class="kw">operator</span>&lt;&lt;(ostream&amp; os, vector&lt
 
 <span class="co">/* inner dot */</span>
 Real dot(P&amp;a, P&amp;b) {
-  <span class="kw">return</span> car(a) * car(b) + cdr(a) * cdr(b);
+  <span class="kw">return</span> a.first * b.first + a.second * b.second;
 }
 Real <span class="kw">operator</span>*(P&amp;a, P&amp;b) {
-  <span class="kw">return</span> car(a) * car(b) + cdr(a) * cdr(b);
+  <span class="kw">return</span> a.first * b.first + a.second * b.second;
 }
 
 <span class="co">/* scalar multiple */</span>
 P <span class="kw">operator</span>*(P a, Real c) {
-  <span class="kw">return</span> cons(c * car(a), c * cdr(a));
+  <span class="kw">return</span> {c * a.first, c * a.second};
 }
 P <span class="kw">operator</span>*(Real c, P a) {
-  <span class="kw">return</span> cons(c * car(a), c * cdr(a));
+  <span class="kw">return</span> {c * a.first, c * a.second};
 }
 
 P <span class="kw">operator</span>/(P a, Real d) {
-  <span class="kw">return</span> cons(car(a) / d, cdr(a) / d);
+  <span class="kw">return</span> {a.first / d, a.second / d};
 }
 
 Real det(P a, P b) {
-  <span class="kw">return</span> car(a) * cdr(b) - cdr(a) * car(b);
+  <span class="kw">return</span> a.first * b.second - a.second * b.first;
 }
 
 <span class="co">/* vector operator */</span>
 P <span class="kw">operator</span>+(P a, P b) {
-  <span class="kw">return</span> cons(car(a) + car(b), cdr(a) + cdr(b));
+  <span class="kw">return</span> {a.first + b.first, a.second + b.second};
 }
 
 P <span class="kw">operator</span>-(P a) {
-  <span class="kw">return</span> cons(-car(a), -cdr(a));
+  <span class="kw">return</span> {-a.first, -a.second};
 }
 
 P <span class="kw">operator</span>-(P a, P b) {
-  <span class="kw">return</span> cons(car(a) - car(b), cdr(a) - cdr(b));
+  <span class="kw">return</span> {a.first - b.first, a.second - b.second};
 }
 
 <span class="co">/* distance */</span>
 Real Manhattan(P a, P b) {
-  <span class="kw">return</span> abs(car(a) - car(b)) + abs(cdr(a) - cdr(b));
+  <span class="kw">return</span> abs(a.first - b.first) + abs(a.second - b.second);
 }
 Real Euclidean(P a, P b) {
   P p = a - b;
-  <span class="kw">return</span> sqrt(pow(car(p), <span class="dv">2</span>) + pow(cdr(p), <span class="dv">2</span>));
+  <span class="kw">return</span> sqrt(pow(p.first, <span class="dv">2</span>) + pow(p.second, <span class="dv">2</span>));
 }
 
-<span class="co">/* equality with EPS (default: 1e-9) */</span>
+<span class="co">/* equality with eps (default: 1e-9) */</span>
 <span class="dt">bool</span> eq(Real x, Real y) {
-  <span class="kw">return</span> abs(x - y) &lt; EPS;
+  <span class="kw">return</span> abs(x - y) &lt; eps;
 }
 <span class="dt">bool</span> <span class="kw">operator</span>==(P a, P b) {
-  <span class="kw">return</span> eq(car(a), car(b)) &amp;&amp; eq(cdr(a), cdr(b));
+  <span class="kw">return</span> eq(a.first, b.first) &amp;&amp; eq(a.second, b.second);
 }
 
 <span class="dt">int</span> sign(Real a) {
@@ -128,13 +126,23 @@ Real Euclidean(P a, P b) {
 }
 
 Real magnitude(P&amp;a) {
-  <span class="kw">return</span> sqrt(pow(car(a), <span class="dv">2</span>) + pow(cdr(a), <span class="dv">2</span>));
+  <span class="kw">return</span> sqrt(pow(a.first, <span class="dv">2</span>) + pow(a.second, <span class="dv">2</span>));
 }
 
 Real arg(P&amp;a, P&amp;b) {
   Real x = dot(a, b) / magnitude(a) / magnitude(b);
   x = min&lt;Real&gt;(<span class="dv">1</span>, max&lt;Real&gt;(-<span class="dv">1</span>, x));
   <span class="kw">return</span> acos(x);
+}
+
+<span class="dt">int</span> main() {
+  cin.tie(<span class="dv">0</span>);
+  ios::sync_with_stdio(<span class="dv">0</span>);
+  cout.setf(ios::fixed);
+  cout.precision(<span class="dv">10</span>);
+  Real a,b,c,d,e,f;
+
+  <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>
 </body>
 </html>

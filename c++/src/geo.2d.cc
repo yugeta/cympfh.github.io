@@ -1,40 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define iota(i,n,b,s) for(int i=int(b);i!=int((b)+(s)*(n));i+=(s))
-#define range(i,n,m) iota(i,(((n)>(m))?((n)-(m)):((m)-(n))),(n),((n)>(m)?-1:1))
-#define rep(i,n) iota(i,(n),0,1)
+#define rep(i,n) for(int i=0;i<(n);++i)
 #define loop for(;;)
-
-#define INF (1e9)
-#define EPS (1e-9)
-#define cons(a,b) (make_pair(a,b))
-#define car(a) (a.first)
-#define cdr(a) (a.second)
-#define cadr(a) (car(cdr(a)))
-#define cddr(a) (cdr(cdr(a)))
-#define all(a) a.begin(), a.end()
+#define inf (1e9)
+#define eps (1e-9)
 #define trace(var) cerr<<">>> "<<#var<<" = "<<var<<endl;
-
 typedef long long Integer;
 typedef long double Real;
-typedef vector<int> vi;
-typedef vector<string> vs;
-typedef map<string,int> Dictionary;
 typedef pair<Real, Real> P; // Point
 typedef pair<P, P> L; // segment or line
 const Real PI = acos(-1);
 
-template<class S, class T>
-ostream& operator<<(ostream& os, pair<S,T> p) {
-  os << '(' << car(p) << ", " << cdr(p) << ')';
+template<class S, class T> inline
+ostream& operator<<(ostream&os, pair<S,T> p) {
+  os << '(' << p.first << ", " << p.second << ')';
   return os;
 }
-template<class T>
-ostream& operator<<(ostream& os, vector<T> v) {
+
+template<class T> inline
+ostream& operator<<(ostream&os, vector<T> v) {
+  if (v.size() == 0) {
+    os << "(empty)";
+    return os;
+  }
   os << v[0];
   for (int i=1, len=v.size(); i<len; ++i) os << ' ' << v[i];
   return os;
+}
+
+template<class T> inline
+istream& operator>>(istream&is, vector<T>&v) {
+  rep (i, v.size()) is >> v[i];
+  return is;
 }
 
 int dx[] = { -1, 0, 1, 0 };
@@ -42,56 +40,56 @@ int dy[] = {  0, -1, 0, 1 };
 
 /* inner dot */
 Real dot(P&a, P&b) {
-  return car(a) * car(b) + cdr(a) * cdr(b);
+  return a.first * b.first + a.second * b.second;
 }
 Real operator*(P&a, P&b) {
-  return car(a) * car(b) + cdr(a) * cdr(b);
+  return a.first * b.first + a.second * b.second;
 }
 
 /* scalar multiple */
 P operator*(P a, Real c) {
-  return cons(c * car(a), c * cdr(a));
+  return {c * a.first, c * a.second};
 }
 P operator*(Real c, P a) {
-  return cons(c * car(a), c * cdr(a));
+  return {c * a.first, c * a.second};
 }
 
 P operator/(P a, Real d) {
-  return cons(car(a) / d, cdr(a) / d);
+  return {a.first / d, a.second / d};
 }
 
 Real det(P a, P b) {
-  return car(a) * cdr(b) - cdr(a) * car(b);
+  return a.first * b.second - a.second * b.first;
 }
 
 /* vector operator */
 P operator+(P a, P b) {
-  return cons(car(a) + car(b), cdr(a) + cdr(b));
+  return {a.first + b.first, a.second + b.second};
 }
 
 P operator-(P a) {
-  return cons(-car(a), -cdr(a));
+  return {-a.first, -a.second};
 }
 
 P operator-(P a, P b) {
-  return cons(car(a) - car(b), cdr(a) - cdr(b));
+  return {a.first - b.first, a.second - b.second};
 }
 
 /* distance */
 Real Manhattan(P a, P b) {
-  return abs(car(a) - car(b)) + abs(cdr(a) - cdr(b));
+  return abs(a.first - b.first) + abs(a.second - b.second);
 }
 Real Euclidean(P a, P b) {
   P p = a - b;
-  return sqrt(pow(car(p), 2) + pow(cdr(p), 2));
+  return sqrt(pow(p.first, 2) + pow(p.second, 2));
 }
 
-/* equality with EPS (default: 1e-9) */
+/* equality with eps (default: 1e-9) */
 bool eq(Real x, Real y) {
-  return abs(x - y) < EPS;
+  return abs(x - y) < eps;
 }
 bool operator==(P a, P b) {
-  return eq(car(a), car(b)) && eq(cdr(a), cdr(b));
+  return eq(a.first, b.first) && eq(a.second, b.second);
 }
 
 int sign(Real a) {
@@ -100,11 +98,21 @@ int sign(Real a) {
 }
 
 Real magnitude(P&a) {
-  return sqrt(pow(car(a), 2) + pow(cdr(a), 2));
+  return sqrt(pow(a.first, 2) + pow(a.second, 2));
 }
 
 Real arg(P&a, P&b) {
   Real x = dot(a, b) / magnitude(a) / magnitude(b);
   x = min<Real>(1, max<Real>(-1, x));
   return acos(x);
+}
+
+int main() {
+  cin.tie(0);
+  ios::sync_with_stdio(0);
+  cout.setf(ios::fixed);
+  cout.precision(10);
+  Real a,b,c,d,e,f;
+
+  return 0;
 }
