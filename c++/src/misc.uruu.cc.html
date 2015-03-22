@@ -27,10 +27,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<pre class="sourceCode cpp"><code class="sourceCode cpp">Real triangle_area(P a, P b, P c) {
-  P u = b - a;
-  P v = c - a;
-  <span class="kw">return</span> abs(det(u, v)) / <span class="fl">2.0</span>;
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">bool</span> is_uruu(<span class="dt">int</span> y) {
+  <span class="kw">return</span> y % <span class="dv">4</span> == <span class="dv">0</span> <span class="kw">and</span> y % <span class="dv">100</span> != <span class="dv">0</span> <span class="kw">or</span> y % <span class="dv">400</span> == <span class="dv">0</span>;
 }</code></pre>
 </body>
 </html>
