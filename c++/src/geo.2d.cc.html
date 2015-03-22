@@ -35,10 +35,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="ot">#define inf (1e9)</span>
 <span class="ot">#define eps (1e-9)</span>
 <span class="ot">#define trace(var) cerr&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;#var&lt;&lt;&quot; = &quot;&lt;&lt;var&lt;&lt;endl;</span>
-<span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> Integer;
-<span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">double</span> Real;
-<span class="kw">typedef</span> pair&lt;Real, Real&gt; P; <span class="co">// Point</span>
-<span class="kw">typedef</span> pair&lt;P, P&gt; L; <span class="co">// segment or line</span>
+<span class="kw">using</span> Integer = <span class="dt">long</span> <span class="dt">long</span>;
+<span class="kw">using</span> Real = <span class="dt">long</span> <span class="dt">double</span>;
+<span class="kw">using</span> P = pair&lt;Real, Real&gt;;
+<span class="kw">using</span> L = vector&lt;P&gt;;
 <span class="dt">const</span> Real PI = acos(-<span class="dv">1</span>);
 
 <span class="kw">template</span>&lt;<span class="kw">class</span> S, <span class="kw">class</span> T&gt; <span class="kw">inline</span>
@@ -116,6 +116,9 @@ Real Euclidean(P a, P b) {
 <span class="co">/* equality with eps (default: 1e-9) */</span>
 <span class="dt">bool</span> eq(Real x, Real y) {
   <span class="kw">return</span> abs(x - y) &lt; eps;
+}
+<span class="dt">bool</span> eq(P a, P b) {
+  <span class="kw">return</span> eq(a.first, b.first) &amp;&amp; eq(a.second, b.second);
 }
 <span class="dt">bool</span> <span class="kw">operator</span>==(P a, P b) {
   <span class="kw">return</span> eq(a.first, b.first) &amp;&amp; eq(a.second, b.second);

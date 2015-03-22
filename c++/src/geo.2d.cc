@@ -6,10 +6,10 @@ using namespace std;
 #define inf (1e9)
 #define eps (1e-9)
 #define trace(var) cerr<<">>> "<<#var<<" = "<<var<<endl;
-typedef long long Integer;
-typedef long double Real;
-typedef pair<Real, Real> P; // Point
-typedef pair<P, P> L; // segment or line
+using Integer = long long;
+using Real = long double;
+using P = pair<Real, Real>;
+using L = vector<P>;
 const Real PI = acos(-1);
 
 template<class S, class T> inline
@@ -87,6 +87,9 @@ Real Euclidean(P a, P b) {
 /* equality with eps (default: 1e-9) */
 bool eq(Real x, Real y) {
   return abs(x - y) < eps;
+}
+bool eq(P a, P b) {
+  return eq(a.first, b.first) && eq(a.second, b.second);
 }
 bool operator==(P a, P b) {
   return eq(a.first, b.first) && eq(a.second, b.second);

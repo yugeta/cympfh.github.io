@@ -4,8 +4,8 @@ using namespace std;
 #define rep(i,n) for(int i=0;i<(n);++i)
 #define loop for(;;)
 #define trace(var) cerr<<">>> "<<#var<<" = "<<var<<endl;
-typedef long long Integer;
-typedef long double Real;
+using Integer = long long;
+using Real = long double;
 const Real PI = acos(-1);
 
 template<class S, class T> inline
