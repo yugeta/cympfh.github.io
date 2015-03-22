@@ -5,7 +5,7 @@
 
 # [テンプレート](src/template.cc.html)
 
-- [Mac用代替](src/include.cc.html)
+- [clang用代替](src/include.cc.html)
 - [ループマクロについて](memo/loop.html)
 
 # [グラフ](src/graph.head.cc.html)
